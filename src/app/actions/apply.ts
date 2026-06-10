@@ -48,8 +48,9 @@ export async function submitApplication(eventSlug: string, formData: {
 
     const isYouTube = formData.songUrl.match(/(?:youtu\.be\/|youtube\.com\/)/);
     const isNico = formData.songUrl.match(/(?:nicovideo\.jp\/|nico\.ms\/)/);
-    if (!isYouTube && !isNico) {
-      return { success: false, error: '楽曲URLはYouTubeまたはニコニコ動画のURLのみ有効です。' }
+    const isSuno = formData.songUrl.match(/(?:suno\.com\/)/);
+    if (!isYouTube && !isNico && !isSuno) {
+      return { success: false, error: '楽曲URLはYouTube、ニコニコ動画、またはSunoのURLのみ有効です。' }
     }
 
     // Find the event
