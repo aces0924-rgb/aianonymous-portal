@@ -11,7 +11,8 @@ import {
   addEventNews, deleteEventNews, addEventSchedule, deleteEventSchedule,
   addEventFaq, deleteEventFaq,
   toggleEventTrackPublication, deleteEventTrack, syncEventTracksFromSheet, syncOnlyEventAnalysisFromSheet,
-  updateEventConfig
+  updateEventConfig,
+  toggleEventDirectTrackPublication, deleteEventDirectTrack
 } from './actions'
 import ColorInput from '@/components/ColorInput'
 import RichTextEditor from '@/components/RichTextEditor'
@@ -570,8 +571,44 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           <div className="mt-8 text-sm font-bold border-b pb-2">
             登録されている楽曲数: <span className="text-[var(--color-cyan-400)] text-lg">{event.tracks?.length || 0}</span> 曲 (Direct Apply: Track) / <span className="text-[var(--color-cyan-400)] text-lg">{event.trackHonbans?.length || 0}</span> 曲 (Sync: TrackHonban)
           </div>
+          <div className="mt-8 text-sm font-bold border-b pb-2 text-[var(--color-cyan-500)]">
+            【直接応募版 (Track)】の楽曲一覧
+          </div>
+          <ul className="space-y-2 mt-4 max-h-60 overflow-y-auto pr-2 mb-8">
+            {event.tracks && event.tracks.length > 0 ? event.tracks.map(t => (
+              <li key={t.id} className="flex justify-between items-center border-b pb-4 pt-2">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs bg-gray-200 px-1 rounded">No.{t.entryNo || t.id.toString().padStart(3, '0')}</span>
+                    <span className="font-bold">{t.title}</span>
+                    {t.published ? (
+                      <span className="text-xs bg-green-100 text-green-700 px-2 rounded-full font-bold">公開中</span>
+                    ) : (
+                      <span className="text-xs bg-gray-100 text-gray-500 px-2 rounded-full font-bold">非公開</span>
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">{t.artistName || "匿名"}</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <a href={`/${event.slug}/tracks/${t.id}?preview=all`} target="_blank" className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700">確認</a>
+                  <form action={toggleEventDirectTrackPublication.bind(null, id, t.id, !t.published)}>
+                    <button className={`px-3 py-1 text-xs font-bold rounded ${t.published ? 'bg-amber-100 text-amber-700' : 'bg-green-600 text-white'}`}>
+                      {t.published ? '非公開へ' : '公開する'}
+                    </button>
+                  </form>
+                  <form action={deleteEventDirectTrack.bind(null, id, t.id)}>
+                    <button className="px-3 py-1 bg-red-100 text-red-600 text-xs font-bold rounded hover:bg-red-200">削除</button>
+                  </form>
+                </div>
+              </li>
+            )) : <p className="text-sm text-gray-500">まだ楽曲が登録されていません。</p>}
+          </ul>
+
+          <div className="mt-8 text-sm font-bold border-b pb-2 text-[var(--color-cyan-500)]">
+            【スプレッドシート同期版 (TrackHonban)】の楽曲一覧
+          </div>
           <ul className="space-y-2 mt-4 max-h-60 overflow-y-auto pr-2">
-            {event.trackHonbans.map(t => (
+            {event.trackHonbans && event.trackHonbans.length > 0 ? event.trackHonbans.map(t => (
               <li key={t.id} className="flex justify-between items-center border-b pb-4 pt-2">
                 <div>
                   <div className="flex items-center gap-2">
@@ -586,7 +623,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                   <div className="text-xs text-gray-500 mt-1">{t.artistName || "匿名"}</div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <a href={`/${event.slug}/tracks/${t.id}`} target="_blank" className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700">確認</a>
+                  <a href={`/${event.slug}/tracks/${t.id}?preview=honban`} target="_blank" className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700">確認</a>
                   <form action={toggleEventTrackPublication.bind(null, id, t.id, !t.published)}>
                     <button className={`px-3 py-1 text-xs font-bold rounded ${t.published ? 'bg-amber-100 text-amber-700' : 'bg-green-600 text-white'}`}>
                       {t.published ? '非公開へ' : '公開する'}
@@ -597,7 +634,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                   </form>
                 </div>
               </li>
-            ))}
+            )) : <p className="text-sm text-gray-500">同期された楽曲がありません。</p>}
           </ul>
         </div>
 

@@ -137,6 +137,16 @@ export async function deleteEventTrack(eventId: string, id: number) {
   revalidatePath(`/admin/events/${eventId}/settings`)
 }
 
+export async function toggleEventDirectTrackPublication(eventId: string, id: number, published: boolean) {
+  await prisma.track.update({ where: { id }, data: { published } })
+  revalidatePath(`/admin/events/${eventId}/settings`)
+}
+
+export async function deleteEventDirectTrack(eventId: string, id: number) {
+  await prisma.track.delete({ where: { id } })
+  revalidatePath(`/admin/events/${eventId}/settings`)
+}
+
 const DEFAULT_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1q3rESt0GZG_rs8hk0hU1beeURRttxQKQ1mGFBJNrlyg/export?format=csv&gid=1297990899";
 
 export async function syncEventTracksFromSheet(eventId: string, formData?: FormData) {
