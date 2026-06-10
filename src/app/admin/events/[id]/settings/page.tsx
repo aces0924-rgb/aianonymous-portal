@@ -559,14 +559,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             " className="bg-[var(--color-cyan-500)] text-white p-3 rounded-lg font-bold w-full hover:bg-[var(--color-cyan-500)] transition" />
           </form>
 
-          <form action={async (formData) => {
-            'use server'
-            await syncOnlyEventAnalysisFromSheet(id, formData)
-          }}>
-            <ToastSubmitButton label="
-              楽曲考察のみを再同期する
-            " className="bg-purple-100 text-purple-700 border border-purple-200 p-2 rounded-lg font-bold w-full hover:bg-purple-200 transition text-sm" />
-          </form>
+
 
           <div className="mt-8 text-sm font-bold border-b pb-2">
             登録されている楽曲数: <span className="text-[var(--color-cyan-400)] text-lg">{event.tracks?.length || 0}</span> 曲 (Direct Apply: Track) / <span className="text-[var(--color-cyan-400)] text-lg">{event.trackHonbans?.length || 0}</span> 曲 (Sync: TrackHonban)
