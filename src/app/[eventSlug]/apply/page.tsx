@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import TrackDetailView from '@/components/TrackDetailView';
 import { submitApplication, getApplyConfig } from '@/app/actions/apply';
+import toast from 'react-hot-toast';
 
 export default function ApplyPage({ params }: { params: Promise<{ eventSlug: string }> }) {
   const resolvedParams = React.use(params);
@@ -156,19 +157,24 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
     setErrorMsg('');
     setUploadProgress(0);
     
+    let toastId = toast.loading('送信処理を開始しています...', { id: 'submit-toast' });
+    
     try {
       let musicFileUrl = '';
       let srtFileUrl = '';
 
       if (config.applicationFormType === 'anonymous') {
         if (musicFile) {
+          toast.loading(`音声ファイルをGoogle Driveへアップロード中...`, { id: toastId });
           musicFileUrl = await uploadFileDirectly(musicFile);
         }
         if (srtFile) {
+          toast.loading(`字幕ファイルをGoogle Driveへアップロード中...`, { id: toastId });
           srtFileUrl = await uploadFileDirectly(srtFile);
         }
       }
 
+      toast.loading('データベースへ楽曲情報を登録中...', { id: toastId });
       const payload = {
         ...formData,
         musicFileUrl,
@@ -177,13 +183,18 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
       const result = await submitApplication(eventSlug, payload);
       if (result.success) {
+        toast.success('応募が完了しました！', { id: toastId });
         setStep('success');
         window.scrollTo(0, 0);
       } else {
-        setErrorMsg(result.error || 'エラーが発生しました。');
+        const errMsg = result.error || 'エラーが発生しました。';
+        setErrorMsg(errMsg);
+        toast.error(`エラー: ${errMsg}`, { id: toastId, duration: 8000 });
       }
     } catch (e: any) {
-      setErrorMsg(e.message || '通信エラーが発生しました。');
+      const errMsg = e.message || '通信エラーが発生しました。';
+      setErrorMsg(errMsg);
+      toast.error(`エラー: ${errMsg}`, { id: toastId, duration: 8000 });
     } finally {
       setIsSubmitting(false);
       setIsUploading(false);
