@@ -449,7 +449,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <button type="submit" className="bg-gray-600 text-foreground p-2 rounded hover:bg-gray-700 text-sm font-bold mt-2 w-32">ON/OFFを保存</button>
+            <button type="submit" className="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 text-sm font-bold mt-2 w-32">ON/OFFを保存</button>
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'ENABLE_ILLUST_RECOMMEND')} className="flex flex-col gap-2 pt-4 border-t">
