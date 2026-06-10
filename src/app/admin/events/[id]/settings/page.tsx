@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect, notFound } from 'next/navigation'
+import { logout } from '../../login/actions'
 import { 
   updateEventDetails, saveEventSetting, updateEventSetting,
   addEventNews, deleteEventNews, addEventSchedule, deleteEventSchedule,
@@ -114,9 +115,14 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
         {/* ヘッダー部 */}
         <div className="flex items-center justify-between">
           <div>
-            <Link href="/admin" className="text-blue-600 hover:underline mb-2 inline-block font-bold">
-              ← ダッシュボードに戻る
-            </Link>
+            <div className="flex items-center gap-4 mb-2">
+              <Link href="/admin" className="text-blue-600 hover:underline inline-block font-bold">
+                ← ダッシュボードに戻る
+              </Link>
+              <form action={logout}>
+                <button type="submit" className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200">ログアウト</button>
+              </form>
+            </div>
             <h1 className="text-3xl font-black">イベント管理: {event.title}</h1>
             <p className="text-gray-500 mt-1">/{event.slug}</p>
           </div>
