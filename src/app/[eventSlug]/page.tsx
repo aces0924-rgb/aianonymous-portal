@@ -10,6 +10,7 @@ import SelectionIndicator from '@/components/SelectionIndicator'
 import TrackJumpModern from '@/components/TrackJumpModern'
 
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function generateMetadata({ params }: { params: Promise<{ eventSlug: string }> }) {
   const { eventSlug } = await params;
@@ -54,14 +55,19 @@ export default async function Home({ params, searchParams }: { params: Promise<{
     published: true,
   }
 
+  const cookieStore = await cookies();
+  const isAdmin = cookieStore.get('admin_session')?.value === 'true';
+  const showUnpublished = isAdmin || preview === 'all';
+  const whereClause = showUnpublished ? { eventId: event.id } : { eventId: event.id, published: true };
+
   const tracks = activeTable === "track_honban"
     ? await prisma.trackHonban.findMany({ 
-        where: { eventId: event.id, published: true },
+        where: whereClause,
         select: tracksSelect,
         orderBy: { entryNo: 'asc' } 
       })
     : await prisma.track.findMany({ 
-        where: { eventId: event.id, published: true },
+        where: whereClause,
         select: tracksSelect,
         orderBy: { entryNo: 'asc' } 
       })

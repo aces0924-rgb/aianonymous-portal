@@ -37,6 +37,11 @@ export default function TrackCard({ track, preview }: { track: any, preview?: st
                 {track.genre}
               </span>
             )}
+            {!track.published && (
+              <span className="bg-red-500/20 text-red-400 border border-red-500/50 px-2 py-0.5 rounded text-[10px] font-bold">
+                非公開
+              </span>
+            )}
           </div>
 
           <div className="flex items-center gap-2">

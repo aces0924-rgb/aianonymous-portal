@@ -48,6 +48,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
       rules: { orderBy: { order: 'asc' } },
       faqs: { orderBy: { order: 'asc' } },
       trackHonbans: { orderBy: { id: 'desc' } },
+      tracks: { orderBy: { id: 'desc' } },
       settings: true
     }
   })
@@ -567,7 +568,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           </form>
 
           <div className="mt-8 text-sm font-bold border-b pb-2">
-            登録されている楽曲数: <span className="text-[var(--color-cyan-400)] text-lg">{event.trackHonbans.length}</span> 曲
+            登録されている楽曲数: <span className="text-[var(--color-cyan-400)] text-lg">{event.tracks?.length || 0}</span> 曲 (Direct Apply: Track) / <span className="text-[var(--color-cyan-400)] text-lg">{event.trackHonbans?.length || 0}</span> 曲 (Sync: TrackHonban)
           </div>
           <ul className="space-y-2 mt-4 max-h-60 overflow-y-auto pr-2">
             {event.trackHonbans.map(t => (
