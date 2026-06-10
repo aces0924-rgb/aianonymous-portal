@@ -7,10 +7,12 @@ export async function getApplyConfig(eventSlug: string) {
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
   if (!event) return null;
   const labelConfig = JSON.parse(event.labelConfig || '{}');
+  const featureFlags = JSON.parse(event.featureFlags || '{}');
   return {
     lyricsTab: labelConfig.lyricsTab || 'LYRICS',
     analysisTab: labelConfig.analysisTab || '歌詞考察',
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
+    applicationFormType: featureFlags.applicationFormType || 'standard',
   };
 }
 
@@ -34,10 +36,13 @@ export async function submitApplication(eventSlug: string, formData: {
   genre: string;
   publishConsent: boolean;
   agreedToTerms: boolean;
+  password?: string;
+  musicFileUrl?: string;
+  srtFileUrl?: string;
 }) {
   try {
     // Basic validation
-    if (!formData.title?.trim() || !formData.songUrl?.trim() || !formData.agreedToTerms || !formData.artistName?.trim()) {
+    if (!formData.title?.trim() || !formData.songUrl?.trim() || !formData.agreedToTerms) {
       return { success: false, error: '必須項目が不足しています。' }
     }
 
@@ -75,13 +80,16 @@ export async function submitApplication(eventSlug: string, formData: {
         audioUrl: formData.songUrl.trim(),
         lyrics: formData.lyrics.trim() || null,
         analysis: formData.analysis.trim() || null,
-        artistName: formData.artistName.trim(),
+        artistName: formData.artistName.trim() || '匿名',
         xAccount: formData.xAccount.trim() || null,
         email: formData.email.trim() || null,
         genre: formData.genre.trim() || null,
         publishConsent: formData.publishConsent ? 'Yes' : 'No',
         agreedToTerms: formData.agreedToTerms ? 'Yes' : 'No',
         published: false,
+        password: formData.password?.trim() || null,
+        musicFileUrl: formData.musicFileUrl?.trim() || null,
+        srtFileUrl: formData.srtFileUrl?.trim() || null,
       }
     });
 

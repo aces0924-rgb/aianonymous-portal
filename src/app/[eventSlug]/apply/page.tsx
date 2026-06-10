@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import TrackDetailView from '@/components/TrackDetailView';
 import { submitApplication, getApplyConfig } from '@/app/actions/apply';
@@ -10,7 +10,13 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
   const [step, setStep] = useState<'input' | 'preview' | 'success'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察' });
+  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', applicationFormType: 'standard' });
+
+  // Upload State
+  const [musicFile, setMusicFile] = useState<File | null>(null);
+  const [srtFile, setSrtFile] = useState<File | null>(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     getApplyConfig(eventSlug).then(res => {
@@ -27,6 +33,7 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
     xAccount: '',
     email: '',
     genre: '',
+    password: '',
     publishConsent: false,
     agreedToTerms: false,
   });
@@ -48,34 +55,126 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
       return;
     }
     if (!formData.songUrl.trim()) {
-      setErrorMsg('楽曲URLは必須です。');
+      setErrorMsg('Suno楽曲URLは必須です。');
       return;
     }
-    const isYouTube = formData.songUrl.match(/(?:youtu\.be\/|youtube\.com\/)/);
-    const isNico = formData.songUrl.match(/(?:nicovideo\.jp\/|nico\.ms\/)/);
-    if (!isYouTube && !isNico) {
-      setErrorMsg('楽曲URLはYouTubeまたはニコニコ動画のURLのみ有効です。');
-      return;
+
+    if (config.applicationFormType === 'anonymous') {
+      if (!formData.xAccount.trim()) {
+        setErrorMsg('X (旧Twitter) アカウントは必須です。');
+        return;
+      }
+      if (!formData.email.trim()) {
+        setErrorMsg('連絡用メールアドレスは必須です。');
+        return;
+      }
+      if (!formData.password.trim() || formData.password.length !== 10) {
+        setErrorMsg('パスワードは10桁で入力してください。');
+        return;
+      }
+      if (!formData.lyrics.trim()) {
+        setErrorMsg('歌詞は必須です。（インストの場合は「インスト曲」と記載）');
+        return;
+      }
+      if (!musicFile) {
+        setErrorMsg('音楽ファイルのアップロードは必須です。');
+        return;
+      }
+    } else {
+      // Standard validation
+      const isYouTube = formData.songUrl.match(/(?:youtu\.be\/|youtube\.com\/)/);
+      const isNico = formData.songUrl.match(/(?:nicovideo\.jp\/|nico\.ms\/)/);
+      if (!isYouTube && !isNico) {
+        setErrorMsg('楽曲URLはYouTubeまたはニコニコ動画のURLのみ有効です。');
+        return;
+      }
+      if (!formData.artistName.trim()) {
+        setErrorMsg('アーティスト名は必須です。');
+        return;
+      }
     }
-    if (!formData.artistName.trim()) {
-      setErrorMsg('アーティスト名は必須です。');
-      return;
-    }
+
     if (!formData.agreedToTerms) {
       setErrorMsg('応募規約への同意は必須です。');
       return;
     }
+    
     setErrorMsg('');
     setStep('preview');
     window.scrollTo(0, 0);
   };
 
+  const uploadFileDirectly = async (file: File) => {
+    try {
+      const res = await fetch('/api/upload/resumable', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fileName: file.name, mimeType: file.type })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      const sessionUri = data.sessionUri;
+
+      return new Promise<string>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('PUT', sessionUri, true);
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            setUploadProgress(Math.round((e.loaded / e.total) * 100));
+          }
+        };
+        xhr.onload = () => {
+          if (xhr.status === 200 || xhr.status === 201) {
+            // Google Drive res usually contains the file info, but not always with id if we don't request it in fields. 
+            // However, we just need the file URL or we can extract the ID if available.
+            // Let's assume the ID is returned or we store the session URL? Actually, we should return a Drive ID or success token.
+            let fileId = 'unknown_id';
+            if(xhr.responseText) {
+               try {
+                 const response = JSON.parse(xhr.responseText);
+                 if (response.id) fileId = response.id;
+               } catch(e) {}
+            }
+            resolve(fileId);
+          } else {
+            reject(new Error('アップロードに失敗しました: ' + xhr.statusText));
+          }
+        };
+        xhr.onerror = () => reject(new Error('ネットワークエラーが発生しました。'));
+        xhr.send(file);
+      });
+    } catch (e: any) {
+      throw new Error(e.message || 'アップロード処理中にエラーが発生しました。');
+    }
+  };
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    setIsUploading(true);
     setErrorMsg('');
+    setUploadProgress(0);
     
     try {
-      const result = await submitApplication(eventSlug, formData);
+      let musicFileUrl = '';
+      let srtFileUrl = '';
+
+      if (config.applicationFormType === 'anonymous') {
+        if (musicFile) {
+          musicFileUrl = await uploadFileDirectly(musicFile);
+        }
+        if (srtFile) {
+          srtFileUrl = await uploadFileDirectly(srtFile);
+        }
+      }
+
+      const payload = {
+        ...formData,
+        musicFileUrl,
+        srtFileUrl
+      };
+
+      const result = await submitApplication(eventSlug, payload);
       if (result.success) {
         setStep('success');
         window.scrollTo(0, 0);
@@ -86,6 +185,7 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
       setErrorMsg(e.message || '通信エラーが発生しました。');
     } finally {
       setIsSubmitting(false);
+      setIsUploading(false);
     }
   };
 
@@ -121,7 +221,7 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
       songUrl: formData.songUrl,
       audioUrl: formData.songUrl,
       lyrics: formData.lyrics,
-      artistName: formData.artistName,
+      artistName: formData.artistName || '匿名',
       xAccount: formData.xAccount,
       genre: formData.genre,
       analysis: formData.analysis || '※プレビューモードではこの内容が表示されます。',
@@ -131,41 +231,50 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
 
     return (
       <div className="min-h-screen bg-background relative pb-24">
-        {/* Preview Banner */}
         <div className="fixed top-0 left-0 w-full z-[100] bg-purple-600 text-white py-2 text-center text-sm font-black tracking-widest shadow-lg">
           プレビューモード（実際の画面ではこのように表示されます）
         </div>
         
         <div className="pt-10 pointer-events-none">
           <TrackDetailView 
-            track={previewTrack}
+            track={previewTrack as any}
             eventSlug={eventSlug}
             audioSource={formData.songUrl}
             isPreviewMode={true}
           />
         </div>
 
-        {/* Action Bar */}
         <div className="fixed bottom-0 left-0 w-full z-[100] bg-surface/90 backdrop-blur-xl border-t border-surface-border p-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
           <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-foreground/80 text-sm font-bold text-center sm:text-left">
-              内容に問題がなければ「この内容で応募する」を押してください。
-              {errorMsg && <p className="text-red-400 mt-1">{errorMsg}</p>}
+            <div className="text-sm">
+              <p className="font-bold text-[var(--color-cyan-400)] mb-1">プレビュー確認中</p>
+              <p className="text-foreground/70 text-xs hidden sm:block">内容に問題がなければ「この内容で応募する」を押してください。</p>
             </div>
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <button 
+            
+            <div className="flex gap-3 w-full sm:w-auto">
+              <button
                 onClick={() => setStep('input')}
                 disabled={isSubmitting}
-                className="flex-1 sm:flex-none px-6 py-3 md:py-4 rounded-full bg-surface-border hover:bg-surface-border/80 text-foreground font-black transition-all disabled:opacity-50"
+                className="flex-1 sm:flex-none px-6 py-3 bg-surface-border hover:bg-surface-border/80 text-foreground font-bold rounded-xl transition-colors disabled:opacity-50"
               >
                 修正する
               </button>
-              <button 
+              <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex-1 sm:flex-none px-8 py-3 md:py-4 rounded-full bg-gradient-to-r from-[var(--color-cyan-400)] to-blue-600 hover:brightness-110 text-white font-black transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-[0_0_20px_var(--color-glow)]"
+                className="flex-1 sm:flex-none px-8 py-3 bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-background font-black rounded-xl transition-all shadow-[0_0_20px_var(--color-glow)] hover:shadow-[0_0_30px_var(--color-glow)] disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {isSubmitting ? '送信中...' : 'この内容で応募する'}
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-background" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {isUploading ? `アップロード中 (${uploadProgress}%)...` : '送信中...'}
+                  </>
+                ) : (
+                  'この内容で応募する'
+                )}
               </button>
             </div>
           </div>
@@ -174,180 +283,295 @@ export default function ApplyPage({ params }: { params: { eventSlug: string } })
     );
   }
 
-  // Input Step
+  const isAnonymousMode = config.applicationFormType === 'anonymous';
+
   return (
-    <main className="min-h-screen bg-background text-foreground py-12 px-4 relative">
-      <div className="fixed inset-0 pointer-events-none opacity-20" style={{
-        backgroundImage: 'radial-gradient(circle at 50% 0%, var(--color-glow) 0%, transparent 60%)'
-      }}></div>
-
-      <div className="max-w-3xl mx-auto relative z-10">
-        <Link href={`/${eventSlug}`} className="inline-flex items-center gap-2 text-[var(--color-cyan-400)] hover:brightness-110 mb-8 font-bold text-sm">
-          <span className="text-xl">◀</span> トップページへ戻る
+    <main className="min-h-screen bg-background text-foreground py-12 md:py-20 px-4">
+      <div className="max-w-3xl mx-auto">
+        <Link href={`/${eventSlug}`} className="inline-flex items-center text-[var(--color-cyan-500)] hover:text-[var(--color-cyan-400)] font-bold mb-8 transition-colors">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l-7-7m-7 7h18" />
+          </svg>
+          トップページに戻る
         </Link>
-        
-        <h1 className="text-4xl md:text-5xl font-black mb-2 tracking-tighter">
-          ENTRY FORM
-        </h1>
-        <p className="text-foreground/60 mb-10 text-sm md:text-base font-bold">
-          楽曲応募フォーム
-        </p>
 
-        <form onSubmit={handlePreview} className="bg-surface/60 backdrop-blur-md border border-surface-border rounded-[2rem] p-6 md:p-10 space-y-8 shadow-2xl">
-          {errorMsg && (
-            <div className="bg-red-500/10 border-l-4 border-red-500 text-red-500 p-4 rounded-r-lg text-sm font-bold">
-              {errorMsg}
-            </div>
-          )}
+        <div className="mb-12">
+          <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-foreground">
+            {isAnonymousMode ? '匿名楽曲エントリー' : '楽曲エントリー'}
+          </h1>
+          <p className="text-foreground/70 text-lg">
+            {isAnonymousMode 
+              ? '以下のフォームから匿名フェス用の楽曲情報を登録してください。'
+              : '以下のフォームから楽曲情報を登録してください。'}
+          </p>
+        </div>
 
-          <div className="space-y-6">
+        {errorMsg && (
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/50 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
+            <svg className="w-6 h-6 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p className="text-red-500 font-bold">{errorMsg}</p>
+          </div>
+        )}
+
+        <form onSubmit={handlePreview} className="space-y-8">
+          <div className="bg-surface border border-surface-border p-6 md:p-8 rounded-3xl space-y-6 shadow-xl">
+            
+            {/* 共通項目: 曲名 */}
             <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                曲名 <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded uppercase tracking-wider">必須</span>
+              <label className="block text-sm font-bold mb-2">
+                曲名 <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
               </label>
               <input
                 type="text"
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground"
+                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
                 placeholder="例: サイバーパンク・シティ"
                 required
               />
             </div>
 
+            {/* URL */}
             <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                楽曲URL <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded uppercase tracking-wider">必須</span>
+              <label className="block text-sm font-bold mb-2">
+                {isAnonymousMode ? 'Suno楽曲URL' : '楽曲URL (YouTube または ニコニコ動画)'} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
               </label>
               <input
                 type="url"
                 name="songUrl"
                 value={formData.songUrl}
                 onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground"
-                placeholder="YouTube、またはニコニコ動画のURL"
+                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                placeholder={isAnonymousMode ? "例: https://suno.com/song/..." : "例: https://youtu.be/..."}
                 required
               />
-              <p className="text-xs text-foreground/50 mt-2">
-                ※審査および試聴用に使用します。公開可能なURLを入力してください。
-              </p>
             </div>
 
+            {/* アーティスト名 */}
             <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                アーティスト名 <span className="text-[10px] bg-red-500 text-white px-2 py-0.5 rounded uppercase tracking-wider">必須</span>
+              <label className="block text-sm font-bold mb-2">
+                アーティスト名 {isAnonymousMode ? <span className="text-foreground/50 ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-[var(--color-cyan-500)] ml-1">必須</span>}
               </label>
               <input
                 type="text"
                 name="artistName"
                 value={formData.artistName}
                 onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground"
-                placeholder="アーティスト名"
-                required
+                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                placeholder={isAnonymousMode ? "未入力の場合は匿名" : "例: AI-Creator"}
+                required={!isAnonymousMode}
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                X (旧Twitter) アカウント <span className="text-[10px] bg-surface-border text-foreground/70 px-2 py-0.5 rounded uppercase tracking-wider">任意</span>
-              </label>
-              <input
-                type="text"
-                name="xAccount"
-                value={formData.xAccount}
-                onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground"
-                placeholder="例: @your_account"
-              />
-            </div>
+            {/* 匿名モード専用項目 */}
+            {isAnonymousMode && (
+              <>
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    X (旧Twitter) アカウント <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="xAccount"
+                    value={formData.xAccount}
+                    onChange={handleChange}
+                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none font-mono"
+                    placeholder="例: @your_account"
+                    required
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                連絡用メールアドレス <span className="text-[10px] bg-surface-border text-foreground/70 px-2 py-0.5 rounded uppercase tracking-wider">任意</span>
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground"
-                placeholder="運営からの連絡を受け取れるアドレス"
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    連絡用メールアドレス <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                    placeholder="例: example@gmail.com"
+                    required
+                  />
+                </div>
 
-            <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                ジャンル <span className="text-[10px] bg-surface-border text-foreground/70 px-2 py-0.5 rounded uppercase tracking-wider">任意</span>
-              </label>
-              <input
-                type="text"
-                name="genre"
-                value={formData.genre}
-                onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground"
-                placeholder="例: Rock, EDM, ボカロ etc."
-              />
-            </div>
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    パスワード (10桁) <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                    <p className="text-xs text-foreground/60 font-normal mt-1">※投票や結果開示などに使用します</p>
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    maxLength={10}
+                    minLength={10}
+                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none font-mono tracking-widest"
+                    placeholder="10桁のパスワードを入力"
+                    required
+                  />
+                </div>
+              </>
+            )}
 
+            {/* 通常モード専用のXとジャンル */}
+            {!isAnonymousMode && (
+              <>
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    X (Twitter) アカウント <span className="text-foreground/50 ml-1">任意</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="xAccount"
+                    value={formData.xAccount}
+                    onChange={handleChange}
+                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                    placeholder="例: @your_account"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    ジャンル <span className="text-foreground/50 ml-1">任意</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="genre"
+                    value={formData.genre}
+                    onChange={handleChange}
+                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                    placeholder="例: サイバーパンク / EDM"
+                  />
+                </div>
+              </>
+            )}
+
+            {/* 歌詞 */}
             <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                {config.lyricsTab} <span className="text-[10px] bg-surface-border text-foreground/70 px-2 py-0.5 rounded uppercase tracking-wider">任意</span>
+              <label className="block text-sm font-bold mb-2">
+                {config.lyricsTab} {isAnonymousMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground/50 ml-1">任意</span>}
+                {isAnonymousMode && <p className="text-xs text-foreground/60 font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
               </label>
               <textarea
                 name="lyrics"
                 value={formData.lyrics}
                 onChange={handleChange}
                 rows={6}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground resize-y"
-                placeholder={`${config.lyricsTab}がある場合はこちらに入力してください`}
-              ></textarea>
+                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
+                placeholder={isAnonymousMode ? "歌詞を入力（インストの場合は「インスト曲」と記載）" : "歌詞を入力..."}
+                required={isAnonymousMode}
+              />
             </div>
 
-            <div>
-              <label className="block text-sm font-black mb-2 flex items-center gap-2">
-                {config.analysisTab} <span className="text-[10px] bg-surface-border text-foreground/70 px-2 py-0.5 rounded uppercase tracking-wider">任意</span>
-              </label>
-              <textarea
-                name="analysis"
-                value={formData.analysis}
-                onChange={handleChange}
-                rows={6}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--color-cyan-400)] transition-colors text-foreground resize-y"
-                placeholder={`${config.analysisTab}がある場合はこちらに入力してください`}
-              ></textarea>
-            </div>
+            {/* ファイルアップロード (匿名モードのみ) */}
+            {isAnonymousMode && (
+              <div className="space-y-6 pt-4 border-t border-surface-border">
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    音楽ファイルアップロード <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                    <p className="text-xs text-foreground/60 font-normal mt-1">※ .mp3, .wav, .mp4 のいずれかの形式</p>
+                  </label>
+                  <input
+                    type="file"
+                    accept=".mp3,.wav,.mp4,audio/mpeg,audio/wav,video/mp4"
+                    onChange={(e) => setMusicFile(e.target.files?.[0] || null)}
+                    className="w-full text-sm text-foreground/80 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-[var(--color-cyan-500)]/10 file:text-[var(--color-cyan-400)] hover:file:bg-[var(--color-cyan-500)]/20 cursor-pointer"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-bold mb-2">
+                    字幕SRTファイル <span className="text-foreground/50 ml-1">任意</span>
+                  </label>
+                  <input
+                    type="file"
+                    accept=".srt"
+                    onChange={(e) => setSrtFile(e.target.files?.[0] || null)}
+                    className="w-full text-sm text-foreground/80 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-surface-border file:text-foreground/80 hover:file:bg-surface-border/80 cursor-pointer"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* 通常モード専用の考察 */}
+            {!isAnonymousMode && (
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  {config.analysisTab} <span className="text-foreground/50 ml-1">任意</span>
+                </label>
+                <textarea
+                  name="analysis"
+                  value={formData.analysis}
+                  onChange={handleChange}
+                  rows={4}
+                  className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
+                  placeholder="楽曲に込めた思いや、設定、背景などを自由に記述してください。"
+                />
+              </div>
+            )}
             
-            <div className="pt-4 border-t border-surface-border/50">
+            {/* チェックボックス類 */}
+            <div className="pt-4 border-t border-surface-border space-y-4">
               <label className="flex items-start gap-3 cursor-pointer group">
-                <div className="relative flex items-center justify-center mt-0.5">
+                <div className="relative flex items-center justify-center mt-1">
+                  <input
+                    type="checkbox"
+                    name="publishConsent"
+                    checked={formData.publishConsent}
+                    onChange={handleChange}
+                    className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-500)] checked:border-[var(--color-cyan-500)] transition-colors cursor-pointer"
+                  />
+                  <svg className="absolute w-3 h-3 text-background opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div className="text-sm">
+                  <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
+                    ニコニコ動画等への転載・公開に同意する
+                  </p>
+                  <p className="text-foreground/60 mt-1">
+                    ご応募いただいた楽曲は、運営のYouTubeチャンネルやニコニコ動画のプレイリスト等で紹介される場合があります。
+                  </p>
+                </div>
+              </label>
+
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <div className="relative flex items-center justify-center mt-1">
                   <input
                     type="checkbox"
                     name="agreedToTerms"
                     checked={formData.agreedToTerms}
                     onChange={handleChange}
-                    className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-400)] checked:border-[var(--color-cyan-400)] transition-all cursor-pointer"
+                    className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-500)] checked:border-[var(--color-cyan-500)] transition-colors cursor-pointer"
+                    required
                   />
-                  <svg className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="absolute w-3 h-3 text-background opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
-                <div className="text-sm font-bold text-foreground/80 group-hover:text-foreground transition-colors">
-                  <a href={`/${eventSlug}#guidelines`} target="_blank" rel="noreferrer" className="text-[var(--color-cyan-400)] hover:underline">応募規約</a>に同意します <span className="text-red-400">*</span>
+                <div className="text-sm">
+                  <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
+                    応募規約に同意する <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                  </p>
                 </div>
               </label>
             </div>
           </div>
 
-          <div className="pt-8 text-center">
-            <button 
+          <div className="text-center pt-4 pb-12">
+            <button
               type="submit"
-              className="w-full md:w-auto px-12 py-4 rounded-full bg-gradient-to-r from-[var(--color-cyan-400)] to-blue-600 hover:brightness-110 text-white font-black text-lg transition-all shadow-[0_0_20px_var(--color-glow)] hover:scale-105 active:scale-95 flex items-center justify-center gap-2 mx-auto"
+              className="inline-flex items-center justify-center gap-2 px-12 py-4 bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-background font-black text-lg rounded-full transition-all shadow-[0_0_20px_var(--color-glow)] hover:shadow-[0_0_30px_var(--color-glow)] hover:scale-105 active:scale-95"
             >
-              プレビューで確認する
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              入力内容の確認へ進む
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </button>
           </div>

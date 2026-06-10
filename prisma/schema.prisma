@@ -92,6 +92,9 @@ model Track {
   genre          String?
   published      Boolean  @default(false)
   entryNo        String?  @db.Text
+  password       String?
+  musicFileUrl   String?  @db.Text
+  srtFileUrl     String?  @db.Text
   createdAt      DateTime @default(now())
 }
 
@@ -114,6 +117,9 @@ model TrackHonban {
   genre          String?
   published      Boolean  @default(false)
   entryNo        String?  @db.Text
+  password       String?
+  musicFileUrl   String?  @db.Text
+  srtFileUrl     String?  @db.Text
   createdAt      DateTime @default(now())
 
   @@map("track_honban")

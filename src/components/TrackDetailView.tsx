@@ -209,7 +209,7 @@ export default function TrackDetailView({
               )}
 
               <div className={`mt-6 w-full ${!subText ? 'pt-4' : ''}`}>
-                <AudioPlayer audioSource={audioSource || null} trackId={track.id} />
+                <AudioPlayer audioSource={audioSource || null} trackId={track.id} isPreviewMode={isPreviewMode} />
               </div>
 
               {/* Creator Info or Anonymity Policy */}
@@ -294,15 +294,15 @@ export default function TrackDetailView({
                     </div>
                   </div>
                 ) : (
-                  <div className="mt-8 p-5 rounded-2xl bg-yellow-500/5 border border-yellow-500/20 flex items-start gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-4 duration-1000 shadow-[0_0_20px_rgba(234,179,8,0.02)]">
-                    <div className="p-2.5 bg-yellow-500/10 rounded-xl border border-yellow-500/20 shrink-0">
-                      <svg className="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <div className="mt-8 p-5 rounded-2xl bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-900/50 flex items-start gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-4 duration-1000 shadow-[0_0_20px_rgba(234,179,8,0.05)]">
+                    <div className="p-2.5 bg-yellow-100 dark:bg-yellow-500/10 rounded-xl border border-yellow-200 dark:border-yellow-500/20 shrink-0">
+                      <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                       </svg>
                     </div>
                     <div className="space-y-1 pt-1" style={{ textShadow: 'none' }}>
-                      <p className="text-[10px] font-black tracking-[0.3em] text-yellow-500/80 uppercase">Anonymity Policy</p>
-                      <p className="text-xs md:text-sm text-yellow-200/80 leading-relaxed font-medium">
+                      <p className="text-[10px] font-black tracking-[0.3em] text-yellow-700 dark:text-yellow-500/80 uppercase">Anonymity Policy</p>
+                      <p className="text-xs md:text-sm text-yellow-900 dark:text-yellow-200/90 leading-relaxed font-bold">
                         本フェスは匿名性を楽しむイベントです。SNS等での制作者の特定や推測に関する投稿は、投票期間終了後までお控えいただけますようお願い申し上げます。
                       </p>
                     </div>

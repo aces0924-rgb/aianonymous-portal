@@ -101,7 +101,8 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     enableShowCreators: featureFlags.enableShowCreators ?? false,
     enableArtistMain: featureFlags.enableArtistMain ?? false,
     enableAwards: featureFlags.enableAwards ?? false,
-    enableHostSection: featureFlags.enableHostSection ?? true
+    enableHostSection: featureFlags.enableHostSection ?? true,
+    applicationFormType: featureFlags.applicationFormType || 'standard'
   }
 
   const hosts = labelConfig.hosts || []
@@ -393,7 +394,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const enableShowCreators = formData.get('enableShowCreators') === 'true'
             const enableArtistMain = formData.get('enableArtistMain') === 'true'
             const enableAwards = formData.get('enableAwards') === 'true'
-            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards })
+            const enableHostSection = formData.get('enableHostSection') === 'true'
+            const applicationFormType = formData.get('applicationFormType') as string || 'standard'
+            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, applicationFormType })
           }} className="flex flex-col gap-2 pt-4 border-t">
             <h3 className="font-bold text-sm text-gray-700 mb-2">機能ON/OFF (Features)</h3>
             <div className="flex gap-4">
@@ -435,6 +438,17 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 </select>
               </div>
             </div>
+
+            <div className="flex gap-4 mt-2">
+              <div className="flex-1">
+                <label className="text-xs font-bold text-gray-500 block mb-1">応募フォームの形式</label>
+                <select name="applicationFormType" defaultValue={defaultFeatures.applicationFormType} className="w-full border p-2 rounded text-sm bg-white">
+                  <option value="standard">標準（タイトル、URL、歌詞、考察、等）</option>
+                  <option value="anonymous">匿名フェス用（SunoURL、パスワード、直アップロード等）</option>
+                </select>
+              </div>
+            </div>
+
             <button type="submit" className="bg-gray-600 text-foreground p-2 rounded hover:bg-gray-700 text-sm font-bold mt-2 w-32">ON/OFFを保存</button>
           </form>
 

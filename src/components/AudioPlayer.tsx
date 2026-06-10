@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom';
 interface AudioPlayerProps {
   audioSource: string | null;
   trackId: number;
+  isPreviewMode?: boolean;
 }
 
 import { getNiconicoThumbnail } from '@/app/actions/niconico';
@@ -24,7 +25,7 @@ function getNiconicoID(url: string | null): string | null {
   return match ? match[1] : null;
 }
 
-export default function AudioPlayer({ audioSource, trackId }: AudioPlayerProps) {
+export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: AudioPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -63,18 +64,25 @@ export default function AudioPlayer({ audioSource, trackId }: AudioPlayerProps) 
 
   if (!youtubeId && !niconicoId) {
     return (
-      <div className="flex flex-col gap-4 bg-red-500/5 p-8 rounded-3xl border border-red-500/20 w-full backdrop-blur-md shadow-2xl">
+      <div className="flex flex-col gap-4 bg-red-50 dark:bg-red-950/30 p-8 rounded-3xl border border-red-200 dark:border-red-900/50 w-full backdrop-blur-md shadow-2xl">
         <div className="flex items-center gap-3 justify-center mb-1">
           <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)] animate-pulse"></span>
-          <span className="text-red-400 font-mono text-[10px] md:text-xs font-black tracking-[0.2em] uppercase">
+          <span className="text-red-600 dark:text-red-400 font-mono text-[10px] md:text-xs font-black tracking-[0.2em] uppercase">
             Notice for Contributor
           </span>
         </div>
-        <p className="text-red-100 font-bold text-center text-sm md:text-base leading-relaxed max-w-sm mx-auto">
-          投稿者様へ。<br />
-          対応する動画URL（YouTube または ニコニコ動画）が設定されていません。<br />
-          DMまたはメールにて投稿内容の不備を連絡しておりますので、ご確認ください。
-        </p>
+        {isPreviewMode ? (
+          <p className="text-red-800 dark:text-red-200 font-bold text-center text-sm md:text-base leading-relaxed max-w-sm mx-auto">
+            投稿者様へ。<br />
+            匿名フェス用応募の場合、動画は運営にて投稿されるまでお待ちください。
+          </p>
+        ) : (
+          <p className="text-red-800 dark:text-red-200 font-bold text-center text-sm md:text-base leading-relaxed max-w-sm mx-auto">
+            投稿者様へ。<br />
+            対応する動画URL（YouTube または ニコニコ動画）が設定されていません。<br />
+            DMまたはメールにて投稿内容の不備を連絡しておりますので、ご確認ください。
+          </p>
+        )}
       </div>
     );
   }
