@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Failed to create resumable upload session:', errorText);
-      throw new Error('Google Drive API Error');
+      throw new Error(`Google Drive API Error: ${errorText}`);
     }
 
     const sessionUri = response.headers.get('location');
@@ -56,8 +56,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ sessionUri });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Resumable Upload Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
   }
 }
