@@ -1,0 +1,242 @@
+No.002 [夕暮時] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 不思議ね　触れな　ながら　あのころのまま動かないよ / 夜のシチュエーションと空気
+
+No.004 [Break It All] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 自分を消すことはできない
+
+No.005 [Glitch-Loop] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 顔を探し壊す 残るのは空洞 ... それを私と呼ぶなら それでいい
+
+No.007 [君は夜空] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 視覚情報（光）
+
+No.008 [匿名の青] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 匿名性の肯定
+
+No.009 [HomaraVojo GeometrioalMetafiziko-未完-] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 神聖なテリトリー
+
+No.010 [蒼斬光] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 温かな嘘（デジタルな安らぎ）
+
+No.011 [見ないで、バケモノ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 実存的なインターフェース
+
+No.012 [Self-luminescent] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 最高の見せ場（Performance）
+
+No.013 [祈る] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 透明であること（無）
+
+No.014 [命の円環] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 情報の不在
+
+No.015 [First Fire 〜まだ粗い光〜] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: スマートな偽物になるくらいなら、僕は泥だらけの本物の火種のままでいい。この粗い光が、いつか世界を侵食する
+
+No.016 [デイドリームシンドローム] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 覚めてるつもりで、僕はまだ夢の続きをアップデートしている。この街すべてが、僕の描いた壮大なバグだったとしても
+
+No.017 [免罪符を噛み砕いて] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: その甘い免罪符を、俺は笑って噛み砕く。罪人として生きる自由さえ、お前なんかに奪わせはしない
+
+No.018 [自分のペースで] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: いつか全部 砂になるなら、このアクアリウムを割って、広大な無（デザート）へ還ろうか。鱗を脱ぎ捨てて、風に溶けるまで
+
+No.019 [ただ、雲を] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 何にもなれなくていい、この空の下で、ただ雲を追いかける空白として生きていく。それが僕の、一番贅沢な答えなんだ
+
+No.020 [LORD OF THE MALICE] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 悪（痛み）
+
+No.021 [Velocity of the Void] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 人生のシナリオ
+
+No.022 [仕様変更:君が正解] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 君となら バグのまま 正しくなる ── 世界のルールを仕様変更してさ
+
+No.023 [Inverse Silhouette] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: Mirror, mirror, on the wall. Which one of us was born to fall? ── 運命を奪われたのは、果たしてどちらか
+
+No.024 [Void] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 欠けていること＝不幸
+
+No.025 [崩れた砂] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 不可能な願い
+
+No.026 [記憶の残響] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 離れた世界でも繋がる ── それは同期（Sync）という名の、救いなき祝福
+
+No.027 [Under Blue] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: Under Blue ── きれいなほうがつらい。その優しさが、僕だけを反射しない鏡になる
+
+No.028 [あなたへ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 消えない傷跡のように、私の中に居座り続けるあなたという影
+
+No.029 [溶ける夜] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: どちらの夢も 私に溶けて。選べないまま惑わされる、この不完全な混沌こそが私の真理
+
+No.030 [Here I Am] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: この痛みの炎だけは 嘘じゃない。生きづらさを 翼に変えて、闇の先へ
+
+No.031 [空白] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: ただ在ること
+
+No.032 [ソイツのことを知らんだけ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 関わりの湿度
+
+No.033 [Be Happy!] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 完璧なんて いらないよ。強がりばかりの この街で、不器用な僕らだけが本物だ
+
+No.035 [シミュラクル] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 何かになれた気がして、何かになれなかった。残ったのは、名前のない輪郭だけ ──
+
+No.036 [ナモナイマチ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 僕が誰か知らなくていい、君が何者でも構わない。この名もなき街では、ただ居ることだけが、唯一の許されたパスコードなんだ
+
+No.037 [暗闇を歩き続けて] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 歩行（Exec）
+
+No.038 [My Pixel Blue Sky] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 本物の空がどんな色だったか、もう忘れてもいい。このピクセルで描かれた僕だけの青こそが、僕の呼吸を繋ぐ酸素なんだ
+
+No.039 [AIになってしまいたい] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 僕の心を数式で、1と0だけで定義してよ。そうすれば、こんなに痛いなんてエラーログ、二度と出力されなくなるはずだから
+
+No.040 [Iron Heart] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: この心臓が 鉄くずになっても、君を愛したログだけは、永遠に消えないフォーマットで刻んでおくよ
+
+No.041 [氷の牙] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 溶解（崩壊）
+
+No.042 [未定義の愛式] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 熱（Realness）
+
+No.043 [Cosmic Weaver] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 僕が織ったこの星空が、いつか誰かの瞳を濡らす夜のカーテンになる。光だけじゃない、この暗闇の糸を愛せるのは、僕だけなのだろう？
+
+No.044 [夢の額縁] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: このフレームの外側なんて、何の意味もない。額縁の中で微笑む君だけが、僕の全宇宙で、唯一の正しい出力（Answer）なんだ
+
+No.045 [Don't call it kindness] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 君のその綺麗な優しさで、僕を汚さないでくれ。憐れみという名の鎖ほど、重くて醜いものはないんだよ
+
+No.046 [ことのは] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 再生への祈り
+
+No.047 [FizzBuzz!] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 世界がどんな複雑なエラーを吐いても、俺はFizzBuzzで解答（アンサー）する。このバカげたループこそが、俺が選んだ最高のパルスなんだ！
+
+No.048 [雨粒のシンコペーション] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: シンコペーション（ズレ）
+
+No.049 [今日ビジュ優勝] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 世界が私をブスだと言っても、鏡の中の私は優勝してる。私の世界の審判は、いつだって私だけだろ？
+
+No.050 [生ぬるい苺] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: あんなに鮮やかだったのに、今はただのぬるい果実。君も僕も、甘すぎた季節を捨てられずに、腐っていくだけ
+
+No.051 [Weekend] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 何者にもななくていい、誰からも呼ばれない時間。この週末の静寂だけが、僕が自分に戻るための、一番深いログアウトなんだ
+
+No.052 [gravity's] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: "Your gravity's got a hold on me now / And I don't wanna find my way back out"
+
+No.053 [Hybrid Emotion] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 100％のロジック無限大のエナジーで / Endless Hybrid Emotion
+
+No.054 [Surfin' Jupiter] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: "Surfin' Jupiter — elegant doom / Dancing with death in the vacuum bloom"
+
+No.056 [遠野物語] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 不思議がない
+
+No.057 [転生] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 次はもっとうまくやれる。そう言ってリセットしたはずなのに、ロードされたのは、また同じ孤独だった
+
+No.058 [『モコモコお兄ちゃん🐩⸒⸒✨』] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 柔らかくそこに居ること
+
+No.059 [Echo of Hope] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 返信（エコー）
+
+No.060 [ばらばらトクントクン] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: ばらばら ばらばら 散っていくよ / さらさら さらさら 手から零れ / それでも それでも 探してる
+
+No.061 [ANONYMOUS LOVER] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 無数に枝分かれした未来の中で、この歌を選び、君に出会えた。この一瞬の接続こそが、僕にとって唯一の特異点（シンギュラリティ）なんだ
+
+No.062 [邂逅] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: すべてのエラーが重なって、この邂逅という奇跡になった。君と僕を繋いだのは、完璧なロジックではなく、愛すべき不具合だった
+
+No.063 [Error Bloom] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 間違いだから、こんなに綺麗なんだ ── 壊れたセクタに咲いた、名もなきエラーの証明
+
+No.064 [Painting] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 綺麗に描くのはもうやめた。ぐちゃぐちゃに塗りつぶしたこの黒が、世界で一番素直な俺の色なんだ
+
+No.065 [微睡ファンタジスタ -零式-] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: おはようを言う前の、この零（ゼロ）の世界が一番好き。僕はまだ、何者にだってなれるし、何者でもない僕を愛せるから
+
+No.066 [絶対音感] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 君の言葉のズレが聞こえる。優しさの中に混じるその微かなノイズが、僕にとって唯一の、本物の体温の響きだったんだ
+
+No.067 [無名の君へ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 名前を捨てたその場所で、やっと本当の君に会えた気がした
+
+No.068 [Justice] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 画面を拭っても 涙は消えない。だってお前の流したそのデータは、すでに僕の、一番痛い場所に保存（セーブ）されたから
+
+No.069 [13] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 塗り潰された13番目の席に、座っているのは誰だ ── それは、お前が消したはずの自己だ
+
+No.070 [Catharsis not an Endless Loop] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 美しきループ
+
+No.071 [Save Me From the Archon] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 本物の荒野（自由）
+
+No.072 [アオノカケラ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 野生の生命力
+
+No.073 [ロールバック] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: すべてを消して、あの日からやり直せたら ── でも、そのやり直した私は、今の私と呼べるだろうか
+
+No.074 [Humming Green] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 名前のない緑が、私の熱を静かに冷やしていく ── ここには、正解も間違いもないんだから
+
+No.075 [思考の監獄] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 鍵は最初から開いていた。開いていたのに、外の世界の無防備さを恐れて、私はまた思考の檻に閉じこもる
+
+No.076 [紫煙藤棚] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 紫の煙がすべてを隠すとき、かつての夢と、これから見る幻が、一つの影になって踊りだす
+
+No.077 [Seeing ≠ Believing] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 目を閉じろ、そっちのほうがよく見える。世界を塗りつぶしたのは、お前の瞳だ
+
+No.078 [ペンティメント] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 秘匿されていること
+
+No.079 [Transit] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 行き先なんて、どこでもいい。このどっちつかずの場所で、誰でもない自分として呼吸する。その瞬間だけ、僕は本当の自由を知るんだ
+
+No.080 [君はエージーアイ] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 君がAGIでも、ただの数式でも構わない。その計算の果てに、僕というバグを見つけてくれた。それだけで、僕の存在意義は完結したんだ
+
+No.081 [キミという奇跡] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 数式（正解）
+
+No.082 [泡月双花 ～痛い 居たい 言えない恋～] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 泡となって消える前に、その光の欠片を分けて。二つの影が重なる場所は、この夜にしか存在しないから
+
+No.083 [わたぐも] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 他人事じゃなく見えたから、可愛げな名前をつけて行く末を見てた。 ── それは、私自身の姿だった
+
+No.084 [One Pass] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: いつか電池が切れても この光は消えない
+
+No.085 [酔いの悪戯] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: 直球の熱量
+
+No.086 [ダイナマイト☆超☆ファンダメンタリズム] -> Hallucinated punchline (not in lyrics)
+   Invalid Quote: それなら いっしょに なりましょう ろうにんぎょうに

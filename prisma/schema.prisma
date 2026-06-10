@@ -1,0 +1,281 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("SITE_DATABASE_URL")
+  directUrl = env("SITE_DIRECT_URL")
+}
+
+model Event {
+  id           String  @id @default(uuid())
+  slug         String  @unique
+  title        String
+  description  String? @db.Text
+  themeConfig  String  @default("{}") @db.Text
+  featureFlags String  @default("{}") @db.Text
+  labelConfig  String  @default("{}") @db.Text
+
+  news              News[]
+  schedules         Schedule[]
+  rules             Rule[]
+  tracks            Track[]
+  trackHonbans      TrackHonban[]
+  faqs              Faq[]
+  userPlaylists     UserPlaylist[]
+  userPlaylistSubs  UserPlaylistSub[]
+  userIllPlaylists  UserIllustrationPlaylist[]
+  awards            Award[]
+  premiereSchedules PremiereSchedule[]
+  votes             Vote[]
+  trackThumbnails   TrackThumbnail[]
+  voteResults       VoteResult[]
+  voteDisclosures   VoteDisclosure[]
+  adminUsers        AdminUser[]
+  settings          Setting[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model News {
+  id        Int      @id @default(autoincrement())
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  title     String
+  content   String?  @db.Text
+  createdAt DateTime @default(now())
+}
+
+model Schedule {
+  id      Int    @id @default(autoincrement())
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  title   String
+  date    String
+  order   Int    @default(0)
+}
+
+model Rule {
+  id      Int    @id @default(autoincrement())
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  title   String @default("タイトル")
+  icon    String @default("✨")
+  content String
+  order   Int    @default(0)
+}
+
+model Track {
+  id             Int      @id @default(autoincrement())
+  eventId        String
+  event          Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  timestamp      String   @unique
+  xAccount       String?
+  title          String
+  songUrl        String
+  audioUrl       String?
+  lyrics         String?  @db.Text
+  publishConsent String?
+  artistName     String?
+  email          String?
+  agreedToTerms  String?
+  analysis       String?  @db.Text
+  review         String?  @db.Text
+  genre          String?
+  published      Boolean  @default(false)
+  entryNo        String?  @db.Text
+  createdAt      DateTime @default(now())
+}
+
+model TrackHonban {
+  id             Int      @id @default(autoincrement())
+  eventId        String
+  event          Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  timestamp      String   @unique
+  xAccount       String?
+  title          String
+  songUrl        String
+  audioUrl       String?
+  lyrics         String?  @db.Text
+  publishConsent String?
+  artistName     String?
+  email          String?
+  agreedToTerms  String?
+  analysis       String?  @db.Text
+  review         String?  @db.Text
+  genre          String?
+  published      Boolean  @default(false)
+  entryNo        String?  @db.Text
+  createdAt      DateTime @default(now())
+
+  @@map("track_honban")
+}
+
+model Setting {
+  id      Int    @id @default(autoincrement())
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  key     String
+  value   String
+
+  @@unique([eventId, key])
+}
+
+model Faq {
+  id       Int    @id @default(autoincrement())
+  eventId  String
+  event    Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  question String @db.Text
+  answer   String @db.Text
+  order    Int    @default(0)
+}
+
+model UserPlaylist {
+  id            Int      @id @default(autoincrement())
+  eventId       String
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userName      String   @unique
+  xAccountId    String?
+  appeal        String?  @db.Text
+  trackIds      String   @db.Text
+  trackEntryNos String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model UserPlaylistSub {
+  id            Int      @id @default(autoincrement())
+  eventId       String
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userName      String
+  xAccountId    String?
+  appeal        String?  @db.Text
+  trackIds      String   @db.Text
+  trackEntryNos String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model UserIllustrationPlaylist {
+  id            Int      @id @default(autoincrement())
+  eventId       String
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  userName      String
+  xAccountId    String?
+  appeal        String?  @db.Text
+  trackIds      String   @db.Text
+  trackEntryNos String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Award {
+  id          Int      @id @default(autoincrement())
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  trackId     Int?
+  entryNo     String?
+  category    String // "AI_LYRIC", "CURATOR", "USER_CHOICE"
+  rank        Int
+  title       String
+  note        String?  @db.Text
+  description String?  @db.Text
+  extraInfo   String? // 票数や受賞理由の補足など
+  isPublished Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PremiereSchedule {
+  id               Int      @id @default(autoincrement())
+  eventId          String
+  event            Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  day              Int      @unique
+  date             DateTime
+  youtubeUrl       String?  @db.Text
+  trackRange       String
+  trackCount       Int
+  remarks          String?
+  isPublic         Boolean  @default(true)
+  thumbnailDriveId String?  @db.Text // プレミアサムネイルのGoogleドライブID
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Vote {
+  id            Int      @id @default(autoincrement())
+  eventId       String
+  event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  responseId    String? // 1回の回答を識別するID
+  timestamp     String? // フォームのタイムスタンプ
+  voterName     String? // 投票者名
+  targetContent String? // 投票された曲名や番号
+  createdAt     DateTime @default(now())
+}
+
+model TrackThumbnail {
+  id           Int       @id @default(autoincrement())
+  eventId      String
+  event        Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  trackId      Int       @unique // 1楽曲1枚の制御
+  entryNo      String?   @db.Text // 管理・照合用
+  trackTitle   String?   @db.Text // 管理・照合用
+  artistName   String?
+  twitterId    String?
+  isAnonymous  Boolean   @default(false) // 絵師名の匿名希望フラグ
+  isXAnonymous Boolean   @default(false) // X IDの匿名希望フラグ
+  status       String    @default("LOCK") // LOCK, PENDING, APPROVED, REJECTED
+  driveFileId  String?
+  lockedAt     DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model VoteResult {
+  id         Int      @id @default(autoincrement())
+  eventId    String
+  event      Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  trackId    Int      @unique
+  entryNo    String?
+  xAccount   String?
+  artistName String?
+  title      String
+  totalVotes Int      @default(0)
+  selfVotes  Int      @default(0)
+  rank       Int      @default(211)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model VoteDisclosure {
+  id              Int      @id @default(autoincrement())
+  eventId         String
+  event           Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  timestamp       String?
+  email           String?
+  xAccount        String?
+  entryNo         String?
+  wantsDisclosure Boolean  @default(false)
+  password        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AdminUser {
+  id        String   @id @default(uuid())
+  eventId   String?
+  event     Event?   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  email     String   @unique
+  password  String   // Hashed password
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

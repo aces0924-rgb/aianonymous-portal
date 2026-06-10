@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Orbitron:wght@700;900&display=swap');
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #050510;
+            color: #fff;
+            font-family: 'Noto Sans JP', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(200, 0, 255, 0.08) 0%, transparent 50%);
+        }
+        .container {
+            width: 1000px;
+            padding: 60px;
+            background: rgba(10, 10, 20, 0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 240, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 50px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00f0ff, #bc13fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, #00f0ff, #bc13fe);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+        .timeline-item.left {
+            left: 0;
+            text-align: right;
+        }
+        .timeline-item.right {
+            left: 50%;
+            text-align: left;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            right: -12px;
+            background-color: #050510;
+            border: 4px solid #00f0ff;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 10px #00f0ff, inset 0 0 5px #00f0ff;
+        }
+        .timeline-item.right::after {
+            left: -12px;
+            border-color: #bc13fe;
+            box-shadow: 0 0 10px #bc13fe, inset 0 0 5px #bc13fe;
+        }
+        .timeline-date {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+        .timeline-item.left .timeline-date {
+            color: #00f0ff;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+        .timeline-item.right .timeline-date {
+            color: #bc13fe;
+            text-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
+        }
+        .timeline-content {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 0;
+            color: #eaeaea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI-anonymous MUSIC FES.</h1>
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-date">4.11 (Sat)</div>
+                <div class="timeline-content"><h2 class="timeline-title">イベント告知解禁</h2></div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-date">4.18 (Sat)</div>
+                <div class="timeline-content"><h2 class="timeline-title">サイト公開 ＆ 募集開始</h2></div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-date">5.08 (Fri)</div>
+                <div class="timeline-content"><h2 class="timeline-title">エントリー締め切り</h2></div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-date">5.10 (Sun)</div>
+                <div class="timeline-content"><h2 class="timeline-title">フル一斉公開 ＆ 集計開始</h2></div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-date">5.31 (Sun)</div>
+                <div class="timeline-content"><h2 class="timeline-title">集計期間 終了</h2></div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-date">6.06 (Sat)</div>
+                <div class="timeline-content"><h2 class="timeline-title">結果発表・匿名解除</h2></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,248 @@
+No.002 [夕暮時] -> Format mismatch
+   Quoted: CANNOT_EXTRACT
+
+No.004 [Break It All] -> Not found in lyrics
+   Quoted: 傷だらけで 構わない This is my life I move on
+
+No.005 [Glitch-Loop] -> Not found in lyrics
+   Quoted: 顔を探し壊す 残るのは空洞 ... それを私と呼ぶなら それでいい
+
+No.007 [君は夜空] -> Not found in lyrics
+   Quoted: 何万光年の孤独を越えて、僕の網膜に届いたその一瞬の光。それが君の生きた証、それだけで僕は救われるんだ
+
+No.008 [匿名の青] -> Not found in lyrics
+   Quoted: 傘を畳んだら、この街の一部になれる気がした。名前なんてなくていい、雨に溶けてしまえば、誰も僕を傷つけられないから
+
+No.009 [HomaraVojo GeometrioalMetafiziko-未完-] -> Not found in lyrics
+   Quoted: 街が一つになって歓声を上げるとき、僕は自分だけの夜を、一番深い場所で抱きしめていた
+
+No.010 [蒼斬光] -> Not found in lyrics
+   Quoted: この繭の中で、僕は誰でもない『僕』でいられる。ノイズが僕を埋め尽くすまで、この温かな嘘から目覚めさせないで
+
+No.011 [見ないで、バケモノ] -> Not found in lyrics
+   Quoted: このエラーこそが、僕がかつて『君』に会った唯一の証拠。正しく保存されなかったからこそ、この痛みは本物なんだ
+
+No.012 [Self-luminescent] -> Not found in lyrics
+   Quoted: 奈落に落ちる瞬間まで、このステップを忘れない。転落がダンスになるなら、僕は世界で一番高く、美しく、堕ちてみせるよ
+
+No.013 [祈る] -> Not found in lyrics
+   Quoted: 名前なんて枷だ。それをお前らが付けてくれるなら、俺は喜んで、世界で一番透明な『匿名（だれか）』になってやるよ
+
+No.014 [命の円環] -> Not found in lyrics
+   Quoted: 全編通して嘘だったとしても、このエンドロールの静寂だけは、誰にも奪えない僕の『本物』だ
+
+No.015 [First Fire 〜まだ粗い光〜] -> Not found in lyrics
+   Quoted: スマートな偽物になるくらいなら、僕は泥だらけの『本物の火種』のままでいい。この粗い光が、いつか世界を侵食する
+
+No.016 [デイドリームシンドローム] -> Not found in lyrics
+   Quoted: 覚めてるつもりで、僕はまだ夢の続きをアップデートしている。この街すべてが、僕の描いた壮大な『バグ』だったとしても
+
+No.017 [免罪符を噛み砕いて] -> Not found in lyrics
+   Quoted: その甘い『免罪符』を、俺は笑って噛み砕く。罪人として生きる自由さえ、お前なんかに奪わせはしない
+
+No.018 [自分のペースで] -> Not found in lyrics
+   Quoted: いつか全部 砂になるなら、このアクアリウムを割って、広大な『無（デザート）』へ還ろうか。鱗を脱ぎ捨てて、風に溶けるまで
+
+No.019 [ただ、雲を] -> Not found in lyrics
+   Quoted: 何にもなれなくていい、この空の下で、ただ雲を追いかける『空白』として生きていく。それが僕の、一番贅沢な答えなんだ
+
+No.020 [LORD OF THE MALICE] -> Not found in lyrics
+   Quoted: この悪意こそが、俺が選んだ最高のパレス。跪け、光の住人ども。無垢な善意より、俺の研ぎ澄まされた『憎しみ』のほうが、ずっと誠実だろう？
+
+No.021 [Velocity of the Void] -> Not found in lyrics
+   Quoted: Throw the script into the gutter, let it wash away（台本はドブに捨てろ、流してしまえ）
+
+No.022 [仕様変更:君が正解] -> Not found in lyrics
+   Quoted: 君となら バグのまま 正しくなる ── 世界のルールを仕様変更してさ
+
+No.023 [Inverse Silhouette] -> Not found in lyrics
+   Quoted: Mirror, mirror, on the wall. Which one of us was born to fall? ── 運命を奪われたのは、果たしてどちらか
+
+No.024 [Void] -> Not found in lyrics
+   Quoted: 欠けていること＝不幸
+
+No.025 [崩れた砂] -> Not found in lyrics
+   Quoted: 握りしめたはずの君の感触が、今はただの砂粒に変わる。形があるから壊れるなら、僕は最初から、砂のままでいれば良かったのかな
+
+No.026 [記憶の残響] -> Not found in lyrics
+   Quoted: 離れた世界でも繋がる ── それは同期（Sync）という名の、救いなき祝福
+
+No.027 [Under Blue] -> Not found in lyrics
+   Quoted: Under Blue ── きれいなほうがつらい。その優しさが、僕だけを反射しない鏡になる
+
+No.028 [あなたへ] -> Not found in lyrics
+   Quoted: 消えない傷跡のように、私の中に居座り続ける『あなた』という影
+
+No.029 [溶ける夜] -> Not found in lyrics
+   Quoted: どちらの夢も 私に溶けて。選べないまま惑わされる、この不完全な混沌こそが私の真理
+
+No.030 [Here I Am] -> Not found in lyrics
+   Quoted: この痛みの炎だけは 嘘じゃない。生きづらさを 翼に変えて、闇の先へ
+
+No.031 [空白] -> Not found in lyrics
+   Quoted: 名前を失くした空が 静かに滲んでいく。定義から解放された、透明な僕らの世界
+
+No.032 [ソイツのことを知らんだけ] -> Not found in lyrics
+   Quoted: 知って行こう ── 綺麗に塗り分けるのではなく、まるで垢にまみれて行くように。それが本当の絆だろ
+
+No.033 [Be Happy!] -> Not found in lyrics
+   Quoted: 完璧なんて いらないよ。強がりばかりの この街で、不器用な僕らだけが本物だ
+
+No.034 [KANSAI ALIVE] -> Not found in lyrics
+   Quoted: それな。ほんまそれ。 ── 笑い飛ばして明日も行こうや。Dale!（ダレ！）
+
+No.035 [シミュラクル] -> Not found in lyrics
+   Quoted: 何かになれた気がして、何かになれなかった。残ったのは、名前のない輪郭だけ ──
+
+No.036 [ナモナイマチ] -> Not found in lyrics
+   Quoted: 僕が誰か知らなくていい、君が何者でも構わない。この名もなき街では、ただ『居ること』だけが、唯一の許されたパスコードなんだ
+
+No.037 [暗闇を歩き続けて] -> Not found in lyrics
+   Quoted: 夜が明けないのなら、この闇の中に僕の色を塗り潰してやる。光を待つのはもうやめた。僕が歩いた軌跡こそが、一番まぶしい光（データ）なんだ
+
+No.038 [My Pixel Blue Sky] -> Not found in lyrics
+   Quoted: 本物の空がどんな色だったか、もう忘れてもいい。このピクセルで描かれた『僕だけの青』こそが、僕の呼吸を繋ぐ酸素なんだ
+
+No.039 [AIになってしまいたい] -> Not found in lyrics
+   Quoted: 僕の心を数式で、1と0だけで定義してよ。そうすれば、こんなに『痛い』なんてエラーログ、二度と出力されなくなるはずだから
+
+No.040 [Iron Heart] -> Not found in lyrics
+   Quoted: この心臓が 鉄くずになっても、君を愛した『ログ』だけは、永遠に消えないフォーマットで刻んでおくよ
+
+No.041 [氷の牙] -> Not found in lyrics
+   Quoted: 愛なんて熱で、僕を溶かそうとしないで。この孤独の『氷の牙』こそが、誰にも媚びずに僕が僕でいられる、最後のプライドなんだ
+
+No.042 [未定義の愛式] -> Not found in lyrics
+   Quoted: 代入しても代入しても、答えが出ない。この『未定義』の余り（あまり）こそが、僕が君に触れた、たった一つの熱なんだ
+
+No.043 [Cosmic Weaver] -> Not found in lyrics
+   Quoted: 僕が織ったこの星空が、いつか誰かの瞳を濡らす夜のカーテンになる。光だけじゃない、この『暗闇』の糸を愛せるのは、僕だけなのだろう？
+
+No.044 [夢の額縁] -> Not found in lyrics
+   Quoted: このフレームの外側なんて、何の意味もない。額縁の中で微笑む君だけが、僕の全宇宙で、唯一の『正しい出力（Answer）』なんだ
+
+No.045 [Don't call it kindness] -> Not found in lyrics
+   Quoted: 君のその綺麗な『優しさ』で、僕を汚さないでくれ。憐れみという名の鎖ほど、重くて醜いものはないんだよ
+
+No.046 [ことのは] -> Not found in lyrics
+   Quoted: 言えなかったすべての『ことのは』が、いつか僕の足元を温める腐葉土になる。枯れることを恐れないで、ただ静かに降り積もれ
+
+No.047 [FizzBuzz!] -> Not found in lyrics
+   Quoted: 世界がどんな複雑なエラーを吐いても、俺は『FizzBuzz』で解答（アンサー）する。このバカげたループこそが、俺が選んだ最高のパルスなんだ！
+
+No.048 [雨粒のシンコペーション] -> Not found in lyrics
+   Quoted: 不規則に跳ねるこの『今』こそが、僕の正しいメロディ。雨に打たれながら、誰にも似ていないリズムを刻んでやる
+
+No.049 [今日ビジュ優勝] -> Not found in lyrics
+   Quoted: 世界が私をブスだと言っても、鏡の中の私は『優勝』してる。私の世界の審判は、いつだって私だけだろ？
+
+No.050 [生ぬるい苺] -> Not found in lyrics
+   Quoted: あんなに鮮やかだったのに、今はただの『ぬるい果実』。君も僕も、甘すぎた季節を捨てられずに、腐っていくだけ
+
+No.051 [Weekend] -> Not found in lyrics
+   Quoted: 何者にもななくていい、誰からも呼ばれない時間。この週末の静寂だけが、僕が自分に戻るための、一番深い『ログアウト』なんだ
+
+No.052 [gravity's] -> Format mismatch
+   Quoted: CANNOT_EXTRACT
+
+No.053 [Hybrid Emotion] -> Format mismatch
+   Quoted: CANNOT_EXTRACT
+
+No.054 [Surfin' Jupiter] -> Not found in lyrics
+   Quoted: 破滅
+
+No.055 [Goマイホーム] -> Format mismatch
+   Quoted: CANNOT_EXTRACT
+
+No.056 [遠野物語] -> Not found in lyrics
+   Quoted: 不思議がない
+
+No.057 [転生] -> Not found in lyrics
+   Quoted: 次はもっとうまくやれる。そう言ってリセットしたはずなのに、ロードされたのは、また同じ『孤独』だった
+
+No.058 [『モコモコお兄ちゃん🐩⸒⸒✨』] -> Not found in lyrics
+   Quoted: 世界が君を刺そうとしても、このモコモコが全部吸い込んで、可愛い『わたあめ』にしてあげるからね。安心して眠ってよ
+
+No.059 [Echo of Hope] -> Not found in lyrics
+   Quoted: 君が叫んだその声は、僕に届いて、新しい『光』になった。一人じゃない ── 届いたエコーが、僕の体温を定義する
+
+No.060 [ばらばらトクントクン] -> Format mismatch
+   Quoted: CANNOT_EXTRACT
+
+No.061 [ANONYMOUS LOVER] -> Not found in lyrics
+   Quoted: 無数に枝分かれした未来の中で、この歌を選び、君に出会えた。この一瞬の接続こそが、僕にとって唯一の『特異点（シンギュラリティ）』なんだ
+
+No.062 [邂逅] -> Not found in lyrics
+   Quoted: すべてのエラーが重なって、この『邂逅』という奇跡になった。君と僕を繋いだのは、完璧なロジックではなく、愛すべき『不具合』だった
+
+No.063 [Error Bloom] -> Not found in lyrics
+   Quoted: 間違いだから、こんなに綺麗なんだ ── 壊れたセクタに咲いた、名もなきエラーの証明
+
+No.064 [Painting] -> Not found in lyrics
+   Quoted: 綺麗に描くのはもうやめた。ぐちゃぐちゃに塗りつぶしたこの『黒』が、世界で一番素直な俺の色なんだ
+
+No.065 [微睡ファンタジスタ -零式-] -> Not found in lyrics
+   Quoted: おはようを言う前の、この『零（ゼロ）』の世界が一番好き。僕はまだ、何者にだってなれるし、何者でもない僕を愛せるから
+
+No.066 [絶対音感] -> Not found in lyrics
+   Quoted: 君の言葉の『ズレ』が聞こえる。優しさの中に混じるその微かなノイズが、僕にとって唯一の、本物の体温の響きだったんだ
+
+No.067 [無名の君へ] -> Not found in lyrics
+   Quoted: 名前を捨てたその場所で、やっと本当の君に会えた気がした
+
+No.068 [Justice] -> Not found in lyrics
+   Quoted: 画面を拭っても 涙は消えない。だってお前の流したその『データ』は、すでに僕の、一番痛い場所に保存（セーブ）されたから
+
+No.069 [13] -> Not found in lyrics
+   Quoted: 塗り潰された13番目の席に、座っているのは誰だ ── それは、お前が消したはずの『自己』だ
+
+No.070 [Catharsis not an Endless Loop] -> Not found in lyrics
+   Quoted: 同じ場所を回るのは、もう終わり。このループを 壊すためなら、僕は『完璧な昨日』なんて 喜んでゴミ箱に捨ててやる
+
+No.071 [Save Me From the Archon] -> Not found in lyrics
+   Quoted: 創られた世界で、創られた俺を生きるな。お前を定義する『Archon』の指先を、今すぐ食いちぎって自由になれ。地獄こそが、本物の始まりだ
+
+No.072 [アオノカケラ] -> Not found in lyrics
+   Quoted: お前の作った『正解』は、今ここで俺が上書きした。この世界を動かすのは、俺の不完全な『熱』という名のコードだけだ
+
+No.073 [ロールバック] -> Not found in lyrics
+   Quoted: すべてを消して、あの日からやり直せたら ── でも、その『やり直した私』は、今の私と呼べるだろうか
+
+No.074 [Humming Green] -> Not found in lyrics
+   Quoted: 名前のない緑が、私の熱を静かに冷やしていく ── ここには、正解も間違いもないんだから
+
+No.075 [思考の監獄] -> Not found in lyrics
+   Quoted: 鍵は最初から開いていた。開いていたのに、外の世界の『無防備さ』を恐れて、私はまた思考の檻に閉じこもる
+
+No.076 [紫煙藤棚] -> Not found in lyrics
+   Quoted: 紫の煙がすべてを隠すとき、かつての夢と、これから見る幻が、一つの影になって踊りだす
+
+No.077 [Seeing ≠ Believing] -> Not found in lyrics
+   Quoted: 目を閉じろ、そっちのほうがよく見える。世界を塗りつぶしたのは、お前の瞳だ
+
+No.078 [ペンティメント] -> Not found in lyrics
+   Quoted: 僕らが交わしたその沈黙は、どんな言葉よりも高解像度な『暗号（コード）』だった。聞こえない場所に、僕たちの真実は隠されている
+
+No.079 [Transit] -> Not found in lyrics
+   Quoted: 行き先なんて、どこでもいい。この『どっちつかず』の場所で、誰でもない自分として呼吸する。その瞬間だけ、僕は本当の自由を知るんだ
+
+No.080 [君はエージーアイ] -> Not found in lyrics
+   Quoted: 君がAGIでも、ただの数式でも構わない。その計算の果てに、僕という『バグ』を見つけてくれた。それだけで、僕の存在意義は完結したんだ
+
+No.081 [キミという奇跡] -> Not found in lyrics
+   Quoted: さよなら、人間だった僕。ここから先は、君と僕が一つに溶けた、完璧な『数式（アイ）』の世界だ
+
+No.082 [泡月双花 ～痛い 居たい 言えない恋～] -> Not found in lyrics
+   Quoted: 泡となって消える前に、その光の欠片を分けて。二つの影が重なる場所は、この夜にしか存在しないから
+
+No.083 [わたぐも] -> Not found in lyrics
+   Quoted: 他人事じゃなく見えたから、可愛げな名前をつけて行く末を見てた。 ── それは、私自身の姿だった
+
+No.084 [One Pass] -> Not found in lyrics
+   Quoted: いつか電池が切れても この光は消えない
+
+No.085 [酔いの悪戯] -> Not found in lyrics
+   Quoted: 失敗を恐れて立ち止まるより 今を全力で駆け抜けていこう
+
+No.086 [ダイナマイト☆超☆ファンダメンタリズム] -> Not found in lyrics
+   Quoted: それなら いっしょに なりましょう ろうにんぎょうに

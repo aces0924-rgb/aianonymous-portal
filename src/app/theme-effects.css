@@ -1,0 +1,92 @@
+/* ---------------------------------
+   Theme Background Effects
+---------------------------------- */
+/* Scanline */
+.theme-bg-scanline::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.6;
+}
+
+/* Cyber Grid */
+.theme-bg-grid::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background-image: 
+    linear-gradient(to right, var(--color-cyan-500) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-cyan-500) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.15;
+  transform: perspective(500px) rotateX(60deg) scale(2);
+  transform-origin: bottom;
+}
+
+/* Film Noise */
+.theme-bg-noise::after {
+  content: "";
+  position: fixed;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.08;
+  animation: noiseAnimation 0.2s infinite;
+}
+
+@keyframes noiseAnimation {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ---------------------------------
+   Theme UI Texture
+---------------------------------- */
+.theme-ui-glass .bg-surface,
+.theme-ui-glass .bg-surface\/40,
+.theme-ui-glass .bg-surface\/80,
+.theme-ui-glass .bg-surface\/90 {
+  background-color: color-mix(in srgb, var(--surface) 20%, transparent) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-color: color-mix(in srgb, var(--surface-border) 40%, transparent) !important;
+}
+
+/* ---------------------------------
+   Theme Corner Style
+---------------------------------- */
+.theme-corner-sharp .rounded-xl,
+.theme-corner-sharp .rounded-2xl,
+.theme-corner-sharp .rounded-3xl,
+.theme-corner-sharp .rounded-lg,
+.theme-corner-sharp .rounded-md,
+.theme-corner-sharp .rounded {
+  border-radius: 0 !important;
+}
+
+.theme-corner-pill .rounded-xl,
+.theme-corner-pill .rounded-2xl,
+.theme-corner-pill .rounded-3xl {
+  border-radius: 2rem !important;
+}
+
+.theme-corner-pill .rounded-lg,
+.theme-corner-pill .rounded-md {
+  border-radius: 9999px !important;
+}
