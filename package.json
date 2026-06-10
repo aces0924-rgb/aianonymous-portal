@@ -19,6 +19,7 @@
     "prisma": "^5.22.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-hot-toast": "^2.6.0",
     "react-player": "^3.4.0",
     "react-quill-new": "^3.8.3"
   },

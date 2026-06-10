@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   description: "完全制作者匿名で音楽そのものの魅力を届ける、生成AI音楽の祭典。",
 };
 
+import { Toaster } from 'react-hot-toast';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -30,6 +32,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
+        <Toaster position="top-center" />
       </body>
     </html>
   );

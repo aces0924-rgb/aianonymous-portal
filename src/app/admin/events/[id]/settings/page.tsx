@@ -5,6 +5,7 @@ import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect, notFound } from 'next/navigation'
 import { logout } from '../../login/actions'
+import { ToastSubmitButton } from '@/components/admin/ToastSubmitButton'
 import { 
   updateEventDetails, saveEventSetting, updateEventSetting,
   addEventNews, deleteEventNews, addEventSchedule, deleteEventSchedule,
@@ -170,9 +171,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <label className="block text-sm font-bold text-gray-700 mb-2">セクション本文 (リッチテキスト)</label>
               <RichTextEditor name="description" defaultValue={event.description || ''} />
             </div>
-            <button type="submit" className="bg-gray-800 text-foreground px-4 py-2 rounded font-bold hover:bg-gray-700">
+            <ToastSubmitButton label="
               保存する
-            </button>
+            " className="bg-gray-800 text-foreground px-4 py-2 rounded font-bold hover:bg-gray-700" />
           </form>
         </div>
 
@@ -286,7 +287,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <label className="text-xs font-bold text-gray-500 block mb-1">ロゴ画像 (直リンクURL)</label>
               <input name="logoUrl" defaultValue={defaultTheme.logoUrl} placeholder="https://.../logo.png" className="w-full border p-2 rounded text-sm bg-white" />
             </div>
-            <button type="submit" className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 text-sm font-bold w-32 mt-2">デザインを保存</button>
+            <ToastSubmitButton label="デザインを保存" className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 text-sm font-bold w-32 mt-2" />
           </form>
         </div>
 
@@ -335,7 +336,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <label className="text-xs font-bold text-gray-500 block mb-1">楽曲詳細ページの免責事項 (フッター等)</label>
               <textarea name="disclaimer" defaultValue={defaultLabels.disclaimer} className="w-full border p-2 rounded text-sm bg-white h-20"></textarea>
             </div>
-            <button type="submit" className="bg-amber-600 text-white p-2 rounded hover:bg-amber-700 text-sm font-bold w-32">文言を保存</button>
+            <ToastSubmitButton label="文言を保存" className="bg-amber-600 text-white p-2 rounded hover:bg-amber-700 text-sm font-bold w-32" />
           </form>
         </div>
 
@@ -358,25 +359,25 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           <form action={updateEventSetting.bind(null, id, 'SHEET_URL')} className="flex flex-col gap-2">
             <label className="text-xs font-bold text-gray-500">スプレッドシート（CSVエクスポートURL）</label>
             <input name="value" defaultValue={currentSheetUrl} placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..." className="border p-2 rounded text-sm bg-white" />
-            <button type="submit" className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-sm font-bold">URLを保存</button>
+            <ToastSubmitButton label="URLを保存" className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'VOTE_URL')} className="flex flex-col gap-2 pt-4 border-t">
             <label className="text-xs font-bold text-gray-500">投票フォームのURL</label>
             <input name="value" defaultValue={voteUrl} placeholder="https://docs.google.com/forms/d/..." className="border p-2 rounded text-sm bg-white" />
-            <button type="submit" className="bg-purple-600 text-white p-2 rounded hover:bg-purple-700 text-sm font-bold">投票URLを保存</button>
+            <ToastSubmitButton label="投票URLを保存" className="bg-purple-600 text-white p-2 rounded hover:bg-purple-700 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'YOUTUBE_PLAYLIST_URL')} className="flex flex-col gap-2 pt-4 border-t">
             <label className="text-xs font-bold text-gray-500">YouTube再生リストURL</label>
             <input name="value" defaultValue={playlistUrl} placeholder="https://www.youtube.com/playlist?list=..." className="border p-2 rounded text-sm bg-white" />
-            <button type="submit" className="bg-red-600 text-white p-2 rounded hover:bg-red-700 text-sm font-bold">再生リストURLを保存</button>
+            <ToastSubmitButton label="再生リストURLを保存" className="bg-red-600 text-white p-2 rounded hover:bg-red-700 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'SHARE_BASE_POST_URL')} className="flex flex-col gap-2 pt-4 border-t">
             <label className="text-xs font-bold text-gray-500">𝕏共有時引用ポストURL</label>
             <input name="value" defaultValue={shareBasePostUrl} placeholder="https://x.com/username/status/..." className="border p-2 rounded text-sm bg-white" />
-            <button type="submit" className="bg-sky-500 text-foreground p-2 rounded hover:bg-sky-600 text-sm font-bold">共有用URLを保存</button>
+            <ToastSubmitButton label="共有用URLを保存" className="bg-sky-500 text-foreground p-2 rounded hover:bg-sky-600 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'CTA_BUTTON_MODE')} className="flex flex-col gap-2 pt-4 border-t">
@@ -388,7 +389,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <option value="voting">投票中（集計用等）</option>
               <option value="result">結果発表へ</option>
             </select>
-            <button type="submit" className="bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700 text-sm font-bold">CTAモードを保存</button>
+            <ToastSubmitButton label="CTAモードを保存" className="bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700 text-sm font-bold" />
           </form>
 
           <form action={async (formData) => {
@@ -455,7 +456,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               </div>
             </div>
 
-            <button type="submit" className="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 text-sm font-bold mt-2 w-32">ON/OFFを保存</button>
+            <ToastSubmitButton label="ON/OFFを保存" className="bg-gray-600 text-white p-2 rounded hover:bg-gray-700 text-sm font-bold mt-2 w-32" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'ENABLE_ILLUST_RECOMMEND')} className="flex flex-col gap-2 pt-4 border-t">
@@ -464,7 +465,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <option value="true">有効</option>
               <option value="false">無効</option>
             </select>
-            <button type="submit" className="bg-fuchsia-600 text-white p-2 rounded hover:bg-fuchsia-700 text-sm font-bold">推しイラスト設定を保存</button>
+            <ToastSubmitButton label="推しイラスト設定を保存" className="bg-fuchsia-600 text-white p-2 rounded hover:bg-fuchsia-700 text-sm font-bold" />
           </form>
         </div>
 
@@ -477,7 +478,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           <form action={addEventNews.bind(null, id)} className="flex flex-col gap-2 mb-4">
             <input name="title" placeholder="タイトル" className="border p-2 rounded bg-white" required />
             <textarea name="content" placeholder="内容" className="border p-2 rounded bg-white"></textarea>
-            <button type="submit" className="bg-blue-600 text-white p-2 rounded font-bold">追加する</button>
+            <ToastSubmitButton label="追加する" className="bg-blue-600 text-white p-2 rounded font-bold" />
           </form>
           <ul className="space-y-2">
             {event.news.map(n => (
@@ -499,7 +500,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             <input name="title" placeholder="イベント名" className="border p-2 rounded bg-white" required />
             <input name="date" placeholder="日時" className="border p-2 rounded bg-white" required />
             <input name="order" type="number" placeholder="並び順" className="border p-2 rounded bg-white" defaultValue={0} />
-            <button type="submit" className="bg-green-600 text-white p-2 rounded font-bold">追加する</button>
+            <ToastSubmitButton label="追加する" className="bg-green-600 text-white p-2 rounded font-bold" />
           </form>
           <ul className="space-y-2">
             {event.schedules.map(s => (
@@ -521,7 +522,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             <input name="question" placeholder="質問" className="border p-2 rounded bg-white" required />
             <textarea name="answer" placeholder="回答" className="border p-2 rounded bg-white" required></textarea>
             <input name="order" type="number" placeholder="並び順" className="border p-2 rounded bg-white" defaultValue={0} />
-            <button type="submit" className="bg-[var(--color-cyan-500)] text-white p-2 rounded font-bold">追加する</button>
+            <ToastSubmitButton label="追加する" className="bg-[var(--color-cyan-500)] text-white p-2 rounded font-bold" />
           </form>
           <ul className="space-y-4">
             {event.faqs.map(f => (
@@ -551,18 +552,18 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <label className="text-sm font-bold text-[var(--color-cyan-400)]">更新スタートNo:</label>
               <input type="number" name="startId" defaultValue={event.trackHonbans.length > 0 ? (Math.max(...event.trackHonbans.map((t: any) => parseInt(t.entryNo || "0"))) + 1) : 1} className="w-24 border p-2 rounded font-bold bg-white" />
             </div>
-            <button type="submit" className="bg-[var(--color-cyan-500)] text-white p-3 rounded-lg font-bold w-full hover:bg-[var(--color-cyan-500)] transition">
+            <ToastSubmitButton label="
               スプレッドシートから最新データを取得・同期する
-            </button>
+            " className="bg-[var(--color-cyan-500)] text-white p-3 rounded-lg font-bold w-full hover:bg-[var(--color-cyan-500)] transition" />
           </form>
 
           <form action={async (formData) => {
             'use server'
             await syncOnlyEventAnalysisFromSheet(id, formData)
           }}>
-            <button type="submit" className="bg-purple-100 text-purple-700 border border-purple-200 p-2 rounded-lg font-bold w-full hover:bg-purple-200 transition text-sm">
+            <ToastSubmitButton label="
               楽曲考察のみを再同期する
-            </button>
+            " className="bg-purple-100 text-purple-700 border border-purple-200 p-2 rounded-lg font-bold w-full hover:bg-purple-200 transition text-sm" />
           </form>
 
           <div className="mt-8 text-sm font-bold border-b pb-2">
