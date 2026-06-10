@@ -31,7 +31,7 @@ export async function updateEventDetails(id: string, formData: FormData) {
     }
   })
   revalidatePath('/admin')
-  revalidatePath(`/${slug}`)
+  revalidatePath(`/${slug}`, 'layout')
 }
 
 // === 設定 (Settings) ===
@@ -63,7 +63,7 @@ export async function updateEventConfig(id: string, configType: 'themeConfig' | 
     data: { [configType]: JSON.stringify(newConfig) }
   });
   revalidatePath(`/admin/events/${id}/settings`);
-  revalidatePath(`/${event.slug}`);
+  revalidatePath(`/${event.slug}`, 'layout');
 }
 
 // === お知らせ (News) ===
