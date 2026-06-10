@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect, notFound } from 'next/navigation'
-import { logout } from '../../login/actions'
+import { logout } from '../../../login/actions'
 import { ToastSubmitButton } from '@/components/admin/ToastSubmitButton'
 import { 
   updateEventDetails, saveEventSetting, updateEventSetting,
