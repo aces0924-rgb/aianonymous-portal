@@ -5,8 +5,9 @@ import Link from 'next/link';
 import TrackDetailView from '@/components/TrackDetailView';
 import { submitApplication, getApplyConfig } from '@/app/actions/apply';
 
-export default function ApplyPage({ params }: { params: { eventSlug: string } }) {
-  const { eventSlug } = params;
+export default function ApplyPage({ params }: { params: Promise<{ eventSlug: string }> }) {
+  const resolvedParams = React.use(params);
+  const eventSlug = resolvedParams.eventSlug;
   const [step, setStep] = useState<'input' | 'preview' | 'success'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');

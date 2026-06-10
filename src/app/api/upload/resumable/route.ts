@@ -26,6 +26,8 @@ export async function POST(request: Request) {
 
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
+    const origin = request.headers.get('origin') || 'http://localhost:3000';
+
     // Create a resumable upload session
     const response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable', {
       method: 'POST',
@@ -33,6 +35,7 @@ export async function POST(request: Request) {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
         'X-Upload-Content-Type': mimeType,
+        'Origin': origin,
       },
       body: JSON.stringify({
         name: fileName,
