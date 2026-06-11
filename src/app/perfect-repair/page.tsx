@@ -41,6 +41,7 @@ export default async function PerfectRepairPage() {
           isPublic: true,
         },
         create: {
+          eventId: "teihenanofes",
           day: item.day,
           date: new Date(item.date),
           trackRange: item.trackRange,

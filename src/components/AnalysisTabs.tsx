@@ -2,6 +2,26 @@
 
 import { useState } from 'react'
 
+const processText = (text: string) => {
+  if (!text) return '';
+  // HTMLエスケープ処理
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+  
+  // URLのリンク化
+  const linked = escaped.replace(
+    /(https?:\/\/[^\s]+)/g, 
+    '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-[var(--color-cyan-400)] underline hover:text-[var(--color-cyan-500)] transition-colors break-all">$1</a>'
+  );
+  
+  // 改行の変換
+  return linked.replace(/\n/g, '<br/>');
+};
+
 export default function AnalysisTabs({ analysis, review, defaultLabels = {} }: { analysis: string | null, review: string | null, defaultLabels?: any }) {
   const [activeTab, setActiveTab] = useState<'analysis' | 'review'>(review && !analysis ? 'review' : 'analysis')
 
@@ -53,7 +73,7 @@ export default function AnalysisTabs({ analysis, review, defaultLabels = {} }: {
             <div className="prose prose-invert max-w-none prose-p:leading-[1.8] prose-headings:text-purple-400">
               <div 
                 className="text-lg md:text-2xl font-medium text-foreground tracking-wide text-left"
-                dangerouslySetInnerHTML={{ __html: analysis.replace(/\n/g, '<br/>') }} 
+                dangerouslySetInnerHTML={{ __html: processText(analysis) }} 
               />
             </div>
           </div>
@@ -64,7 +84,7 @@ export default function AnalysisTabs({ analysis, review, defaultLabels = {} }: {
             <div className="prose prose-invert max-w-none prose-p:leading-[1.8] prose-headings:text-blue-400">
               <div 
                 className="text-lg md:text-2xl font-medium text-foreground tracking-wide text-left"
-                dangerouslySetInnerHTML={{ __html: review.replace(/\n/g, '<br/>') }} 
+                dangerouslySetInnerHTML={{ __html: processText(review) }} 
               />
             </div>
           </div>

@@ -25,7 +25,7 @@ export default async function RecommendPage({
   }
 
   // Fetch from DB
-  const playlist = await getPlaylistByUserName(userName);
+  const playlist = await getPlaylistByUserName("teihenanofes", userName);
   
   // Use DB ids if found, otherwise fallback to URL ids (for backward compatibility or new ones not yet in DB)
   const finalIds = playlist?.trackIds || urlIds;

@@ -13,11 +13,14 @@ export default async function SelectionPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ eventSlug: string; id: string }>;
   searchParams: Promise<{ preview?: string }>;
 }) {
-  const { id: encodedId } = await params;
+  const { eventSlug, id: encodedId } = await params;
   const { preview } = await searchParams;
+
+  const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
+  if (!event) return notFound();
   
   // Decode ID with check digit
   const dbId = decodeSelectionId(encodedId);
@@ -29,7 +32,7 @@ export default async function SelectionPage({
   // Fetch from DB by ID
   const playlist = await getIllustrationPlaylistById(dbId);
   
-  if (!playlist) {
+  if (!playlist || playlist.eventId !== event.id) {
     notFound();
   }
 

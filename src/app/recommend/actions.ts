@@ -93,6 +93,7 @@ export async function registerPlaylist(eventSlug: string, userName: string, trac
       // 既にメインにある場合はサブテーブルに保存
       newPlaylist = await (prisma as any).userPlaylistSub.create({
         data: {
+          eventId: event.id,
           userName: trimmedName,
           xAccountId: xAccountId?.trim() || null,
           appeal: appeal?.trim() || null,
@@ -104,6 +105,7 @@ export async function registerPlaylist(eventSlug: string, userName: string, trac
       // 新規の場合はメインテーブルに保存
       newPlaylist = await prisma.userPlaylist.create({
         data: {
+          eventId: event.id,
           userName: trimmedName,
           xAccountId: xAccountId?.trim() || null,
           appeal: appeal?.trim() || null,
@@ -344,6 +346,7 @@ export async function registerIllustrationPlaylist(eventSlug: string, userName: 
 
     const newPlaylist = await prisma.userIllustrationPlaylist.create({
       data: {
+        eventId: event.id,
         userName: trimmedName,
         xAccountId: trimmedXId,
         appeal: appeal?.trim() || null,

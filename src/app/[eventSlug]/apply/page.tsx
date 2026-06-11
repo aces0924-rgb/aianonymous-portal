@@ -531,7 +531,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                   onChange={handleChange}
                   rows={4}
                   className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
-                  placeholder="楽曲に込めた思いや、設定、背景などを自由に記述してください。"
+                  placeholder={`${config.analysisTab}について自由に記述してください。`}
                 />
               </div>
             )}

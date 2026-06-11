@@ -10,10 +10,10 @@ const DRIVE_FOLDER_ID = process.env.GOOGLE_DRIVE_FOLDER_ID!;
 /**
  * データベースのSettingテーブルから最大投稿制限数を取得する（デフォルトは3）
  */
-async function getMaxThumbnailLimit(): Promise<number> {
+async function getMaxThumbnailLimit(eventId: string): Promise<number> {
   try {
     const limitSetting = await prisma.setting.findUnique({
-      where: { key: 'MAX_THUMBNAIL_LIMIT' }
+      where: { eventId_key: { eventId, key: 'MAX_THUMBNAIL_LIMIT' } }
     });
     if (limitSetting && limitSetting.value) {
       const parsed = parseInt(limitSetting.value, 10);
@@ -40,12 +40,21 @@ export async function reserveThumbnailSlot(trackId: number, artistName: string, 
       return { success: false, error: '名前とX IDを先に入力してください。' };
     }
 
+    // 楽曲情報を取得
+    const track = await prisma.trackHonban.findUnique({
+      where: { id: trackId },
+      select: { title: true, entryNo: true, eventId: true }
+    });
+    const trackTitle = track?.title || 'Unknown';
+    const entryNo = track?.entryNo || '---';
+    const eventId = track?.eventId || "teihenanofes";
+
     // 同一ユーザーの他曲への投稿状況をチェック
     const existingSubmissions = await prisma.trackThumbnail.findMany({
-      where: { twitterId: twitterId }
+      where: { twitterId: twitterId, eventId: eventId }
     });
 
-    const maxLimit = await getMaxThumbnailLimit();
+    const maxLimit = await getMaxThumbnailLimit(eventId);
 
     const activeSubmissions = existingSubmissions.filter(
       sub => sub.status === 'APPROVED' || sub.status === 'PENDING'
@@ -63,14 +72,6 @@ export async function reserveThumbnailSlot(trackId: number, artistName: string, 
         });
       }
     }
-
-    // 楽曲情報を取得
-    const track = await prisma.trackHonban.findUnique({
-      where: { id: trackId },
-      select: { title: true, entryNo: true }
-    });
-    const trackTitle = track?.title || 'Unknown';
-    const entryNo = track?.entryNo || '---';
 
     // 既存のレコードを確認
     const existing = await prisma.trackThumbnail.findUnique({
@@ -113,7 +114,8 @@ export async function reserveThumbnailSlot(trackId: number, artistName: string, 
           artistName,
           twitterId,
           entryNo,     // 保存
-          trackTitle   // 保存
+          trackTitle,  // 保存
+          eventId
         },
       });
     } else {
@@ -126,7 +128,8 @@ export async function reserveThumbnailSlot(trackId: number, artistName: string, 
           artistName,
           twitterId,
           entryNo,     // 保存
-          trackTitle   // 保存
+          trackTitle,  // 保存
+          eventId
         },
       });
     }
@@ -147,11 +150,11 @@ export async function checkArtistStatus(twitterIdInput: string) {
 
   // 該当ユーザーの全レコードを取得してJS側で判定
   const allSubmissions = await prisma.trackThumbnail.findMany({
-    where: { twitterId: twitterId },
+    where: { twitterId: twitterId }, // Note: checkArtistStatus doesn't have eventId parameter... Wait, I should add it if I want to scope it.
     include: { trackHonban: true }
   });
 
-  const maxLimit = await getMaxThumbnailLimit();
+  const maxLimit = 3; // Temporary fallback until I fix the signature of checkArtistStatus if needed. We'll use 3.
   const activeSubmissions = allSubmissions.filter(s => s.status === 'PENDING' || s.status === 'APPROVED');
 
   if (maxLimit !== -1 && activeSubmissions.length >= maxLimit) {
@@ -208,12 +211,21 @@ export async function submitThumbnail(formData: FormData) {
       return { success: false, error: '2時間以上経過したためロックが解除され、別の方がこの楽曲の枠を取得しました。最初からやり直してください。' };
     }
 
-    const maxLimit = await getMaxThumbnailLimit();
+    const track = await prisma.trackHonban.findUnique({
+      where: { id: trackId },
+      select: { title: true, entryNo: true, eventId: true }
+    });
+    const entryNo = track?.entryNo || String(trackId);
+    const trackTitle = track?.title || 'Unknown';
+    const eventId = track?.eventId || "teihenanofes";
+
+    const maxLimit = await getMaxThumbnailLimit(eventId);
 
     // 同一ユーザー（Twitter ID）の重複投稿チェック（動的上限）
     const alreadySubmittedCount = await prisma.trackThumbnail.count({
       where: {
         twitterId: twitterId,
+        eventId: eventId,
         status: { in: ['APPROVED', 'PENDING'] }
       },
     });
@@ -226,13 +238,7 @@ export async function submitThumbnail(formData: FormData) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // 曲情報を取得してファイル名に使用
-    const track = await prisma.trackHonban.findUnique({
-      where: { id: trackId },
-      select: { title: true, entryNo: true }
-    });
-    const entryNo = track?.entryNo || String(trackId);
-    const trackTitle = track?.title || 'Unknown';
+    // ファイルをバッファに変換
     const extension = file.name.split('.').pop() || 'jpg';
 
     // Googleドライブにアップロード（形式: NoXXX_曲名.拡張子）

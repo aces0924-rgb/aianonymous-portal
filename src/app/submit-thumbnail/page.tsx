@@ -31,7 +31,7 @@ export default async function SubmitThumbnailPage({
   // 指定された楽曲のみ取得
   const targetTrack = await prisma.trackHonban.findUnique({
     where: { id: parseInt(trackId) },
-    select: { id: true, title: true, entryNo: true }
+    select: { id: true, title: true, entryNo: true, eventId: true }
   });
 
   if (!targetTrack) {
@@ -83,7 +83,7 @@ export default async function SubmitThumbnailPage({
 
   // 制限数をDBから取得（動的化）
   const limitSetting = await prisma.setting.findUnique({
-    where: { key: 'MAX_THUMBNAIL_LIMIT' }
+    where: { eventId_key: { eventId: targetTrack.eventId, key: 'MAX_THUMBNAIL_LIMIT' } }
   });
   const maxThumbnailLimit = limitSetting && !isNaN(parseInt(limitSetting.value, 10))
     ? parseInt(limitSetting.value, 10)
