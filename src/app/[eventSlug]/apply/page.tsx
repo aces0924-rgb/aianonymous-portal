@@ -182,6 +182,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       toast.loading('データベースへ楽曲情報を登録中...', { id: toastId });
       const payload = {
         ...formData,
+        title: entryType === 'illustration' ? (formData.title || 'イラスト作品') : formData.title,
         musicFileUrl,
         srtFileUrl
       };
@@ -234,7 +235,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       eventId: 'preview',
       timestamp: new Date().toISOString(),
       entryNo: 'PRE',
-      title: formData.title,
+      title: entryType === 'illustration' ? (formData.title || 'イラスト作品') : formData.title,
       songUrl: formData.songUrl,
       audioUrl: formData.songUrl,
       lyrics: formData.lyrics,
@@ -364,20 +365,22 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
           <div className="bg-surface border border-surface-border p-6 md:p-8 rounded-3xl space-y-6 shadow-xl">
             
             {/* 共通項目: 曲名 */}
-            <div>
-              <label className="block text-sm font-bold mb-2">
-                曲名 <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
-              </label>
-              <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
-                placeholder="例: サイバーパンク・シティ"
-                required
-              />
-            </div>
+            {entryType === 'music' && (
+              <div>
+                <label className="block text-sm font-bold mb-2">
+                  曲名 <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                  placeholder="例: サイバーパンク・シティ"
+                  required
+                />
+              </div>
+            )}
 
             {/* URL */}
             <div>
@@ -481,19 +484,21 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-bold mb-2">
-                    ジャンル <span className="text-foreground/50 ml-1">任意</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="genre"
-                    value={formData.genre}
-                    onChange={handleChange}
-                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
-                    placeholder="例: サイバーパンク / EDM"
-                  />
-                </div>
+                {entryType === 'music' && (
+                  <div>
+                    <label className="block text-sm font-bold mb-2">
+                      ジャンル <span className="text-foreground/50 ml-1">任意</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="genre"
+                      value={formData.genre}
+                      onChange={handleChange}
+                      className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                      placeholder="例: サイバーパンク / EDM"
+                    />
+                  </div>
+                )}
               </>
             )}
 
