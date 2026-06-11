@@ -281,13 +281,19 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             </div>
 
             <div className="pt-2">
-              <label className="text-xs font-bold text-gray-500 block mb-1">メイン背景画像 (直リンクURL)</label>
+              <div className="flex items-center gap-2 mb-1">
+                <label className="text-xs font-bold text-gray-500 block">メイン背景画像 (直リンクURL)</label>
+                <a href="https://gyazo.com/ja" target="_blank" rel="noopener noreferrer" className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded hover:bg-blue-100 transition-colors shadow-sm">
+                  画像URLの取得には Gyazo が便利です ↗
+                </a>
+              </div>
               <input name="bgUrl" defaultValue={defaultTheme.bgUrl} placeholder="https://.../bg.jpg" className="w-full border p-2 rounded text-sm bg-white" />
-              <p className="text-[10px] text-gray-400 mt-1">※空欄の場合はデフォルトの背景が使用されます</p>
+              <p className="text-[10px] text-gray-400 mt-1">※Gyazo等でアップロードし「画像アドレスをコピー(Direct Link)」を貼り付けてください。空欄の場合はデフォルト背景を使用。</p>
             </div>
-            <div>
+            <div className="pt-2">
               <label className="text-xs font-bold text-gray-500 block mb-1">ロゴ画像 (直リンクURL)</label>
               <input name="logoUrl" defaultValue={defaultTheme.logoUrl} placeholder="https://.../logo.png" className="w-full border p-2 rounded text-sm bg-white" />
+              <p className="text-[10px] text-gray-400 mt-1">※こちらも同様にGyazo等から取得した「画像アドレス(Direct Link)」を貼り付けてください。</p>
             </div>
             <ToastSubmitButton label="デザインを保存" className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 text-sm font-bold w-32 mt-2" />
           </form>
