@@ -31,17 +31,23 @@ export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: Aud
   const [mounted, setMounted] = useState(false);
   const youtubeId = useMemo(() => getYouTubeID(audioSource), [audioSource]);
   const niconicoId = useMemo(() => getNiconicoID(audioSource), [audioSource]);
+  const isImage = useMemo(() => {
+    if (!audioSource) return false;
+    return !!audioSource.match(/\.(jpeg|jpg|gif|png|webp|bmp)(\?.*)?$/i) || audioSource.includes('pbs.twimg.com') || audioSource.includes('gyazo.com');
+  }, [audioSource]);
   const [imgSrc, setImgSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (youtubeId) {
+    if (isImage && audioSource) {
+      setImgSrc(audioSource);
+    } else if (youtubeId) {
       setImgSrc(`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`);
     } else if (niconicoId) {
       getNiconicoThumbnail(niconicoId).then(url => {
         if (url) setImgSrc(url);
       });
     }
-  }, [youtubeId, niconicoId]);
+  }, [youtubeId, niconicoId, isImage, audioSource]);
 
   const handleImageError = () => {
     if (imgSrc?.includes('maxresdefault.jpg')) {
@@ -62,7 +68,7 @@ export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: Aud
     return () => setMounted(false);
   }, []);
 
-  if (!youtubeId && !niconicoId) {
+  if (!youtubeId && !niconicoId && !isImage) {
     return (
       <div className="flex flex-col gap-4 bg-red-50 dark:bg-red-950/30 p-8 rounded-3xl border border-red-200 dark:border-red-900/50 w-full backdrop-blur-md shadow-2xl">
         <div className="flex items-center gap-3 justify-center mb-1">
@@ -92,13 +98,17 @@ export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: Aud
       <div className="flex flex-col gap-2 bg-background/40 p-4 rounded-xl border border-white/5 w-full backdrop-blur-sm shadow-inner group/player relative">
         <div className="flex justify-between items-center mb-1">
           <span className="text-[10px] text-[var(--color-cyan-400)] font-mono tracking-widest uppercase flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-            {niconicoId ? 'Niconico Platform' : 'YouTube Platform'}
+            {!isImage && <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>}
+            {isImage ? 'Illustration Artwork' : (niconicoId ? 'Niconico Platform' : 'YouTube Platform')}
           </span>
         </div>
         
-        <div className="w-full relative rounded-lg overflow-hidden border border-surface-border bg-background shadow-2xl group/video" style={{ aspectRatio: '16/9' }}>
-          {!isPlaying ? (
+        <div className={`w-full relative rounded-lg overflow-hidden border border-surface-border bg-background shadow-2xl ${isImage ? '' : 'group/video'}`} style={{ aspectRatio: isImage ? 'auto' : '16/9' }}>
+          {isImage ? (
+            <div className="w-full flex justify-center items-center bg-black/40 min-h-[300px] max-h-[80vh] cursor-zoom-in" onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(true); }}>
+              <img src={imgSrc || undefined} alt="Illustration" className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-xl animate-in fade-in duration-700" />
+            </div>
+          ) : !isPlaying ? (
             <>
               <button 
                 onClick={() => setIsPlaying(true)}
@@ -165,12 +175,14 @@ export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: Aud
         
         <div className="mt-3 flex justify-between items-center px-1">
           <p className="text-[10px] md:text-xs font-bold tracking-widest text-[var(--color-cyan-400)]/60 uppercase">
-            {isPlaying ? 'Now Playing' : 'Ready to Play'}
+            {isImage ? 'Artwork View' : (isPlaying ? 'Now Playing' : 'Ready to Play')}
           </p>
           <p className="text-[10px] md:text-xs text-gray-500 font-medium italic">
-            {isPlaying 
-              ? '※プレイヤーにて再生中' 
-              : '※上の画面をタップ or クリックすると再生されます'}
+            {isImage 
+              ? '※画像をタップ or クリックすると拡大表示されます'
+              : (isPlaying 
+                ? '※プレイヤーにて再生中' 
+                : '※上の画面をタップ or クリックすると再生されます')}
           </p>
         </div>
       </div>

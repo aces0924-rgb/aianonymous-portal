@@ -13,6 +13,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', applicationFormType: 'standard' });
+  const [entryType, setEntryType] = useState<'music' | 'illustration'>('music');
 
   // Upload State
   const [musicFile, setMusicFile] = useState<File | null>(null);
@@ -86,8 +87,12 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       // Standard validation
       const isYouTube = formData.songUrl.match(/(?:youtu\.be\/|youtube\.com\/)/);
       const isNico = formData.songUrl.match(/(?:nicovideo\.jp\/|nico\.ms\/)/);
-      if (!isYouTube && !isNico) {
+      if (entryType === 'music' && !isYouTube && !isNico) {
         setErrorMsg('楽曲URLはYouTubeまたはニコニコ動画のURLのみ有効です。');
+        return;
+      }
+      if (entryType === 'illustration' && !formData.songUrl.match(/^https?:\/\//)) {
+        setErrorMsg('正しい画像URLを入力してください。');
         return;
       }
       if (!formData.artistName.trim()) {
@@ -336,6 +341,26 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
         )}
 
         <form onSubmit={handlePreview} className="space-y-8">
+          
+          {!isAnonymousMode && (
+            <div className="flex bg-surface border border-surface-border p-1 rounded-2xl w-full max-w-sm mx-auto shadow-inner">
+              <button
+                type="button"
+                onClick={() => setEntryType('music')}
+                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'music' ? 'bg-[var(--color-cyan-500)] text-background shadow-lg' : 'text-foreground/70 hover:text-foreground'}`}
+              >
+                楽曲アーティスト
+              </button>
+              <button
+                type="button"
+                onClick={() => setEntryType('illustration')}
+                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'illustration' ? 'bg-fuchsia-500 text-background shadow-lg' : 'text-foreground/70 hover:text-foreground'}`}
+              >
+                イラストアーティスト
+              </button>
+            </div>
+          )}
+
           <div className="bg-surface border border-surface-border p-6 md:p-8 rounded-3xl space-y-6 shadow-xl">
             
             {/* 共通項目: 曲名 */}
@@ -357,7 +382,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* URL */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                {isAnonymousMode ? 'Suno楽曲URL' : '楽曲URL (YouTube または ニコニコ動画)'} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                {isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画)' : 'イラストの画像URL (Gyazoやpbs.twimg等)')} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
               </label>
               <input
                 type="url"
@@ -365,7 +390,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 value={formData.songUrl}
                 onChange={handleChange}
                 className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
-                placeholder={isAnonymousMode ? "例: https://suno.com/song/..." : "例: https://youtu.be/..."}
+                placeholder={isAnonymousMode ? "例: https://suno.com/song/..." : (entryType === 'music' ? "例: https://youtu.be/..." : "例: https://pbs.twimg.com/media/...jpg")}
                 required
               />
             </div>
