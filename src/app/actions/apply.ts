@@ -13,6 +13,7 @@ export async function getApplyConfig(eventSlug: string) {
     analysisTab: labelConfig.analysisTab || '歌詞考察',
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     applicationFormType: featureFlags.applicationFormType || 'standard',
+    enableArtistMain: featureFlags.enableArtistMain ?? false,
   };
 }
 

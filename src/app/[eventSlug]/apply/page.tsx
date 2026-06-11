@@ -12,7 +12,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
   const [step, setStep] = useState<'input' | 'preview' | 'success'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', applicationFormType: 'standard' });
+  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', applicationFormType: 'standard', enableArtistMain: false });
   const [entryType, setEntryType] = useState<'music' | 'illustration'>('music');
 
   // Upload State
@@ -53,7 +53,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
   const handlePreview = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.title.trim()) {
+    if (entryType === 'music' && !formData.title.trim()) {
       setErrorMsg('曲名は必須です。');
       return;
     }
@@ -323,12 +323,12 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-foreground">
-            {isAnonymousMode ? '匿名楽曲エントリー' : '楽曲エントリー'}
+            {isAnonymousMode ? '匿名楽曲エントリー' : (config.enableArtistMain ? 'アーティストエントリー' : '楽曲エントリー')}
           </h1>
           <p className="text-foreground/70 text-lg">
             {isAnonymousMode 
-              ? '以下のフォームから匿名フェス用の楽曲情報を登録してください。'
-              : '以下のフォームから楽曲情報を登録してください。'}
+              ? '以下のフォームから匿名フェス用の情報を登録してください。'
+              : (config.enableArtistMain ? '以下のフォームからアーティスト情報と作品を登録してください。' : '以下のフォームから楽曲情報を登録してください。')}
           </p>
         </div>
 
