@@ -47,3 +47,11 @@ export async function toggleAwardPublication(id: number, isPublished: boolean) {
   });
   revalidatePath('/admin/awards');
 }
+
+export async function updateApplyButtonSetting() {}
+export async function updateCTAButtonMode() {}
+export async function deleteTrack() {}
+export async function deleteAllTracks() {}
+export async function syncHonbanToSample() {}
+export async function updateActiveTrackTable() {}
+

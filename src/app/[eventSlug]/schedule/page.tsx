@@ -56,7 +56,7 @@ export default async function SchedulePage(props: { searchParams: Promise<{ prev
 
       <div className="absolute left-6 top-8 z-50">
         <Link 
-          href={`/${eventSlug}`} 
+          href={`/${params.eventSlug}`} 
           className="flex items-center gap-2 text-[10px] font-black tracking-widest text-neutral-500 hover:text-[var(--color-cyan-400)] transition-colors uppercase group"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:-translate-x-1">

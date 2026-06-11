@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import StorageDisclaimerModal from '@/components/StorageDisclaimerModal';
 
 interface FavoritesContextType {
@@ -18,41 +19,45 @@ interface FavoritesContextType {
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'vocaloid_fes_favorites';
-const STORAGE_KEY_INTERESTED = 'vocaloid_fes_interested';
-const STORAGE_KEY_DISCLAIMER = 'vocaloid_fes_storage_disclaimer';
-
 export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const params = useParams();
+  const eventSlug = (params?.eventSlug as string) || 'default';
+
+  const STORAGE_KEY = `vocaloid_fes_favorites_${eventSlug}`;
+  const STORAGE_KEY_INTERESTED = `vocaloid_fes_interested_${eventSlug}`;
+  const STORAGE_KEY_DISCLAIMER = `vocaloid_fes_storage_disclaimer_${eventSlug}`;
   const [favorites, setFavorites] = useState<number[]>([]);
   const [interested, setInterested] = useState<number[]>([]);
   const [hasSeenDisclaimer, setHasSeenDisclaimer] = useState<boolean>(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const MAX_FAVORITES = 10;
 
-  // Load from LocalStorage on mount
+  // Load from LocalStorage on mount or when eventSlug changes
   useEffect(() => {
     const storedFavs = localStorage.getItem(STORAGE_KEY);
     if (storedFavs) {
-      try { setFavorites(JSON.parse(storedFavs)); } catch (e) {}
+      try { setFavorites(JSON.parse(storedFavs)); } catch (e) { setFavorites([]); }
+    } else {
+      setFavorites([]);
     }
     const storedInterests = localStorage.getItem(STORAGE_KEY_INTERESTED);
     if (storedInterests) {
-      try { setInterested(JSON.parse(storedInterests)); } catch (e) {}
+      try { setInterested(JSON.parse(storedInterests)); } catch (e) { setInterested([]); }
+    } else {
+      setInterested([]);
     }
     const storedDisclaimer = localStorage.getItem(STORAGE_KEY_DISCLAIMER);
-    if (storedDisclaimer === 'true') {
-      setHasSeenDisclaimer(true);
-    }
-  }, []);
+    setHasSeenDisclaimer(storedDisclaimer === 'true');
+  }, [STORAGE_KEY, STORAGE_KEY_INTERESTED, STORAGE_KEY_DISCLAIMER]);
 
   // Save to LocalStorage whenever they change
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
-  }, [favorites]);
+  }, [favorites, STORAGE_KEY]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_INTERESTED, JSON.stringify(interested));
-  }, [interested]);
+  }, [interested, STORAGE_KEY_INTERESTED]);
 
   const markDisclaimerSeen = () => {
     setHasSeenDisclaimer(true);

@@ -145,14 +145,14 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 },
                 { 
                   href: '#guidelines', 
-                  label: defaultLabels.guidelinesTitle || '募集要項', 
+                  label: (defaultLabels as any).guidelinesTitle || '募集要項', 
                   icon: (
                     <svg className="w-5 h-5 md:w-6 md:h-6 text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/>
                     </svg>
                   )
                 },
-              ].filter(Boolean).map((item, idx) => (
+              ].filter(Boolean).map((item, idx) => item ? (
                 <Link
                   key={idx}
                   href={item.href}
@@ -161,7 +161,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   <span className="shrink-0 transition-transform duration-300 group-hover/link:scale-110">{item.icon}</span>
                   <span className="hidden md:inline truncate">{item.label}</span>
                 </Link>
-              ))}
+              ) : null)}
 
               {/* Row 2: Secondary Links */}
               {[
@@ -385,7 +385,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
             <h2 className="text-4xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-[var(--color-cyan-400)]">
               GUIDELINES
             </h2>
-            <span className="text-foreground/80 font-mono text-sm tracking-widest">/ {defaultLabels.guidelinesTitle || '募集要項'}</span>
+            <span className="text-foreground/80 font-mono text-sm tracking-widest">/ {(defaultLabels as any).guidelinesTitle || '募集要項'}</span>
           </div>
           
 
@@ -399,7 +399,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 <div className="relative bg-gradient-to-br from-surface via-background to-surface border border-surface-border p-8 md:p-14 rounded-[2.5rem] overflow-hidden shadow-2xl transition-all group-hover:border-surface-border">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-cyan-400)] opacity-20 blur-[100px] rounded-full pointer-events-none"></div>
                   <div className="relative z-10 space-y-12">
-                    <h3 className="text-3xl font-black text-foreground tracking-tighter">{defaultLabels.guidelinesTitle || '募集要項'}</h3>
+                    <h2 className="text-3xl md:text-5xl font-black mb-8 text-center tracking-tighter text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]">{(defaultLabels as any).guidelinesTitle || '募集要項'}</h2>
                     
                     {event.description && (
                       <div className="prose prose-p:text-foreground prose-headings:text-foreground prose-a:text-[var(--color-cyan-400)] prose-li:text-foreground prose-strong:text-foreground max-w-none px-0 custom-quill-content">

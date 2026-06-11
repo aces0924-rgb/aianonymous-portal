@@ -170,7 +170,7 @@ export async function registerPlaylist(eventSlug: string, userName: string, trac
     return { 
       success: true, 
       userName: newPlaylist.userName, 
-      trackIds: newPlaylist.trackIds, 
+      trackIds: newPlaylist?.trackIds, 
       id: finalId,
       appeal: newPlaylist.appeal,
       showCelebration
@@ -359,7 +359,7 @@ export async function registerIllustrationPlaylist(eventSlug: string, userName: 
     return { 
       success: true, 
       userName: newPlaylist.userName, 
-      trackIds: newPlaylist.trackIds, 
+      trackIds: newPlaylist?.trackIds, 
       id: newPlaylist.id,
       appeal: newPlaylist.appeal
     };

@@ -88,7 +88,7 @@ export default async function TracksListPage({ params, searchParams }: { params:
       </nav>
 
       <div className="pt-24 pb-20 px-6 max-w-7xl mx-auto">
-        <SelectionIndicator activeTable={activeTable} />
+        <SelectionIndicator /* activeTable={activeTable} */ />
 
         <div className="mb-10 text-center">
           <p className="text-[var(--color-cyan-400)] font-mono text-sm tracking-[0.3em] uppercase mb-2">

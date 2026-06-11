@@ -10,7 +10,7 @@ interface Award {
   note: string | null
   description: string | null
   extraInfo: string | null
-  trackId: string | null
+  trackId: number | null
   order: number
 }
 

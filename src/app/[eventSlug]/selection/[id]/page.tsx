@@ -32,21 +32,21 @@ export default async function SelectionPage({
   // Fetch from DB by ID
   const playlist = await getPlaylistById(dbId);
   
-  if (!playlist || playlist.eventId !== event.id) {
+  if (!playlist || playlist.eventId !== event?.id) {
     notFound();
   }
 
   // 同じユーザーの全リストを取得
   const allUserPlaylists = await getAllPlaylistsByUserName(eventSlug, playlist.userName);
 
-  const idArray = playlist.trackIds.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
+  const idArray = playlist.trackIds.split(',').map((id: any) => parseInt(id)).filter((id: any) => !isNaN(id));
 
   // Check active table
-  const activeTableSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'ACTIVE_TRACK_TABLE' } } })
+  const activeTableSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event?.id, key: 'ACTIVE_TRACK_TABLE' } } })
   // URLパラメータで preview=honban が指定されているか、全体設定が track_honban の場合に本番用を表示
   const activeTable = (preview === 'honban') ? 'track_honban' : (activeTableSetting?.value || "track")
 
-  const shareBasePostUrlSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'SHARE_BASE_POST_URL' } } })
+  const shareBasePostUrlSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event?.id, key: 'SHARE_BASE_POST_URL' } } })
   const shareBasePostUrl = shareBasePostUrlSetting?.value || ""
 
   const tracksSelect = {
@@ -70,7 +70,7 @@ export default async function SelectionPage({
       });
 
   // Keep original order
-  const sortedTracks = idArray.map(id => tracks.find((t: any) => t.id === id)).filter(Boolean);
+  const sortedTracks = idArray.map((id: any) => tracks.find((t: any) => t?.id === id)).filter(Boolean);
 
   const previewQuery = preview === 'honban' ? '?preview=honban' : '';
 
@@ -143,7 +143,7 @@ export default async function SelectionPage({
         <div className="bg-surface/30 border border-surface-border rounded-[2.5rem] p-6 md:p-10 shadow-2xl backdrop-blur-sm text-center">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 text-left">
             {sortedTracks.map((t: any, idx: number) => (
-              <div key={t.id} className="relative">
+              <div key={t?.id} className="relative">
                 <div className="absolute -left-4 -top-4 w-12 h-12 flex items-center justify-center bg-surface border-2 border-[var(--color-cyan-400)] text-[var(--color-cyan-400)] font-black rounded-full z-20 text-xl italic shadow-lg">
                   {idx + 1}
                 </div>
