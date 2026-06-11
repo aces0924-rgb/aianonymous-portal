@@ -106,11 +106,11 @@ export default async function Home({ params, searchParams }: { params: Promise<{
       
       {/* Navigation Index (Fixed Header) */}
       <nav id="nav-index" className="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-surface-border shadow-2xl">
-        <div className="max-w-7xl mx-auto px-4 py-2 flex items-center gap-8 md:gap-14">
+        <div className="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row items-center gap-2 md:gap-14">
           {/* Left: Logo Area (Spanning 3 rows) */}
-          <div className="shrink-0">
+          <div className="shrink-0 mb-1 md:mb-0">
             <Link href="/" className="block">
-              <img src={defaultTheme.logoUrl} alt={defaultLabels.siteTitle} className="h-16 md:h-32 w-auto hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_20px_var(--color-glow)]" style={{ objectFit: 'contain' }} />
+              <img src={defaultTheme.logoUrl} alt={defaultLabels.siteTitle} className="h-10 md:h-32 w-auto hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_20px_var(--color-glow)]" style={{ objectFit: 'contain' }} />
             </Link>
           </div>
 
@@ -239,7 +239,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         
         <div className="absolute inset-0 opacity-10 pointer-events-none z-0" style={{ backgroundImage: 'radial-gradient(circle at center, #bc13fe 0%, transparent 50%)' }}></div>
         
-        <div className="z-10 text-center space-y-4 md:space-y-6 px-4 w-full mt-12 md:mt-16">
+        <div className="z-10 text-center space-y-4 md:space-y-6 px-4 w-full mt-28 md:mt-16">
           <div className="pb-6 flex flex-col items-center justify-center gap-6 md:gap-10 max-w-sm md:max-w-6xl mx-auto relative z-20">
             {/* Top Row: Main Actions */}
             <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 w-full">
