@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 
 interface RandomTrackButtonProps {
   trackIds: number[]
@@ -19,6 +19,8 @@ export default function RandomTrackButton({
   variant = 'compact'
 }: RandomTrackButtonProps & { activeTable?: string }) {
   const router = useRouter()
+  const params = useParams()
+  const eventSlug = params?.eventSlug as string || ''
 
   const handleRandomClick = () => {
     if (trackIds.length === 0) return
@@ -46,8 +48,9 @@ export default function RandomTrackButton({
     
     // プレビューモード（手動パラメータ指定）中のみクエリを引き継ぐ
     const query = preview === 'honban' ? '?preview=honban' : ''
+    const prefix = eventSlug ? `/${eventSlug}` : ''
       
-    router.push(`/tracks/${randomId}${query}`)
+    router.push(`${prefix}/tracks/${randomId}${query}`)
   }
 
   const baseStyles = "rounded-full font-black transition-all whitespace-nowrap flex items-center justify-center"
