@@ -101,7 +101,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       }
     }
 
-    if (!formData.agreedToTerms) {
+    if (config.applicationFormType === 'anonymous' && !formData.agreedToTerms) {
       setErrorMsg('応募規約への同意は必須です。');
       return;
     }
@@ -570,52 +570,54 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
               </div>
             )}
             
-            {/* チェックボックス類 */}
-            <div className="pt-4 border-t border-surface-border space-y-4">
-              <label className="flex items-start gap-3 cursor-pointer group">
-                <div className="relative flex items-center justify-center mt-1">
-                  <input
-                    type="checkbox"
-                    name="publishConsent"
-                    checked={formData.publishConsent}
-                    onChange={handleChange}
-                    className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-500)] checked:border-[var(--color-cyan-500)] transition-colors cursor-pointer"
-                  />
-                  <svg className="absolute w-3 h-3 text-background opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </div>
-                <div className="text-sm">
-                  <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
-                    ニコニコ動画等への転載・公開に同意する
-                  </p>
-                  <p className="text-foreground/60 mt-1">
-                    ご応募いただいた楽曲は、運営のYouTubeチャンネルやニコニコ動画のプレイリスト等で紹介される場合があります。
-                  </p>
-                </div>
-              </label>
+            {/* チェックボックス類 (匿名モードのみ) */}
+            {isAnonymousMode && (
+              <div className="pt-4 border-t border-surface-border space-y-4">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <div className="relative flex items-center justify-center mt-1">
+                    <input
+                      type="checkbox"
+                      name="publishConsent"
+                      checked={formData.publishConsent}
+                      onChange={handleChange}
+                      className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-500)] checked:border-[var(--color-cyan-500)] transition-colors cursor-pointer"
+                    />
+                    <svg className="absolute w-3 h-3 text-background opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div className="text-sm">
+                    <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
+                      ニコニコ動画等への転載・公開に同意する
+                    </p>
+                    <p className="text-foreground/60 mt-1">
+                      ご応募いただいた楽曲は、運営のYouTubeチャンネルやニコニコ動画のプレイリスト等で紹介される場合があります。
+                    </p>
+                  </div>
+                </label>
 
-              <label className="flex items-start gap-3 cursor-pointer group">
-                <div className="relative flex items-center justify-center mt-1">
-                  <input
-                    type="checkbox"
-                    name="agreedToTerms"
-                    checked={formData.agreedToTerms}
-                    onChange={handleChange}
-                    className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-500)] checked:border-[var(--color-cyan-500)] transition-colors cursor-pointer"
-                    required
-                  />
-                  <svg className="absolute w-3 h-3 text-background opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                  </svg>
-                </div>
-                <div className="text-sm">
-                  <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
-                    応募規約に同意する <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
-                  </p>
-                </div>
-              </label>
-            </div>
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <div className="relative flex items-center justify-center mt-1">
+                    <input
+                      type="checkbox"
+                      name="agreedToTerms"
+                      checked={formData.agreedToTerms}
+                      onChange={handleChange}
+                      className="peer appearance-none w-5 h-5 border-2 border-surface-border rounded bg-background checked:bg-[var(--color-cyan-500)] checked:border-[var(--color-cyan-500)] transition-colors cursor-pointer"
+                      required
+                    />
+                    <svg className="absolute w-3 h-3 text-background opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div className="text-sm">
+                    <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
+                      応募規約に同意する <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                    </p>
+                  </div>
+                </label>
+              </div>
+            )}
           </div>
 
           <div className="text-center pt-4 pb-12">
