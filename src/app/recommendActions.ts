@@ -85,80 +85,6 @@ export async function registerPlaylist(eventSlug: string, userName: string, trac
       
       const duplicateNos = duplicateTracks.map(t => t.entryNo).join(', ');
       return { success: false, error: `過去に選んだ楽曲（${duplicateNos}）が含まれています。楽曲を変更してください。` };
-  if (!event) return { success: false, error: 'Event not found' };
-  const trimmedName = userName.trim();
-  const trimmedXId = xAccountId?.trim();
-
-  if (!trimmedName) {
-    return { success: false, error: 'ユーザー名を入力してください。' };
-  }
-  if (!trimmedXId) {
-    return { success: false, error: 'XアカウントIDを入力してください。' };
-  }
-
-  try {
-    const idArray = trackIds.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
-    
-    // Fetch entryNos for these tracks to store for visibility
-    const activeTableSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'ACTIVE_TRACK_TABLE' } } })
-    const activeTable = activeTableSetting?.value || "track"
-    
-    const trackEntries = activeTable === "track_honban"
-      ? await prisma.trackHonban.findMany({
-          where: { id: { in: idArray } },
-          select: { id: true, entryNo: true }
-        })
-      : await prisma.track.findMany({
-          where: { id: { in: idArray } },
-          select: { id: true, entryNo: true }
-        });
-    
-    const entryNos = idArray.map(id => trackEntries.find(t => t.id === id)?.entryNo).filter(Boolean).join(',');
-
-    // Check if name already exists
-    const mainEntry = await prisma.userPlaylist.findUnique({
-      where: { userName: trimmedName }
-    });
-
-    // サブテーブルでの登録レコードも取得（重複チェック用）
-    const subEntries = await (prisma as any).userPlaylistSub.findMany({
-      where: { userName: trimmedName },
-      select: { trackIds: true }
-    });
-
-    const totalRegistrations = (mainEntry ? 1 : 0) + subEntries.length;
-
-    if (totalRegistrations >= 3) {
-      return { success: false, error: '1人3回までしか登録できません。' };
-    }
-
-    // 過去に選んだ楽曲IDをすべて収集
-    const previousTrackIds = new Set<string>();
-    if (mainEntry) {
-      mainEntry.trackIds.split(',').forEach(id => previousTrackIds.add(id.trim()));
-    }
-    subEntries.forEach((entry: any) => {
-      entry.trackIds.split(',').forEach((id: string) => previousTrackIds.add(id.trim()));
-    });
-
-    // 今回選ばれた曲と重複がないかチェック
-    const currentTrackIdList = trackIds.split(',').map(id => id.trim());
-    const duplicateIds = currentTrackIdList.filter(id => previousTrackIds.has(id)).map(id => parseInt(id));
-
-    if (duplicateIds.length > 0) {
-      // 重複している曲のentryNoを取得
-      const duplicateTracks = activeTable === "track_honban"
-        ? await prisma.trackHonban.findMany({
-            where: { id: { in: duplicateIds } },
-            select: { entryNo: true }
-          })
-        : await prisma.track.findMany({
-            where: { id: { in: duplicateIds } },
-            select: { entryNo: true }
-          });
-      
-      const duplicateNos = duplicateTracks.map(t => t.entryNo).join(', ');
-      return { success: false, error: `過去に選んだ楽曲（${duplicateNos}）が含まれています。楽曲を変更してください。` };
     }
 
     let newPlaylist;
@@ -352,6 +278,87 @@ export async function getIllustrationRegistrationCount(eventSlug: string, userNa
 
 export async function registerIllustrationPlaylist(eventSlug: string, userName: string, trackIds: string, xAccountId?: string, appeal?: string): Promise<RegistrationResult> {
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
+  if (!event) return { success: false, error: 'Event not found' };
+  const trimmedName = userName.trim();
+  const trimmedXId = xAccountId?.trim();
+
+  if (!trimmedName) {
+    return { success: false, error: 'ユーザー名を入力してください。' };
+  }
+  if (!trimmedXId) {
+    return { success: false, error: 'XアカウントIDを入力してください。' };
+  }
+
+  try {
+    const idArray = trackIds.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
+    
+    // Check dynamic limit
+    const maxLimit = await getMaxIllustLimit(eventSlug);
+    const currentCount = await getIllustrationRegistrationCount(eventSlug, trimmedName);
+    
+    if (maxLimit !== -1 && currentCount >= maxLimit) {
+      return { success: false, error: `推しイラストは合計${maxLimit}回まで登録可能です。現在${currentCount}回登録済みのため上限を超えています。` };
+    }
+
+    // Fetch entryNos
+    const activeTableSetting = await prisma.setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'ACTIVE_TRACK_TABLE' } } });
+    const activeTable = activeTableSetting?.value || "track";
+    
+    const trackEntries = activeTable === "track_honban"
+      ? await prisma.trackHonban.findMany({
+          where: { id: { in: idArray } },
+          select: { id: true, entryNo: true }
+        })
+      : await prisma.track.findMany({
+          where: { id: { in: idArray } },
+          select: { id: true, entryNo: true }
+        });
+    
+    const entryNos = idArray.map(id => trackEntries.find(t => t.id === id)?.entryNo).filter(Boolean).join(',');
+
+    // Check for duplicates
+    const previousEntries = await prisma.userIllustrationPlaylist.findMany({
+      where: { userName: trimmedName }
+    });
+
+    const previousTrackIds = new Set<string>();
+    previousEntries.forEach(entry => {
+      entry.trackIds.split(',').forEach(id => previousTrackIds.add(id.trim()));
+    });
+
+    const currentTrackIdList = trackIds.split(',').map(id => id.trim());
+    const duplicateIds = currentTrackIdList.filter(id => previousTrackIds.has(id)).map(id => parseInt(id));
+
+    if (duplicateIds.length > 0) {
+      const duplicateTracks = activeTable === "track_honban"
+        ? await prisma.trackHonban.findMany({
+            where: { id: { in: duplicateIds } },
+            select: { entryNo: true }
+          })
+        : await prisma.track.findMany({
+            where: { id: { in: duplicateIds } },
+            select: { entryNo: true }
+          });
+      
+      const duplicateNos = duplicateTracks.map(t => t.entryNo).join(', ');
+      return { success: false, error: `過去に選んだ楽曲（${duplicateNos}）が含まれています。楽曲を変更してください。` };
+    }
+
+    const newPlaylist = await prisma.userIllustrationPlaylist.create({
+      data: {
+        eventId: event.id,
+        userName: trimmedName,
+        xAccountId: trimmedXId,
+        appeal: appeal?.trim() || null,
+        trackIds: trackIds,
+        trackEntryNos: entryNos
+      }
+    });
+
+    revalidatePath('/recommend');
+    revalidatePath('/selections');
+    revalidatePath('/selections/illustrations');
+
     return { 
       success: true, 
       userName: newPlaylist.userName, 
