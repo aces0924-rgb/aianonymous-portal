@@ -12,15 +12,26 @@ interface TrackListFilterableProps {
 
 export default function TrackListFilterable({ initialTracks, preview, enableArtistMain }: TrackListFilterableProps) {
   const { interested, favorites } = useFavorites();
-  const [filterMode, setFilterMode] = useState<'all' | 'interested' | 'favorites' | 'unregistered'>('all');
+  const [filterMode, setFilterMode] = useState<'all' | 'interested' | 'favorites' | 'unregistered' | 'music' | 'illustration'>('all');
+
+  const isIllustration = (url?: string) => {
+    if (!url) return false;
+    const isVideo = url.match(/(?:youtu\.be\/|youtube\.com\/|nicovideo\.jp\/|nico\.ms\/|suno\.com\/)/);
+    if (isVideo) return false;
+    return !!(url.match(/\.(jpeg|jpg|gif|png)$/i) || url.includes('pbs.twimg.com') || url.includes('gyazo.com'));
+  };
 
   const unregisteredCount = useMemo(() => initialTracks.filter(t => !t.hasThumbnail).length, [initialTracks]);
+  const musicCount = useMemo(() => initialTracks.filter(t => !isIllustration(t.songUrl)).length, [initialTracks]);
+  const illustrationCount = useMemo(() => initialTracks.filter(t => isIllustration(t.songUrl)).length, [initialTracks]);
 
   const filteredTracks = useMemo(() => {
     if (filterMode === 'all') return initialTracks;
     if (filterMode === 'interested') return initialTracks.filter(track => interested.includes(track.id));
     if (filterMode === 'favorites') return initialTracks.filter(track => favorites.includes(track.id));
     if (filterMode === 'unregistered') return initialTracks.filter(track => !track.hasThumbnail);
+    if (filterMode === 'music') return initialTracks.filter(track => !isIllustration(track.songUrl));
+    if (filterMode === 'illustration') return initialTracks.filter(track => isIllustration(track.songUrl));
     return initialTracks;
   }, [initialTracks, filterMode, interested, favorites]);
 
@@ -39,6 +50,34 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
           >
             すべて表示 ({initialTracks.length})
           </button>
+          
+          {enableArtistMain && (
+            <>
+              <button
+                onClick={() => setFilterMode('music')}
+                className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
+                  filterMode === 'music' 
+                    ? 'bg-[var(--color-cyan-600)] text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
+                    : 'text-gray-500 hover:text-[var(--color-cyan-400)]/50'
+                }`}
+              >
+                <span>🎵</span>
+                音楽 ({musicCount})
+              </button>
+
+              <button
+                onClick={() => setFilterMode('illustration')}
+                className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
+                  filterMode === 'illustration' 
+                    ? 'bg-fuchsia-600 text-white shadow-[0_0_15px_rgba(192,38,211,0.4)]' 
+                    : 'text-gray-500 hover:text-fuchsia-400/50'
+                }`}
+              >
+                <span>🖼️</span>
+                イラスト ({illustrationCount})
+              </button>
+            </>
+          )}
           
           <button
             onClick={() => setFilterMode('interested')}
@@ -87,14 +126,18 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
         {filteredTracks.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center py-24 border-2 border-dashed border-surface-border rounded-[3rem] space-y-4 animate-in fade-in duration-700">
             <span className="text-5xl opacity-20">
-              {filterMode === 'interested' ? '⭐' : filterMode === 'favorites' ? '💖' : '🎨'}
+              {filterMode === 'interested' ? '⭐' : filterMode === 'favorites' ? '💖' : filterMode === 'music' ? '🎵' : filterMode === 'illustration' ? '🖼️' : '🎨'}
             </span>
             <p className="text-gray-600 font-bold tracking-[0.2em] uppercase text-sm">
               {filterMode === 'interested' 
                 ? '気になる曲はまだありません' 
                 : filterMode === 'favorites' 
                   ? '推し候補はまだありません' 
-                  : 'すべての楽曲にファンアートが登録されました！'}
+                  : filterMode === 'music'
+                    ? '音楽作品はまだありません'
+                    : filterMode === 'illustration'
+                      ? 'イラスト作品はまだありません'
+                      : 'すべての楽曲にファンアートが登録されました！'}
             </p>
           </div>
         )}
