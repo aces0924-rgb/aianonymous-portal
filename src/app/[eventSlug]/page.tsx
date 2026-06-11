@@ -86,6 +86,8 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
+    randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
+    scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！'
   }
   const defaultFeatures = {
     enableRandomPlay: featureFlags.enableRandomPlay ?? true,
@@ -93,7 +95,8 @@ export default async function Home({ params, searchParams }: { params: Promise<{
     enableShowCreators: featureFlags.enableShowCreators ?? false,
     enableArtistMain: featureFlags.enableArtistMain ?? false,
     enableAwards: featureFlags.enableAwards ?? false,
-    enableHostSection: featureFlags.enableHostSection ?? true
+    enableHostSection: featureFlags.enableHostSection ?? true,
+    enableScheduleButton: featureFlags.enableScheduleButton ?? true
   }
 
   const hosts = labelConfig.hosts || []
@@ -278,7 +281,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
 
               {/* Random Button */}
               {defaultFeatures.enableRandomPlay && (
-                <RandomTrackButton trackIds={tracks.map((t: any) => t.id)} preview={preview} variant="hero" label="ランダムで曲を聴く" />
+                <RandomTrackButton trackIds={tracks.map((t: any) => t.id)} preview={preview} variant="hero" label={defaultLabels.randomPlayButtonLabel} />
               )}
             </div>
 
@@ -296,18 +299,20 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 <span className="tracking-tight uppercase font-black text-sm md:text-xl">Xでイベントを応援</span>
               </a>
 
-              <Link 
-                href={`/${eventSlug}/schedule`}
-                className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-white font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]"
-              >
-                <svg className="w-8 h-8 md:w-10 md:h-10 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                </svg>
-                <div className="flex flex-col items-start leading-tight">
-                  <span className="text-[10px] md:text-xs opacity-90 font-bold tracking-[0.2em] mb-1">イベント期間</span>
-                  <span className="text-sm md:text-xl font-black tracking-tighter">YouTubeプレミア配信中！！</span>
-                </div>
-              </Link>
+              {defaultFeatures.enableScheduleButton !== false && (
+                <Link 
+                  href={`/${eventSlug}/schedule`}
+                  className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-white font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]"
+                >
+                  <svg className="w-8 h-8 md:w-10 md:h-10 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                  </svg>
+                  <div className="flex flex-col items-start leading-tight">
+                    <span className="text-[10px] md:text-xs opacity-90 font-bold tracking-[0.2em] mb-1">イベント期間</span>
+                    <span className="text-sm md:text-xl font-black tracking-tighter">{defaultLabels.scheduleButtonLabel}</span>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
           <div className="relative inline-block group z-10 -mt-24 md:-mt-48 lg:-mt-64">

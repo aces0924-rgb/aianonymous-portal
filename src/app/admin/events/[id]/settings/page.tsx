@@ -96,7 +96,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     analysisTab: labelConfig.analysisTab || '歌詞考察',
     analysisNote: labelConfig.analysisNote || '※ChatGPT-4oによる自動考察です。AIの幻覚により、事実と異なる解釈が含まれる可能性があります。',
     disclaimer: labelConfig.disclaimer || '【免責事項】この考察はAIによる独自の解釈であり、作者様の意図と異なる場合があります。',
-    entryPrefix: labelConfig.entryPrefix || 'ANF'
+    entryPrefix: labelConfig.entryPrefix || 'ANF',
+    randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
+    scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！'
   }
   const defaultFeatures = {
     enableRandomPlay: featureFlags.enableRandomPlay ?? true,
@@ -106,6 +108,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     enableArtistMain: featureFlags.enableArtistMain ?? false,
     enableAwards: featureFlags.enableAwards ?? false,
     enableHostSection: featureFlags.enableHostSection ?? true,
+    enableScheduleButton: featureFlags.enableScheduleButton ?? true,
     applicationFormType: featureFlags.applicationFormType || 'standard'
   }
 
@@ -314,7 +317,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const analysisNote = formData.get('analysisNote') as string
             const disclaimer = formData.get('disclaimer') as string
             const entryPrefix = formData.get('entryPrefix') as string
-            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix })
+            const randomPlayButtonLabel = formData.get('randomPlayButtonLabel') as string
+            const scheduleButtonLabel = formData.get('scheduleButtonLabel') as string
+            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonLabel })
           }} className="flex flex-col gap-4">
             <div className="flex gap-4">
               <div className="flex-1">
@@ -344,7 +349,17 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <label className="text-xs font-bold text-gray-500 block mb-1">楽曲詳細ページの免責事項 (フッター等)</label>
               <textarea name="disclaimer" defaultValue={defaultLabels.disclaimer} className="w-full border p-2 rounded text-sm bg-white h-20"></textarea>
             </div>
-            <ToastSubmitButton label="文言を保存" className="bg-amber-600 text-white p-2 rounded hover:bg-amber-700 text-sm font-bold w-32" />
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <label className="text-xs font-bold text-gray-500 block mb-1">ランダム再生ボタン名</label>
+                <input name="randomPlayButtonLabel" defaultValue={defaultLabels.randomPlayButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
+              </div>
+              <div className="flex-1">
+                <label className="text-xs font-bold text-gray-500 block mb-1">スケジュール(配信)ボタン名</label>
+                <input name="scheduleButtonLabel" defaultValue={defaultLabels.scheduleButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
+              </div>
+            </div>
+            <ToastSubmitButton label="文言・ラベルを保存" className="bg-amber-600 text-white p-2 rounded hover:bg-amber-700 text-sm font-bold mt-2" />
           </form>
         </div>
 
@@ -410,8 +425,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const enableArtistMain = formData.get('enableArtistMain') === 'true'
             const enableAwards = formData.get('enableAwards') === 'true'
             const enableHostSection = formData.get('enableHostSection') === 'true'
+            const enableScheduleButton = formData.get('enableScheduleButton') === 'true'
             const applicationFormType = formData.get('applicationFormType') as string || 'standard'
-            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, applicationFormType })
+            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, enableScheduleButton, applicationFormType })
           }} className="flex flex-col gap-2 pt-4 border-t">
             <h3 className="font-bold text-sm text-gray-700 mb-2">機能ON/OFF (Features)</h3>
             <div className="flex gap-4">
@@ -455,6 +471,13 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             </div>
 
             <div className="flex gap-4 mt-2">
+              <div className="flex-1">
+                <label className="text-xs font-bold text-gray-500 block mb-1">スケジュールボタン表示</label>
+                <select name="enableScheduleButton" defaultValue={defaultFeatures.enableScheduleButton ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
+                  <option value="true">表示する (ON)</option>
+                  <option value="false">非表示 (OFF)</option>
+                </select>
+              </div>
               <div className="flex-1">
                 <label className="text-xs font-bold text-gray-500 block mb-1">応募フォームの形式</label>
                 <select name="applicationFormType" defaultValue={defaultFeatures.applicationFormType} className="w-full border p-2 rounded text-sm bg-white">
