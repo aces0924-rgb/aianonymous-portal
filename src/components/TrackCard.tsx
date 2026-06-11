@@ -56,7 +56,7 @@ export default function TrackCard({ track, preview, enableArtistMain }: { track:
               href={detailUrl} 
               className="ml-1 flex items-center gap-2 px-4 py-2 bg-purple-600/20 border border-purple-500/40 text-purple-200 rounded-full text-[10px] md:text-xs font-black hover:bg-purple-600 hover:text-white hover:border-purple-300 transition-all group/link whitespace-nowrap shadow-[0_0_10px_rgba(168,85,247,0.1)]"
             >
-              <span>歌詞・AI考察へ</span>
+              <span>詳細画面へ</span>
               <span className="group-hover/link:translate-x-1 transition-transform">→</span>
             </Link>
           </div>
