@@ -5,11 +5,15 @@ import { useFavorites } from '@/context/FavoritesContext';
 
 interface FavoriteButtonProps {
   trackId: number;
+  enableArtistMain?: boolean;
 }
 
-export default function FavoriteButton({ trackId, compact = false }: FavoriteButtonProps & { compact?: boolean }) {
+export default function FavoriteButton({ trackId, compact = false, enableArtistMain = false }: FavoriteButtonProps & { compact?: boolean }) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(trackId);
+
+  const titleNotFavorite = enableArtistMain ? '推し人に選ぶ' : '推し曲に選ぶ';
+  const titleFavorite = enableArtistMain ? '推し人に登録済み!' : '推し曲に登録済み!';
 
   return (
     <button 
@@ -23,10 +27,10 @@ export default function FavoriteButton({ trackId, compact = false }: FavoriteBut
               : 'bg-transparent border-surface-border text-foreground/50 hover:border-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] hover:bg-[var(--color-cyan-500)]/5'
           }`
       }`}
-      title={favorite ? '推しに登録済み!' : '推し曲に選ぶ'}
+      title={favorite ? titleFavorite : titleNotFavorite}
     >
       <span className={compact ? "text-lg" : "text-xl"}>{favorite ? '💖' : '🤍'}</span>
-      {!compact && <span className="hidden sm:inline">{favorite ? '推しに登録済み!' : '推し曲に選ぶ'}</span>}
+      {!compact && <span className="hidden sm:inline">{favorite ? titleFavorite : titleNotFavorite}</span>}
     </button>
   );
 }

@@ -154,7 +154,7 @@ export default function TrackDetailView({
                   No.{(track as any).entryNo || track.id.toString().padStart(3, '0')}
                 </span>
                 <InterestedButton trackId={track.id} />
-                <FavoriteButton trackId={track.id} />
+                <FavoriteButton trackId={track.id} enableArtistMain={defaultFeatures?.enableArtistMain} />
               </div>
               <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-2 md:mb-4 leading-tight tracking-tighter flex items-start gap-2 md:gap-3">
                 {isArtistMain ? (
