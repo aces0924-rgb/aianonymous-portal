@@ -8,7 +8,7 @@ import FavoriteButton from './FavoriteButton';
 import { useFavorites } from '@/context/FavoritesContext';
 import AudioPlayer from './AudioPlayer';
 
-export default function IllustrationTrackCard({ track, preview }: { track: any, preview?: string }) {
+export default function IllustrationTrackCard({ track, preview, enableArtistMain }: { track: any, preview?: string, enableArtistMain?: boolean }) {
   const audioSource = getDirectStreamUrl(track.audioUrl || track.songUrl);
   const isPlayable = !!audioSource;
   const { isFavorite } = useFavorites();
@@ -31,7 +31,11 @@ export default function IllustrationTrackCard({ track, preview }: { track: any, 
             <span className="text-purple-400 font-mono text-base md:text-lg font-black tracking-widest bg-purple-950/40 px-2 py-1 rounded-md border border-purple-800/50 whitespace-nowrap">
               No.{track.entryNo || track.id.toString().padStart(3, '0')}
             </span>
-            {track.genre && (
+            {enableArtistMain && track.title ? (
+              <span className="text-foreground/60 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 truncate max-w-[100px] md:max-w-[150px]">
+                {track.title}
+              </span>
+            ) : track.genre && (
               <span className="text-foreground/60 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 truncate max-w-[100px] md:max-w-[150px]">
                 {track.genre}
               </span>
@@ -55,7 +59,7 @@ export default function IllustrationTrackCard({ track, preview }: { track: any, 
         {/* Title and Play Button */}
         <div className="flex flex-col gap-4 mt-2">
           <h3 className="text-xl md:text-2xl font-black text-foreground group-hover:text-purple-300 transition-colors leading-tight tracking-tight">
-            {track.title}
+            {enableArtistMain && track.artistName ? track.artistName : track.title}
           </h3>
 
           <div className="w-full">

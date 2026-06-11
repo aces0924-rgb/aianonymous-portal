@@ -19,9 +19,10 @@ interface SelectionCardProps {
     hasMultipleLists?: boolean;
   };
   previewQuery: string;
+  enableArtistMain?: boolean;
 }
 
-export default function IllustrationSelectionCard({ list, previewQuery }: SelectionCardProps) {
+export default function IllustrationSelectionCard({ list, previewQuery, enableArtistMain }: SelectionCardProps) {
   const { interested } = useFavorites();
   const params = useParams();
   const eventSlug = params?.eventSlug as string || '';
@@ -82,7 +83,7 @@ export default function IllustrationSelectionCard({ list, previewQuery }: Select
           <h2 className={`text-xl md:text-2xl font-black tracking-tighter leading-tight transition-colors duration-500 ${
             isCompleted ? 'text-yellow-400' : hasStarted ? 'text-white' : 'text-foreground/80'
           }`}>
-            {list.userName} <span className="text-sm font-bold opacity-60">さんの推しイラストリスト</span>
+            {list.userName} <span className="text-sm font-bold opacity-60">さんの推し{enableArtistMain ? 'クリエイター' : 'イラスト'}リスト</span>
           </h2>
         </div>
 

@@ -176,6 +176,7 @@ export default function IllustrationSelectionListContainer({ initialPlaylists, p
             key={list.id} 
             list={list} 
             previewQuery={previewQuery} 
+            enableArtistMain={enableArtistMain}
           />
         ))}
       </div>
