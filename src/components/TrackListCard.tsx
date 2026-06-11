@@ -35,6 +35,14 @@ export default function TrackListCard({ track, preview, enableArtistMain }: { tr
   // 基本的な高画質サムネイル（maxresdefaultが存在しない場合のフォールバック用）
   const fallbackThumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
+  const isIllustration = (url?: string | null) => {
+    if (!url) return false;
+    const isVideo = url.match(/(?:youtu\.be\/|youtube\.com\/|nicovideo\.jp\/|nico\.ms\/|suno\.com\/)/);
+    if (isVideo) return false;
+    return !!(url.match(/\.(jpeg|jpg|gif|png)$/i) || url.includes('pbs.twimg.com') || url.includes('gyazo.com'));
+  };
+  const isImg = isIllustration(track.songUrl);
+
   const isArtistMain = enableArtistMain && !!track.artistName;
   const mainText = isArtistMain ? track.artistName : track.title;
   const subText = isArtistMain ? track.title : track.artistName;
@@ -70,19 +78,35 @@ export default function TrackListCard({ track, preview, enableArtistMain }: { tr
         </Link>
 
         <div className="flex flex-wrap items-center gap-2 shrink-0">
-          {/* Play Button */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              playTrack(track.id, track.title, track.songUrl, track.audioUrl);
-            }}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all active:scale-90"
-            title="再生する"
-          >
-            <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          </button>
+          {isImg ? (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                setIsModalOpen(true);
+              }}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-fuchsia-500/10 border border-fuchsia-500/30 text-fuchsia-400 hover:bg-fuchsia-500 hover:text-white transition-all active:scale-90"
+              title="イラストを見る"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </button>
+          ) : (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                playTrack(track.id, track.title, track.songUrl, track.audioUrl);
+              }}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all active:scale-90"
+              title="再生する"
+            >
+              <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          )}
 
           {/* Thumbnail Button */}
           {videoId && (
@@ -149,8 +173,8 @@ export default function TrackListCard({ track, preview, enableArtistMain }: { tr
         </div>
       </div>
 
-      {/* サムネイル拡大モーダル */}
-      {isModalOpen && videoId && mounted && createPortal(
+      {/* サムネイル/イラスト拡大モーダル */}
+      {isModalOpen && (videoId || isImg) && mounted && createPortal(
         <div 
           className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm animate-in fade-in duration-200"
           onClick={(e) => {
@@ -172,16 +196,16 @@ export default function TrackListCard({ track, preview, enableArtistMain }: { tr
               </svg>
             </button>
             <img 
-              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} 
+              src={isImg ? track.songUrl : `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} 
               alt={track.title}
               className="w-full h-auto max-h-[80vh] object-contain rounded-xl shadow-[0_0_50px_rgba(0,240,255,0.1)] border border-white/10"
               onError={(e) => {
-                if (fallbackThumbnailUrl) {
+                if (!isImg && fallbackThumbnailUrl) {
                   (e.target as HTMLImageElement).src = fallbackThumbnailUrl;
                 }
               }}
               onLoad={(e) => {
-                if (e.currentTarget.naturalWidth <= 120 && fallbackThumbnailUrl) {
+                if (!isImg && e.currentTarget.naturalWidth <= 120 && fallbackThumbnailUrl) {
                   (e.target as HTMLImageElement).src = fallbackThumbnailUrl;
                 }
               }}
