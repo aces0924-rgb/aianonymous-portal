@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useFavorites } from '@/context/FavoritesContext';
 import SelectionCardProgress from './SelectionCardProgress';
 import { encodeSelectionId } from '@/lib/id-utils';
@@ -22,6 +23,9 @@ interface SelectionCardProps {
 
 export default function IllustrationSelectionCard({ list, previewQuery }: SelectionCardProps) {
   const { interested } = useFavorites();
+  const params = useParams();
+  const eventSlug = params?.eventSlug as string || '';
+  const prefix = eventSlug ? `/${eventSlug}` : '';
   
   // 進捗計算
   const trackIds = list.trackIds.split(',').map(id => parseInt(id.trim())).filter(id => !isNaN(id));
@@ -47,7 +51,7 @@ export default function IllustrationSelectionCard({ list, previewQuery }: Select
 
   return (
     <Link 
-      href={`/selection/illustration/${encodeSelectionId(list.id)}${previewQuery}`}
+      href={`${prefix}/selection/illustration/${encodeSelectionId(list.id)}${previewQuery}`}
       className={`group relative border ${borderClass} ${bgClass} rounded-[2.5rem] p-7 md:p-8 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] flex flex-col h-full overflow-hidden`}
     >
       {/* Decorative gradient overlay */}
