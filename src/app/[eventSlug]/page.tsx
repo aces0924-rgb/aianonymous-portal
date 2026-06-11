@@ -109,7 +109,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         <div className="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row items-center gap-2 md:gap-14">
           {/* Left: Logo Area (Spanning 3 rows) */}
           <div className="shrink-0 mb-1 md:mb-0">
-            <Link href="/" className="block">
+            <Link href={`/${eventSlug}${preview === 'honban' ? '?preview=honban' : ''}`} className="block">
               <img src={defaultTheme.logoUrl} alt={defaultLabels.siteTitle} className="h-10 md:h-32 w-auto hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_20px_var(--color-glow)]" style={{ objectFit: 'contain' }} />
             </Link>
           </div>
