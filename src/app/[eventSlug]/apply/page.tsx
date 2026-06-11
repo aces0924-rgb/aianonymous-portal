@@ -398,6 +398,16 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 placeholder={isAnonymousMode ? "例: https://suno.com/song/..." : (entryType === 'music' ? "例: https://youtu.be/..." : "例: https://pbs.twimg.com/media/...jpg")}
                 required
               />
+              {!isAnonymousMode && entryType === 'illustration' && (
+                <div className="mt-3 text-xs text-foreground/80 bg-surface-border/30 border border-surface-border p-4 rounded-xl space-y-2 leading-relaxed">
+                  <p className="font-black text-[var(--color-cyan-400)] flex items-center gap-2"><span className="text-base">💡</span> 画像URLの取得方法</p>
+                  <div className="space-y-1.5 pl-1">
+                    <p><span className="font-bold text-white">【PCの場合】</span><br/>X (Twitter) の画像ページを開いて画像を右クリック → <span className="font-bold text-white underline decoration-cyan-500 underline-offset-2">「画像のアドレスをコピー」</span></p>
+                    <p><span className="font-bold text-white">【スマホの場合】</span><br/>直接画像URLが取れない場合は、ポストのURLをコピーして以下のツール等で画像URLを取得してください。</p>
+                    <p><a href="https://tool-place.net/tools/x_media_getter/" target="_blank" rel="noopener noreferrer" className="inline-block mt-1 text-[var(--color-cyan-400)] underline hover:text-[var(--color-cyan-500)] font-bold">X (Twitter) 画像URL取得ツールを開く ↗</a></p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* アーティスト名 */}
