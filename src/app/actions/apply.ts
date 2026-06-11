@@ -43,15 +43,12 @@ export async function submitApplication(eventSlug: string, formData: {
 }) {
   try {
     // Basic validation
-    if (!formData.title?.trim() || !formData.songUrl?.trim() || !formData.agreedToTerms) {
+    if (!formData.title?.trim() || !formData.songUrl?.trim()) {
       return { success: false, error: '必須項目が不足しています。' }
     }
 
-    const isYouTube = formData.songUrl.match(/(?:youtu\.be\/|youtube\.com\/)/);
-    const isNico = formData.songUrl.match(/(?:nicovideo\.jp\/|nico\.ms\/)/);
-    const isSuno = formData.songUrl.match(/(?:suno\.com\/)/);
-    if (!isYouTube && !isNico && !isSuno) {
-      return { success: false, error: '楽曲URLはYouTube、ニコニコ動画、またはSunoのURLのみ有効です。' }
+    if (!formData.songUrl.match(/^https?:\/\//)) {
+      return { success: false, error: '正しいURLを入力してください。' }
     }
 
     // Find the event
