@@ -502,11 +502,11 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
               </>
             )}
 
-            {/* 歌詞 */}
+            {/* 歌詞 / イラスト説明 */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                {config.lyricsTab} {isAnonymousMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground/50 ml-1">任意</span>}
-                {isAnonymousMode && <p className="text-xs text-foreground/60 font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
+                {entryType === 'illustration' ? 'このイラストについて' : config.lyricsTab} {isAnonymousMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground/50 ml-1">任意</span>}
+                {(isAnonymousMode && entryType === 'music') && <p className="text-xs text-foreground/60 font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
               </label>
               <textarea
                 name="lyrics"
@@ -514,7 +514,11 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 onChange={handleChange}
                 rows={6}
                 className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
-                placeholder={isAnonymousMode ? "歌詞を入力（インストの場合は「インスト曲」と記載）" : "歌詞を入力..."}
+                placeholder={
+                  entryType === 'illustration' 
+                    ? "イラストのキャプションや設定などを入力..." 
+                    : (isAnonymousMode ? `${config.lyricsTab}を入力（インストの場合は「インスト曲」と記載）` : `${config.lyricsTab}を入力...`)
+                }
                 required={isAnonymousMode}
               />
             </div>
