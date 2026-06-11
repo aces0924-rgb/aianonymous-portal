@@ -267,6 +267,8 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             eventSlug={eventSlug}
             audioSource={formData.songUrl}
             isPreviewMode={true}
+            defaultLabels={{ ...config, lyricsTab: entryType === 'illustration' ? 'このイラストについて' : config.lyricsTab }}
+            defaultFeatures={{ applicationFormType: config.applicationFormType, enableArtistMain: config.enableArtistMain }}
           />
         </div>
 

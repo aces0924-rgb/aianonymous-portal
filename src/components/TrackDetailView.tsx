@@ -293,7 +293,7 @@ export default function TrackDetailView({
                       </div>
                     </div>
                   </div>
-                ) : (
+                ) : defaultFeatures?.applicationFormType === 'anonymous' ? (
                   <div className="mt-8 p-5 rounded-2xl bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-900/50 flex items-start gap-4 md:gap-5 animate-in fade-in slide-in-from-bottom-4 duration-1000 shadow-[0_0_20px_rgba(234,179,8,0.05)]">
                     <div className="p-2.5 bg-yellow-100 dark:bg-yellow-500/10 rounded-xl border border-yellow-200 dark:border-yellow-500/20 shrink-0">
                       <svg className="w-5 h-5 text-yellow-600 dark:text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -307,7 +307,7 @@ export default function TrackDetailView({
                       </p>
                     </div>
                   </div>
-                )
+                ) : null
               )}
             </div>
           </div>
