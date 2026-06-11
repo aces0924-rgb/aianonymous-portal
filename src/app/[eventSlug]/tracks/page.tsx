@@ -43,12 +43,12 @@ export default async function TracksListPage({ params, searchParams }: { params:
 
   const tracks = activeTable === 'track_honban'
     ? await prisma.trackHonban.findMany({ 
-        where: { published: true }, 
+        where: { eventId: event.id, published: true }, 
         select: tracksSelect,
         orderBy: { entryNo: 'asc' } 
       })
     : await prisma.track.findMany({ 
-        where: { published: true }, 
+        where: { eventId: event.id, published: true }, 
         select: tracksSelect,
         orderBy: { entryNo: 'asc' } 
       });
