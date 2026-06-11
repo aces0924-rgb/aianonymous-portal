@@ -54,6 +54,7 @@ export default async function SelectionPage({
     entryNo: true,
     title: true,
     genre: true,
+    artistName: true,
     songUrl: true,
     audioUrl: true,
     published: true,
@@ -73,6 +74,8 @@ export default async function SelectionPage({
   const sortedTracks = idArray.map((id: any) => tracks.find((t: any) => t?.id === id)).filter(Boolean);
 
   const previewQuery = preview === 'honban' ? '?preview=honban' : '';
+  const featureFlags = JSON.parse(event?.featureFlags || '{}');
+  const enableArtistMain = featureFlags.enableArtistMain ?? false;
 
   return (
     <main className="min-h-screen bg-background text-white selection:bg-[var(--color-cyan-500)] selection:text-white font-sans overflow-x-hidden relative">
@@ -80,7 +83,7 @@ export default async function SelectionPage({
       <div className="absolute top-4 left-4 md:top-8 md:left-8 z-30">
         <Link href={`/${eventSlug}/selections${previewQuery}`} className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface/80 backdrop-blur-md border border-surface-border hover:border-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] transition-all group">
           <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
-          <span className="text-xs md:text-sm font-black tracking-widest uppercase">推薦作品リスト一覧へ</span>
+          <span className="text-xs md:text-sm font-black tracking-widest uppercase">推薦{enableArtistMain ? 'アーティスト' : '作品'}リスト一覧へ</span>
         </Link>
       </div>
 
@@ -92,7 +95,7 @@ export default async function SelectionPage({
         <div className="relative z-10 max-w-6xl mx-auto">
           <h1 className="text-2xl md:text-5xl font-black tracking-tighter leading-tight italic">
             <span className="text-[var(--color-cyan-400)] drop-shadow-[0_0_10px_var(--color-glow)]">{playlist.userName}</span> 様の
-            推薦作品リスト
+            推薦{enableArtistMain ? 'アーティスト' : '作品'}リスト
           </h1>
           
           <div className="pt-3 flex flex-col items-center gap-2">
@@ -147,7 +150,7 @@ export default async function SelectionPage({
                 <div className="absolute -left-4 -top-4 w-12 h-12 flex items-center justify-center bg-surface border-2 border-[var(--color-cyan-400)] text-[var(--color-cyan-400)] font-black rounded-full z-20 text-xl italic shadow-lg">
                   {idx + 1}
                 </div>
-                <TrackCard track={t} preview={preview} />
+                <TrackCard track={t} preview={preview} enableArtistMain={enableArtistMain} />
               </div>
             ))}
           </div>

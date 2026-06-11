@@ -165,6 +165,7 @@ export default function SelectionListContainer({ initialPlaylists, subPlaylists,
             key={list.id} 
             list={list} 
             previewQuery={previewQuery} 
+            enableArtistMain={enableArtistMain}
           />
         ))}
       </div>
