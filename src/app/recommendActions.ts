@@ -118,7 +118,7 @@ export async function registerPlaylist(eventSlug: string, userName: string, trac
     revalidatePath('/recommend');
     
     // ID 8以降の場合のみオフセットを足す（1〜7はそのまま）
-    const finalId = (mainEntry && newPlaylist.id >= 8) 
+    const finalId = mainEntry 
       ? newPlaylist.id + SUB_PLAYLIST_OFFSET 
       : newPlaylist.id;
 
@@ -387,7 +387,7 @@ export async function getAllPlaylistsByUserName(eventSlug: string, userName: str
     // ID 8以降のみオフセットを適用（1〜7は救済措置としてそのまま）
     const subWithOffset = sub.map((p: any) => ({ 
       ...p, 
-      id: p.id >= 8 ? p.id + SUB_PLAYLIST_OFFSET : p.id 
+      id: p.id + SUB_PLAYLIST_OFFSET 
     }));
     // メインを先頭にして結合し、作成日時順に整理
     return [...main, ...subWithOffset].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
