@@ -12,7 +12,8 @@ type HelpKey =
   | 'schedule'
   | 'rules'
   | 'faq'
-  | 'tracks';
+  | 'tracks'
+  | 'image-url';
 
 const helpContents: Record<HelpKey, { title: string; target: string; desc: string; example: React.ReactNode }> = {
   'basic-info': {
@@ -136,6 +137,24 @@ const helpContents: Record<HelpKey, { title: string; target: string; desc: strin
         <li><b>更新スタートNo:</b> 途中から追加分だけを同期したい場合に、エントリーNoを指定します。通常は自動でセットされます。</li>
         <li><b>公開する/非公開へ:</b> 特定の楽曲だけを一時的に非公開にすることができます。</li>
       </ul>
+    )
+  },
+  'image-url': {
+    title: '画像URLの取得方法 (Gyazo推奨)',
+    target: '画像URLを入力するすべての項目（背景画像、ロゴ、アイコンなど）',
+    desc: '画像を直接アップロードする代わりに、Gyazo等のサービスを使って画像の「直リンクURL」を取得して貼り付けます。',
+    example: (
+      <div className="space-y-2">
+        <p><b>Gyazoを使った取得手順:</b></p>
+        <ol className="list-decimal pl-5 space-y-1">
+          <li>PCにGyazoアプリをインストールして起動します。</li>
+          <li>画面上の画像を切り取るか、画像をGyazoにドラッグ＆ドロップします。</li>
+          <li>ブラウザでアップロードされた画像ページが開きます。</li>
+          <li>画像の上で<b>右クリック</b>し、<b>「画像アドレスをコピー」</b>（または「画像リンクをコピー」）を選択します。</li>
+          <li>コピーしたURL（<code>https://i.gyazo.com/xxxx.png</code> や <code>.jpg</code> で終わるもの）を、ここの入力欄に貼り付けます。</li>
+        </ol>
+        <p className="text-xs text-amber-700 mt-2 font-bold">※ブラウザのURL欄（gyazo.com/xxxx）ではなく、必ず右クリックから「画像アドレス（拡張子付き）」をコピーしてください。</p>
+      </div>
     )
   }
 };
