@@ -334,7 +334,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         
         {/* News Section */}
         <section id="news" className="space-y-8 scroll-mt-20">
-          <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4">NEWS</h2>
+          <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">NEWS</h2>
           <div className="bg-surface/50 backdrop-blur-sm border border-surface-border rounded-3xl p-8 shadow-2xl">
             {news.length === 0 ? (
               <p className="text-foreground/80 italic">現在お知らせはありません。</p>
@@ -356,7 +356,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
 
         {/* Schedule Section */}
         <section id="schedule" className="space-y-16 scroll-mt-20">
-          <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4">SCHEDULE</h2>
+          <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">SCHEDULE</h2>
           
           <div className="relative">
             {/* Central Line (Desktop) */}
@@ -396,7 +396,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         {/* Guidelines Section */}
         <section id="guidelines" className="space-y-16 scroll-mt-20">
           <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
-            <h2 className="text-4xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-[var(--color-cyan-400)]">
+            <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">
               GUIDELINES
             </h2>
             <span className="text-foreground/80 font-mono text-sm tracking-widest">/ {(defaultLabels as any).guidelinesTitle || '募集要項'}</span>
@@ -431,7 +431,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         {/* Schedule Section */}
           <section id="faq" className="space-y-8 scroll-mt-24">
             <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
-              <h2 className="text-4xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-cyan-400)] to-[var(--color-cyan-600)] uppercase">
+              <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md uppercase">
                 FAQ
               </h2>
               <span className="text-foreground/80 font-mono text-sm tracking-widest">/ よくある質問</span>
