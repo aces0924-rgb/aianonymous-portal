@@ -238,6 +238,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       entryNo: 'PRE',
       title: entryType === 'illustration' ? (formData.title || 'イラスト作品') : formData.title,
       songUrl: formData.songUrl,
+      sunoUrl: formData.songUrl.includes('suno.com') ? formData.songUrl : null,
       audioUrl: formData.songUrl,
       lyrics: formData.lyrics,
       artistName: formData.artistName || '匿名',
