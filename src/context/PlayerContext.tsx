@@ -32,10 +32,21 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return match ? match[1] : null;
   }, []);
 
+  const getSunoUrl = useCallback((url: string) => {
+    if (!url) return null;
+    return url.includes('suno.com') ? url : null;
+  }, []);
+
   const playTrack = useCallback((id: number, title: string, songUrl: string, audioUrl?: string) => {
     const urlsToTry = [songUrl, audioUrl].filter(Boolean) as string[];
     
     for (const url of urlsToTry) {
+      const sunoUrlMatch = getSunoUrl(url);
+      if (sunoUrlMatch) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+        return;
+      }
+
       const ytId = getYouTubeId(url);
       if (ytId) {
         setCurrentTrack({ id, title, mediaId: ytId, platform: 'youtube' });
