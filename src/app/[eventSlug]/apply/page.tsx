@@ -87,8 +87,9 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       // Standard validation
       const isYouTube = formData.songUrl.match(/(?:youtu\.be\/|youtube\.com\/)/);
       const isNico = formData.songUrl.match(/(?:nicovideo\.jp\/|nico\.ms\/)/);
-      if (entryType === 'music' && !isYouTube && !isNico) {
-        setErrorMsg('楽曲URLはYouTubeまたはニコニコ動画のURLのみ有効です。');
+      const isSuno = formData.songUrl.match(/suno\.com\//);
+      if (entryType === 'music' && !isYouTube && !isNico && !isSuno) {
+        setErrorMsg('楽曲URLはYouTube、ニコニコ動画、またはSunoのURLのみ有効です。');
         return;
       }
       if (entryType === 'illustration' && !formData.songUrl.match(/^https?:\/\//)) {
@@ -387,7 +388,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* URL */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                {isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画)' : 'イラストの画像URL (Gyazoやpbs.twimg等)')} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                {isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画 または Suno)' : 'イラストの画像URL (Gyazoやpbs.twimg等)')} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
               </label>
               <input
                 type="url"
