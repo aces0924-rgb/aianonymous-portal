@@ -120,6 +120,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     enableAwards: featureFlags.enableAwards ?? false,
     enableHostSection: featureFlags.enableHostSection ?? true,
     enableScheduleButton: featureFlags.enableScheduleButton ?? true,
+    enableCelebrationAlert: featureFlags.enableCelebrationAlert ?? true,
     applicationFormType: featureFlags.applicationFormType || 'standard'
   }
 
@@ -518,8 +519,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const enableAwards = formData.get('enableAwards') === 'true'
             const enableHostSection = formData.get('enableHostSection') === 'true'
             const enableScheduleButton = formData.get('enableScheduleButton') === 'true'
+            const enableCelebrationAlert = formData.get('enableCelebrationAlert') === 'true'
             const applicationFormType = formData.get('applicationFormType') as string || 'standard'
-            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, enableScheduleButton, applicationFormType })
+            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, enableScheduleButton, enableCelebrationAlert, applicationFormType })
           }} className="flex flex-col gap-2 pt-4 border-t">
             <h3 className="font-bold text-sm text-foreground mb-2">機能ON/OFF (Features)</h3>
             <div className="flex gap-4">
@@ -570,6 +572,16 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                   <option value="false">非表示 (OFF)</option>
                 </select>
               </div>
+              <div className="flex-1">
+                <label className="text-xs font-bold text-foreground block mb-1">新曲発掘アラート演出</label>
+                <select name="enableCelebrationAlert" defaultValue={defaultFeatures.enableCelebrationAlert ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
+                  <option value="true">有効 (ON)</option>
+                  <option value="false">無効 (OFF)</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex gap-4 mt-2">
               <div className="flex-1">
                 <label className="text-xs font-bold text-foreground block mb-1">応募フォームの形式</label>
                 <select name="applicationFormType" defaultValue={defaultFeatures.applicationFormType} className="w-full border p-2 rounded text-sm bg-white">

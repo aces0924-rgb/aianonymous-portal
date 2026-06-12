@@ -162,7 +162,10 @@ export async function registerPlaylist(eventSlug: string, userName: string, trac
       // 今回追加された楽曲の中で、過去に一度も選ばれていないものがあるか確認
       const newlyDiscovered = idArray.some(id => !pastUniqueSelectedIds.has(id));
 
-      if (newlyDiscovered && unselectedCount < threshold) {
+      const featureFlags = JSON.parse(event.featureFlags || '{}');
+      const enableCelebrationAlert = featureFlags.enableCelebrationAlert !== false;
+
+      if (enableCelebrationAlert && newlyDiscovered && unselectedCount < threshold) {
         showCelebration = true;
       }
     } catch (err) {
