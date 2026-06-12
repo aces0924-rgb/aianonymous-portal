@@ -1,5 +1,3 @@
-export const revalidate = 3600
-
 import prisma from '@/lib/prisma'
 import TrackCard from '@/components/TrackCard'
 import RandomTrackButton from '@/components/RandomTrackButton'
@@ -10,7 +8,7 @@ import SelectionIndicator from '@/components/SelectionIndicator'
 import TrackJumpModern from '@/components/TrackJumpModern'
 
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { unstable_cache } from "next/cache";
 
 export async function generateMetadata({ params }: { params: Promise<{ eventSlug: string }> }) {
   const { eventSlug } = await params;
@@ -27,52 +25,59 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   if (!event) notFound();
   const { preview } = await searchParams;
   
-  // 並列でデータ取得して高速化
-  const [news, schedule, faqs, settings] = await Promise.all([
-    prisma.news.findMany({ where: { eventId: event.id }, orderBy: { createdAt: 'desc' } }),
-    prisma.schedule.findMany({ where: { eventId: event.id }, orderBy: { order: 'asc' } }),
-    (prisma as any).faq.findMany({ where: { eventId: event.id }, orderBy: { order: 'asc' } }),
-    (prisma as any).setting.findMany({ where: { eventId: event.id } })
-  ]);
-  
-  const getSetting = (key: string) => settings.find((s: any) => s.key === key)?.value;
+  const showUnpublished = preview === 'all';
 
-  // URLパラメータで preview=honban が指定されているか、全体設定が track_honban の場合に本番用を表示
-  const activeTable = (preview === 'honban') ? 'track_honban' : (getSetting('ACTIVE_TRACK_TABLE') || "track");
-  
-  const ctaMode = getSetting('CTA_BUTTON_MODE') || 'apply';
-  const voteUrl = getSetting('VOTE_URL') || "";
-  const playlistUrl = getSetting('YOUTUBE_PLAYLIST_URL') || "";
+  const getCachedEventTopData = unstable_cache(
+    async (eventId: string, isHonban: boolean, showUnpublishedTracks: boolean) => {
+      // 並列で設定やその他データを取得
+      const [news, schedule, faqs, settings] = await Promise.all([
+        prisma.news.findMany({ where: { eventId }, orderBy: { createdAt: 'desc' } }),
+        prisma.schedule.findMany({ where: { eventId }, orderBy: { order: 'asc' } }),
+        (prisma as any).faq.findMany({ where: { eventId }, orderBy: { order: 'asc' } }),
+        (prisma as any).setting.findMany({ where: { eventId } })
+      ]);
+      
+      const getSetting = (key: string) => settings.find((s: any) => s.key === key)?.value;
+      const activeTable = isHonban ? 'track_honban' : (getSetting('ACTIVE_TRACK_TABLE') || "track");
+      
+      const tracksSelect = {
+        id: true, entryNo: true, title: true, artistName: true, genre: true, songUrl: true, audioUrl: true, published: true,
+      };
+      
+      const whereClause = showUnpublishedTracks ? { eventId } : { eventId, published: true };
+      
+      const tracks = activeTable === "track_honban"
+        ? await prisma.trackHonban.findMany({ where: whereClause, select: tracksSelect, orderBy: { entryNo: 'asc' } })
+        : await prisma.track.findMany({ where: whereClause, select: tracksSelect, orderBy: { entryNo: 'asc' } });
+        
+      return {
+        news,
+        schedule,
+        faqs,
+        settings,
+        activeTable,
+        tracks,
+        ctaMode: getSetting('CTA_BUTTON_MODE') || 'apply',
+        voteUrl: getSetting('VOTE_URL') || "",
+        playlistUrl: getSetting('YOUTUBE_PLAYLIST_URL') || "",
+        shareBasePostUrl: getSetting('SHARE_BASE_POST_URL') || ""
+      };
+    },
+    ['event-top-data'],
+    { revalidate: 60 } // 60秒キャッシュ
+  );
 
-  const tracksSelect = {
-    id: true,
-    entryNo: true,
-    title: true,
-    artistName: true,
-    genre: true,
-    songUrl: true,
-    audioUrl: true,
-    published: true,
-  }
-
-  const cookieStore = await cookies();
-  const isAdmin = cookieStore.get('admin_session')?.value === 'true';
-  const showUnpublished = isAdmin || preview === 'all';
-  const whereClause = showUnpublished ? { eventId: event.id } : { eventId: event.id, published: true };
-
-  const tracks = activeTable === "track_honban"
-    ? await prisma.trackHonban.findMany({ 
-        where: whereClause,
-        select: tracksSelect,
-        orderBy: { entryNo: 'asc' } 
-      })
-    : await prisma.track.findMany({ 
-        where: whereClause,
-        select: tracksSelect,
-        orderBy: { entryNo: 'asc' } 
-      })
-
-  const shareBasePostUrl = getSetting('SHARE_BASE_POST_URL') || "";
+  const {
+    news,
+    schedule,
+    faqs,
+    activeTable,
+    tracks,
+    ctaMode,
+    voteUrl,
+    playlistUrl,
+    shareBasePostUrl
+  } = await getCachedEventTopData(event.id, preview === 'honban', showUnpublished);
 
   const themeConfig = JSON.parse(event.themeConfig || '{}')
   const featureFlags = JSON.parse(event.featureFlags || '{}')

@@ -6,8 +6,8 @@ import ScheduleItemProgress from '@/components/ScheduleItemProgress';
 import TrackInterestStar from '@/components/TrackInterestStar';
 import PremiereThumbnailUploader from '@/components/PremiereThumbnailUploader';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+import { unstable_cache } from 'next/cache';
+import { notFound } from 'next/navigation';
 
 export default async function SchedulePage(props: { params: Promise<{ eventSlug: string }>, searchParams: Promise<{ preview?: string }> }) {
   const { eventSlug } = await props.params;
@@ -16,21 +16,29 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
   // Get the event to fetch its settings properly
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
+  if (!event) return notFound();
 
-  const [schedule, tracks, shareBasePostUrlSetting] = await Promise.all([
-    prisma.premiereSchedule.findMany({
-      where: isHonban ? {} : { isPublic: true },
-      orderBy: { day: 'asc' },
-    }),
-    prisma.trackHonban.findMany({
-      where: event ? { eventId: event.id, published: true } : { published: true },
-      orderBy: { entryNo: 'asc' },
-      select: { id: true, entryNo: true, title: true }
-    }),
-    event ? (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'SHARE_BASE_POST_URL' } } }) : null
-  ]);
+  const getCachedScheduleData = unstable_cache(
+    async (eventId: string, isHonban: boolean) => {
+      const [schedule, tracks, shareBasePostUrlSetting] = await Promise.all([
+        prisma.premiereSchedule.findMany({
+          where: isHonban ? {} : { isPublic: true },
+          orderBy: { day: 'asc' },
+        }),
+        prisma.trackHonban.findMany({
+          where: { eventId, published: true },
+          orderBy: { entryNo: 'asc' },
+          select: { id: true, entryNo: true, title: true }
+        }),
+        (prisma as any).setting.findUnique({ where: { eventId_key: { eventId, key: 'SHARE_BASE_POST_URL' } } })
+      ]);
+      return { schedule, tracks, shareBasePostUrl: shareBasePostUrlSetting?.value || "" };
+    },
+    ['event-schedule-data'],
+    { revalidate: 60 }
+  );
 
-  const shareBasePostUrl = shareBasePostUrlSetting?.value || "";
+  const { schedule, tracks, shareBasePostUrl } = await getCachedScheduleData(event.id, isHonban);
 
   const getJstDateString = (date: Date) => {
     return new Intl.DateTimeFormat('en-CA', {

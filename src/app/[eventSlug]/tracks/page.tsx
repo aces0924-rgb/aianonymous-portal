@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+import { unstable_cache } from 'next/cache';
 
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
@@ -17,51 +17,51 @@ export default async function TracksListPage({ params, searchParams }: { params:
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
   if (!event) return notFound();
   
-  const [settings, thumbnails] = await Promise.all([
-    (prisma as any).setting.findMany({ where: { eventId: event.id } }),
-    prisma.trackThumbnail.findMany({
-      where: { status: { in: ['PENDING', 'APPROVED'] } },
-      select: { trackId: true }
-    })
-  ]);
-  
-  const activeTableSetting = settings.find((s: any) => s.key === 'ACTIVE_TRACK_TABLE');
   const featureFlags = JSON.parse(event.featureFlags || '{}');
   const showCreators = featureFlags.enableShowCreators === true;
-
-  // preview=honban または table=track_honban が指定されているか、全体設定が track_honban の場合に本番用を表示
   const isHonban = preview === 'honban' || table === 'track_honban';
-  const activeTable = isHonban ? 'track_honban' : (activeTableSetting?.value || "track");
-
   const previewQuery = isHonban ? '?preview=honban' : '';
 
-  const tracksSelect: any = {
-    id: true,
-    entryNo: true,
-    title: true,
-    genre: true,
-    songUrl: true,
-    audioUrl: true,
-    published: true,
-  }
+  const getCachedTracksData = unstable_cache(
+    async (eventId: string, isHonban: boolean, showCreators: boolean) => {
+      const [settings, thumbnails] = await Promise.all([
+        (prisma as any).setting.findMany({ where: { eventId } }),
+        prisma.trackThumbnail.findMany({
+          where: { status: { in: ['PENDING', 'APPROVED'] } },
+          select: { trackId: true }
+        })
+      ]);
+      
+      const activeTableSetting = settings.find((s: any) => s.key === 'ACTIVE_TRACK_TABLE');
+      const activeTable = isHonban ? 'track_honban' : (activeTableSetting?.value || "track");
+      
+      const tracksSelect: any = {
+        id: true, entryNo: true, title: true, genre: true, songUrl: true, audioUrl: true, published: true,
+      };
+      
+      if (showCreators) {
+        tracksSelect.artistName = true;
+      }
+      
+      const fetchedTracks = activeTable === 'track_honban'
+        ? await prisma.trackHonban.findMany({ 
+            where: { eventId, published: true }, 
+            select: tracksSelect,
+            orderBy: { entryNo: 'asc' } 
+          })
+        : await prisma.track.findMany({ 
+            where: { eventId, published: true }, 
+            select: tracksSelect,
+            orderBy: { entryNo: 'asc' } 
+          });
+          
+      return { activeTable, fetchedTracks, thumbnails };
+    },
+    ['event-tracks-data'],
+    { revalidate: 60 } // 60秒キャッシュ
+  );
 
-  if (showCreators) {
-    tracksSelect.artistName = true;
-  }
-
-  const tracks = activeTable === 'track_honban'
-    ? await prisma.trackHonban.findMany({ 
-        where: { eventId: event.id, published: true }, 
-        select: tracksSelect,
-        orderBy: { entryNo: 'asc' } 
-      })
-    : await prisma.track.findMany({ 
-        where: { eventId: event.id, published: true }, 
-        select: tracksSelect,
-        orderBy: { entryNo: 'asc' } 
-      });
-
-  // サムネイル登録状況は上部で並列取得済み
+  const { activeTable, fetchedTracks: tracks, thumbnails } = await getCachedTracksData(event.id, isHonban, showCreators);
   const thumbSet = new Set(thumbnails.map(t => t.trackId));
 
   const tracksWithStatus = tracks.map(track => ({
