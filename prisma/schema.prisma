@@ -1,19 +1,15 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 // Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
-
 datasource db {
   provider  = "postgresql"
   url       = env("SITE_DATABASE_URL")
   directUrl = env("SITE_DIRECT_URL")
 }
-
 model Event {
   id           String  @id @default(uuid())
   slug         String  @unique
@@ -22,7 +18,6 @@ model Event {
   themeConfig  String  @default("{}") @db.Text
   featureFlags String  @default("{}") @db.Text
   labelConfig  String  @default("{}") @db.Text
-
   news              News[]
   schedules         Schedule[]
   rules             Rule[]
@@ -40,11 +35,9 @@ model Event {
   voteDisclosures   VoteDisclosure[]
   adminUsers        AdminUser[]
   settings          Setting[]
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
 model News {
   id        Int      @id @default(autoincrement())
   eventId   String
@@ -53,7 +46,6 @@ model News {
   content   String?  @db.Text
   createdAt DateTime @default(now())
 }
-
 model Schedule {
   id      Int    @id @default(autoincrement())
   eventId String
@@ -62,17 +54,15 @@ model Schedule {
   date    String
   order   Int    @default(0)
 }
-
 model Rule {
   id      Int    @id @default(autoincrement())
   eventId String
   event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  title   String @default("タイトル")
-  icon    String @default("✨")
+  title   String @default("繧ｿ繧､繝医Ν")
+  icon    String @default("笨ｨ")
   content String
   order   Int    @default(0)
 }
-
 model Track {
   id             Int      @id @default(autoincrement())
   eventId        String
@@ -81,7 +71,6 @@ model Track {
   xAccount       String?
   title          String
   songUrl        String
-  sunoUrl        String?
   audioUrl       String?
   lyrics         String?  @db.Text
   publishConsent String?
@@ -98,7 +87,6 @@ model Track {
   srtFileUrl     String?  @db.Text
   createdAt      DateTime @default(now())
 }
-
 model TrackHonban {
   id             Int      @id @default(autoincrement())
   eventId        String
@@ -107,7 +95,6 @@ model TrackHonban {
   xAccount       String?
   title          String
   songUrl        String
-  sunoUrl        String?
   audioUrl       String?
   lyrics         String?  @db.Text
   publishConsent String?
@@ -123,20 +110,16 @@ model TrackHonban {
   musicFileUrl   String?  @db.Text
   srtFileUrl     String?  @db.Text
   createdAt      DateTime @default(now())
-
   @@map("track_honban")
 }
-
 model Setting {
   id      Int    @id @default(autoincrement())
   eventId String
   event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
   key     String
   value   String
-
   @@unique([eventId, key])
 }
-
 model Faq {
   id       Int    @id @default(autoincrement())
   eventId  String
@@ -145,7 +128,6 @@ model Faq {
   answer   String @db.Text
   order    Int    @default(0)
 }
-
 model UserPlaylist {
   id            Int      @id @default(autoincrement())
   eventId       String
@@ -158,7 +140,6 @@ model UserPlaylist {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
-
 model UserPlaylistSub {
   id            Int      @id @default(autoincrement())
   eventId       String
@@ -171,7 +152,6 @@ model UserPlaylistSub {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
-
 model UserIllustrationPlaylist {
   id            Int      @id @default(autoincrement())
   eventId       String
@@ -184,7 +164,6 @@ model UserIllustrationPlaylist {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
-
 model Award {
   id          Int      @id @default(autoincrement())
   eventId     String
@@ -196,13 +175,12 @@ model Award {
   title       String
   note        String?  @db.Text
   description String?  @db.Text
-  extraInfo   String? // 票数や受賞理由の補足など
+  extraInfo   String? // 逾ｨ謨ｰ繧・女雉樒炊逕ｱ縺ｮ陬懆ｶｳ縺ｪ縺ｩ
   isPublished Boolean  @default(false)
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-
 model PremiereSchedule {
   id               Int      @id @default(autoincrement())
   eventId          String
@@ -214,40 +192,36 @@ model PremiereSchedule {
   trackCount       Int
   remarks          String?
   isPublic         Boolean  @default(true)
-  thumbnailDriveId String?  @db.Text // プレミアサムネイルのGoogleドライブID
+  thumbnailDriveId String?  @db.Text // 繝励Ξ繝溘い繧ｵ繝繝阪う繝ｫ縺ｮGoogle繝峨Λ繧､繝蜂D
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
-
 model Vote {
   id            Int      @id @default(autoincrement())
   eventId       String
   event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  responseId    String? // 1回の回答を識別するID
-  timestamp     String? // フォームのタイムスタンプ
-  voterName     String? // 投票者名
-  targetContent String? // 投票された曲名や番号
+  responseId    String? // 1蝗槭・蝗樒ｭ斐ｒ隴伜挨縺吶ｋID
+  timestamp     String? // 繝輔か繝ｼ繝縺ｮ繧ｿ繧､繝繧ｹ繧ｿ繝ｳ繝・  voterName     String? // 謚慕･ｨ閠・錐
+  targetContent String? // 謚慕･ｨ縺輔ｌ縺滓峇蜷阪ｄ逡ｪ蜿ｷ
   createdAt     DateTime @default(now())
 }
-
 model TrackThumbnail {
   id           Int       @id @default(autoincrement())
   eventId      String
   event        Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  trackId      Int       @unique // 1楽曲1枚の制御
-  entryNo      String?   @db.Text // 管理・照合用
-  trackTitle   String?   @db.Text // 管理・照合用
+  trackId      Int       @unique // 1讌ｽ譖ｲ1譫壹・蛻ｶ蠕｡
+  entryNo      String?   @db.Text // 邂｡逅・・辣ｧ蜷育畑
+  trackTitle   String?   @db.Text // 邂｡逅・・辣ｧ蜷育畑
   artistName   String?
   twitterId    String?
-  isAnonymous  Boolean   @default(false) // 絵師名の匿名希望フラグ
-  isXAnonymous Boolean   @default(false) // X IDの匿名希望フラグ
+  isAnonymous  Boolean   @default(false) // 邨ｵ蟶ｫ蜷阪・蛹ｿ蜷榊ｸ梧悍繝輔Λ繧ｰ
+  isXAnonymous Boolean   @default(false) // X ID縺ｮ蛹ｿ蜷榊ｸ梧悍繝輔Λ繧ｰ
   status       String    @default("LOCK") // LOCK, PENDING, APPROVED, REJECTED
   driveFileId  String?
   lockedAt     DateTime?
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
-
 model VoteResult {
   id         Int      @id @default(autoincrement())
   eventId    String
@@ -263,7 +237,6 @@ model VoteResult {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
-
 model VoteDisclosure {
   id              Int      @id @default(autoincrement())
   eventId         String
@@ -277,7 +250,6 @@ model VoteDisclosure {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
-
 model AdminUser {
   id        String   @id @default(uuid())
   eventId   String?

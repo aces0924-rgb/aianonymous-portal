@@ -177,7 +177,6 @@ export async function syncEventTracksFromSheet(eventId: string, formData?: FormD
         const entryNo = row['No'] || "";
         const title = row['■ 曲タイトル'] || row['楽曲タイトル'] || row['title'] || "Untitled";
         const songUrl = row['youtube:URL'] || row['YouTube:URL'] || row['■ 楽曲URL'] || row['URL'] || "";
-        const sunoUrl = songUrl.includes("suno.com") ? songUrl : null;
         const lyrics = row['■ 歌詞（任意）'] || row['歌詞'] || row['lyrics'] || "";
         const artistName = row['■ 公開名（アーティスト名）※公開する場合のみ'] || row['名前（ハンドルネーム）'] || row['artist'] || "";
         const xAccount = row['■ X（旧Twitter）アカウント'] || row['X（旧Twitter）アカウント'] || row['xAccount'] || "";
@@ -197,7 +196,7 @@ export async function syncEventTracksFromSheet(eventId: string, formData?: FormD
         }
 
         const updateData: any = {
-          xAccount, title, songUrl, sunoUrl, lyrics, publishConsent, artistName, email, review, entryNo, genre, eventId
+          xAccount, title, songUrl, lyrics, publishConsent, artistName, email, review, entryNo, genre, eventId
         };
 
         if (analysis) {
