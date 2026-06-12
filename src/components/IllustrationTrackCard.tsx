@@ -32,11 +32,11 @@ export default function IllustrationTrackCard({ track, preview, enableArtistMain
               No.{track.entryNo || track.id.toString().padStart(3, '0')}
             </span>
             {enableArtistMain && track.title ? (
-              <span className="text-foreground/60 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 truncate max-w-[100px] md:max-w-[150px]">
+              <span className="text-foreground font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest  truncate max-w-[100px] md:max-w-[150px]">
                 {track.title}
               </span>
             ) : track.genre && (
-              <span className="text-foreground/60 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 truncate max-w-[100px] md:max-w-[150px]">
+              <span className="text-foreground font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest  truncate max-w-[100px] md:max-w-[150px]">
                 {track.genre}
               </span>
             )}

@@ -39,14 +39,14 @@ export default function SelectionCardProgress({
       <div className="flex flex-col gap-1.5 w-full">
         <div className="flex justify-between items-end mb-1">
           <span className={`text-xs font-black tracking-widest uppercase transition-colors duration-500 ${
-            isCompleted ? 'text-yellow-500' : hasStarted ? 'text-[var(--color-cyan-400)]' : 'text-gray-500'
+            isCompleted ? 'text-yellow-500' : hasStarted ? 'text-[var(--color-cyan-400)]' : 'text-foreground'
           }`}>
             {isCompleted ? 'シンクロ 100%' : hasMultipleLists ? '合計シンクロ率' : '好みのシンクロ率'}
           </span>
           <div className="flex items-baseline gap-2">
             <span className={`text-2xl font-black font-mono transition-all duration-500 ${
               isCompleted ? 'text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.8)] scale-110' : 
-              hasStarted ? 'text-[var(--color-cyan-400)] drop-shadow-[0_0_20px_var(--color-glow)]' : 'text-gray-600'
+              hasStarted ? 'text-[var(--color-cyan-400)] drop-shadow-[0_0_20px_var(--color-glow)]' : 'text-foreground'
             }`}>
               {percentage}%
             </span>

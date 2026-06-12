@@ -40,7 +40,7 @@ export default function TrackJumpSelect({
             className="appearance-none bg-transparent text-foreground font-mono text-sm md:text-base py-2.5 px-4 pr-12 outline-none cursor-pointer w-full whitespace-nowrap overflow-hidden text-ellipsis"
             defaultValue=""
           >
-            <option value="" disabled className="bg-surface text-gray-500">
+            <option value="" disabled className="bg-surface text-foreground">
               {isArtistMain ? 'アーティストを選択 ...' : '楽曲を選択 ...'}
             </option>
             {tracks.map((track) => {
@@ -56,7 +56,7 @@ export default function TrackJumpSelect({
               );
             })}
           </select>
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground/60 group-hover:text-cyan-400 group-focus-within:text-cyan-400 transition-colors">
+          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-foreground group-hover:text-cyan-400 group-focus-within:text-cyan-400 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <path d="m6 9 6 6 6-6"/>
             </svg>

@@ -15,7 +15,7 @@ async function ToggleButton({ id, isPublished }: { id: number, isPublished: bool
         className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
           isPublished 
             ? 'bg-green-600 text-white hover:bg-green-700' 
-            : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            : 'bg-gray-700 text-foreground hover:bg-gray-600'
         }`}
       >
         {isPublished ? '● 公開中' : '○ 非公開'}
@@ -54,7 +54,7 @@ export default async function AdminAwardsPage() {
         <header className="flex items-center justify-between border-b border-surface-border pb-6">
           <div>
             <h1 className="text-3xl font-black tracking-tight">アワード管理</h1>
-            <p className="text-sm text-gray-500 mt-1">表彰結果の公開・非公開および内容の確認</p>
+            <p className="text-sm text-foreground mt-1">表彰結果の公開・非公開および内容の確認</p>
           </div>
           <div className="flex items-center gap-6">
             <Link 
@@ -64,7 +64,7 @@ export default async function AdminAwardsPage() {
             >
               <span>👁</span> プレビューを確認
             </Link>
-            <Link href="/admin" className="text-sm text-gray-400 hover:text-foreground transition-colors">
+            <Link href="/admin" className="text-sm text-foreground hover:text-foreground transition-colors">
               ← ダッシュボードへ戻る
             </Link>
           </div>
@@ -77,7 +77,7 @@ export default async function AdminAwardsPage() {
               <div className="bg-gray-800 rounded-3xl overflow-hidden border border-surface-border text-foreground">
                 <table className="w-full text-left">
                   <thead>
-                    <tr className="bg-surface/50 text-gray-400 text-xs uppercase tracking-widest border-b border-surface-border">
+                    <tr className="bg-surface/50 text-foreground text-xs uppercase tracking-widest border-b border-surface-border">
                       <th className="px-6 py-4 font-bold">順位</th>
                       <th className="px-6 py-4 font-bold">タイトル / 受賞者</th>
                       <th className="px-6 py-4 font-bold max-w-xs">内容の概要</th>
@@ -88,16 +88,16 @@ export default async function AdminAwardsPage() {
                     {(groupedAwards[key] || []).map((award) => (
                       <tr key={award.id} className="hover:bg-white/5 transition-colors">
                         <td className="px-6 py-4">
-                          <span className={`font-mono text-lg font-black ${award.rank <= 3 && key !== 'CURATOR' ? 'text-yellow-500' : 'text-gray-500'}`}>
+                          <span className={`font-mono text-lg font-black ${award.rank <= 3 && key !== 'CURATOR' ? 'text-yellow-500' : 'text-foreground'}`}>
                             {key === 'CURATOR' ? '-' : award.rank}
                           </span>
                         </td>
                         <td className="px-6 py-4">
                           <p className="font-bold">{award.title}</p>
-                          <p className="text-[10px] text-gray-500 truncate max-w-[150px]">{award.note}</p>
+                          <p className="text-[10px] text-foreground truncate max-w-[150px]">{award.note}</p>
                         </td>
                         <td className="px-6 py-4">
-                          <p className="text-xs text-gray-400 line-clamp-2 max-w-md italic">
+                          <p className="text-xs text-foreground line-clamp-2 max-w-md italic">
                             {award.description || award.extraInfo || '-'}
                           </p>
                         </td>
@@ -108,7 +108,7 @@ export default async function AdminAwardsPage() {
                     ))}
                     {(!groupedAwards[key] || groupedAwards[key].length === 0) && (
                       <tr>
-                        <td colSpan={4} className="px-6 py-10 text-center text-gray-600 italic">
+                        <td colSpan={4} className="px-6 py-10 text-center text-foreground italic">
                           データがありません
                         </td>
                       </tr>
@@ -124,7 +124,7 @@ export default async function AdminAwardsPage() {
           <h3 className="text-yellow-500 font-bold mb-2 flex items-center gap-2 text-foreground">
             <span>💡</span> ヒント
           </h3>
-          <p className="text-sm text-gray-400 leading-relaxed">
+          <p className="text-sm text-foreground leading-relaxed">
             現在、 `/awards` ページは「Coming Soon」に固定されています。<br/>
             表示内容の確認は、右上の「プレビューを確認」から行ってください。
           </p>

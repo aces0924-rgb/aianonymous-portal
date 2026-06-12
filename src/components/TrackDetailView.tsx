@@ -69,7 +69,7 @@ export default function TrackDetailView({
     
     if (isSubmitted) {
       return (
-        <div className={`w-full py-4 rounded-2xl bg-surface/50 border border-surface-border text-foreground/60 items-center justify-center gap-2 cursor-not-allowed flex ${className}`}>
+        <div className={`w-full py-4 rounded-2xl bg-surface/50 border border-surface-border text-foreground items-center justify-center gap-2 cursor-not-allowed flex ${className}`}>
           <span className="text-lg">✅</span>
           <span className="text-sm font-black tracking-widest uppercase">サムネイル採用済み</span>
         </div>
@@ -123,7 +123,7 @@ export default function TrackDetailView({
                   href={`/${eventSlug}/tracks/${(prevTrack as any).id}${tableQuery}`} 
                   className="px-3 md:px-5 py-2 md:py-3 rounded-full bg-white/5 hover:bg-white/10 text-foreground text-[10px] md:text-xs font-black transition-all border border-surface-border flex items-center gap-1 backdrop-blur-sm whitespace-nowrap"
                 >
-                  <svg className="w-4 h-4 md:w-5 md:h-5 text-foreground/70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="15 18 9 12 15 6"/>
                   </svg>
                   <span>前へ</span>
@@ -165,25 +165,25 @@ export default function TrackDetailView({
               </div>
               <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-2 md:mb-4 leading-tight tracking-tighter flex items-start gap-2 md:gap-3">
                 {isArtistMain ? (
-                  <svg className="w-8 h-8 md:w-10 md:h-10 opacity-70 shrink-0 mt-1 md:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-8 h-8 md:w-10 md:h-10  shrink-0 mt-1 md:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
                 ) : (
-                  <svg className="w-8 h-8 md:w-10 md:h-10 opacity-70 shrink-0 mt-1 md:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-8 h-8 md:w-10 md:h-10  shrink-0 mt-1 md:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
                   </svg>
                 )}
                 <span>{mainText}</span>
               </h1>
               {subText && (
-                <p className={`text-lg md:text-2xl font-bold text-foreground/70 mb-8 flex items-center gap-2 ${isArtistMain ? 'text-[var(--color-cyan-500)]' : ''}`}>
+                <p className={`text-lg md:text-2xl font-bold text-foreground mb-8 flex items-center gap-2 ${isArtistMain ? 'text-[var(--color-cyan-500)]' : ''}`}>
                   {isArtistMain ? (
-                    <svg className="w-5 h-5 opacity-70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="w-5 h-5  shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
                     </svg>
                   ) : (
-                    <svg className="w-5 h-5 opacity-70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="w-5 h-5  shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                       <circle cx="12" cy="7" r="4" />
                     </svg>
@@ -199,14 +199,14 @@ export default function TrackDetailView({
                     href={audioSource} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5 transition-all text-sm font-bold text-foreground/90 hover:text-white shadow-lg backdrop-blur-sm group"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 hover:-translate-y-0.5 transition-all text-sm font-bold text-foreground hover:text-white shadow-lg backdrop-blur-sm group"
                   >
                     <svg className="w-5 h-5 text-white/80 group-hover:text-white transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
                       <polyline points="17 2 12 7 7 2"></polyline>
                     </svg>
                     ニコニコ動画でコメントする
-                    <svg className="w-3.5 h-3.5 ml-1 opacity-50 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="w-3.5 h-3.5 ml-1  group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                       <polyline points="15 3 21 3 21 9"></polyline>
                       <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -244,8 +244,8 @@ export default function TrackDetailView({
                       </svg>
                     </div>
                     <div className="space-y-3 w-full pt-1">
-                      <p className="text-[10px] font-black tracking-[0.3em] text-[var(--color-cyan-400)]/80 uppercase">Creator Information</p>
-                      <div className="text-sm md:text-base text-foreground/80 leading-relaxed font-bold space-y-3">
+                      <p className="text-[10px] font-black tracking-[0.3em] text-[var(--color-cyan-400)] uppercase">Creator Information</p>
+                      <div className="text-sm md:text-base text-foreground leading-relaxed font-bold space-y-3">
                         <div className="flex items-center gap-3">
                           <svg className="w-4 h-4 text-blue-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -255,7 +255,7 @@ export default function TrackDetailView({
                             {!thumbnail.isAnonymous ? (
                               <span className="text-foreground">{thumbnail.artistName || '不明'}</span>
                             ) : (
-                              <span className="text-foreground/60 text-sm font-medium">匿名</span>
+                              <span className="text-foreground text-sm font-medium">匿名</span>
                             )}
                             {!thumbnail.isXAnonymous && thumbnail.twitterId && (
                               <a href={`https://x.com/${thumbnail.twitterId.replace(/^@/, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-2.5 py-0.5 ml-1 rounded-full bg-[var(--color-cyan-500)]/60 border border-[var(--color-cyan-400)]/80 hover:bg-[var(--color-cyan-500)] transition-colors group">
@@ -279,8 +279,8 @@ export default function TrackDetailView({
                       </svg>
                     </div>
                     <div className="space-y-3 w-full pt-1">
-                      <p className="text-[10px] font-black tracking-[0.3em] text-[var(--color-cyan-400)]/80 uppercase">Creator Information</p>
-                      <div className="text-sm md:text-base text-foreground/80 leading-relaxed font-bold space-y-3">
+                      <p className="text-[10px] font-black tracking-[0.3em] text-[var(--color-cyan-400)] uppercase">Creator Information</p>
+                      <div className="text-sm md:text-base text-foreground leading-relaxed font-bold space-y-3">
                         <div className="flex items-center gap-3">
                           <svg className="w-4 h-4 text-purple-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
@@ -300,7 +300,7 @@ export default function TrackDetailView({
                               {!thumbnail.isAnonymous ? (
                                 <span className="text-foreground">{thumbnail.artistName || '不明'}</span>
                               ) : (
-                                <span className="text-foreground/60 text-sm font-medium">匿名</span>
+                                <span className="text-foreground text-sm font-medium">匿名</span>
                               )}
                               {!thumbnail.isXAnonymous && thumbnail.twitterId && (
                                 <a href={`https://x.com/${thumbnail.twitterId.replace(/^@/, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-2.5 py-0.5 ml-1 rounded-full bg-[var(--color-cyan-500)]/60 border border-[var(--color-cyan-400)]/80 hover:bg-[var(--color-cyan-500)] transition-colors group">
@@ -322,8 +322,8 @@ export default function TrackDetailView({
                       </svg>
                     </div>
                     <div className="space-y-1 pt-1" style={{ textShadow: 'none' }}>
-                      <p className="text-[10px] font-black tracking-[0.3em] text-yellow-700 dark:text-yellow-500/80 uppercase">Anonymity Policy</p>
-                      <p className="text-xs md:text-sm text-yellow-900 dark:text-yellow-200/90 leading-relaxed font-bold">
+                      <p className="text-[10px] font-black tracking-[0.3em] text-yellow-700 dark:text-yellow-500 uppercase">Anonymity Policy</p>
+                      <p className="text-xs md:text-sm text-yellow-900 dark:text-yellow-200 leading-relaxed font-bold">
                         本フェスは匿名性を楽しむイベントです。SNS等での制作者の特定や推測に関する投稿は、投票期間終了後までお控えいただけますようお願い申し上げます。
                       </p>
                     </div>
@@ -336,11 +336,11 @@ export default function TrackDetailView({
           {/* Right Column: Lyrics Box & Submission Button */}
           <div className="lg:w-[45%] flex flex-col relative">
             <div className="flex flex-col gap-4 mb-4 lg:mb-0 lg:absolute lg:inset-0">
-              <h2 className="text-lg md:text-2xl font-black flex items-center gap-3 tracking-tighter text-[var(--color-cyan-400)]/80 uppercase shrink-0">
+              <h2 className="text-lg md:text-2xl font-black flex items-center gap-3 tracking-tighter text-[var(--color-cyan-400)] uppercase shrink-0">
                 {defaultLabels.lyricsTab || 'LYRICS'}
               </h2>
               <div className="bg-surface/40 border border-surface-border rounded-3xl p-6 md:p-8 backdrop-blur-sm flex-grow overflow-y-auto custom-scrollbar max-h-[600px] lg:max-h-none">
-                <pre className="text-foreground/90 whitespace-pre-wrap font-sans leading-loose text-base md:text-lg">
+                <pre className="text-foreground whitespace-pre-wrap font-sans leading-loose text-base md:text-lg">
                   {track.lyrics || "歌詞は登録されていません。"}
                 </pre>
               </div>
@@ -359,7 +359,7 @@ export default function TrackDetailView({
               review={(track as any).review} 
               defaultLabels={defaultLabels}
             />
-            <div className="mt-4 text-right text-[10px] text-foreground/50 font-mono tracking-widest uppercase opacity-50">
+            <div className="mt-4 text-right text-[10px] text-foreground font-mono tracking-widest uppercase ">
               {defaultLabels.lyricsAnalysisAttribution || 'Lyrics Analysis generated by Google Gemini AI'}
             </div>
           </div>

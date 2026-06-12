@@ -144,7 +144,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
         <div className="relative z-10 space-y-6">
           <div className="text-center space-y-2">
             <h2 className="text-3xl font-black text-foreground tracking-tighter">推薦者名を登録</h2>
-            <p className="text-foreground/60 text-sm font-light mt-2">
+            <p className="text-foreground text-sm font-light mt-2">
               以下の選択項目で「推しリスト」を作成します。
             </p>
             {recommendType === 'song' && (
@@ -178,19 +178,19 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
               <div className="bg-surface/40 border border-surface-border rounded-2xl p-5 space-y-4 shadow-inner">
                 {isIllustEnabled && (
                   <div className="text-center space-y-3">
-                    <p className="text-xs font-black tracking-widest uppercase text-foreground/60">リストの種類を選択</p>
+                    <p className="text-xs font-black tracking-widest uppercase text-foreground">リストの種類を選択</p>
                     <div className="flex bg-surface rounded-full p-1 max-w-xs mx-auto border border-surface-border">
                       <button
                         type="button"
                         onClick={() => { setRecommendType('song'); setError(null); }}
-                        className={`flex-1 py-2 rounded-full text-sm font-black transition-all ${recommendType === 'song' ? 'bg-[var(--color-cyan-500)] text-black shadow-[0_0_15px_var(--color-glow)]' : 'text-gray-500 hover:text-white'}`}
+                        className={`flex-1 py-2 rounded-full text-sm font-black transition-all ${recommendType === 'song' ? 'bg-[var(--color-cyan-500)] text-black shadow-[0_0_15px_var(--color-glow)]' : 'text-foreground hover:text-white'}`}
                       >
                         🎵 楽曲
                       </button>
                       <button
                         type="button"
                         onClick={() => { setRecommendType('illustration'); setError(null); }}
-                        className={`flex-1 py-2 rounded-full text-sm font-black transition-all ${recommendType === 'illustration' ? 'bg-purple-500 text-black shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'text-gray-500 hover:text-white'}`}
+                        className={`flex-1 py-2 rounded-full text-sm font-black transition-all ${recommendType === 'illustration' ? 'bg-purple-500 text-black shadow-[0_0_15px_rgba(168,85,247,0.4)]' : 'text-foreground hover:text-white'}`}
                       >
                         🎨 イラスト
                       </button>
@@ -202,15 +202,15 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
                   {recommendType === 'song' ? (
                     <span>
                       同じ名前での登録は3回までとなります。登録したリストは後から変更できません。<br />
-                      <span className="text-[10px] opacity-80">※過去に選んだ楽曲を再度選ぶことはできません。</span>
+                      <span className="text-[10px] ">※過去に選んだ楽曲を再度選ぶことはできません。</span>
                     </span>
                   ) : recommendType === 'illustration' ? (
                     <span>
                       同じ名前でのイラスト登録は{maxIllustLimit === -1 ? '無制限' : `${maxIllustLimit}回`}までとなります。登録したリストは後から変更できません。<br />
-                      <span className="text-[10px] opacity-80">※過去に選んだイラストを再度選ぶことはできません。</span>
+                      <span className="text-[10px] ">※過去に選んだイラストを再度選ぶことはできません。</span>
                     </span>
                   ) : (
-                    <span className="text-foreground/60">
+                    <span className="text-foreground">
                       まずは登録するリストの種類を選んでください。
                     </span>
                   )}
@@ -220,9 +220,9 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
               {/* Username Input */}
               <div className="space-y-2">
                 <div className="flex justify-between items-end px-2">
-                  <label htmlFor="name" className={`text-xs font-black tracking-[0.3em] uppercase ${recommendType === 'song' ? 'text-[var(--color-cyan-400)]' : recommendType === 'illustration' ? 'text-purple-500' : 'text-gray-500'}`}>Username</label>
+                  <label htmlFor="name" className={`text-xs font-black tracking-[0.3em] uppercase ${recommendType === 'song' ? 'text-[var(--color-cyan-400)]' : recommendType === 'illustration' ? 'text-purple-500' : 'text-foreground'}`}>Username</label>
                   {userName.trim() && recommendType && (
-                    <span className={`text-[10px] font-bold ${canSubmitCurrentMode ? 'text-foreground/60' : 'text-red-500'}`}>
+                    <span className={`text-[10px] font-bold ${canSubmitCurrentMode ? 'text-foreground' : 'text-red-500'}`}>
                       {recommendType === 'song' ? (
                         <>残り登録可能数: <span className="text-sm ml-1">{remainingSongCount}</span> / 3</>
                       ) : (
@@ -242,7 +242,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
                   disabled={isSubmitting || !recommendType}
                   placeholder={recommendType ? "あなたの名前を入力..." : "リストの種類を選択してください"}
                   autoFocus
-                  className={`w-full bg-surface border-2 ${error || (userName.trim() && !canSubmitCurrentMode) ? 'border-red-500/50' : 'border-surface-border'} rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-gray-600 font-bold disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`w-full bg-surface border-2 ${error || (userName.trim() && !canSubmitCurrentMode) ? 'border-red-500/50' : 'border-surface-border'} rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-foreground font-bold disabled: disabled:cursor-not-allowed`}
                   required
                 />
                 {userName.trim() && !canSubmitCurrentMode && recommendType && (
@@ -254,7 +254,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
 
               {/* X Account ID Input */}
               <div className="space-y-2">
-                <label htmlFor="x-id" className={`block text-xs font-black tracking-[0.3em] uppercase ml-2 ${recommendType === 'song' ? 'text-[var(--color-cyan-400)]' : recommendType === 'illustration' ? 'text-purple-500' : 'text-gray-500'}`}>X Account ID</label>
+                <label htmlFor="x-id" className={`block text-xs font-black tracking-[0.3em] uppercase ml-2 ${recommendType === 'song' ? 'text-[var(--color-cyan-400)]' : recommendType === 'illustration' ? 'text-purple-500' : 'text-foreground'}`}>X Account ID</label>
                 <input
                   id="x-id"
                   type="text"
@@ -265,21 +265,21 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
                   }}
                   disabled={isSubmitting || !recommendType}
                   placeholder={recommendType ? "@zyonetsunko" : ""}
-                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-gray-600 font-bold disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-foreground font-bold disabled: disabled:cursor-not-allowed`}
                   required
                 />
               </div>
 
               {/* Appeal Point Input */}
               <div className="space-y-2">
-                <label htmlFor="appeal" className={`block text-xs font-black tracking-[0.3em] uppercase ml-2 ${recommendType === 'song' ? 'text-[var(--color-cyan-400)]' : recommendType === 'illustration' ? 'text-purple-500' : 'text-gray-500'}`}>Appeal Point (Optional)</label>
+                <label htmlFor="appeal" className={`block text-xs font-black tracking-[0.3em] uppercase ml-2 ${recommendType === 'song' ? 'text-[var(--color-cyan-400)]' : recommendType === 'illustration' ? 'text-purple-500' : 'text-foreground'}`}>Appeal Point (Optional)</label>
                 <textarea
                   id="appeal"
                   value={appeal}
                   onChange={(e) => setAppeal(e.target.value)}
                   disabled={isSubmitting || !recommendType}
                   placeholder={recommendType === 'song' ? 'このリストの見どころや、楽曲への想いを入力してください...' : recommendType === 'illustration' ? '選んだイラストの好きなところや、おすすめポイントを入力してください...' : ''}
-                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-gray-600 font-bold min-h-[100px] resize-none disabled:opacity-50 disabled:cursor-not-allowed`}
+                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-foreground font-bold min-h-[100px] resize-none disabled: disabled:cursor-not-allowed`}
                 />
               </div>
               
@@ -291,14 +291,14 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
                 type="button"
                 onClick={onClose}
                 disabled={isSubmitting}
-                className="flex-1 py-4 rounded-2xl border-2 border-surface-border text-foreground/60 font-black hover:bg-surface transition-all disabled:opacity-50"
+                className="flex-1 py-4 rounded-2xl border-2 border-surface-border text-foreground font-black hover:bg-surface transition-all disabled:"
               >
                 キャンセル
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting || !recommendType || (userName.trim() !== '' && !canSubmitCurrentMode)}
-                className={`flex-[2] py-4 rounded-2xl ${recommendType === 'song' ? 'bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-500)] shadow-[0_0_20px_var(--color-glow)]' : recommendType === 'illustration' ? 'bg-purple-600 hover:bg-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.3)]' : 'bg-gray-600'} text-white font-black transition-all active:scale-95 disabled:opacity-50 disabled:bg-gray-800 disabled:shadow-none`}
+                className={`flex-[2] py-4 rounded-2xl ${recommendType === 'song' ? 'bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-500)] shadow-[0_0_20px_var(--color-glow)]' : recommendType === 'illustration' ? 'bg-purple-600 hover:bg-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.3)]' : 'bg-gray-600'} text-white font-black transition-all active:scale-95 disabled: disabled:bg-gray-800 disabled:shadow-none`}
               >
                 {isSubmitting ? '登録中...' : 'リストを生成する'}
               </button>

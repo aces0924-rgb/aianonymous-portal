@@ -165,7 +165,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 <Link
                   key={idx}
                   href={item.href}
-                  className="px-0.5 py-0.5 md:px-2 md:py-1 rounded-full text-sm md:text-xl font-black text-foreground hover:opacity-80 transition-all flex items-center justify-center md:justify-start gap-2 whitespace-nowrap group/link"
+                  className="px-0.5 py-0.5 md:px-2 md:py-1 rounded-full text-sm md:text-xl font-black text-foreground hover: transition-all flex items-center justify-center md:justify-start gap-2 whitespace-nowrap group/link"
                 >
                   <span className="shrink-0 transition-transform duration-300 group-hover/link:scale-110">{item.icon}</span>
                   <span className="hidden md:inline truncate">{item.label}</span>
@@ -218,7 +218,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   <Link
                     key={idx}
                     href={finalHref}
-                    className="px-0.5 py-0.5 md:px-2 md:py-1 rounded-full text-sm md:text-xl font-black text-foreground hover:opacity-80 transition-all flex items-center justify-center md:justify-start gap-2 whitespace-nowrap group/link"
+                    className="px-0.5 py-0.5 md:px-2 md:py-1 rounded-full text-sm md:text-xl font-black text-foreground hover: transition-all flex items-center justify-center md:justify-start gap-2 whitespace-nowrap group/link"
                   >
                     <span className="shrink-0 transition-transform duration-300 group-hover/link:scale-110">{item.icon}</span>
                     <span className="hidden md:inline truncate">{item.label}</span>
@@ -297,9 +297,9 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://${event.slug}.example.com/\n\n${shareBasePostUrl}`)}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-white hover:bg-gray-100 text-gray-900 text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]"
+                className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-white hover:bg-gray-100 text-foreground text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]"
               >
-                <svg className="w-8 h-8 md:w-10 md:h-10 text-gray-900 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-8 h-8 md:w-10 md:h-10 text-foreground group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
                 <span className="tracking-tight uppercase font-black text-sm md:text-xl">Xでイベントを応援</span>
@@ -314,7 +314,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                   </svg>
                   <div className="flex flex-col items-start leading-tight">
-                    <span className="text-[10px] md:text-xs opacity-90 font-bold tracking-[0.2em] mb-1">イベント期間</span>
+                    <span className="text-[10px] md:text-xs  font-bold tracking-[0.2em] mb-1">イベント期間</span>
                     <span className="text-sm md:text-xl font-black tracking-tighter">{defaultLabels.scheduleButtonLabel}</span>
                   </div>
                 </Link>
@@ -337,7 +337,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
           <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">NEWS</h2>
           <div className="bg-surface/50 backdrop-blur-sm border border-surface-border rounded-3xl p-8 shadow-2xl">
             {news.length === 0 ? (
-              <p className="text-foreground/80 italic">現在お知らせはありません。</p>
+              <p className="text-foreground italic">現在お知らせはありません。</p>
             ) : (
               <ul className="space-y-6">
                 {news.map((n: any) => (
@@ -360,11 +360,11 @@ export default async function Home({ params, searchParams }: { params: Promise<{
           
           <div className="relative">
             {/* Central Line (Desktop) */}
-            <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--color-cyan-400)] via-[var(--color-cyan-500)] to-[var(--color-cyan-600)] shadow-[0_0_15px_var(--color-glow)] opacity-50"></div>
+            <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[var(--color-cyan-400)] via-[var(--color-cyan-500)] to-[var(--color-cyan-600)] shadow-[0_0_15px_var(--color-glow)] "></div>
 
             <div className="space-y-16">
               {schedule.length === 0 ? (
-                <p className="text-foreground/80 pl-12 md:text-center md:pl-0 italic">スケジュールは後日発表されます。</p>
+                <p className="text-foreground pl-12 md:text-center md:pl-0 italic">スケジュールは後日発表されます。</p>
               ) : (
                 schedule.map((s: any, idx: number) => {
                   const isEven = idx % 2 === 0;
@@ -399,7 +399,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
             <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">
               GUIDELINES
             </h2>
-            <span className="text-foreground/80 font-mono text-sm tracking-widest">/ {(defaultLabels as any).guidelinesTitle || '募集要項'}</span>
+            <span className="text-foreground font-mono text-sm tracking-widest">/ {(defaultLabels as any).guidelinesTitle || '募集要項'}</span>
           </div>
           
 
@@ -434,7 +434,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md uppercase">
                 FAQ
               </h2>
-              <span className="text-foreground/80 font-mono text-sm tracking-widest">/ よくある質問</span>
+              <span className="text-foreground font-mono text-sm tracking-widest">/ よくある質問</span>
             </div>
             <div className="grid grid-cols-1 gap-6">
               {faqs.map((faq: any, index: number) => (
@@ -445,7 +445,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                       <h3 className="text-xl font-black text-foreground leading-tight">{faq.question}</h3>
                       <div className="flex gap-6 pt-2 border-t border-surface-border/50">
                         <span className="text-2xl font-black text-[var(--color-cyan-400)]">A.</span>
-                        <p className="text-foreground/80 text-lg font-light leading-relaxed whitespace-pre-wrap">{faq.answer}</p>
+                        <p className="text-foreground text-lg font-light leading-relaxed whitespace-pre-wrap">{faq.answer}</p>
                       </div>
                     </div>
                   </div>
@@ -461,12 +461,12 @@ export default async function Home({ params, searchParams }: { params: Promise<{
 
       </div>
 
-      <footer className="border-t border-surface-border bg-background py-24 mt-40 text-center text-foreground/60">
+      <footer className="border-t border-surface-border bg-background py-24 mt-40 text-center text-foreground">
         <div className="max-w-4xl mx-auto px-6 space-y-10 text-center">
           <div className="flex justify-center mb-8">
-            <img src={defaultTheme.logoUrl} alt="Logo" className="w-32 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" style={{ mixBlendMode: 'screen', objectFit: 'contain' }} />
+            <img src={defaultTheme.logoUrl} alt="Logo" className="w-32  grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500" style={{ mixBlendMode: 'screen', objectFit: 'contain' }} />
           </div>
-          <div className="space-y-3 opacity-50">
+          <div className="space-y-3 ">
             <p className="text-[10px] tracking-[0.4em] font-light">© {new Date().getFullYear()} {defaultLabels.siteTitle}</p>
             <p className="text-[9px] tracking-tighter uppercase font-bold text-[var(--color-cyan-400)]">Powered by Portal System</p>
           </div>

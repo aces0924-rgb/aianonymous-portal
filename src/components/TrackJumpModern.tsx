@@ -112,7 +112,7 @@ export default function TrackJumpModern({
         <input
           ref={inputRef}
           type="text"
-          className="bg-transparent text-foreground font-mono text-sm py-2.5 px-4 outline-none w-full placeholder:text-foreground/40"
+          className="bg-transparent text-foreground font-mono text-sm py-2.5 px-4 outline-none w-full placeholder:text-foreground"
           placeholder={enableShowCreators ? "曲名・番号・アーティスト名で検索..." : "曲名・番号で検索..."}
           value={query}
           onChange={(e) => {
@@ -123,7 +123,7 @@ export default function TrackJumpModern({
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
         />
-        <div className="pr-4 text-gray-500">
+        <div className="pr-4 text-foreground">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
           </svg>
@@ -145,7 +145,7 @@ export default function TrackJumpModern({
                   key={track.id}
                   onClick={() => handleSelect(track.id)}
                   className={`w-full text-left px-4 py-3 rounded-lg transition-all flex items-center gap-3 ${
-                    index === selectedIndex ? 'bg-[var(--color-cyan-500)] text-black' : 'text-foreground/80 hover:bg-foreground/5 hover:text-foreground'
+                    index === selectedIndex ? 'bg-[var(--color-cyan-500)] text-black' : 'text-foreground hover:bg-foreground/5 hover:text-foreground'
                   }`}
                 >
                   <span className={`font-mono text-xs font-black px-2 py-0.5 rounded border ${
@@ -156,9 +156,9 @@ export default function TrackJumpModern({
                   <div className="flex flex-col min-w-0">
                     <span className="text-sm font-bold truncate">{mainText}</span>
                     {(enableShowCreators || isArtistMain) && subText && (
-                      <span className="text-[10px] text-foreground/50 truncate flex items-center gap-1 mt-0.5">
+                      <span className="text-[10px] text-foreground truncate flex items-center gap-1 mt-0.5">
                         {!isArtistMain && (
-                          <svg className="w-3 h-3 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <svg className="w-3 h-3 " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
                           </svg>
@@ -171,7 +171,7 @@ export default function TrackJumpModern({
               )})}
             </div>
           ) : (
-            <div className="p-8 text-center text-gray-500 italic text-sm">
+            <div className="p-8 text-center text-foreground italic text-sm">
               一致する楽曲が見つかりません
             </div>
           )}

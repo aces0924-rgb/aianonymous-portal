@@ -99,7 +99,7 @@ function HostCard({ host }: { host: Host }) {
         <div className="text-center space-y-6">
           <div className="space-y-1">
             <p className="text-[var(--color-cyan-600)] font-black text-sm tracking-widest">{host.role}</p>
-            <h3 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight">
+            <h3 className="text-2xl md:text-3xl font-black text-foreground tracking-tight leading-tight">
               {host.name || 'ゲスト'}
             </h3>
           </div>
@@ -115,7 +115,7 @@ function HostCard({ host }: { host: Host }) {
                 aria-label={`${host.name}のXプロフィールを表示`}
               >
                 <svg 
-                  className="w-8 h-8 text-gray-900 group-hover/btn:text-[var(--color-cyan-500)] transition-colors" 
+                  className="w-8 h-8 text-foreground group-hover/btn:text-[var(--color-cyan-500)] transition-colors" 
                   fill="currentColor" 
                   viewBox="0 0 24 24"
                 >

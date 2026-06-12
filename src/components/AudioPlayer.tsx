@@ -118,7 +118,7 @@ export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: Aud
                   <img 
                     src={imgSrc || undefined} 
                     alt="Video Thumbnail" 
-                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover/video:opacity-100 transition-opacity duration-700"
+                    className="absolute inset-0 w-full h-full object-cover  group-hover/video:opacity-100 transition-opacity duration-700"
                     loading="lazy"
                     onError={handleImageError}
                     onLoad={handleImageLoad}
@@ -174,10 +174,10 @@ export default function AudioPlayer({ audioSource, trackId, isPreviewMode }: Aud
         </div>
         
         <div className="mt-3 flex justify-between items-center px-1">
-          <p className="text-[10px] md:text-xs font-bold tracking-widest text-[var(--color-cyan-400)]/60 uppercase">
+          <p className="text-[10px] md:text-xs font-bold tracking-widest text-[var(--color-cyan-400)] uppercase">
             {isImage ? 'Artwork View' : (isPlaying ? 'Now Playing' : 'Ready to Play')}
           </p>
-          <p className="text-[10px] md:text-xs text-gray-500 font-medium italic">
+          <p className="text-[10px] md:text-xs text-foreground font-medium italic">
             {isImage 
               ? '※画像をタップ or クリックすると拡大表示されます'
               : (isPlaying 

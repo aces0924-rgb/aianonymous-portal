@@ -45,7 +45,7 @@ export default function ScheduleItemProgress({ trackIds, size = 'normal' }: Sche
           }`}>
             {matchedCount}
           </span>
-          <span className={`text-xl font-bold ${isPerfect ? 'text-yellow-400/60' : 'text-amber-400/60'}`}>曲</span>
+          <span className={`text-xl font-bold ${isPerfect ? 'text-yellow-400' : 'text-amber-400'}`}>曲</span>
         </div>
       </div>
     );
@@ -64,14 +64,14 @@ export default function ScheduleItemProgress({ trackIds, size = 'normal' }: Sche
         }`}>
           気になる
         </span>
-        <span className="text-xs font-bold text-neutral-400/80 whitespace-nowrap">
+        <span className="text-xs font-bold text-neutral-400 whitespace-nowrap">
           {matchedCount}/{totalCount}曲
         </span>
       </div>
       <div className={`text-2xl font-black font-mono leading-none ${
         isPerfect ? 'text-yellow-300 drop-shadow-[0_0_10px_rgba(250,204,21,0.5)]' : 'text-amber-400'
       }`}>
-        {matchedCount}<span className="text-xs ml-0.5 opacity-60">曲</span>
+        {matchedCount}<span className="text-xs ml-0.5 ">曲</span>
       </div>
     </div>
   );

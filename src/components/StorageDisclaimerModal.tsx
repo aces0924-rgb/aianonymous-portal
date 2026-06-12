@@ -40,7 +40,7 @@ export default function StorageDisclaimerModal({ isOpen, onClose }: StorageDiscl
             </h2>
           </div>
 
-          <div className="space-y-4 text-foreground/80 leading-relaxed font-medium">
+          <div className="space-y-4 text-foreground leading-relaxed font-medium">
             <p className="text-sm">
               『気になる曲』や『推し候補』のチェック状態は、お客様の<span className="text-amber-400 font-bold underline decoration-amber-900">ブラウザ内に一時的に保存</span>されます。
             </p>
@@ -67,7 +67,7 @@ export default function StorageDisclaimerModal({ isOpen, onClose }: StorageDiscl
                 />
                 <div className={`w-3 h-3 rounded-sm bg-amber-500 transition-all ${dontShowAgain ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}></div>
               </div>
-              <span className="text-xs font-bold text-foreground/60 group-hover:text-foreground transition-colors">
+              <span className="text-xs font-bold text-foreground group-hover:text-foreground transition-colors">
                 内容を理解しました。以降は表示しない
               </span>
             </label>

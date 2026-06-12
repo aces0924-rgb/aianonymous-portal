@@ -46,7 +46,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all ${
               filterMode === 'all' 
                 ? 'bg-gray-800 text-white shadow-lg border border-surface-border' 
-                : 'text-gray-500 hover:text-foreground/80'
+                : 'text-foreground hover:text-foreground'
             }`}
           >
             すべて表示 ({initialTracks.length})
@@ -59,7 +59,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
                 className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                   filterMode === 'music' 
                     ? 'bg-[var(--color-cyan-600)] text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
-                    : 'text-gray-500 hover:text-[var(--color-cyan-400)]/50'
+                    : 'text-foreground hover:text-[var(--color-cyan-400)]'
                 }`}
               >
                 <span>🎵</span>
@@ -71,7 +71,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
                 className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
                   filterMode === 'illustration' 
                     ? 'bg-fuchsia-600 text-white shadow-[0_0_15px_rgba(192,38,211,0.4)]' 
-                    : 'text-gray-500 hover:text-fuchsia-400/50'
+                    : 'text-foreground hover:text-fuchsia-400'
                 }`}
               >
                 <span>🖼️</span>
@@ -85,7 +85,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
               filterMode === 'interested' 
                 ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]' 
-                : 'text-gray-500 hover:text-amber-500/50'
+                : 'text-foreground hover:text-amber-500'
             }`}
           >
             <span>⭐</span>
@@ -97,7 +97,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
               filterMode === 'favorites' 
                 ? 'bg-[var(--color-cyan-500)] text-black shadow-[0_0_15px_var(--color-glow)]' 
-                : 'text-gray-500 hover:text-[var(--color-cyan-400)]/50'
+                : 'text-foreground hover:text-[var(--color-cyan-400)]'
             }`}
           >
             <span>💖</span>
@@ -109,7 +109,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
               filterMode === 'unregistered' 
                 ? 'bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] border border-[var(--color-cyan-400)]/40 shadow-[0_0_20px_var(--color-glow)]' 
-                : 'text-gray-500 hover:text-[var(--color-cyan-400)]/50'
+                : 'text-foreground hover:text-[var(--color-cyan-400)]'
             }`}
           >
             <span>🎨</span>
@@ -135,7 +135,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             <span className="text-5xl opacity-20">
               {filterMode === 'interested' ? '⭐' : filterMode === 'favorites' ? '💖' : filterMode === 'music' ? '🎵' : filterMode === 'illustration' ? '🖼️' : '🎨'}
             </span>
-            <p className="text-gray-600 font-bold tracking-[0.2em] uppercase text-sm">
+            <p className="text-foreground font-bold tracking-[0.2em] uppercase text-sm">
               {filterMode === 'interested' 
                 ? '気になる曲はまだありません' 
                 : filterMode === 'favorites' 

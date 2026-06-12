@@ -41,7 +41,7 @@ export default function ScheduleJumpSelect({ tracks }: { tracks: Track[] }) {
             }`}
             defaultValue=""
           >
-            <option value="" disabled className="bg-surface text-foreground/40">
+            <option value="" disabled className="bg-surface text-foreground">
               楽曲を選択...
             </option>
             {tracks.map((track) => {
@@ -58,7 +58,7 @@ export default function ScheduleJumpSelect({ tracks }: { tracks: Track[] }) {
             })}
           </select>
           <div className={`absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-colors ${
-            hasInterested ? 'text-yellow-500/50 group-hover:text-yellow-400' : 'text-foreground/30 group-hover:text-[var(--color-cyan-400)]'
+            hasInterested ? 'text-yellow-500 group-hover:text-yellow-400' : 'text-foreground group-hover:text-[var(--color-cyan-400)]'
           }`}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <path d="m6 9 6 6 6-6"/>

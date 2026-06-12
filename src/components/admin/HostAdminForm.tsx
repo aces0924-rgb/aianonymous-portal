@@ -70,7 +70,7 @@ export default function HostAdminForm({
             onChange={(e) => setEnableHostSection(e.target.checked)}
             className="w-5 h-5 accent-green-600 rounded cursor-pointer" 
           />
-          <span className="text-sm font-bold text-gray-700">主催者セクションを表示する</span>
+          <span className="text-sm font-bold text-foreground">主催者セクションを表示する</span>
         </label>
       </div>
 
@@ -86,7 +86,7 @@ export default function HostAdminForm({
             </button>
             
             <div className="w-full md:w-32 shrink-0">
-              <label className="text-[10px] font-bold text-gray-500 block mb-1">役職 (Role)</label>
+              <label className="text-[10px] font-bold text-foreground block mb-1">役職 (Role)</label>
               <input 
                 value={host.role} 
                 onChange={(e) => handleChange(i, 'role', e.target.value)} 
@@ -95,7 +95,7 @@ export default function HostAdminForm({
               />
             </div>
             <div className="w-full md:flex-1">
-              <label className="text-[10px] font-bold text-gray-500 block mb-1">名前 (Name)</label>
+              <label className="text-[10px] font-bold text-foreground block mb-1">名前 (Name)</label>
               <input 
                 value={host.name} 
                 onChange={(e) => handleChange(i, 'name', e.target.value)} 
@@ -104,7 +104,7 @@ export default function HostAdminForm({
               />
             </div>
             <div className="w-full md:flex-1">
-              <label className="text-[10px] font-bold text-gray-500 block mb-1">X (Twitter) URL</label>
+              <label className="text-[10px] font-bold text-foreground block mb-1">X (Twitter) URL</label>
               <input 
                 value={host.xUrl} 
                 onChange={(e) => handleChange(i, 'xUrl', e.target.value)} 
@@ -113,7 +113,7 @@ export default function HostAdminForm({
               />
             </div>
             <div className="w-full md:flex-1">
-              <label className="text-[10px] font-bold text-gray-500 block mb-1">アイコン画像 URL</label>
+              <label className="text-[10px] font-bold text-foreground block mb-1">アイコン画像 URL</label>
               <input 
                 value={host.iconUrl} 
                 onChange={(e) => handleChange(i, 'iconUrl', e.target.value)} 
@@ -126,7 +126,7 @@ export default function HostAdminForm({
 
         <button 
           onClick={handleAddHost}
-          className="w-full py-3 border-2 border-dashed border-gray-300 text-gray-500 font-bold rounded-xl hover:bg-gray-50 hover:text-green-600 transition"
+          className="w-full py-3 border-2 border-dashed border-gray-300 text-foreground font-bold rounded-xl hover:bg-gray-50 hover:text-green-600 transition"
         >
           ＋ メンバーを追加
         </button>
@@ -136,7 +136,7 @@ export default function HostAdminForm({
         <button 
           onClick={handleSave}
           disabled={isSaving}
-          className="bg-green-600 text-white p-2 px-6 rounded hover:bg-green-700 text-sm font-bold w-full md:w-auto disabled:opacity-50"
+          className="bg-green-600 text-white p-2 px-6 rounded hover:bg-green-700 text-sm font-bold w-full md:w-auto disabled:"
         >
           {isSaving ? '保存中...' : '主催者設定を保存'}
         </button>

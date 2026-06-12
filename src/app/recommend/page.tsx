@@ -16,7 +16,7 @@ export default async function RecommendPage({
     return (
       <main className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 text-center space-y-8">
         <h1 className="text-4xl font-black text-red-500">INVALID LINK</h1>
-        <p className="text-gray-400">ユーザー名が指定されていません。</p>
+        <p className="text-foreground">ユーザー名が指定されていません。</p>
         <Link href="/" className="px-8 py-4 bg-surface border border-surface-border rounded-full hover:border-[var(--color-cyan-400)] transition-all">
           トップに戻る
         </Link>
@@ -34,7 +34,7 @@ export default async function RecommendPage({
     return (
       <main className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 text-center space-y-8">
         <h1 className="text-4xl font-black text-red-500">NOT FOUND</h1>
-        <p className="text-gray-400">「{userName}」さんのリストは見つかりませんでした。</p>
+        <p className="text-foreground">「{userName}」さんのリストは見つかりませんでした。</p>
         <Link href="/" className="px-8 py-4 bg-surface border border-surface-border rounded-full hover:border-[var(--color-cyan-400)] transition-all">
           トップに戻る
         </Link>
@@ -81,9 +81,9 @@ export default async function RecommendPage({
           <div className="pt-10 flex flex-col items-center gap-6">
              {playlist?.appeal && (
                <div className="relative max-w-2xl mx-auto">
-                 <div className="absolute -top-3 -left-3 text-4xl text-[var(--color-cyan-400)]/50 opacity-50">"</div>
-                 <div className="absolute -bottom-3 -right-3 text-4xl text-[var(--color-cyan-400)]/50 opacity-50 rotate-180">"</div>
-                 <p className="text-xl md:text-2xl font-bold text-gray-200 leading-relaxed italic px-6">
+                 <div className="absolute -top-3 -left-3 text-4xl text-[var(--color-cyan-400)] ">"</div>
+                 <div className="absolute -bottom-3 -right-3 text-4xl text-[var(--color-cyan-400)]  rotate-180">"</div>
+                 <p className="text-xl md:text-2xl font-bold text-foreground leading-relaxed italic px-6">
                    {playlist.appeal}
                  </p>
                </div>
@@ -116,7 +116,7 @@ export default async function RecommendPage({
         
         {/* Footer info */}
         <div className="text-center pt-12 space-y-6">
-          <p className="text-gray-500 font-light italic text-sm">
+          <p className="text-foreground font-light italic text-sm">
             このリストは {userName} さんによって作成されました。<br />あなたも推し10曲を見つけて共有しませんか？
           </p>
           <Link 
@@ -128,7 +128,7 @@ export default async function RecommendPage({
         </div>
       </section>
 
-      <footer className="border-t border-surface-border bg-background py-24 text-center text-gray-400 mt-20">
+      <footer className="border-t border-surface-border bg-background py-24 text-center text-foreground mt-20">
         <div className="max-w-4xl mx-auto px-6 space-y-10">
           <Image 
             src="/images/logo.png" 

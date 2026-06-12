@@ -95,8 +95,8 @@ function ComingSoonCard({ title, awardName, description, placeholder, gradient, 
             <span className="text-6xl filter grayscale group-hover:grayscale-0 transition-all duration-700">🦉</span>
           </div>
           <div className="space-y-1">
-            <p className="text-2xl font-black tracking-[0.15em] text-foreground/90">COMING SOON</p>
-            <p className="text-[10px] font-bold text-yellow-500/60 tracking-widest uppercase">結果発表までお待ちください</p>
+            <p className="text-2xl font-black tracking-[0.15em] text-foreground">COMING SOON</p>
+            <p className="text-[10px] font-bold text-yellow-500 tracking-widest uppercase">結果発表までお待ちください</p>
           </div>
         </div>
         <div className="pt-6 border-t border-white/5">

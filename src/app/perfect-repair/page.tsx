@@ -57,7 +57,7 @@ export default async function PerfectRepairPage() {
       <div className="p-10 bg-background text-foreground min-h-screen font-sans">
         <h1 className="text-4xl font-bold text-[var(--color-cyan-400)] mb-6">✨ スケジュール完全修復完了</h1>
         <p className="text-xl mb-4">全17日程（Day 0〜16）を本番データの正しい日時にリセットしました。</p>
-        <ul className="mb-8 text-gray-400 space-y-1">
+        <ul className="mb-8 text-foreground space-y-1">
           <li>Day 1: 5/11 22:00</li>
           <li>Day 2: 5/12 22:00</li>
           <li>Day 3: 5/13 22:00 (本日)</li>

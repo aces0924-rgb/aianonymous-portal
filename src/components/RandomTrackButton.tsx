@@ -56,7 +56,7 @@ export default function RandomTrackButton({
   const baseStyles = "rounded-full font-black transition-all whitespace-nowrap flex items-center justify-center"
   
   const variantStyles = variant === 'hero' 
-    ? "w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 bg-white hover:bg-gray-100 text-gray-900 text-xl md:text-2xl shadow-xl hover:shadow-2xl hover:scale-105 justify-center gap-4 [text-shadow:none]"
+    ? "w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 bg-white hover:bg-gray-100 text-foreground text-xl md:text-2xl shadow-xl hover:shadow-2xl hover:scale-105 justify-center gap-4 [text-shadow:none]"
     : "px-3 md:px-6 py-2 md:py-3 bg-purple-400/10 hover:bg-purple-400/20 text-white text-xs md:text-sm gap-2 backdrop-blur-sm"
 
   return (

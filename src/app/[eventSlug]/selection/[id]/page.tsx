@@ -101,10 +101,10 @@ export default async function SelectionPage({
           <div className="pt-3 flex flex-col items-center gap-2">
              {playlist?.appeal && (
                <div className="relative max-w-3xl mx-auto">
-                 <p className="text-sm md:text-base font-medium text-gray-300 leading-relaxed italic px-8">
-                   <span className="text-[var(--color-cyan-400)]/50 mr-2">"</span>
+                 <p className="text-sm md:text-base font-medium text-foreground leading-relaxed italic px-8">
+                   <span className="text-[var(--color-cyan-400)] mr-2">"</span>
                    {playlist.appeal}
-                   <span className="text-[var(--color-cyan-400)]/50 ml-2">"</span>
+                   <span className="text-[var(--color-cyan-400)] ml-2">"</span>
                  </p>
                </div>
              )}
@@ -128,7 +128,7 @@ export default async function SelectionPage({
                        className={`px-6 py-2 rounded-full text-xs md:text-sm font-black transition-all ${
                          isActive 
                            ? "bg-[var(--color-cyan-500)] text-black shadow-[0_0_15px_var(--color-glow)] scale-105" 
-                           : "text-gray-500 hover:text-white hover:bg-gray-800"
+                           : "text-foreground hover:text-white hover:bg-gray-800"
                        }`}
                      >
                        {label}
@@ -158,7 +158,7 @@ export default async function SelectionPage({
         
         {/* Footer info */}
         <div className="text-center pt-8 space-y-6">
-          <p className="text-gray-500 font-light italic text-sm">
+          <p className="text-foreground font-light italic text-sm">
             このリストは {playlist.userName} さんによって作成されました。<br />あなたも推し10曲を見つけて共有しませんか？
           </p>
           <Link 
@@ -170,7 +170,7 @@ export default async function SelectionPage({
         </div>
       </section>
 
-      <footer className="border-t border-surface-border bg-background py-24 text-center text-gray-400 mt-20">
+      <footer className="border-t border-surface-border bg-background py-24 text-center text-foreground mt-20">
         <div className="max-w-4xl mx-auto px-6 space-y-10">
           <Image 
             src="/images/logo.png" 

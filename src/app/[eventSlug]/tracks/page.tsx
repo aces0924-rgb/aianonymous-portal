@@ -101,20 +101,20 @@ export default async function TracksListPage({ params, searchParams }: { params:
           <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase mb-4">
             {featureFlags.enableArtistMain ? "参加アーティスト一覧" : "投稿作品一覧"}
           </h2>
-          <p className="text-foreground/60 text-sm max-w-2xl mx-auto mb-6">
+          <p className="text-foreground text-sm max-w-2xl mx-auto mb-6">
             {featureFlags.enableArtistMain ? "エントリーされたすべての参加者と楽曲です。" : "エントリーされたすべての楽曲です。"}
           </p>
           <div className="flex flex-col items-center justify-center gap-4">
             <ClearFavoritesButton />
             
             {/* ボタン凡例 */}
-            <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs font-bold text-foreground/60 bg-surface/30 px-5 py-2.5 rounded-full border border-surface-border/50">
+            <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs font-bold text-foreground bg-surface/30 px-5 py-2.5 rounded-full border border-surface-border/50">
               <span className="flex items-center gap-1.5">
                 <svg className="w-4 h-4 text-[var(--color-cyan-400)]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
                 プレイヤー再生
               </span>
               <span className="flex items-center gap-1.5">
-                <svg className="w-4 h-4 text-foreground/60" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                <svg className="w-4 h-4 text-foreground" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                 サムネ拡大
               </span>
               <span className="flex items-center gap-1.5">
@@ -134,13 +134,13 @@ export default async function TracksListPage({ params, searchParams }: { params:
 
         {tracks.length === 0 && (
           <div className="text-center py-20 border border-dashed border-surface-border rounded-3xl">
-            <p className="text-gray-500 font-mono">No tracks found.</p>
+            <p className="text-foreground font-mono">No tracks found.</p>
           </div>
         )}
       </div>
 
       <footer className="py-10 border-t border-surface-border text-center">
-        <Link href="/" className="text-gray-500 hover:text-[var(--color-cyan-400)] transition-colors text-xs uppercase tracking-widest">
+        <Link href="/" className="text-foreground hover:text-[var(--color-cyan-400)] transition-colors text-xs uppercase tracking-widest">
           Back to Entrance
         </Link>
       </footer>

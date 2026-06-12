@@ -33,29 +33,29 @@ export default function LoginPage() {
             <h1 className="text-2xl font-black tracking-tighter text-foreground uppercase italic">
               Admin Gateway
             </h1>
-            <p className="text-gray-500 text-xs tracking-[0.3em] font-light">AI-ANONYMOUS MUSIC FES.</p>
+            <p className="text-foreground text-xs tracking-[0.3em] font-light">AI-ANONYMOUS MUSIC FES.</p>
           </div>
 
           <form action={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-gray-500 tracking-widest uppercase ml-1">Account ID</label>
+              <label className="text-[10px] font-black text-foreground tracking-widest uppercase ml-1">Account ID</label>
               <input
                 name="email"
                 type="email"
                 required
                 placeholder="xxxxxxxxxxxx"
-                className="w-full bg-background border border-surface-border rounded-2xl px-5 py-4 text-foreground focus:outline-none focus:border-[var(--color-cyan-400)] focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-gray-700"
+                className="w-full bg-background border border-surface-border rounded-2xl px-5 py-4 text-foreground focus:outline-none focus:border-[var(--color-cyan-400)] focus:ring-1 focus:ring-cyan-500/50 transition-all placeholder:text-foreground"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-gray-500 tracking-widest uppercase ml-1">Password</label>
+              <label className="text-[10px] font-black text-foreground tracking-widest uppercase ml-1">Password</label>
               <input
                 name="password"
                 type="password"
                 required
                 placeholder="••••••••"
-                className="w-full bg-background border border-surface-border rounded-2xl px-5 py-4 text-foreground focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all placeholder:text-gray-700"
+                className="w-full bg-background border border-surface-border rounded-2xl px-5 py-4 text-foreground focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500/50 transition-all placeholder:text-foreground"
               />
             </div>
 
@@ -68,13 +68,13 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-[var(--color-cyan-500)] hover:text-black transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none mt-4 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+              className="w-full bg-white text-black font-black py-4 rounded-2xl hover:bg-[var(--color-cyan-500)] hover:text-black transition-all active:scale-95 disabled: disabled:pointer-events-none mt-4 shadow-[0_0_20px_rgba(255,255,255,0.1)]"
             >
               {loading ? 'CONNECTING...' : 'LOGIN TO DASHBOARD'}
             </button>
           </form>
 
-          <div className="mt-8 text-center text-[10px] text-gray-600 tracking-widest uppercase">
+          <div className="mt-8 text-center text-[10px] text-foreground tracking-widest uppercase">
             Restricted Area / Authorized Only
           </div>
         </div>

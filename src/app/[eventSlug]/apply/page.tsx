@@ -218,7 +218,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             </svg>
           </div>
           <h1 className="text-3xl md:text-4xl font-black mb-6 tracking-tighter text-foreground">応募が完了しました！</h1>
-          <p className="text-foreground/70 mb-10 text-lg">
+          <p className="text-foreground mb-10 text-lg">
             素晴らしい楽曲のご応募ありがとうございます。<br/>
             運営にて内容を確認の上、公開作業を進めさせていただきます。
           </p>
@@ -277,21 +277,21 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
           <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-sm">
               <p className="font-bold text-[var(--color-cyan-400)] mb-1">プレビュー確認中</p>
-              <p className="text-foreground/70 text-xs hidden sm:block">内容に問題がなければ「この内容で応募する」を押してください。</p>
+              <p className="text-foreground text-xs hidden sm:block">内容に問題がなければ「この内容で応募する」を押してください。</p>
             </div>
             
             <div className="flex gap-3 w-full sm:w-auto">
               <button
                 onClick={() => setStep('input')}
                 disabled={isSubmitting}
-                className="flex-1 sm:flex-none px-6 py-3 bg-surface-border hover:bg-surface-border/80 text-foreground font-bold rounded-xl transition-colors disabled:opacity-50"
+                className="flex-1 sm:flex-none px-6 py-3 bg-surface-border hover:bg-surface-border/80 text-foreground font-bold rounded-xl transition-colors disabled:"
               >
                 修正する
               </button>
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitting}
-                className="flex-1 sm:flex-none px-8 py-3 bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-background font-black rounded-xl transition-all shadow-[0_0_20px_var(--color-glow)] hover:shadow-[0_0_30px_var(--color-glow)] disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex-1 sm:flex-none px-8 py-3 bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-background font-black rounded-xl transition-all shadow-[0_0_20px_var(--color-glow)] hover:shadow-[0_0_30px_var(--color-glow)] disabled: flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>
@@ -328,7 +328,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
           <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-foreground">
             {isAnonymousMode ? '匿名楽曲エントリー' : (config.enableArtistMain ? 'アーティストエントリー' : '楽曲エントリー')}
           </h1>
-          <p className="text-foreground/70 text-lg">
+          <p className="text-foreground text-lg">
             {isAnonymousMode 
               ? '以下のフォームから匿名フェス用の情報を登録してください。'
               : (config.enableArtistMain ? '以下のフォームからアーティスト情報と作品を登録してください。' : '以下のフォームから楽曲情報を登録してください。')}
@@ -351,14 +351,14 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
               <button
                 type="button"
                 onClick={() => setEntryType('music')}
-                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'music' ? 'bg-[var(--color-cyan-500)] text-background shadow-lg' : 'text-foreground/70 hover:text-foreground'}`}
+                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'music' ? 'bg-[var(--color-cyan-500)] text-background shadow-lg' : 'text-foreground hover:text-foreground'}`}
               >
                 楽曲アーティスト
               </button>
               <button
                 type="button"
                 onClick={() => setEntryType('illustration')}
-                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'illustration' ? 'bg-fuchsia-500 text-background shadow-lg' : 'text-foreground/70 hover:text-foreground'}`}
+                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'illustration' ? 'bg-fuchsia-500 text-background shadow-lg' : 'text-foreground hover:text-foreground'}`}
               >
                 イラストアーティスト
               </button>
@@ -400,7 +400,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 required
               />
               {!isAnonymousMode && entryType === 'illustration' && (
-                <div className="mt-3 text-xs text-foreground/80 bg-surface-border/30 border border-surface-border p-4 rounded-xl space-y-2 leading-relaxed">
+                <div className="mt-3 text-xs text-foreground bg-surface-border/30 border border-surface-border p-4 rounded-xl space-y-2 leading-relaxed">
                   <p className="font-black text-[var(--color-cyan-400)] flex items-center gap-2"><span className="text-base">💡</span> 画像URLの取得方法</p>
                   <div className="space-y-1.5 pl-1">
                     <p><span className="font-bold text-white">【PCの場合】</span><br/>X (Twitter) の画像ページを開いて画像を右クリック → <span className="font-bold text-white underline decoration-cyan-500 underline-offset-2">「画像のアドレスをコピー」</span></p>
@@ -414,7 +414,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* アーティスト名 */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                アーティスト名 {isAnonymousMode ? <span className="text-foreground/50 ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-[var(--color-cyan-500)] ml-1">必須</span>}
+                アーティスト名 {isAnonymousMode ? <span className="text-foreground ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-[var(--color-cyan-500)] ml-1">必須</span>}
               </label>
               <input
                 type="text"
@@ -463,7 +463,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 <div>
                   <label className="block text-sm font-bold mb-2">
                     パスワード (10桁) <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
-                    <p className="text-xs text-foreground/60 font-normal mt-1">※投票や結果開示などに使用します</p>
+                    <p className="text-xs text-foreground font-normal mt-1">※投票や結果開示などに使用します</p>
                   </label>
                   <input
                     type="password"
@@ -485,7 +485,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
               <>
                 <div>
                   <label className="block text-sm font-bold mb-2">
-                    X (Twitter) アカウント <span className="text-foreground/50 ml-1">任意</span>
+                    X (Twitter) アカウント <span className="text-foreground ml-1">任意</span>
                   </label>
                   <input
                     type="text"
@@ -500,7 +500,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 {entryType === 'music' && (
                   <div>
                     <label className="block text-sm font-bold mb-2">
-                      ジャンル <span className="text-foreground/50 ml-1">任意</span>
+                      ジャンル <span className="text-foreground ml-1">任意</span>
                     </label>
                     <input
                       type="text"
@@ -518,8 +518,8 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* 歌詞 / イラスト説明 */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                {entryType === 'illustration' ? 'このイラストについて' : config.lyricsTab} {isAnonymousMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground/50 ml-1">任意</span>}
-                {(isAnonymousMode && entryType === 'music') && <p className="text-xs text-foreground/60 font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
+                {entryType === 'illustration' ? 'このイラストについて' : config.lyricsTab} {isAnonymousMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground ml-1">任意</span>}
+                {(isAnonymousMode && entryType === 'music') && <p className="text-xs text-foreground font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
               </label>
               <textarea
                 name="lyrics"
@@ -542,25 +542,25 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                 <div>
                   <label className="block text-sm font-bold mb-2">
                     音楽ファイルアップロード <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
-                    <p className="text-xs text-foreground/60 font-normal mt-1">※ .mp3, .wav, .mp4 のいずれかの形式</p>
+                    <p className="text-xs text-foreground font-normal mt-1">※ .mp3, .wav, .mp4 のいずれかの形式</p>
                   </label>
                   <input
                     type="file"
                     accept=".mp3,.wav,.mp4,audio/mpeg,audio/wav,video/mp4"
                     onChange={(e) => setMusicFile(e.target.files?.[0] || null)}
-                    className="w-full text-sm text-foreground/80 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-[var(--color-cyan-500)]/10 file:text-[var(--color-cyan-400)] hover:file:bg-[var(--color-cyan-500)]/20 cursor-pointer"
+                    className="w-full text-sm text-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-[var(--color-cyan-500)]/10 file:text-[var(--color-cyan-400)] hover:file:bg-[var(--color-cyan-500)]/20 cursor-pointer"
                     required
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-bold mb-2">
-                    字幕SRTファイル <span className="text-foreground/50 ml-1">任意</span>
+                    字幕SRTファイル <span className="text-foreground ml-1">任意</span>
                   </label>
                   <input
                     type="file"
                     accept=".srt"
                     onChange={(e) => setSrtFile(e.target.files?.[0] || null)}
-                    className="w-full text-sm text-foreground/80 file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-surface-border file:text-foreground/80 hover:file:bg-surface-border/80 cursor-pointer"
+                    className="w-full text-sm text-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-surface-border file:text-foreground hover:file:bg-surface-border/80 cursor-pointer"
                   />
                 </div>
               </div>
@@ -570,7 +570,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {!isAnonymousMode && (
               <div>
                 <label className="block text-sm font-bold mb-2">
-                  {config.analysisTab} <span className="text-foreground/50 ml-1">任意</span>
+                  {config.analysisTab} <span className="text-foreground ml-1">任意</span>
                 </label>
                 <textarea
                   name="analysis"
@@ -603,7 +603,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                     <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
                       ニコニコ動画等への転載・公開に同意する
                     </p>
-                    <p className="text-foreground/60 mt-1">
+                    <p className="text-foreground mt-1">
                       ご応募いただいた楽曲は、運営のYouTubeチャンネルやニコニコ動画のプレイリスト等で紹介される場合があります。
                     </p>
                   </div>

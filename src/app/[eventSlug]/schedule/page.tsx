@@ -109,7 +109,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                 </div>
 
                 <div className="space-y-4">
-                  <div className="text-[var(--color-cyan-400)] font-mono text-xl font-black tracking-[0.4em] uppercase opacity-80">
+                  <div className="text-[var(--color-cyan-400)] font-mono text-xl font-black tracking-[0.4em] uppercase ">
                     {todayItem.day === 0 ? 'DAY 00' : todayItem.day === 16 ? 'FINAL DAY' : `DAY ${String(todayItem.day).padStart(2, '0')}`}
                   </div>
                   <h2 className="text-7xl md:text-8xl font-black tracking-tighter leading-none text-foreground">
@@ -153,7 +153,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                       return <PremiereThumbnailUploader day={todayItem.day} size="large" />;
                     } else if (!todayItem.youtubeUrl) {
                       return (
-                        <div className="w-full py-6 rounded-2xl bg-white/5 border border-white/10 text-foreground/20 font-black text-2xl tracking-widest text-center select-none">
+                        <div className="w-full py-6 rounded-2xl bg-white/5 border border-white/10 text-foreground font-black text-2xl tracking-widest text-center select-none">
                           LINK PENDING
                         </div>
                       );
@@ -267,7 +267,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <div className="text-xs font-black text-[var(--color-cyan-400)]/60 uppercase">{dateFormatter.format(itemDate)} ({dayFormatter.format(itemDate)})</div>
+                    <div className="text-xs font-black text-[var(--color-cyan-400)] uppercase">{dateFormatter.format(itemDate)} ({dayFormatter.format(itemDate)})</div>
                     <div className="text-3xl font-black text-foreground tracking-tight">{timeFormatter.format(itemDate)}〜</div>
                   </div>
                   {!isSpecial ? (
@@ -303,7 +303,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                         return <PremiereThumbnailUploader day={item.day} />;
                       } else if (!item.youtubeUrl) {
                         return (
-                          <div className="block w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-center font-black text-[10px] text-foreground/20 select-none">
+                          <div className="block w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-center font-black text-[10px] text-foreground select-none">
                             LINK PENDING
                           </div>
                         );

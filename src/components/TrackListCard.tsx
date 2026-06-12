@@ -66,7 +66,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               No.{track.entryNo || track.id.toString().padStart(3, '0')}
             </span>
             {track.genre && (
-              <span className="text-foreground/50 font-mono text-xs uppercase tracking-wider whitespace-nowrap">
+              <span className="text-foreground font-mono text-xs uppercase tracking-wider whitespace-nowrap">
                 {track.genre}
               </span>
             )}
@@ -75,9 +75,9 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
             {mainText}
           </h3>
           {subText && (
-            <p className="text-sm text-foreground/60 mt-1.5 font-medium flex items-center gap-1.5">
+            <p className="text-sm text-foreground mt-1.5 font-medium flex items-center gap-1.5">
               {!isArtistMain && (
-                <svg className="w-3.5 h-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg className="w-3.5 h-3.5 " viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
@@ -140,7 +140,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
                 e.preventDefault();
                 setIsModalOpen(true);
               }}
-              className="flex items-center justify-center w-10 h-10 rounded-full border transition-all active:scale-90 bg-transparent border-gray-800 text-gray-500 hover:border-cyan-500/50 hover:text-cyan-500/50"
+              className="flex items-center justify-center w-10 h-10 rounded-full border transition-all active:scale-90 bg-transparent border-gray-800 text-foreground hover:border-cyan-500/50 hover:text-cyan-500"
               title="サムネイルを拡大"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -160,7 +160,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
             className={`flex items-center justify-center w-10 h-10 rounded-full border transition-all active:scale-90 ${
               interested 
                 ? 'bg-amber-500/20 border-amber-500 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.3)]' 
-                : 'bg-transparent border-gray-800 text-gray-500 hover:border-amber-500/50 hover:text-amber-500/50'
+                : 'bg-transparent border-gray-800 text-foreground hover:border-amber-500/50 hover:text-amber-500'
             }`}
             title="気になる"
           >
@@ -178,7 +178,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
             className={`flex items-center justify-center w-10 h-10 rounded-full border transition-all active:scale-90 ${
               favorite 
                 ? 'bg-pink-500/20 border-pink-500 text-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.3)]' 
-                : 'bg-transparent border-surface-border text-foreground/50 hover:border-pink-500/50 hover:text-pink-500/50'
+                : 'bg-transparent border-surface-border text-foreground hover:border-pink-500/50 hover:text-pink-500'
             }`}
             title={enableArtistMain ? "推し人に選ぶ" : "推し曲に選ぶ"}
           >
@@ -189,7 +189,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
 
           <Link 
             href={detailUrl} 
-            className="flex items-center gap-2 px-4 py-2.5 bg-purple-600/20 border border-purple-500/40 text-foreground/80 rounded-full hover:bg-purple-600 hover:text-white transition-all active:scale-90 text-xs font-black uppercase tracking-tighter shadow-lg shadow-purple-900/20"
+            className="flex items-center gap-2 px-4 py-2.5 bg-purple-600/20 border border-purple-500/40 text-foreground rounded-full hover:bg-purple-600 hover:text-white transition-all active:scale-90 text-xs font-black uppercase tracking-tighter shadow-lg shadow-purple-900/20"
             style={{ textShadow: 'none' }}
           >
             <span>詳細</span>

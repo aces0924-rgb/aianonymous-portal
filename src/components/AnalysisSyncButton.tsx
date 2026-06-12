@@ -35,7 +35,7 @@ export default function AnalysisSyncButton({ action }: AnalysisSyncButtonProps) 
 
   // 規約上の懸念により、楽曲考察同期機能を一時停止中
   return (
-    <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-xl text-gray-500 text-sm font-bold text-center">
+    <div className="mt-4 p-4 bg-gray-100 border border-gray-300 rounded-xl text-foreground text-sm font-bold text-center">
       ⚠️ 楽曲考察同期機能は現在停止されています
     </div>
   );

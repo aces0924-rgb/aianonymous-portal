@@ -20,7 +20,7 @@ export function ToastSubmitButton({ label, className = '' }: { label: string, cl
     <button 
       type="submit" 
       disabled={pending} 
-      className={`${className} transition-opacity ${pending ? 'opacity-70 cursor-not-allowed' : ''}`}
+      className={`${className} transition-opacity ${pending ? ' cursor-not-allowed' : ''}`}
     >
       {pending ? '保存中...' : label}
     </button>

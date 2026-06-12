@@ -248,7 +248,7 @@ export default function ThumbnailSubmissionForm({ tracks, initialTrackId, isPrev
             <h2 className="text-xl md:text-2xl font-black text-foreground mb-2 italic tracking-tighter">
               【早い者勝ち】アノフェス楽曲サムネイル・ジャック！
             </h2>
-            <p className="text-[var(--color-cyan-400)] text-xs font-black tracking-widest uppercase mb-6 opacity-80">サムネイルジャック 応募要項</p>
+            <p className="text-[var(--color-cyan-400)] text-xs font-black tracking-widest uppercase mb-6 ">サムネイルジャック 応募要項</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Left Column: Schedule */}
@@ -266,7 +266,7 @@ export default function ThumbnailSubmissionForm({ tracks, initialTrackId, isPrev
                   <div className={`flex items-center justify-between p-3 rounded-xl border transition-all duration-500 ${
                     isPhase1 
                       ? 'bg-[var(--color-cyan-500)]/10 border-[var(--color-cyan-400)]/50 shadow-[0_0_20px_var(--color-glow)] scale-[1.02]' 
-                      : 'bg-neutral-800/20 border-white/5 opacity-60'
+                      : 'bg-neutral-800/20 border-white/5 '
                   }`}>
                     <div className="flex items-center gap-3">
                       <span className={`text-[10px] px-2.5 py-1 rounded-lg font-bold ${
@@ -285,7 +285,7 @@ export default function ThumbnailSubmissionForm({ tracks, initialTrackId, isPrev
                   <div className={`flex items-center justify-between p-3 rounded-xl border transition-all duration-500 ${
                     isPhase2 
                       ? 'bg-purple-500/10 border-purple-500/50 shadow-[0_0_20px_rgba(168,85,247,0.15)] scale-[1.02]' 
-                      : 'bg-neutral-800/20 border-white/5 opacity-60'
+                      : 'bg-neutral-800/20 border-white/5 '
                   }`}>
                     <div className="flex items-center gap-3">
                       <span className={`text-[10px] px-2.5 py-1 rounded-lg font-bold ${
@@ -313,7 +313,7 @@ export default function ThumbnailSubmissionForm({ tracks, initialTrackId, isPrev
               <div className="space-y-5">
                 <h4 className="text-[11px] font-black text-[var(--color-cyan-400)] uppercase tracking-[0.3em] border-b border-white/10 pb-2 flex items-center justify-between">
                   <span>Regulation</span>
-                  <span className="text-[9px] opacity-60">参加ルール・掲載</span>
+                  <span className="text-[9px] ">参加ルール・掲載</span>
                 </h4>
                 <ul className="space-y-3 text-sm font-bold text-neutral-200 leading-relaxed">
                   <li className="flex gap-3">
@@ -476,7 +476,7 @@ export default function ThumbnailSubmissionForm({ tracks, initialTrackId, isPrev
                       <span className="bg-green-400 text-black rounded-full w-6 h-6 flex items-center justify-center text-xs">✓</span>
                       楽曲「No.{tracks[0]?.entryNo} {tracks[0]?.title}」の確保に成功！
                     </p>
-                    <p className="text-xs text-green-500/80 mt-2 font-bold ml-9">
+                    <p className="text-xs text-green-500 mt-2 font-bold ml-9">
                       この曲の投稿枠をロックしました。2時間以内に下のボタンからアップロードしてください。
                     </p>
                     <p className="text-[10px] text-red-400 font-black mt-2 ml-9 animate-pulse bg-red-500/10 p-2 rounded-lg inline-block border border-red-500/20">

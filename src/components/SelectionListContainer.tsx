@@ -127,7 +127,7 @@ export default function SelectionListContainer({ initialPlaylists, subPlaylists,
               className={`px-4 md:px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black tracking-widest transition-all whitespace-nowrap ${
                 sortMode === 'newest' 
                   ? 'bg-[var(--color-cyan-500)] text-white shadow-lg shadow-[var(--color-cyan-500)]/20' 
-                  : 'text-gray-500 hover:text-foreground/80'
+                  : 'text-foreground hover:text-foreground'
               }`}
             >
               新着順
@@ -137,7 +137,7 @@ export default function SelectionListContainer({ initialPlaylists, subPlaylists,
               className={`px-4 md:px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black tracking-widest transition-all flex items-center gap-2 whitespace-nowrap ${
                 sortMode === 'sync' 
                   ? 'bg-[var(--color-cyan-500)] text-white shadow-lg shadow-cyan-600/20' 
-                  : 'text-gray-500 hover:text-foreground/80'
+                  : 'text-foreground hover:text-foreground'
               }`}
             >
               <span className={sortMode === 'sync' ? 'animate-pulse' : ''}>✨</span>
@@ -148,7 +148,7 @@ export default function SelectionListContainer({ initialPlaylists, subPlaylists,
               className={`px-4 md:px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black tracking-widest transition-all flex items-center gap-2 whitespace-nowrap ${
                 sortMode === 'match' 
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20' 
-                  : 'text-gray-500 hover:text-foreground/80'
+                  : 'text-foreground hover:text-foreground'
               }`}
             >
               <span className={sortMode === 'match' ? 'animate-bounce' : ''}>🔥</span>
@@ -172,7 +172,7 @@ export default function SelectionListContainer({ initialPlaylists, subPlaylists,
 
       {sortedPlaylists.length === 0 && (
         <div className="text-center py-20 bg-surface/20 border border-dashed border-surface-border rounded-[3rem]">
-          <p className="text-gray-500">まだリストが登録されていません。</p>
+          <p className="text-foreground">まだリストが登録されていません。</p>
         </div>
       )}
     </div>

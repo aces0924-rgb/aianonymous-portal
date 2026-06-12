@@ -132,7 +132,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               </form>
             </div>
             <h1 className="text-3xl font-black">イベント管理: {event.title}</h1>
-            <p className="text-gray-500 mt-1">/{event.slug}</p>
+            <p className="text-foreground mt-1">/{event.slug}</p>
           </div>
           <Link href={`/${event.slug}`} target="_blank" className="px-6 py-3 bg-fuchsia-600 text-white font-bold rounded-xl shadow-lg hover:bg-fuchsia-700 transition">
             公開ページを確認 ↗
@@ -141,15 +141,15 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
 
         {/* 目次 (Table of Contents) */}
         <div className="bg-white p-6 rounded-xl shadow border-l-4 border-gray-400">
-          <h2 className="text-sm font-bold text-gray-500 mb-3">目次 (Table of Contents)</h2>
+          <h2 className="text-sm font-bold text-foreground mb-3">目次 (Table of Contents)</h2>
           <div className="flex flex-wrap gap-2">
-            <a href="#basic-info" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-gray-700 transition-colors">基本情報</a>
+            <a href="#basic-info" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-foreground transition-colors">基本情報</a>
             <a href="#appearance" className="px-3 py-1.5 bg-pink-50 hover:bg-pink-100 rounded-lg text-xs font-bold text-pink-700 transition-colors">デザイン・見た目</a>
             <a href="#labels" className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 rounded-lg text-xs font-bold text-amber-700 transition-colors">文言・ラベル</a>
             <a href="#host-settings" className="px-3 py-1.5 bg-green-50 hover:bg-green-100 rounded-lg text-xs font-bold text-green-700 transition-colors">主催者・メンバー</a>
             <a href="#features" className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 rounded-lg text-xs font-bold text-blue-700 transition-colors">機能設定</a>
-            <a href="#news" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-gray-700 transition-colors">お知らせ</a>
-            <a href="#schedule" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-gray-700 transition-colors">スケジュール</a>
+            <a href="#news" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-foreground transition-colors">お知らせ</a>
+            <a href="#schedule" className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-lg text-xs font-bold text-foreground transition-colors">スケジュール</a>
             <a href="#rules" className="px-3 py-1.5 bg-purple-50 hover:bg-purple-100 rounded-lg text-xs font-bold text-purple-700 transition-colors">募集内容</a>
             <a href="#faq" className="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 rounded-lg text-xs font-bold text-cyan-700 transition-colors">よくある質問</a>
             <a href="#tracks" className="px-3 py-1.5 bg-cyan-50 hover:bg-cyan-100 rounded-lg text-xs font-bold text-cyan-700 transition-colors">楽曲データ同期</a>
@@ -164,18 +164,18 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           </div>
           <form action={updateEventDetails.bind(null, id)} className="space-y-4">
             <div>
-              <label className="block text-sm font-bold text-gray-700">イベント名</label>
+              <label className="block text-sm font-bold text-foreground">イベント名</label>
               <input name="title" defaultValue={event.title} className="w-full border p-2 rounded mt-1 bg-white" required />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700">URL Slug</label>
+              <label className="block text-sm font-bold text-foreground">URL Slug</label>
               <input name="slug" defaultValue={event.slug} className="w-full border p-2 rounded mt-1 bg-white" required />
             </div>
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-2">セクション見出し (例: 募集要項, イベントについて)</label>
+              <label className="block text-sm font-bold text-foreground mb-2">セクション見出し (例: 募集要項, イベントについて)</label>
               <input name="guidelinesTitle" defaultValue={defaultLabels.guidelinesTitle} className="w-full border p-2 rounded mb-4 bg-white" required />
               
-              <label className="block text-sm font-bold text-gray-700 mb-2">セクション本文 (リッチテキスト)</label>
+              <label className="block text-sm font-bold text-foreground mb-2">セクション本文 (リッチテキスト)</label>
               <RichTextEditor name="description" defaultValue={event.description || ''} />
             </div>
             <ToastSubmitButton label="
@@ -213,104 +213,104 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">メインボタン色 (HEX)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">メインボタン色 (HEX)</label>
                 <ColorInput name="btnPrimaryColor" defaultValue={defaultTheme.btnPrimaryColor} />
-                <p className="text-[10px] text-gray-400 mt-1">応募・投票ボタンの色</p>
+                <p className="text-[10px] text-foreground mt-1">応募・投票ボタンの色</p>
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">サブボタン色 (HEX)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">サブボタン色 (HEX)</label>
                 <ColorInput name="btnSecondaryColor" defaultValue={defaultTheme.btnSecondaryColor} />
-                <p className="text-[10px] text-gray-400 mt-1">YouTube等のボタンの色</p>
+                <p className="text-[10px] text-foreground mt-1">YouTube等のボタンの色</p>
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">メイン/アクセントカラー (HEX)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">メイン/アクセントカラー (HEX)</label>
                 <ColorInput name="mainColor" defaultValue={defaultTheme.mainColor} />
-                <p className="text-[10px] text-gray-400 mt-1">ボタンやアイコン、光の基本色です。</p>
+                <p className="text-[10px] text-foreground mt-1">ボタンやアイコン、光の基本色です。</p>
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">サイト背景色 (HEX)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">サイト背景色 (HEX)</label>
                 <ColorInput name="bgColor" defaultValue={defaultTheme.bgColor} />
-                <p className="text-[10px] text-gray-400 mt-1">全体の背景色。デフォルトは黒(#000000)です。</p>
+                <p className="text-[10px] text-foreground mt-1">全体の背景色。デフォルトは黒(#000000)です。</p>
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">基本文字色 (HEX)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">基本文字色 (HEX)</label>
                 <ColorInput name="textColor" defaultValue={defaultTheme.textColor} />
-                <p className="text-[10px] text-gray-400 mt-1">デフォルトは白(#ffffff)です。</p>
+                <p className="text-[10px] text-foreground mt-1">デフォルトは白(#ffffff)です。</p>
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">基本フォントサイズ (px)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">基本フォントサイズ (px)</label>
                 <input type="number" name="baseFontSize" defaultValue={defaultTheme.baseFontSize} className="w-full border p-2 rounded text-sm bg-white" min="12" max="24" />
-                <p className="text-[10px] text-gray-400 mt-1">UI全体の基準サイズ。デフォルトは16です。</p>
+                <p className="text-[10px] text-foreground mt-1">UI全体の基準サイズ。デフォルトは16です。</p>
               </div>
               <div>
-                <label className="text-xs font-bold text-gray-500 block mb-1">カード・パネル表面色 (HEX)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">カード・パネル表面色 (HEX)</label>
                 <ColorInput name="surfaceColor" defaultValue={defaultTheme.surfaceColor} />
-                <p className="text-[10px] text-gray-400 mt-1">リストの背景など。デフォルトはダークグレー(#111827)です。</p>
+                <p className="text-[10px] text-foreground mt-1">リストの背景など。デフォルトはダークグレー(#111827)です。</p>
               </div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
               <label className="flex items-center gap-2 cursor-pointer mb-2">
                 <input type="checkbox" name="enableNeon" defaultChecked={defaultTheme.enableNeon} className="w-5 h-5 accent-pink-600 rounded cursor-pointer" />
-                <span className="text-sm font-bold text-gray-700">ネオン発光エフェクト (Cyberpunk Glow) を有効にする</span>
+                <span className="text-sm font-bold text-foreground">ネオン発光エフェクト (Cyberpunk Glow) を有効にする</span>
               </label>
-              <p className="text-xs text-gray-500 pl-7 mb-4">OFFにすると、文字や枠線のドロップシャドウ（光る影）が消え、フラットでクリーンなデザインになります。サイバーパンク以外のテーマを作る際に有用です。</p>
+              <p className="text-xs text-foreground pl-7 mb-4">OFFにすると、文字や枠線のドロップシャドウ（光る影）が消え、フラットでクリーンなデザインになります。サイバーパンク以外のテーマを作る際に有用です。</p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-200 pt-4">
                 <div>
-                  <label className="text-xs font-bold text-gray-500 block mb-1">背景エフェクト</label>
+                  <label className="text-xs font-bold text-foreground block mb-1">背景エフェクト</label>
                   <select name="bgEffect" defaultValue={defaultTheme.bgEffect || 'none'} className="w-full border p-2 rounded text-sm bg-white">
                     <option value="none">なし (None)</option>
                     <option value="scanline">ブラウン管・走査線 (CRT)</option>
                     <option value="grid">サイバー空間グリッド</option>
                     <option value="noise">フィルムグレイン (ノイズ)</option>
                   </select>
-                  <p className="text-[10px] text-gray-400 mt-1">背景に重ねる特殊エフェクト</p>
+                  <p className="text-[10px] text-foreground mt-1">背景に重ねる特殊エフェクト</p>
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-gray-500 block mb-1">UIの質感 (カード等)</label>
+                  <label className="text-xs font-bold text-foreground block mb-1">UIの質感 (カード等)</label>
                   <select name="uiTexture" defaultValue={defaultTheme.uiTexture || 'solid'} className="w-full border p-2 rounded text-sm bg-white">
                     <option value="solid">ソリッド (標準)</option>
                     <option value="glass">グラスモーフィズム (すりガラス)</option>
                   </select>
-                  <p className="text-[10px] text-gray-400 mt-1">カードやヘッダーの背景の質感</p>
+                  <p className="text-[10px] text-foreground mt-1">カードやヘッダーの背景の質感</p>
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-gray-500 block mb-1">角のスタイル</label>
+                  <label className="text-xs font-bold text-foreground block mb-1">角のスタイル</label>
                   <select name="cornerStyle" defaultValue={defaultTheme.cornerStyle || 'rounded'} className="w-full border p-2 rounded text-sm bg-white">
                     <option value="rounded">丸み (標準・角丸)</option>
                     <option value="sharp">シャープ (直角)</option>
                     <option value="pill">ピル型 (完全に丸い)</option>
                   </select>
-                  <p className="text-[10px] text-gray-400 mt-1">UI全体の角の丸み</p>
+                  <p className="text-[10px] text-foreground mt-1">UI全体の角の丸み</p>
                 </div>
               </div>
             </div>
 
             <div className="pt-2">
               <div className="flex items-center gap-2 mb-1">
-                <label className="text-xs font-bold text-gray-500 block">メイン背景画像 (直リンクURL)</label>
+                <label className="text-xs font-bold text-foreground block">メイン背景画像 (直リンクURL)</label>
                 <a href="https://gyazo.com/ja" target="_blank" rel="noopener noreferrer" className="text-[10px] text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded hover:bg-blue-100 transition-colors shadow-sm">
                   画像URLの取得には Gyazo が便利です ↗
                 </a>
               </div>
               <input name="bgUrl" defaultValue={defaultTheme.bgUrl} placeholder="https://.../bg.jpg" className="w-full border p-2 rounded text-sm bg-white" />
-              <p className="text-[10px] text-gray-400 mt-1">※Gyazo等でアップロードし「画像アドレスをコピー(Direct Link)」を貼り付けてください。空欄の場合はデフォルト背景を使用。</p>
+              <p className="text-[10px] text-foreground mt-1">※Gyazo等でアップロードし「画像アドレスをコピー(Direct Link)」を貼り付けてください。空欄の場合はデフォルト背景を使用。</p>
             </div>
             <div className="pt-2">
-              <label className="text-xs font-bold text-gray-500 block mb-1">ロゴ画像 (直リンクURL)</label>
+              <label className="text-xs font-bold text-foreground block mb-1">ロゴ画像 (直リンクURL)</label>
               <input name="logoUrl" defaultValue={defaultTheme.logoUrl} placeholder="https://.../logo.png" className="w-full border p-2 rounded text-sm bg-white" />
-              <p className="text-[10px] text-gray-400 mt-1">※こちらも同様にGyazo等から取得した「画像アドレス(Direct Link)」を貼り付けてください。</p>
+              <p className="text-[10px] text-foreground mt-1">※こちらも同様にGyazo等から取得した「画像アドレス(Direct Link)」を貼り付けてください。</p>
             </div>
             <div className="pt-2">
-              <label className="text-xs font-bold text-gray-500 block mb-1">ロゴ画像の表示幅 (px)</label>
+              <label className="text-xs font-bold text-foreground block mb-1">ロゴ画像の表示幅 (px)</label>
               <input name="logoWidth" type="number" defaultValue={defaultTheme.logoWidth} placeholder="例: 1000" className="w-full border p-2 rounded text-sm bg-white" />
-              <p className="text-[10px] text-gray-400 mt-1">PC等でロゴが大きくなりすぎる場合、800や1000などの数値を指定してください。空欄の場合は巨大サイズになります。</p>
+              <p className="text-[10px] text-foreground mt-1">PC等でロゴが大きくなりすぎる場合、800や1000などの数値を指定してください。空欄の場合は巨大サイズになります。</p>
             </div>
             <div className="pt-2">
-              <label className="text-xs font-bold text-gray-500 block mb-1">ロゴの上下位置調整 (px)</label>
+              <label className="text-xs font-bold text-foreground block mb-1">ロゴの上下位置調整 (px)</label>
               <input name="logoMarginTop" type="number" defaultValue={defaultTheme.logoMarginTop} placeholder="例: -50 (上へ), 50 (下へ)" className="w-full border p-2 rounded text-sm bg-white" />
-              <p className="text-[10px] text-gray-400 mt-1">マイナス値で上に、プラス値で下に移動します。ボタンと重なってしまう場合に調整してください。空欄の場合はデフォルトの配置になります。</p>
+              <p className="text-[10px] text-foreground mt-1">マイナス値で上に、プラス値で下に移動します。ボタンと重なってしまう場合に調整してください。空欄の場合はデフォルトの配置になります。</p>
             </div>
             <ToastSubmitButton label="デザインを保存" className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 text-sm font-bold w-32 mt-2" />
           </form>
@@ -337,39 +337,39 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           }} className="flex flex-col gap-4">
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">サイト表示タイトル (ヘッダー等)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">サイト表示タイトル (ヘッダー等)</label>
                 <input name="siteTitle" defaultValue={defaultLabels.siteTitle} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">エントリーNo接頭辞(3文字)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">エントリーNo接頭辞(3文字)</label>
                 <input name="entryPrefix" defaultValue={defaultLabels.entryPrefix} maxLength={3} className="w-full border p-2 rounded text-sm bg-white uppercase" />
               </div>
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">タブ1 (デフォルト: LYRICS)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">タブ1 (デフォルト: LYRICS)</label>
                 <input name="lyricsTab" defaultValue={defaultLabels.lyricsTab} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">タブ2 (デフォルト: 歌詞考察)</label>
+                <label className="text-xs font-bold text-foreground block mb-1">タブ2 (デフォルト: 歌詞考察)</label>
                 <input name="analysisTab" defaultValue={defaultLabels.analysisTab} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-500 block mb-1">考察タブの注意書き (小さく表示)</label>
+              <label className="text-xs font-bold text-foreground block mb-1">考察タブの注意書き (小さく表示)</label>
               <input name="analysisNote" defaultValue={defaultLabels.analysisNote} className="w-full border p-2 rounded text-sm bg-white" />
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-500 block mb-1">楽曲詳細ページの免責事項 (フッター等)</label>
+              <label className="text-xs font-bold text-foreground block mb-1">楽曲詳細ページの免責事項 (フッター等)</label>
               <textarea name="disclaimer" defaultValue={defaultLabels.disclaimer} className="w-full border p-2 rounded text-sm bg-white h-20"></textarea>
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">ランダム再生ボタン名</label>
+                <label className="text-xs font-bold text-foreground block mb-1">ランダム再生ボタン名</label>
                 <input name="randomPlayButtonLabel" defaultValue={defaultLabels.randomPlayButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">スケジュール(配信)ボタン名</label>
+                <label className="text-xs font-bold text-foreground block mb-1">スケジュール(配信)ボタン名</label>
                 <input name="scheduleButtonLabel" defaultValue={defaultLabels.scheduleButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
             </div>
@@ -394,31 +394,31 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           </div>
           
           <form action={updateEventSetting.bind(null, id, 'SHEET_URL')} className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-gray-500">スプレッドシート（CSVエクスポートURL）</label>
+            <label className="text-xs font-bold text-foreground">スプレッドシート（CSVエクスポートURL）</label>
             <input name="value" defaultValue={currentSheetUrl} placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..." className="border p-2 rounded text-sm bg-white" />
             <ToastSubmitButton label="URLを保存" className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'VOTE_URL')} className="flex flex-col gap-2 pt-4 border-t">
-            <label className="text-xs font-bold text-gray-500">投票フォームのURL</label>
+            <label className="text-xs font-bold text-foreground">投票フォームのURL</label>
             <input name="value" defaultValue={voteUrl} placeholder="https://docs.google.com/forms/d/..." className="border p-2 rounded text-sm bg-white" />
             <ToastSubmitButton label="投票URLを保存" className="bg-purple-600 text-white p-2 rounded hover:bg-purple-700 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'YOUTUBE_PLAYLIST_URL')} className="flex flex-col gap-2 pt-4 border-t">
-            <label className="text-xs font-bold text-gray-500">YouTube再生リストURL</label>
+            <label className="text-xs font-bold text-foreground">YouTube再生リストURL</label>
             <input name="value" defaultValue={playlistUrl} placeholder="https://www.youtube.com/playlist?list=..." className="border p-2 rounded text-sm bg-white" />
             <ToastSubmitButton label="再生リストURLを保存" className="bg-red-600 text-white p-2 rounded hover:bg-red-700 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'SHARE_BASE_POST_URL')} className="flex flex-col gap-2 pt-4 border-t">
-            <label className="text-xs font-bold text-gray-500">𝕏共有時引用ポストURL</label>
+            <label className="text-xs font-bold text-foreground">𝕏共有時引用ポストURL</label>
             <input name="value" defaultValue={shareBasePostUrl} placeholder="https://x.com/username/status/..." className="border p-2 rounded text-sm bg-white" />
             <ToastSubmitButton label="共有用URLを保存" className="bg-sky-500 text-foreground p-2 rounded hover:bg-sky-600 text-sm font-bold" />
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'CTA_BUTTON_MODE')} className="flex flex-col gap-2 pt-4 border-t">
-            <label className="text-xs font-bold text-gray-500">CTAボタンのモード</label>
+            <label className="text-xs font-bold text-foreground">CTAボタンのモード</label>
             <select name="value" defaultValue={ctaMode} className="border p-2 rounded text-sm bg-white">
               <option value="hidden">非表示</option>
               <option value="apply">エントリーする（現在は非推奨）</option>
@@ -443,17 +443,17 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const applicationFormType = formData.get('applicationFormType') as string || 'standard'
             await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, enableScheduleButton, applicationFormType })
           }} className="flex flex-col gap-2 pt-4 border-t">
-            <h3 className="font-bold text-sm text-gray-700 mb-2">機能ON/OFF (Features)</h3>
+            <h3 className="font-bold text-sm text-foreground mb-2">機能ON/OFF (Features)</h3>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">ランダム再生ボタン</label>
+                <label className="text-xs font-bold text-foreground block mb-1">ランダム再生ボタン</label>
                 <select name="enableRandomPlay" defaultValue={defaultFeatures.enableRandomPlay ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">表示する (ON)</option>
                   <option value="false">非表示 (OFF)</option>
                 </select>
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">サムネイル投稿機能</label>
+                <label className="text-xs font-bold text-foreground block mb-1">サムネイル投稿機能</label>
                 <select name="enableThumbSubmit" defaultValue={defaultFeatures.enableThumbSubmit ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">有効 (ON)</option>
                   <option value="false">無効 (OFF)</option>
@@ -462,21 +462,21 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             </div>
             <div className="flex gap-4 mt-2">
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">制作者名 表示設定</label>
+                <label className="text-xs font-bold text-foreground block mb-1">制作者名 表示設定</label>
                 <select name="enableShowCreators" defaultValue={defaultFeatures.enableShowCreators ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">表示する (ON)</option>
                   <option value="false">非表示 (OFF)</option>
                 </select>
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">アーティストメイン表示</label>
+                <label className="text-xs font-bold text-foreground block mb-1">アーティストメイン表示</label>
                 <select name="enableArtistMain" defaultValue={defaultFeatures.enableArtistMain ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">有効 (ON)</option>
                   <option value="false">無効 (OFF)</option>
                 </select>
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">AWARDSボタン</label>
+                <label className="text-xs font-bold text-foreground block mb-1">AWARDSボタン</label>
                 <select name="enableAwards" defaultValue={defaultFeatures.enableAwards ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">表示する (ON)</option>
                   <option value="false">非表示 (OFF)</option>
@@ -486,14 +486,14 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
 
             <div className="flex gap-4 mt-2">
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">スケジュールボタン表示</label>
+                <label className="text-xs font-bold text-foreground block mb-1">スケジュールボタン表示</label>
                 <select name="enableScheduleButton" defaultValue={defaultFeatures.enableScheduleButton ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">表示する (ON)</option>
                   <option value="false">非表示 (OFF)</option>
                 </select>
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 block mb-1">応募フォームの形式</label>
+                <label className="text-xs font-bold text-foreground block mb-1">応募フォームの形式</label>
                 <select name="applicationFormType" defaultValue={defaultFeatures.applicationFormType} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="standard">標準（タイトル、URL、歌詞、考察、等）</option>
                   <option value="anonymous">匿名フェス用（SunoURL、パスワード、直アップロード等）</option>
@@ -505,7 +505,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           </form>
 
           <form action={updateEventSetting.bind(null, id, 'ENABLE_ILLUST_RECOMMEND')} className="flex flex-col gap-2 pt-4 border-t">
-            <label className="text-xs font-bold text-gray-500">推しイラスト機能を有効にする</label>
+            <label className="text-xs font-bold text-foreground">推しイラスト機能を有効にする</label>
             <select name="value" defaultValue={isIllustEnabled ? 'true' : 'false'} className="border p-2 rounded text-sm bg-white">
               <option value="true">有効</option>
               <option value="false">無効</option>
@@ -550,7 +550,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           <ul className="space-y-2">
             {event.schedules.map(s => (
               <li key={s.id} className="flex justify-between items-center border-b pb-2">
-                <div><span className="text-gray-500">[{s.order}]</span> <b>{s.title}</b> : {s.date}</div>
+                <div><span className="text-foreground">[{s.order}]</span> <b>{s.title}</b> : {s.date}</div>
                 <form action={deleteEventSchedule.bind(null, id, s.id)}><button className="text-red-500 text-sm font-bold">削除</button></form>
               </li>
             ))}
@@ -620,10 +620,10 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                     {t.published ? (
                       <span className="text-xs bg-green-100 text-green-700 px-2 rounded-full font-bold">公開中</span>
                     ) : (
-                      <span className="text-xs bg-gray-100 text-gray-500 px-2 rounded-full font-bold">非公開</span>
+                      <span className="text-xs bg-gray-100 text-foreground px-2 rounded-full font-bold">非公開</span>
                     )}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{t.artistName || "匿名"}</div>
+                  <div className="text-xs text-foreground mt-1">{t.artistName || "匿名"}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <a href={`/${event.slug}/tracks/${t.id}?preview=all`} target="_blank" className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700">確認</a>
@@ -637,7 +637,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                   </form>
                 </div>
               </li>
-            )) : <p className="text-sm text-gray-500">まだ楽曲が登録されていません。</p>}
+            )) : <p className="text-sm text-foreground">まだ楽曲が登録されていません。</p>}
           </ul>
 
           <div className="mt-8 text-sm font-bold border-b pb-2 text-[var(--color-cyan-500)]">
@@ -653,10 +653,10 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                     {t.published ? (
                       <span className="text-xs bg-green-100 text-green-700 px-2 rounded-full font-bold">公開中</span>
                     ) : (
-                      <span className="text-xs bg-gray-100 text-gray-500 px-2 rounded-full font-bold">非公開</span>
+                      <span className="text-xs bg-gray-100 text-foreground px-2 rounded-full font-bold">非公開</span>
                     )}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">{t.artistName || "匿名"}</div>
+                  <div className="text-xs text-foreground mt-1">{t.artistName || "匿名"}</div>
                 </div>
                 <div className="flex items-center gap-2">
                   <a href={`/${event.slug}/tracks/${t.id}?preview=honban`} target="_blank" className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded hover:bg-blue-700">確認</a>
@@ -670,7 +670,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                   </form>
                 </div>
               </li>
-            )) : <p className="text-sm text-gray-500">同期された楽曲がありません。</p>}
+            )) : <p className="text-sm text-foreground">同期された楽曲がありません。</p>}
           </ul>
         </div>
 

@@ -31,7 +31,7 @@ export default function SyncHonbanToSampleButton() {
       <button
         onClick={handleSync}
         disabled={isPending}
-        className="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-500 font-bold shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 disabled:opacity-50"
+        className="w-full bg-indigo-600 text-white p-3 rounded-lg hover:bg-indigo-500 font-bold shadow-lg transition-transform active:scale-95 flex items-center justify-center gap-2 disabled:"
       >
         <span>🔄</span> 本番データを準備中テーブルにコピーする
       </button>

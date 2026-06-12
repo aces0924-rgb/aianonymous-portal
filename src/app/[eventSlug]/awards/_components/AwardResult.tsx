@@ -99,7 +99,7 @@ export default function AwardResult({ awards, isPreview, playlists }: AwardResul
                   </p>
                   
                   {award.extraInfo && (
-                    <p className="text-[10px] md:text-xs text-yellow-500/60 font-mono tracking-widest mt-4">
+                    <p className="text-[10px] md:text-xs text-yellow-500 font-mono tracking-widest mt-4">
                       {award.extraInfo}
                     </p>
                   )}

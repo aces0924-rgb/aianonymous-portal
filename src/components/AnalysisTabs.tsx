@@ -34,7 +34,7 @@ export default function AnalysisTabs({ analysis, review, defaultLabels = {} }: {
           <button
             onClick={() => setActiveTab('analysis')}
             className={`px-4 text-lg md:text-2xl font-black tracking-tighter transition-all relative ${
-              activeTab === 'analysis' ? 'text-purple-400 drop-shadow-[0_0_10px_rgba(188,19,254,0.5)]' : 'text-gray-500 hover:text-foreground/80'
+              activeTab === 'analysis' ? 'text-purple-400 drop-shadow-[0_0_10px_rgba(188,19,254,0.5)]' : 'text-foreground hover:text-foreground'
             }`}
           >
             <span className="flex items-baseline gap-2 md:gap-3">
@@ -54,7 +54,7 @@ export default function AnalysisTabs({ analysis, review, defaultLabels = {} }: {
           <button
             onClick={() => setActiveTab('review')}
             className={`px-4 text-lg md:text-2xl font-black tracking-tighter transition-all relative ${
-              activeTab === 'review' ? 'text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]' : 'text-gray-500 hover:text-foreground/80'
+              activeTab === 'review' ? 'text-blue-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]' : 'text-foreground hover:text-foreground'
             }`}
           >
             <span className="relative pb-3 inline-block">

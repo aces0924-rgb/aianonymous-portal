@@ -74,32 +74,32 @@ export default function IllustrationSelectionCard({ list, previewQuery, enableAr
            }`}>
              {isCompleted ? '🏆' : '🎧'}
            </div>
-           <span className="text-[11px] text-gray-500 font-black tracking-tighter uppercase opacity-60">
+           <span className="text-[11px] text-foreground font-black tracking-tighter uppercase ">
              {new Date(list.createdAt).toLocaleDateString('ja-JP')}
            </span>
         </div>
 
         <div className="space-y-1">
           <h2 className={`text-xl md:text-2xl font-black tracking-tighter leading-tight transition-colors duration-500 ${
-            isCompleted ? 'text-yellow-400' : hasStarted ? 'text-white' : 'text-foreground/80'
+            isCompleted ? 'text-yellow-400' : hasStarted ? 'text-white' : 'text-foreground'
           }`}>
-            {list.userName} <span className="text-sm font-bold opacity-60">さんの推し{enableArtistMain ? 'クリエイター' : 'イラスト'}リスト</span>
+            {list.userName} <span className="text-sm font-bold ">さんの推し{enableArtistMain ? 'クリエイター' : 'イラスト'}リスト</span>
           </h2>
         </div>
 
         {list.appeal ? (
           <div className="flex-grow pt-2">
             <p className={`text-sm md:text-base leading-relaxed line-clamp-4 italic border-l-4 pl-5 transition-colors duration-500 ${
-              isCompleted ? 'text-foreground/80 border-yellow-500/50' : 
+              isCompleted ? 'text-foreground border-yellow-500/50' : 
               hasStarted ? 'text-foreground border-[var(--color-cyan-400)]/40' : 
-              'text-foreground/60 border-purple-500/20'
+              'text-foreground border-purple-500/20'
             }`}>
               "{list.appeal}"
             </p>
           </div>
         ) : (
           <div className="flex-grow pt-2">
-            <p className="text-gray-600 text-sm italic">
+            <p className="text-foreground text-sm italic">
               （想いの一欠片がここに眠っています...）
             </p>
           </div>

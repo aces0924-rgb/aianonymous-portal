@@ -34,13 +34,13 @@ export default function GlobalPlayer() {
         <div className="bg-surface/80 px-4 py-2 flex items-center justify-between border-b border-surface-border">
           <div className="flex items-center gap-2 overflow-hidden">
             <div className={`w-2 h-2 ${isPlaying ? 'bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]' : 'bg-gray-600'} rounded-full`}></div>
-            <span className="text-[10px] font-black tracking-widest text-foreground/60 uppercase truncate">
+            <span className="text-[10px] font-black tracking-widest text-foreground uppercase truncate">
               {isPlaying ? 'Now Playing' : 'Paused'}
             </span>
           </div>
           <button 
             onClick={closePlayer}
-            className="text-gray-500 hover:text-foreground p-1 transition-colors"
+            className="text-foreground hover:text-foreground p-1 transition-colors"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
               <path d="M18 6L6 18M6 6l12 12"/>
@@ -107,7 +107,7 @@ export default function GlobalPlayer() {
             <h4 className="text-[11px] font-black text-foreground truncate uppercase tracking-widest leading-none mb-1">
               {currentTrack.title}
             </h4>
-            <p className="text-[9px] text-[var(--color-cyan-400)]/60 font-mono tracking-[0.2em] uppercase leading-none">
+            <p className="text-[9px] text-[var(--color-cyan-400)] font-mono tracking-[0.2em] uppercase leading-none">
               High-Fidelity Audio
             </p>
           </div>
@@ -117,7 +117,7 @@ export default function GlobalPlayer() {
             className="flex-shrink-0 w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-[var(--color-cyan-500)]/20 hover:border-[var(--color-cyan-400)]/50 flex items-center justify-center text-white transition-all group"
           >
             {isPlaying ? (
-              <svg className="w-5 h-5 text-foreground/60 group-hover:text-[var(--color-cyan-400)]" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-foreground group-hover:text-[var(--color-cyan-400)]" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
               </svg>
             ) : (

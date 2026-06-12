@@ -58,13 +58,13 @@ export default async function AdminPage() {
           <h2 className="text-xl font-bold mb-4">イベント管理 (Events)</h2>
           
           <form action={addEvent} className="flex flex-col gap-2 mb-6 p-4 bg-gray-50 border rounded-xl">
-            <h3 className="font-bold text-sm text-gray-700">＋ 新規イベントを作成</h3>
+            <h3 className="font-bold text-sm text-foreground">＋ 新規イベントを作成</h3>
             <div className="flex gap-2">
               <input name="title" placeholder="イベント名 (例: 第2回アノフェス)" className="border p-2 rounded text-black flex-1" required />
               <input name="slug" placeholder="URL部分 (例: vol2)" className="border p-2 rounded text-black flex-1" required />
               <button type="submit" className="bg-fuchsia-600 text-white px-4 py-2 rounded hover:bg-fuchsia-700 font-bold whitespace-nowrap">作成</button>
             </div>
-            <p className="text-xs text-gray-500">※ URL部分は `aianonymous-portal.com/【ここ】` になります（半角英数字推奨、1, 2, 3 のような数字だけでもOKです）</p>
+            <p className="text-xs text-foreground">※ URL部分は `aianonymous-portal.com/【ここ】` になります（半角英数字推奨、1, 2, 3 のような数字だけでもOKです）</p>
           </form>
 
           <ul className="space-y-4">
@@ -72,7 +72,7 @@ export default async function AdminPage() {
               <li key={e.id} className="border p-4 rounded-xl flex items-center justify-between hover:bg-gray-50 transition-colors">
                 <div>
                   <h3 className="font-bold text-lg">{e.title}</h3>
-                  <p className="text-gray-500 text-sm">/{e.slug}</p>
+                  <p className="text-foreground text-sm">/{e.slug}</p>
                 </div>
                 <Link href={`/admin/events/${e.id}/settings`} className="bg-fuchsia-100 text-fuchsia-700 px-4 py-2 rounded-lg font-bold hover:bg-fuchsia-200 transition-colors">
                   管理画面を開く →
@@ -106,7 +106,7 @@ export default async function AdminPage() {
                       管理イベント: {events.find(e => e.id === u.eventId)?.title || u.eventId}
                     </span>
                   ) : (
-                    <span className="ml-2 text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-full border border-gray-200 font-bold">
+                    <span className="ml-2 text-xs bg-gray-100 text-foreground px-2 py-1 rounded-full border border-gray-200 font-bold">
                       全イベント (Global)
                     </span>
                   )}

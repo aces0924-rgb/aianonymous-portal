@@ -43,11 +43,11 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
               No.{track.entryNo || track.id.toString().padStart(3, '0')}
             </span>
             {enableArtistMain && track.title ? (
-              <span className="text-foreground/60 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 truncate max-w-[100px] md:max-w-[150px]">
+              <span className="text-foreground font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest  truncate max-w-[100px] md:max-w-[150px]">
                 {track.title}
               </span>
             ) : track.genre && (
-              <span className="text-foreground/60 font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest opacity-80 truncate max-w-[100px] md:max-w-[150px]">
+              <span className="text-foreground font-mono text-[10px] md:text-xs font-bold uppercase tracking-widest  truncate max-w-[100px] md:max-w-[150px]">
                 {track.genre}
               </span>
             )}
@@ -87,7 +87,7 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
               </button>
             )
           ) : (
-            <div className="w-12 h-12 rounded-full bg-red-500/5 border border-red-500/20 flex items-center justify-center text-red-500/40 shrink-0" title="楽曲データなし">
+            <div className="w-12 h-12 rounded-full bg-red-500/5 border border-red-500/20 flex items-center justify-center text-red-500 shrink-0" title="楽曲データなし">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <path d="M18.36 18.36l-1.41-1.41M6.34 6.34l-1.41-1.41M2 12h2M20 12h2M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41" strokeLinecap="round" strokeLinejoin="round" />
               </svg>

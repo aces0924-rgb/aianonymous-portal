@@ -92,17 +92,17 @@ function ConfirmPageContent() {
           <h1 className="text-3xl md:text-6xl font-black italic tracking-tighter">
             <span className="text-[var(--color-cyan-400)] drop-shadow-[0_0_15px_var(--color-glow)]">{userName}</span> 様の推薦リスト
           </h1>
-          <p className="text-gray-400 font-bold tracking-widest uppercase text-sm">Preview Your Selection</p>
+          <p className="text-foreground font-bold tracking-widest uppercase text-sm">Preview Your Selection</p>
         </div>
 
         {appeal && (
           <div className="relative max-w-3xl mx-auto">
             <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-cyan-400)]/20 to-[var(--color-cyan-600)]/20 blur-xl rounded-[2rem]"></div>
             <div className="relative bg-surface/50 border border-surface-border p-10 rounded-[2.5rem] italic text-center">
-              <p className="text-gray-200 text-lg md:text-xl font-medium leading-relaxed italic">
-                <span className="text-[var(--color-cyan-400)]/50 mr-2 text-2xl">"</span>
+              <p className="text-foreground text-lg md:text-xl font-medium leading-relaxed italic">
+                <span className="text-[var(--color-cyan-400)] mr-2 text-2xl">"</span>
                 {appeal}
-                <span className="text-[var(--color-cyan-400)]/50 ml-2 text-2xl">"</span>
+                <span className="text-[var(--color-cyan-400)] ml-2 text-2xl">"</span>
               </p>
             </div>
           </div>
@@ -116,7 +116,7 @@ function ConfirmPageContent() {
                   {idx + 1}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-[var(--color-cyan-400)]/50 font-mono font-bold">No.{track.entryNo}</p>
+                  <p className="text-[10px] text-[var(--color-cyan-400)] font-mono font-bold">No.{track.entryNo}</p>
                   <h3 className="text-lg font-bold text-foreground truncate">
                     {track.title}
                   </h3>
@@ -148,14 +148,14 @@ function ConfirmPageContent() {
           <button
             onClick={() => router.back()}
             disabled={isSubmitting}
-            className="flex-1 py-5 rounded-2xl border-2 border-surface-border text-gray-400 font-black hover:bg-surface hover:text-foreground transition-all active:scale-95 disabled:opacity-50"
+            className="flex-1 py-5 rounded-2xl border-2 border-surface-border text-foreground font-black hover:bg-surface hover:text-foreground transition-all active:scale-95 disabled:"
           >
             修正する
           </button>
           <button
             onClick={handleFinalConfirm}
             disabled={isSubmitting}
-            className="flex-[2] py-5 rounded-2xl bg-gradient-to-r from-[var(--color-cyan-400)] to-[var(--color-cyan-600)] text-foreground font-black text-xl shadow-[0_0_50px_var(--color-glow)] hover:scale-105 hover:from-[var(--color-cyan-400)] hover:to-[var(--color-cyan-600)] active:scale-95 transition-all disabled:opacity-50"
+            className="flex-[2] py-5 rounded-2xl bg-gradient-to-r from-[var(--color-cyan-400)] to-[var(--color-cyan-600)] text-foreground font-black text-xl shadow-[0_0_50px_var(--color-glow)] hover:scale-105 hover:from-[var(--color-cyan-400)] hover:to-[var(--color-cyan-600)] active:scale-95 transition-all disabled:"
           >
             {isSubmitting ? '登録処理中...' : 'この内容で確定する'}
           </button>

@@ -53,7 +53,7 @@ export default async function IllustrationSelectionsIndexPage({ params, searchPa
           <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-tight">
             リスナーが選んだ珠玉のセレクション。
           </p>
-          <p className="text-gray-400 max-w-xl mx-auto text-xs md:text-sm font-bold tracking-widest uppercase opacity-80">
+          <p className="text-foreground max-w-xl mx-auto text-xs md:text-sm font-bold tracking-widest uppercase ">
             それぞれの想いが詰まったアピールポイントをチェックしましょう。
           </p>
           
@@ -61,7 +61,7 @@ export default async function IllustrationSelectionsIndexPage({ params, searchPa
             <div className="inline-flex bg-surface/50 p-1.5 rounded-full border border-surface-border backdrop-blur-sm">
               <Link 
                 href={`/${eventSlug}/selections${previewQuery}`}
-                className="px-6 py-2.5 rounded-full text-sm font-black text-gray-500 hover:text-foreground transition-all hover:bg-surface-hover [text-shadow:none]"
+                className="px-6 py-2.5 rounded-full text-sm font-black text-foreground hover:text-foreground transition-all hover:bg-surface-hover [text-shadow:none]"
               >
                 {enableArtistMain ? '🎵 アーティストリスト' : '🎵 楽曲リスト'}
               </Link>
@@ -82,7 +82,7 @@ export default async function IllustrationSelectionsIndexPage({ params, searchPa
         />
       </section>
 
-      <footer className="border-t border-surface-border bg-background py-24 text-center text-gray-400">
+      <footer className="border-t border-surface-border bg-background py-24 text-center text-foreground">
         <div className="max-w-4xl mx-auto px-6 space-y-10">
           <img src={defaultTheme.logoUrl} alt="Logo" className="w-32 mx-auto opacity-30 grayscale" style={{ mixBlendMode: 'screen', objectFit: 'contain' }} />
           <p className="text-xs tracking-[0.4em] font-light uppercase">© {new Date().getFullYear()} {defaultLabels.siteTitle}</p>

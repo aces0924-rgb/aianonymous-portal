@@ -128,7 +128,7 @@ export default function DisclosurePage() {
               <button 
                 type="submit" 
                 disabled={loading}
-                className="w-full mt-4 bg-white text-black hover:bg-[var(--color-cyan-500)] hover:text-black font-black italic tracking-widest text-sm py-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+                className="w-full mt-4 bg-white text-black hover:bg-[var(--color-cyan-500)] hover:text-black font-black italic tracking-widest text-sm py-4 rounded-xl transition-all disabled: disabled:cursor-not-allowed group relative overflow-hidden"
               >
                 <span className="relative z-10">{loading ? 'AUTHENTICATING...' : 'SHOW RESULT'}</span>
               </button>

@@ -21,13 +21,13 @@ export default function SelectionIndicator() {
             <span className="text-[10px] font-black tracking-[0.3em] uppercase text-[var(--color-cyan-400)]">Selected</span>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-black text-foreground">{count}</span>
-              <span className="text-gray-500 text-sm font-mono">/ {MAX_FAVORITES}</span>
+              <span className="text-foreground text-sm font-mono">/ {MAX_FAVORITES}</span>
             </div>
           </div>
           
           <div className="flex-1 px-6">
             {!isEnabled ? (
-              <p className="text-[10px] text-foreground/60 font-bold text-center leading-tight">
+              <p className="text-[10px] text-foreground font-bold text-center leading-tight">
                 あと <span className="text-[var(--color-cyan-400)]">{5 - count}曲</span> 選択すると<br />推薦ページを作成できます
               </p>
             ) : (
@@ -43,7 +43,7 @@ export default function SelectionIndicator() {
             className={`px-8 py-3 rounded-xl font-black text-sm transition-all shadow-lg ${
               isEnabled 
                 ? 'bg-gradient-to-r from-[var(--color-cyan-400)] to-[var(--color-cyan-600)] hover:from-[var(--color-cyan-400)] hover:to-[var(--color-cyan-600)] text-white shadow-cyan-500/20 active:scale-95 cursor-pointer' 
-                : 'bg-gray-800 text-gray-500 cursor-not-allowed grayscale'
+                : 'bg-gray-800 text-foreground cursor-not-allowed grayscale'
             }`}
           >
             推薦する

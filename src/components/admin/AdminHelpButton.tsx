@@ -23,7 +23,7 @@ const helpContents: Record<HelpKey, { title: string; target: string; desc: strin
     example: (
       <ul className="list-disc pl-5 space-y-1">
         <li><b>イベント名:</b> AI-anonymous MUSIC FES.</li>
-        <li><b>URL Slug:</b> aianonymous2 <br/><span className="text-gray-500 text-xs">サイトのURLが yourdomain.com/aianonymous2 になります。</span></li>
+        <li><b>URL Slug:</b> aianonymous2 <br/><span className="text-foreground text-xs">サイトのURLが yourdomain.com/aianonymous2 になります。</span></li>
         <li><b>セクション見出し:</b> 募集要項 や イベントについて など</li>
       </ul>
     )
@@ -36,7 +36,7 @@ const helpContents: Record<HelpKey, { title: string; target: string; desc: strin
       <ul className="list-disc pl-5 space-y-1">
         <li><b>メインカラー:</b> #00f0ff (水色など)</li>
         <li><b>ネオン発光エフェクト:</b> ONにするとサイバーパンク風の光る影が付きます。</li>
-        <li><b>ロゴ画像URL:</b> https://.../logo.png <br/><span className="text-gray-500 text-xs">XやDiscordにアップロードした画像の直接リンク(URL)等</span></li>
+        <li><b>ロゴ画像URL:</b> https://.../logo.png <br/><span className="text-foreground text-xs">XやDiscordにアップロードした画像の直接リンク(URL)等</span></li>
       </ul>
     )
   },
@@ -58,7 +58,7 @@ const helpContents: Record<HelpKey, { title: string; target: string; desc: strin
     example: (
       <ul className="list-disc pl-5 space-y-1">
         <li><b>役職:</b> 主催、イラスト担当、サポーター など</li>
-        <li><b>X URL:</b> https://x.com/username <br/><span className="text-gray-500 text-xs">アイコンをクリックしたときの飛び先リンクになります。</span></li>
+        <li><b>X URL:</b> https://x.com/username <br/><span className="text-foreground text-xs">アイコンをクリックしたときの飛び先リンクになります。</span></li>
       </ul>
     )
   },
@@ -101,7 +101,7 @@ const helpContents: Record<HelpKey, { title: string; target: string; desc: strin
       <ul className="list-disc pl-5 space-y-1">
         <li><b>イベント名:</b> 楽曲募集開始</li>
         <li><b>日時:</b> 2024/05/01 19:00</li>
-        <li><b>並び順:</b> 1 <br/><span className="text-gray-500 text-xs">数字が小さい順に上から表示されます。</span></li>
+        <li><b>並び順:</b> 1 <br/><span className="text-foreground text-xs">数字が小さい順に上から表示されます。</span></li>
       </ul>
     )
   },
@@ -168,7 +168,7 @@ export default function AdminHelpButton({ contentKey }: { contentKey: HelpKey })
       <button
         type="button"
         onClick={(e) => { e.preventDefault(); setIsOpen(true); }}
-        className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-500 hover:bg-blue-100 hover:text-blue-600 transition-colors ml-2 shadow-sm"
+        className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-foreground hover:bg-blue-100 hover:text-blue-600 transition-colors ml-2 shadow-sm"
         title="この設定のヘルプを見る"
       >
         <span className="text-xs font-black">?</span>
@@ -187,19 +187,19 @@ export default function AdminHelpButton({ contentKey }: { contentKey: HelpKey })
             <div className="absolute top-4 right-4">
               <button 
                 onClick={() => setIsOpen(false)}
-                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 font-bold"
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-foreground hover:bg-gray-200 font-bold"
               >
                 ✕
               </button>
             </div>
 
-            <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-2 border-b pb-4">
+            <h3 className="text-xl font-black text-foreground mb-6 flex items-center gap-2 border-b pb-4">
               <span className="text-blue-500">❓</span> {content.title}
             </h3>
 
-            <div className="space-y-6 text-sm text-gray-700">
+            <div className="space-y-6 text-sm text-foreground">
               <div>
-                <h4 className="font-bold text-gray-900 flex items-center gap-2 mb-2">
+                <h4 className="font-bold text-foreground flex items-center gap-2 mb-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                   どこに反映されるか
                 </h4>
@@ -209,7 +209,7 @@ export default function AdminHelpButton({ contentKey }: { contentKey: HelpKey })
               </div>
 
               <div>
-                <h4 className="font-bold text-gray-900 flex items-center gap-2 mb-2">
+                <h4 className="font-bold text-foreground flex items-center gap-2 mb-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                   設定の役割
                 </h4>
@@ -219,7 +219,7 @@ export default function AdminHelpButton({ contentKey }: { contentKey: HelpKey })
               </div>
 
               <div>
-                <h4 className="font-bold text-gray-900 flex items-center gap-2 mb-2">
+                <h4 className="font-bold text-foreground flex items-center gap-2 mb-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                   入力例
                 </h4>
