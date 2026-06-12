@@ -85,6 +85,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     bgUrl: themeConfig.bgUrl || '',
     logoUrl: themeConfig.logoUrl || '',
     logoWidth: themeConfig.logoWidth || '',
+    logoMarginTop: themeConfig.logoMarginTop || '',
     baseFontSize: themeConfig.baseFontSize || 16,
     bgEffect: themeConfig.bgEffect || 'none',
     uiTexture: themeConfig.uiTexture || 'solid',
@@ -202,11 +203,12 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const bgUrl = formData.get('bgUrl') as string
             const logoUrl = formData.get('logoUrl') as string
             const logoWidth = formData.get('logoWidth') as string
+            const logoMarginTop = formData.get('logoMarginTop') as string
             const btnPrimaryColor = formData.get('btnPrimaryColor') as string
             const btnSecondaryColor = formData.get('btnSecondaryColor') as string
             const baseFontSizeStr = formData.get('baseFontSize') as string
             const baseFontSize = baseFontSizeStr ? parseInt(baseFontSizeStr, 10) : 16
-            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, logoUrl, logoWidth, btnPrimaryColor, btnSecondaryColor, baseFontSize })
+            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, logoUrl, logoWidth, logoMarginTop, btnPrimaryColor, btnSecondaryColor, baseFontSize })
           }} className="flex flex-col gap-4">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -304,6 +306,11 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <label className="text-xs font-bold text-gray-500 block mb-1">ロゴ画像の表示幅 (px)</label>
               <input name="logoWidth" type="number" defaultValue={defaultTheme.logoWidth} placeholder="例: 1000" className="w-full border p-2 rounded text-sm bg-white" />
               <p className="text-[10px] text-gray-400 mt-1">PC等でロゴが大きくなりすぎる場合、800や1000などの数値を指定してください。空欄の場合は巨大サイズになります。</p>
+            </div>
+            <div className="pt-2">
+              <label className="text-xs font-bold text-gray-500 block mb-1">ロゴの上下位置調整 (px)</label>
+              <input name="logoMarginTop" type="number" defaultValue={defaultTheme.logoMarginTop} placeholder="例: -50 (上へ), 50 (下へ)" className="w-full border p-2 rounded text-sm bg-white" />
+              <p className="text-[10px] text-gray-400 mt-1">マイナス値で上に、プラス値で下に移動します。ボタンと重なってしまう場合に調整してください。空欄の場合はデフォルトの配置になります。</p>
             </div>
             <ToastSubmitButton label="デザインを保存" className="bg-pink-600 text-white p-2 rounded hover:bg-pink-700 text-sm font-bold w-32 mt-2" />
           </form>

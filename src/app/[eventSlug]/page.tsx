@@ -87,7 +87,8 @@ export default async function Home({ params, searchParams }: { params: Promise<{
     mainColor: themeConfig.mainColor || '#00f0ff',
     bgUrl: themeConfig.bgUrl || '/images/hero-bg.jpg',
     logoUrl: themeConfig.logoUrl || '/images/logo.png',
-    logoWidth: themeConfig.logoWidth || ''
+    logoWidth: themeConfig.logoWidth || '',
+    logoMarginTop: themeConfig.logoMarginTop || ''
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
@@ -320,7 +321,10 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               )}
             </div>
           </div>
-          <div className="relative inline-block group z-10 -mt-24 md:-mt-48 lg:-mt-64 w-full">
+          <div 
+            className={`relative inline-block group z-10 w-full ${defaultTheme.logoMarginTop !== '' ? '' : '-mt-24 md:-mt-48 lg:-mt-64'}`}
+            style={defaultTheme.logoMarginTop !== '' ? { marginTop: `${defaultTheme.logoMarginTop}px` } : {}}
+          >
             <img src={defaultTheme.logoUrl} alt={defaultLabels.siteTitle} className="w-full h-auto mx-auto drop-shadow-[0_0_80px_rgba(188,19,254,0.6)] transition-all duration-700 group-hover:drop-shadow-[0_0_120px_var(--color-glow)] group-hover:scale-[1.08]" style={{ mixBlendMode: 'screen', objectFit: 'contain', maxWidth: defaultTheme.logoWidth ? `${defaultTheme.logoWidth}px` : '2400px' }} />
           </div>
         </div>
