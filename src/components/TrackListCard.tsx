@@ -43,6 +43,16 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
   };
   const isImg = isIllustration(track.songUrl);
 
+  const isSunoUrl = (url?: string | null) => url ? url.includes('suno.com') : false;
+  const isSuno = isSunoUrl(track.songUrl) || isSunoUrl(track.audioUrl);
+
+  const extractSunoId = (url?: string | null) => {
+    if (!url) return null;
+    const match = url.match(/suno\.com\/(?:song|embed)\/([a-zA-Z0-9\-]+)/);
+    return match ? match[1] : null;
+  };
+  const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
+
   const isArtistMain = enableArtistMain && !!track.artistName;
   const mainText = isArtistMain ? track.artistName : track.title;
   const subText = isArtistMain ? track.title : track.artistName;
@@ -77,6 +87,19 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
           )}
         </Link>
 
+        {sunoId && (
+          <div className="w-full mb-1">
+            <iframe
+              src={`https://suno.com/embed/${sunoId}`}
+              width="100%"
+              height="120"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              className="rounded-xl border border-surface-border/50 bg-black/20"
+            ></iframe>
+          </div>
+        )}
+
         <div className="flex flex-wrap items-center gap-2 shrink-0">
           {isImg ? (
             <button
@@ -94,18 +117,20 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               </svg>
             </button>
           ) : (
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                playTrack(track.id, track.title, track.songUrl, track.audioUrl);
-              }}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all active:scale-90"
-              title="再生する"
-            >
-              <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
+            !isSuno && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  playTrack(track.id, track.title, track.songUrl, track.audioUrl);
+                }}
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500 hover:text-black transition-all active:scale-90"
+                title="再生する"
+              >
+                <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
+            )
           )}
 
           {/* Thumbnail Button */}

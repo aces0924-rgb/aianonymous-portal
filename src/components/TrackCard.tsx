@@ -13,6 +13,14 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
   const isPlayable = !!audioSource;
   const isSunoUrl = (url?: string | null) => url ? url.includes('suno.com') : false;
   const isSuno = isSunoUrl(track.songUrl) || isSunoUrl(track.audioUrl);
+
+  const extractSunoId = (url?: string | null) => {
+    if (!url) return null;
+    const match = url.match(/suno\.com\/(?:song|embed)\/([a-zA-Z0-9\-]+)/);
+    return match ? match[1] : null;
+  };
+  const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
+
   const { isFavorite } = useFavorites();
   const { playTrack } = usePlayer();
   const favorite = isFavorite(track.id);
@@ -67,21 +75,17 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
         {/* Title and Play Button */}
         <div className="flex items-center gap-4">
           {(track.songUrl || track.audioUrl) ? (
-            <button
-              onClick={() => {
-                if (isSuno) {
-                  window.open(track.songUrl || track.audioUrl, '_blank', 'noopener,noreferrer');
-                } else {
-                  playTrack(track.id, track.title, track.songUrl, track.audioUrl);
-                }
-              }}
-              className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/10 border border-[var(--color-cyan-400)]/30 text-[var(--color-cyan-400)] hover:bg-[var(--color-cyan-500)] hover:text-black transition-all active:scale-90 shrink-0 shadow-[0_0_15px_var(--color-glow)] group-hover:border-[var(--color-cyan-400)]"
-              title={isSuno ? "Sunoで再生する(別窓)" : "再生する"}
-            >
-              <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
+            !isSuno && (
+              <button
+                onClick={() => playTrack(track.id, track.title, track.songUrl, track.audioUrl)}
+                className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/10 border border-[var(--color-cyan-400)]/30 text-[var(--color-cyan-400)] hover:bg-[var(--color-cyan-500)] hover:text-black transition-all active:scale-90 shrink-0 shadow-[0_0_15px_var(--color-glow)] group-hover:border-[var(--color-cyan-400)]"
+                title="再生する"
+              >
+                <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </button>
+            )
           ) : (
             <div className="w-12 h-12 rounded-full bg-red-500/5 border border-red-500/20 flex items-center justify-center text-red-500/40 shrink-0" title="楽曲データなし">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -94,6 +98,19 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
             {enableArtistMain && track.artistName ? track.artistName : track.title}
           </h3>
         </div>
+
+        {sunoId && (
+          <div className="w-full mt-2">
+            <iframe
+              src={`https://suno.com/embed/${sunoId}`}
+              width="100%"
+              height="120"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              className="rounded-xl border border-[var(--color-cyan-400)]/30 bg-black/20"
+            ></iframe>
+          </div>
+        )}
       </div>
     </div>
   );
