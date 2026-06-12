@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { registerPlaylist, getTrackTitlesByIds, getRegistrationCount, getIllustrationRegistrationCount, registerIllustrationPlaylist, getMaxIllustLimit, getEnableIllustRecommend } from '@/app/recommendActions';
+import { registerPlaylist, getTrackTitlesByIds, getRegistrationCount, getIllustrationRegistrationCount, registerIllustrationPlaylist, getMaxIllustLimit, getEnableIllustRecommend, getEnableAwards } from '@/app/recommendActions';
 import { encodeSelectionId } from '@/lib/id-utils';
 
 interface RecommendationModalProps {
@@ -21,6 +21,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
   const [illustRegCount, setIllustRegCount] = useState<number | null>(null);
   const [maxIllustLimit, setMaxIllustLimit] = useState<number>(3);
   const [isIllustEnabled, setIsIllustEnabled] = useState(false);
+  const [isAwardsEnabled, setIsAwardsEnabled] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [trackTitles, setTrackTitles] = useState<{id: number, title: string}[]>([]);
   const [isLoadingTitles, setIsLoadingTitles] = useState(false);
@@ -32,6 +33,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
   useEffect(() => {
     if(eventSlug) getMaxIllustLimit(eventSlug).then(limit => setMaxIllustLimit(limit));
     if(eventSlug) getEnableIllustRecommend(eventSlug).then(enabled => setIsIllustEnabled(enabled));
+    if(eventSlug) getEnableAwards(eventSlug).then(enabled => setIsAwardsEnabled(enabled));
   }, [eventSlug]);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
 
     const confirmMessage = recommendType === 'song'
       ? (regCount === 0 || regCount === null
-          ? 'この内容で推しリストを登録します。よろしいですか？\n\n【重要】アワードの選出は楽曲の初回登録（1回目）のみが対象となります。\n※登録後の変更はできません。'
+          ? `この内容で推しリストを登録します。よろしいですか？\n${isAwardsEnabled ? '\n【重要】アワードの選出は楽曲の初回登録（1回目）のみが対象となります。\n' : ''}※登録後の変更はできません。`
           : 'この内容で推しリストを登録します。よろしいですか？\n※登録後の変更はできません。')
       : 'この内容でイラストの推しリストを登録します。よろしいですか？\n※登録後の変更はできません。';
 
@@ -147,7 +149,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
             <p className="text-foreground text-sm font-light mt-2">
               以下の選択項目で「推しリスト」を作成します。
             </p>
-            {recommendType === 'song' && (
+            {recommendType === 'song' && isAwardsEnabled && (
               <span className="text-sm md:text-base inline-block mt-2 font-black text-white bg-red-600/20 py-2 px-3 rounded border border-red-500/30 animate-pulse">
                 ※アワードの選出は楽曲の初回登録のみが対象となります。
               </span>

@@ -262,6 +262,13 @@ export async function getEnableIllustRecommend(eventSlug: string): Promise<boole
   }
 }
 
+export async function getEnableAwards(eventSlug: string): Promise<boolean> {
+  const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
+  if (!event) return false;
+  const featureFlags = JSON.parse(event.featureFlags || '{}');
+  return featureFlags.enableAwards === true;
+}
+
 export async function getIllustrationRegistrationCount(eventSlug: string, userName: string): Promise<number> {
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
   if (!event) return 0;
