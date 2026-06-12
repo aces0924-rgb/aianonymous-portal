@@ -60,7 +60,7 @@ export default function TrackDetailView({
     const match = url.match(/suno\.com\/(?:song|embed)\/([a-zA-Z0-9\-]+)/);
     return match ? match[1] : null;
   };
-  const sunoId = extractSunoId(track.sunoUrl) || extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
+  const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
 
   const renderThumbnailButton = (className: string) => {
     if (isPreviewMode || !defaultFeatures?.enableThumbSubmit) return null;
