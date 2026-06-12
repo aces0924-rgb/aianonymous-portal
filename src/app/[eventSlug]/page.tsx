@@ -257,8 +257,8 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         
         <div className="z-10 text-center space-y-4 md:space-y-6 px-4 w-full mt-28 md:mt-16">
           <div className="pb-6 flex flex-col items-center justify-center gap-6 md:gap-10 max-w-sm md:max-w-6xl mx-auto relative z-20">
-            {/* Top Row: Main Actions */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 w-full">
+            {/* Action Buttons */}
+            <div className="flex flex-col md:flex-row md:flex-wrap items-center justify-center gap-4 md:gap-8 w-full">
               {/* CTA Button (Dynamic) */}
               {ctaMode !== 'hidden' && (
                 <a 
@@ -308,10 +308,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   style={defaultTheme.btnRandomColor ? { backgroundColor: defaultTheme.btnRandomColor, color: defaultTheme.btnRandomTextColor } : undefined}
                 />
               )}
-            </div>
 
-            {/* Row 2: X Support & Schedule */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 w-full mt-4">
               <a 
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://${event.slug}.example.com/\n\n${shareBasePostUrl}`)}`} 
                 target="_blank" 
