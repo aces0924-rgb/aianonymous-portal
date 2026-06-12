@@ -88,7 +88,17 @@ export default async function Home({ params, searchParams }: { params: Promise<{
     bgUrl: themeConfig.bgUrl || '/images/hero-bg.jpg',
     logoUrl: themeConfig.logoUrl || '/images/logo.png',
     logoWidth: themeConfig.logoWidth || '',
-    logoMarginTop: themeConfig.logoMarginTop || ''
+    logoMarginTop: themeConfig.logoMarginTop || '',
+    btnPrimaryColor: themeConfig.btnPrimaryColor || '',
+    btnPrimaryTextColor: themeConfig.btnPrimaryTextColor || '#ffffff',
+    btnSecondaryColor: themeConfig.btnSecondaryColor || '',
+    btnSecondaryTextColor: themeConfig.btnSecondaryTextColor || '#ffffff',
+    btnRandomColor: themeConfig.btnRandomColor || '',
+    btnRandomTextColor: themeConfig.btnRandomTextColor || '#000000',
+    btnXColor: themeConfig.btnXColor || '',
+    btnXTextColor: themeConfig.btnXTextColor || '#000000',
+    btnScheduleColor: themeConfig.btnScheduleColor || '',
+    btnScheduleTextColor: themeConfig.btnScheduleTextColor || '#ffffff',
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
@@ -255,13 +265,15 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   href={ctaMode === 'vote' ? voteUrl : `/${eventSlug}/apply`} 
                   target={ctaMode === 'vote' ? "_blank" : undefined} 
                   rel={ctaMode === 'vote' ? "noopener noreferrer" : undefined} 
-                  className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-gradient-to-r ${
+                  style={defaultTheme.btnPrimaryColor ? { backgroundColor: defaultTheme.btnPrimaryColor, color: defaultTheme.btnPrimaryTextColor } : undefined}
+                  className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${
+                    defaultTheme.btnPrimaryColor ? '' :
                     ctaMode === 'vote' 
-                      ? 'from-purple-600 via-pink-600 to-amber-500 hover:from-purple-500 hover:to-amber-400' 
-                      : 'from-[var(--color-cyan-400)] via-blue-600 to-purple-600 hover:from-[var(--color-cyan-400)] hover:to-purple-500'
-                  } text-white text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group animate-pulse-slow [text-shadow:none]`}
+                      ? 'bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 hover:from-purple-500 hover:to-amber-400 text-white' 
+                      : 'bg-gradient-to-r from-[var(--color-cyan-400)] via-blue-600 to-purple-600 hover:from-[var(--color-cyan-400)] hover:to-purple-500 text-white'
+                  } text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group animate-pulse-slow [text-shadow:none]`}
                 >
-                  <svg className="w-8 h-8 md:w-10 md:h-10 text-foreground group-hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnPrimaryColor ? 'text-current' : 'text-foreground'} group-hover:rotate-12 transition-transform`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
                   </svg>
                   <span className="tracking-tighter uppercase">
@@ -276,9 +288,10 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   href={playlistUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-[var(--color-btn-secondary)] hover:brightness-110 text-white text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 border-2 border-white/20 whitespace-nowrap group [text-shadow:none]"
+                  style={defaultTheme.btnSecondaryColor ? { backgroundColor: defaultTheme.btnSecondaryColor, color: defaultTheme.btnSecondaryTextColor } : undefined}
+                  className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnSecondaryColor ? '' : 'bg-[var(--color-btn-secondary)] text-white'} hover:brightness-110 text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 border-2 border-white/20 whitespace-nowrap group [text-shadow:none]`}
                 >
-                  <svg className="w-8 h-8 md:w-10 md:h-10 text-foreground group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnSecondaryColor ? 'text-current' : 'text-foreground'} group-hover:scale-110 transition-transform`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
                   </svg>
                   <span className="tracking-tighter">YouTube再生リスト</span>
@@ -287,7 +300,13 @@ export default async function Home({ params, searchParams }: { params: Promise<{
 
               {/* Random Button */}
               {defaultFeatures.enableRandomPlay && (
-                <RandomTrackButton trackIds={tracks.map((t: any) => t.id)} preview={preview} variant="hero" label={defaultLabels.randomPlayButtonLabel} />
+                <RandomTrackButton 
+                  trackIds={tracks.map((t: any) => t.id)} 
+                  preview={preview} 
+                  variant="hero" 
+                  label={defaultLabels.randomPlayButtonLabel} 
+                  style={defaultTheme.btnRandomColor ? { backgroundColor: defaultTheme.btnRandomColor, color: defaultTheme.btnRandomTextColor } : undefined}
+                />
               )}
             </div>
 
@@ -297,9 +316,10 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://${event.slug}.example.com/\n\n${shareBasePostUrl}`)}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-white hover:bg-gray-100 text-foreground text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]"
+                style={defaultTheme.btnXColor ? { backgroundColor: defaultTheme.btnXColor, color: defaultTheme.btnXTextColor } : undefined}
+                className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnXColor ? '' : 'bg-white hover:bg-gray-100 text-foreground'} text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]`}
               >
-                <svg className="w-8 h-8 md:w-10 md:h-10 text-foreground group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnXColor ? 'text-current' : 'text-foreground'} group-hover:rotate-12 transition-transform`} fill="currentColor" viewBox="0 0 24 24">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
                 <span className="tracking-tight uppercase font-black text-sm md:text-xl">Xでイベントを応援</span>
@@ -308,9 +328,10 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               {defaultFeatures.enableScheduleButton !== false && (
                 <Link 
                   href={`/${eventSlug}/schedule`}
-                  className="w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-white font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]"
+                  style={defaultTheme.btnScheduleColor ? { backgroundColor: defaultTheme.btnScheduleColor, color: defaultTheme.btnScheduleTextColor } : undefined}
+                  className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnScheduleColor ? '' : 'bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-white'} font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]`}
                 >
-                  <svg className="w-8 h-8 md:w-10 md:h-10 text-white transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 md:w-10 md:h-10 text-current transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                   </svg>
                   <div className="flex flex-col items-start leading-tight">

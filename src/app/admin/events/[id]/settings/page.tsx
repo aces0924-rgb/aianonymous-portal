@@ -89,7 +89,15 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     baseFontSize: themeConfig.baseFontSize || 16,
     bgEffect: themeConfig.bgEffect || 'none',
     uiTexture: themeConfig.uiTexture || 'solid',
-    cornerStyle: themeConfig.cornerStyle || 'rounded'
+    cornerStyle: themeConfig.cornerStyle || 'rounded',
+    btnPrimaryTextColor: themeConfig.btnPrimaryTextColor || '#ffffff',
+    btnSecondaryTextColor: themeConfig.btnSecondaryTextColor || '#ffffff',
+    btnRandomColor: themeConfig.btnRandomColor || '',
+    btnRandomTextColor: themeConfig.btnRandomTextColor || '#000000',
+    btnXColor: themeConfig.btnXColor || '',
+    btnXTextColor: themeConfig.btnXTextColor || '#000000',
+    btnScheduleColor: themeConfig.btnScheduleColor || '',
+    btnScheduleTextColor: themeConfig.btnScheduleTextColor || '#ffffff'
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
@@ -205,23 +213,78 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const logoWidth = formData.get('logoWidth') as string
             const logoMarginTop = formData.get('logoMarginTop') as string
             const btnPrimaryColor = formData.get('btnPrimaryColor') as string
+            const btnPrimaryTextColor = formData.get('btnPrimaryTextColor') as string || '#ffffff'
             const btnSecondaryColor = formData.get('btnSecondaryColor') as string
+            const btnSecondaryTextColor = formData.get('btnSecondaryTextColor') as string || '#ffffff'
+            const btnRandomColor = formData.get('btnRandomColor') as string
+            const btnRandomTextColor = formData.get('btnRandomTextColor') as string || '#000000'
+            const btnXColor = formData.get('btnXColor') as string
+            const btnXTextColor = formData.get('btnXTextColor') as string || '#000000'
+            const btnScheduleColor = formData.get('btnScheduleColor') as string
+            const btnScheduleTextColor = formData.get('btnScheduleTextColor') as string || '#ffffff'
             const baseFontSizeStr = formData.get('baseFontSize') as string
             const baseFontSize = baseFontSizeStr ? parseInt(baseFontSizeStr, 10) : 16
-            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, logoUrl, logoWidth, logoMarginTop, btnPrimaryColor, btnSecondaryColor, baseFontSize })
+            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, logoUrl, logoWidth, logoMarginTop, btnPrimaryColor, btnPrimaryTextColor, btnSecondaryColor, btnSecondaryTextColor, btnRandomColor, btnRandomTextColor, btnXColor, btnXTextColor, btnScheduleColor, btnScheduleTextColor, baseFontSize })
           }} className="flex flex-col gap-4">
             
+            <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+              <h3 className="font-bold text-sm text-foreground mb-3">トップページのボタン色設定</h3>
+              <p className="text-xs text-foreground mb-4">色を指定しない（空欄の）場合はデフォルトのグラデーションやテーマ色が適用されます。</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">応募ボタン背景</label>
+                    <ColorInput name="btnPrimaryColor" defaultValue={defaultTheme.btnPrimaryColor} />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">文字色</label>
+                    <ColorInput name="btnPrimaryTextColor" defaultValue={defaultTheme.btnPrimaryTextColor} />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">YouTubeボタン背景</label>
+                    <ColorInput name="btnSecondaryColor" defaultValue={defaultTheme.btnSecondaryColor} />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">文字色</label>
+                    <ColorInput name="btnSecondaryTextColor" defaultValue={defaultTheme.btnSecondaryTextColor} />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">ランダムボタン背景</label>
+                    <ColorInput name="btnRandomColor" defaultValue={defaultTheme.btnRandomColor} />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">文字色</label>
+                    <ColorInput name="btnRandomTextColor" defaultValue={defaultTheme.btnRandomTextColor} />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">X応援ボタン背景</label>
+                    <ColorInput name="btnXColor" defaultValue={defaultTheme.btnXColor} />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">文字色</label>
+                    <ColorInput name="btnXTextColor" defaultValue={defaultTheme.btnXTextColor} />
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">スケジュールボタン背景</label>
+                    <ColorInput name="btnScheduleColor" defaultValue={defaultTheme.btnScheduleColor} />
+                  </div>
+                  <div className="flex-1">
+                    <label className="text-xs font-bold text-foreground block mb-1">文字色</label>
+                    <ColorInput name="btnScheduleTextColor" defaultValue={defaultTheme.btnScheduleTextColor} />
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-200">
-              <div>
-                <label className="text-xs font-bold text-foreground block mb-1">メインボタン色 (HEX)</label>
-                <ColorInput name="btnPrimaryColor" defaultValue={defaultTheme.btnPrimaryColor} />
-                <p className="text-[10px] text-foreground mt-1">応募・投票ボタンの色</p>
-              </div>
-              <div>
-                <label className="text-xs font-bold text-foreground block mb-1">サブボタン色 (HEX)</label>
-                <ColorInput name="btnSecondaryColor" defaultValue={defaultTheme.btnSecondaryColor} />
-                <p className="text-[10px] text-foreground mt-1">YouTube等のボタンの色</p>
-              </div>
               <div>
                 <label className="text-xs font-bold text-foreground block mb-1">メイン/アクセントカラー (HEX)</label>
                 <ColorInput name="mainColor" defaultValue={defaultTheme.mainColor} />
