@@ -84,6 +84,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     surfaceColor: themeConfig.surfaceColor || '#111827',
     enableNeon: themeConfig.enableNeon !== false, // default true
     bgUrl: themeConfig.bgUrl || '',
+    bgPosition: themeConfig.bgPosition || '',
     logoUrl: themeConfig.logoUrl || '',
     logoWidth: themeConfig.logoWidth || '',
     logoMarginTop: themeConfig.logoMarginTop || '',
@@ -98,7 +99,8 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     btnXColor: themeConfig.btnXColor || '',
     btnXTextColor: themeConfig.btnXTextColor || '#000000',
     btnScheduleColor: themeConfig.btnScheduleColor || '',
-    btnScheduleTextColor: themeConfig.btnScheduleTextColor || '#ffffff'
+    btnScheduleTextColor: themeConfig.btnScheduleTextColor || '#ffffff',
+    btnOpacity: themeConfig.btnOpacity || ''
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
@@ -225,9 +227,11 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const uiTexture = formData.get('uiTexture') as string
             const cornerStyle = formData.get('cornerStyle') as string
             const bgUrl = formData.get('bgUrl') as string
+            const bgPosition = formData.get('bgPosition') as string
             const logoUrl = formData.get('logoUrl') as string
             const logoWidth = formData.get('logoWidth') as string
             const logoMarginTop = formData.get('logoMarginTop') as string
+            const btnOpacity = formData.get('btnOpacity') as string
             const btnPrimaryColor = formData.get('btnPrimaryColor') as string
             const btnPrimaryTextColor = formData.get('btnPrimaryTextColor') as string || '#ffffff'
             const btnSecondaryColor = formData.get('btnSecondaryColor') as string
@@ -240,11 +244,17 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const btnScheduleTextColor = formData.get('btnScheduleTextColor') as string || '#ffffff'
             const baseFontSizeStr = formData.get('baseFontSize') as string
             const baseFontSize = baseFontSizeStr ? parseInt(baseFontSizeStr, 10) : 16
-            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, logoUrl, logoWidth, logoMarginTop, btnPrimaryColor, btnPrimaryTextColor, btnSecondaryColor, btnSecondaryTextColor, btnRandomColor, btnRandomTextColor, btnXColor, btnXTextColor, btnScheduleColor, btnScheduleTextColor, baseFontSize })
+            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, bgPosition, logoUrl, logoWidth, logoMarginTop, btnOpacity, btnPrimaryColor, btnPrimaryTextColor, btnSecondaryColor, btnSecondaryTextColor, btnRandomColor, btnRandomTextColor, btnXColor, btnXTextColor, btnScheduleColor, btnScheduleTextColor, baseFontSize })
           }} className="flex flex-col gap-4">
             
             <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
-              <h3 className="font-bold text-sm text-foreground mb-3">トップページのボタン色設定</h3>
+              <div className="flex justify-between items-end mb-3">
+                <h3 className="font-bold text-sm text-foreground">トップページのボタン色設定</h3>
+                <div className="w-1/3">
+                  <label className="text-[10px] font-bold text-foreground block mb-1">ボタン全体の透明度 (0.0〜1.0)</label>
+                  <input name="btnOpacity" defaultValue={defaultTheme.btnOpacity} placeholder="例: 0.8" className="w-full border p-1 rounded text-xs bg-white" />
+                </div>
+              </div>
               <p className="text-xs text-foreground mb-4">色を指定しない（空欄の）場合はデフォルトのグラデーションやテーマ色が適用されます。</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex gap-2">
@@ -374,7 +384,10 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 </a>
               </div>
               <input name="bgUrl" defaultValue={defaultTheme.bgUrl} placeholder="https://.../bg.jpg" className="w-full border p-2 rounded text-sm bg-white" />
-              <p className="text-[10px] text-foreground mt-1">※Gyazo等でアップロードし「画像アドレスをコピー(Direct Link)」を貼り付けてください。空欄の場合はデフォルト背景を使用。</p>
+              <p className="text-[10px] text-foreground mt-1 mb-2">※Gyazo等でアップロードし「画像アドレスをコピー(Direct Link)」を貼り付けてください。空欄の場合はデフォルト背景を使用。</p>
+              <label className="text-xs font-bold text-foreground block mb-1">背景画像の表示位置 (background-position)</label>
+              <input name="bgPosition" defaultValue={defaultTheme.bgPosition} placeholder="例: center center, center 20%, right top 等" className="w-full border p-2 rounded text-sm bg-white" />
+              <p className="text-[10px] text-foreground mt-1">※キャラクターの顔が見えない場合などに位置を調整できます。空欄の場合は「center 75%」が適用されます。</p>
             </div>
             <div className="pt-2">
               <label className="text-xs font-bold text-foreground block mb-1">ロゴ画像 (直リンクURL)</label>

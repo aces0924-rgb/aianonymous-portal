@@ -86,6 +86,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   const defaultTheme = {
     mainColor: themeConfig.mainColor || '#00f0ff',
     bgUrl: themeConfig.bgUrl || '/images/hero-bg.jpg',
+    bgPosition: themeConfig.bgPosition || '',
     logoUrl: themeConfig.logoUrl || '/images/logo.png',
     logoWidth: themeConfig.logoWidth || '',
     logoMarginTop: themeConfig.logoMarginTop || '',
@@ -99,6 +100,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
     btnXTextColor: themeConfig.btnXTextColor || '#000000',
     btnScheduleColor: themeConfig.btnScheduleColor || '',
     btnScheduleTextColor: themeConfig.btnScheduleTextColor || '#ffffff',
+    btnOpacity: themeConfig.btnOpacity || ''
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
@@ -249,7 +251,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
       <section className="relative flex items-center justify-center min-h-screen overflow-hidden py-32" style={{ 
         backgroundImage: `url(${defaultTheme.bgUrl})`, 
         backgroundSize: 'cover', 
-        backgroundPosition: 'center 75%' 
+        backgroundPosition: defaultTheme.bgPosition || 'center 75%' 
       }}>
         <div className="absolute inset-0 bg-background/40 z-0"></div>
         
@@ -265,7 +267,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   href={ctaMode === 'vote' ? voteUrl : `/${eventSlug}/apply`} 
                   target={ctaMode === 'vote' ? "_blank" : undefined} 
                   rel={ctaMode === 'vote' ? "noopener noreferrer" : undefined} 
-                  style={defaultTheme.btnPrimaryColor ? { backgroundColor: defaultTheme.btnPrimaryColor, color: defaultTheme.btnPrimaryTextColor } : undefined}
+                  style={defaultTheme.btnPrimaryColor ? { backgroundColor: defaultTheme.btnPrimaryColor, color: defaultTheme.btnPrimaryTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                   className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${
                     defaultTheme.btnPrimaryColor ? '' :
                     ctaMode === 'vote' 
@@ -288,7 +290,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   href={playlistUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={defaultTheme.btnSecondaryColor ? { backgroundColor: defaultTheme.btnSecondaryColor, color: defaultTheme.btnSecondaryTextColor } : undefined}
+                  style={defaultTheme.btnSecondaryColor ? { backgroundColor: defaultTheme.btnSecondaryColor, color: defaultTheme.btnSecondaryTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                   className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnSecondaryColor ? '' : 'bg-[var(--color-btn-secondary)] text-white'} hover:brightness-110 text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 border-2 border-white/20 whitespace-nowrap group [text-shadow:none]`}
                 >
                   <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnSecondaryColor ? 'text-current' : 'text-foreground'} group-hover:scale-110 transition-transform`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -305,7 +307,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   preview={preview} 
                   variant="hero" 
                   label={defaultLabels.randomPlayButtonLabel} 
-                  style={defaultTheme.btnRandomColor ? { backgroundColor: defaultTheme.btnRandomColor, color: defaultTheme.btnRandomTextColor } : undefined}
+                  style={defaultTheme.btnRandomColor ? { backgroundColor: defaultTheme.btnRandomColor, color: defaultTheme.btnRandomTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                 />
               )}
 
@@ -313,7 +315,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://${event.slug}.example.com/\n\n${shareBasePostUrl}`)}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                style={defaultTheme.btnXColor ? { backgroundColor: defaultTheme.btnXColor, color: defaultTheme.btnXTextColor } : undefined}
+                style={defaultTheme.btnXColor ? { backgroundColor: defaultTheme.btnXColor, color: defaultTheme.btnXTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                 className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnXColor ? '' : 'bg-white hover:bg-gray-100 text-foreground'} text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]`}
               >
                 <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnXColor ? 'text-current' : 'text-foreground'} group-hover:rotate-12 transition-transform`} fill="currentColor" viewBox="0 0 24 24">
@@ -325,7 +327,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               {defaultFeatures.enableScheduleButton !== false && (
                 <Link 
                   href={`/${eventSlug}/schedule`}
-                  style={defaultTheme.btnScheduleColor ? { backgroundColor: defaultTheme.btnScheduleColor, color: defaultTheme.btnScheduleTextColor } : undefined}
+                  style={defaultTheme.btnScheduleColor ? { backgroundColor: defaultTheme.btnScheduleColor, color: defaultTheme.btnScheduleTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                   className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnScheduleColor ? '' : 'bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-white'} font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]`}
                 >
                   <svg className="w-8 h-8 md:w-10 md:h-10 text-current transition-transform group-hover:scale-110" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
