@@ -55,6 +55,13 @@ export default function TrackDetailView({
   const mainText = isArtistMain ? track.artistName : track.title;
   const subText = isArtistMain ? track.title : null;
 
+  const extractSunoId = (url?: string | null) => {
+    if (!url) return null;
+    const match = url.match(/suno\.com\/(?:song|embed)\/([a-zA-Z0-9\-]+)/);
+    return match ? match[1] : null;
+  };
+  const sunoId = track.sunoUrl ? extractSunoId(track.sunoUrl) : null;
+
   const renderThumbnailButton = (className: string) => {
     if (isPreviewMode || !defaultFeatures?.enableThumbSubmit) return null;
     
@@ -209,7 +216,21 @@ export default function TrackDetailView({
               )}
 
               <div className={`mt-6 w-full ${!subText ? 'pt-4' : ''}`}>
-                <AudioPlayer audioSource={audioSource || null} trackId={track.id} isPreviewMode={isPreviewMode} />
+                {sunoId ? (
+                  <div className="w-full rounded-xl overflow-hidden shadow-[0_0_20px_var(--color-glow)] border border-[var(--color-cyan-400)]/30">
+                    <iframe 
+                      width="100%" 
+                      height="120" 
+                      src={`https://suno.com/embed/${sunoId}`} 
+                      title="Suno Player" 
+                      frameBorder="0" 
+                      allow="clipboard-write" 
+                      style={{ borderRadius: '8px' }}>
+                    </iframe>
+                  </div>
+                ) : (
+                  <AudioPlayer audioSource={audioSource || null} trackId={track.id} isPreviewMode={isPreviewMode} />
+                )}
               </div>
 
               {/* Creator Info or Anonymity Policy */}

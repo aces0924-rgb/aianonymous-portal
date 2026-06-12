@@ -81,6 +81,7 @@ model Track {
   xAccount       String?
   title          String
   songUrl        String
+  sunoUrl        String?
   audioUrl       String?
   lyrics         String?  @db.Text
   publishConsent String?
@@ -106,6 +107,7 @@ model TrackHonban {
   xAccount       String?
   title          String
   songUrl        String
+  sunoUrl        String?
   audioUrl       String?
   lyrics         String?  @db.Text
   publishConsent String?
