@@ -12,7 +12,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
   const [step, setStep] = useState<'input' | 'preview' | 'success'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', applicationFormType: 'standard', enableArtistMain: false });
+  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', analysisNote: '', applicationFormType: 'standard', enableArtistMain: false });
   const [entryType, setEntryType] = useState<'music' | 'illustration'>('music');
 
   // Upload State

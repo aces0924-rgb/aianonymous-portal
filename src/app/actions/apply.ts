@@ -11,6 +11,7 @@ export async function getApplyConfig(eventSlug: string) {
   return {
     lyricsTab: labelConfig.lyricsTab || 'LYRICS',
     analysisTab: labelConfig.analysisTab || '歌詞考察',
+    analysisNote: labelConfig.analysisNote || '',
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     applicationFormType: featureFlags.applicationFormType || 'standard',
     enableArtistMain: featureFlags.enableArtistMain ?? false,
