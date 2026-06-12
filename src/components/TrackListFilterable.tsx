@@ -9,9 +9,10 @@ interface TrackListFilterableProps {
   preview?: string;
   enableArtistMain?: boolean;
   eventSlug: string;
+  enableThumbSubmit?: boolean;
 }
 
-export default function TrackListFilterable({ initialTracks, preview, enableArtistMain, eventSlug }: TrackListFilterableProps) {
+export default function TrackListFilterable({ initialTracks, preview, enableArtistMain, eventSlug, enableThumbSubmit = true }: TrackListFilterableProps) {
   const { interested, favorites } = useFavorites();
   const [filterMode, setFilterMode] = useState<'all' | 'interested' | 'favorites' | 'unregistered' | 'music' | 'illustration'>('all');
 
@@ -104,17 +105,19 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             推し候補 ({favorites.length})
           </button>
 
-          <button
-            onClick={() => setFilterMode('unregistered')}
-            className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-              filterMode === 'unregistered' 
-                ? 'bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] border border-[var(--color-cyan-400)]/40 shadow-[0_0_20px_var(--color-glow)]' 
-                : 'text-foreground hover:text-[var(--color-cyan-400)]'
-            }`}
-          >
-            <span>🎨</span>
-            ファンアート募集中 ({unregisteredCount})
-          </button>
+          {enableThumbSubmit && (
+            <button
+              onClick={() => setFilterMode('unregistered')}
+              className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
+                filterMode === 'unregistered' 
+                  ? 'bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] border border-[var(--color-cyan-400)]/40 shadow-[0_0_20px_var(--color-glow)]' 
+                  : 'text-foreground hover:text-[var(--color-cyan-400)]'
+              }`}
+            >
+              <span>🎨</span>
+              ファンアート募集中 ({unregisteredCount})
+            </button>
+          )}
         </div>
       </div>
 

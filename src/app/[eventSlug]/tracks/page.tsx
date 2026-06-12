@@ -130,6 +130,7 @@ export default async function TracksListPage({ params, searchParams }: { params:
           preview={preview} 
           enableArtistMain={featureFlags.enableArtistMain} 
           eventSlug={eventSlug} 
+          enableThumbSubmit={featureFlags.enableThumbSubmit}
         />
 
         {tracks.length === 0 && (
