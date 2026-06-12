@@ -9,22 +9,27 @@ import PremiereThumbnailUploader from '@/components/PremiereThumbnailUploader';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default async function SchedulePage(props: { searchParams: Promise<{ preview?: string }> }) {
+export default async function SchedulePage(props: { params: Promise<{ eventSlug: string }>, searchParams: Promise<{ preview?: string }> }) {
+  const { eventSlug } = await props.params;
   const searchParams = await props.searchParams;
   const isHonban = searchParams.preview === 'honban';
 
-  const schedule = await prisma.premiereSchedule.findMany({
-    where: isHonban ? {} : { isPublic: true },
-    orderBy: { day: 'asc' },
-  });
+  // Get the event to fetch its settings properly
+  const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
 
-  const tracks = await prisma.trackHonban.findMany({
-    where: { published: true },
-    orderBy: { entryNo: 'asc' },
-    select: { id: true, entryNo: true, title: true }
-  });
+  const [schedule, tracks, shareBasePostUrlSetting] = await Promise.all([
+    prisma.premiereSchedule.findMany({
+      where: isHonban ? {} : { isPublic: true },
+      orderBy: { day: 'asc' },
+    }),
+    prisma.trackHonban.findMany({
+      where: event ? { eventId: event.id, published: true } : { published: true },
+      orderBy: { entryNo: 'asc' },
+      select: { id: true, entryNo: true, title: true }
+    }),
+    event ? (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'SHARE_BASE_POST_URL' } } }) : null
+  ]);
 
-  const shareBasePostUrlSetting = await (prisma as any).setting.findUnique({ where: { key: 'SHARE_BASE_POST_URL' } });
   const shareBasePostUrl = shareBasePostUrlSetting?.value || "";
 
   const getJstDateString = (date: Date) => {
@@ -56,7 +61,7 @@ export default async function SchedulePage(props: { searchParams: Promise<{ prev
 
       <div className="absolute left-6 top-8 z-50">
         <Link 
-          href={`/${params.eventSlug}`} 
+          href={`/${eventSlug}`} 
           className="flex items-center gap-2 text-[10px] font-black tracking-widest text-neutral-500 hover:text-[var(--color-cyan-400)] transition-colors uppercase group"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:-translate-x-1">

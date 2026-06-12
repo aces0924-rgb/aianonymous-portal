@@ -17,7 +17,15 @@ export default async function TracksListPage({ params, searchParams }: { params:
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
   if (!event) return notFound();
   
-  const activeTableSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'ACTIVE_TRACK_TABLE' } } });
+  const [settings, thumbnails] = await Promise.all([
+    (prisma as any).setting.findMany({ where: { eventId: event.id } }),
+    prisma.trackThumbnail.findMany({
+      where: { status: { in: ['PENDING', 'APPROVED'] } },
+      select: { trackId: true }
+    })
+  ]);
+  
+  const activeTableSetting = settings.find((s: any) => s.key === 'ACTIVE_TRACK_TABLE');
   const featureFlags = JSON.parse(event.featureFlags || '{}');
   const showCreators = featureFlags.enableShowCreators === true;
 
@@ -53,11 +61,7 @@ export default async function TracksListPage({ params, searchParams }: { params:
         orderBy: { entryNo: 'asc' } 
       });
 
-  // サムネイル登録状況（承認待ち・承認済み）を取得
-  const thumbnails = await prisma.trackThumbnail.findMany({
-    where: { status: { in: ['PENDING', 'APPROVED'] } },
-    select: { trackId: true }
-  });
+  // サムネイル登録状況は上部で並列取得済み
   const thumbSet = new Set(thumbnails.map(t => t.trackId));
 
   const tracksWithStatus = tracks.map(track => ({

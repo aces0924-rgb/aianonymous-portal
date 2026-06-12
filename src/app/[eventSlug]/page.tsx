@@ -27,22 +27,22 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   if (!event) notFound();
   const { preview } = await searchParams;
   
-  const news = await prisma.news.findMany({ where: { eventId: event.id }, orderBy: { createdAt: 'desc' } })
-  const schedule = await prisma.schedule.findMany({ where: { eventId: event.id }, orderBy: { order: 'asc' } })
-  const faqs = await (prisma as any).faq.findMany({ where: { eventId: event.id }, orderBy: { order: 'asc' } })
+  // 並列でデータ取得して高速化
+  const [news, schedule, faqs, settings] = await Promise.all([
+    prisma.news.findMany({ where: { eventId: event.id }, orderBy: { createdAt: 'desc' } }),
+    prisma.schedule.findMany({ where: { eventId: event.id }, orderBy: { order: 'asc' } }),
+    (prisma as any).faq.findMany({ where: { eventId: event.id }, orderBy: { order: 'asc' } }),
+    (prisma as any).setting.findMany({ where: { eventId: event.id } })
+  ]);
   
-  const activeTableSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'ACTIVE_TRACK_TABLE' } } })
+  const getSetting = (key: string) => settings.find((s: any) => s.key === key)?.value;
+
   // URLパラメータで preview=honban が指定されているか、全体設定が track_honban の場合に本番用を表示
-  const activeTable = (preview === 'honban') ? 'track_honban' : (activeTableSetting?.value || "track")
+  const activeTable = (preview === 'honban') ? 'track_honban' : (getSetting('ACTIVE_TRACK_TABLE') || "track");
   
-  const ctaModeSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'CTA_BUTTON_MODE' } } })
-  const ctaMode = ctaModeSetting?.value || 'apply'
-
-  const voteUrlSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'VOTE_URL' } } })
-  const voteUrl = voteUrlSetting?.value || ""
-
-  const playlistUrlSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'YOUTUBE_PLAYLIST_URL' } } })
-  const playlistUrl = playlistUrlSetting?.value || ""
+  const ctaMode = getSetting('CTA_BUTTON_MODE') || 'apply';
+  const voteUrl = getSetting('VOTE_URL') || "";
+  const playlistUrl = getSetting('YOUTUBE_PLAYLIST_URL') || "";
 
   const tracksSelect = {
     id: true,
@@ -72,8 +72,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         orderBy: { entryNo: 'asc' } 
       })
 
-  const shareBasePostUrlSetting = await (prisma as any).setting.findUnique({ where: { eventId_key: { eventId: event.id, key: 'SHARE_BASE_POST_URL' } } });
-  const shareBasePostUrl = shareBasePostUrlSetting?.value || "";
+  const shareBasePostUrl = getSetting('SHARE_BASE_POST_URL') || "";
 
   const themeConfig = JSON.parse(event.themeConfig || '{}')
   const featureFlags = JSON.parse(event.featureFlags || '{}')
