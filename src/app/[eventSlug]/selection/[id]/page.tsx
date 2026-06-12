@@ -89,7 +89,7 @@ export default async function SelectionPage({
 
       {/* Dynamic Header */}
       <section className="relative pt-16 pb-2 md:pt-20 md:pb-4 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-cyan-400)]/10 via-black to-black z-0"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-glow)]/10 to-transparent z-0"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--color-cyan-500)]/5 blur-[100px] rounded-full pointer-events-none"></div>
         
         <div className="relative z-10 max-w-6xl mx-auto">
