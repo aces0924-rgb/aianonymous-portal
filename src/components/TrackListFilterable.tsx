@@ -8,9 +8,10 @@ interface TrackListFilterableProps {
   initialTracks: any[];
   preview?: string;
   enableArtistMain?: boolean;
+  eventSlug: string;
 }
 
-export default function TrackListFilterable({ initialTracks, preview, enableArtistMain }: TrackListFilterableProps) {
+export default function TrackListFilterable({ initialTracks, preview, enableArtistMain, eventSlug }: TrackListFilterableProps) {
   const { interested, favorites } = useFavorites();
   const [filterMode, setFilterMode] = useState<'all' | 'interested' | 'favorites' | 'unregistered' | 'music' | 'illustration'>('all');
 
@@ -120,7 +121,13 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start min-h-[400px]">
         {filteredTracks.map((track) => (
-          <TrackListCard key={track.id} track={track} preview={preview} enableArtistMain={enableArtistMain} />
+          <TrackListCard 
+            key={track.id} 
+            track={track} 
+            preview={preview} 
+            enableArtistMain={enableArtistMain} 
+            eventSlug={eventSlug}
+          />
         ))}
         
         {filteredTracks.length === 0 && (

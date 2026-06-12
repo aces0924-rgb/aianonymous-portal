@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { useFavorites } from '@/context/FavoritesContext';
 import { usePlayer } from '@/context/PlayerContext';
 
-export default function TrackListCard({ track, preview, enableArtistMain }: { track: any, preview?: string, enableArtistMain?: boolean }) {
+export default function TrackListCard({ track, preview, enableArtistMain, eventSlug }: { track: any, preview?: string, enableArtistMain?: boolean, eventSlug: string }) {
   const { isFavorite, toggleFavorite, isInterested, toggleInterested } = useFavorites();
   const { playTrack } = usePlayer();
   const favorite = isFavorite(track.id);
@@ -14,8 +14,8 @@ export default function TrackListCard({ track, preview, enableArtistMain }: { tr
 
   // プレビューモード（手動パラメータ指定）中のみクエリを引き継ぐ
   const detailUrl = preview === 'honban' 
-    ? `/tracks/${track.id}?preview=honban` 
-    : `/tracks/${track.id}`;
+    ? `/${eventSlug}/tracks/${track.id}?preview=honban` 
+    : `/${eventSlug}/tracks/${track.id}`;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);

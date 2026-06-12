@@ -125,7 +125,12 @@ export default async function TracksListPage({ params, searchParams }: { params:
           </div>
         </div>
 
-        <TrackListFilterable initialTracks={tracksWithStatus} preview={preview} enableArtistMain={featureFlags.enableArtistMain} />
+        <TrackListFilterable 
+          initialTracks={tracksWithStatus} 
+          preview={preview} 
+          enableArtistMain={featureFlags.enableArtistMain} 
+          eventSlug={eventSlug} 
+        />
 
         {tracks.length === 0 && (
           <div className="text-center py-20 border border-dashed border-surface-border rounded-3xl">

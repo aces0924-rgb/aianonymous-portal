@@ -8,7 +8,7 @@ import FavoriteButton from './FavoriteButton';
 import { useFavorites } from '@/context/FavoritesContext';
 import { usePlayer } from '@/context/PlayerContext';
 
-export default function TrackCard({ track, preview, enableArtistMain }: { track: any, preview?: string, enableArtistMain?: boolean }) {
+export default function TrackCard({ track, preview, enableArtistMain, eventSlug }: { track: any, preview?: string, enableArtistMain?: boolean, eventSlug: string }) {
   const audioSource = getDirectStreamUrl(track.audioUrl || track.songUrl);
   const isPlayable = !!audioSource;
   const { isFavorite } = useFavorites();
@@ -17,8 +17,8 @@ export default function TrackCard({ track, preview, enableArtistMain }: { track:
 
   // プレビューモード（手動パラメータ指定）中のみクエリを引き継ぐ
   const detailUrl = preview === 'honban' 
-    ? `/tracks/${track.id}?preview=honban` 
-    : `/tracks/${track.id}`;
+    ? `/${eventSlug}/tracks/${track.id}?preview=honban` 
+    : `/${eventSlug}/tracks/${track.id}`;
 
   return (
     <div className={`bg-surface/40 border ${favorite ? 'border-[var(--color-cyan-400)] shadow-[0_0_20px_var(--color-glow)]' : 'border-[var(--color-cyan-400)]/50'} rounded-2xl p-4 md:p-5 hover:border-[var(--color-cyan-400)] transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] relative overflow-hidden group backdrop-blur-sm`}>
