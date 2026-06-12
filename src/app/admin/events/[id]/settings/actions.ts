@@ -42,6 +42,10 @@ export async function saveEventSetting(eventId: string, key: string, value: stri
     create: { eventId, key, value }
   })
   revalidatePath(`/admin/events/${eventId}/settings`)
+  const event = await prisma.event.findUnique({ where: { id: eventId } })
+  if (event) {
+    revalidatePath(`/${event.slug}`, 'layout')
+  }
 }
 
 export async function updateEventSetting(eventId: string, key: string, formData: FormData) {
