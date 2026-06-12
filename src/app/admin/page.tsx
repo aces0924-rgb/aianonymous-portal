@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { addAdminUser, deleteAdminUser, addEvent } from './actions'
+import { addAdminUser, deleteAdminUser, addEvent, getEventTemplates } from './actions'
 import { logout } from './login/actions'
 
 export const metadata = {
@@ -40,6 +40,7 @@ export default async function AdminPage() {
   // グローバル管理者のみここから下を表示
   const events = await prisma.event.findMany({ orderBy: { createdAt: 'desc' } })
   const adminUsers = await prisma.adminUser.findMany({ orderBy: { createdAt: 'desc' } })
+  const templates = await getEventTemplates()
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 text-black">
@@ -63,6 +64,14 @@ export default async function AdminPage() {
               <input name="title" placeholder="イベント名 (例: 第2回アノフェス)" className="border p-2 rounded text-black flex-1" required />
               <input name="slug" placeholder="URL部分 (例: vol2)" className="border p-2 rounded text-black flex-1" required />
               <button type="submit" className="bg-fuchsia-600 text-white px-4 py-2 rounded hover:bg-fuchsia-700 font-bold whitespace-nowrap">作成</button>
+            </div>
+            <div className="mt-2">
+              <select name="templateId" className="border p-2 rounded text-black w-full bg-white">
+                <option value="">テンプレートなし (デフォルト)</option>
+                {templates.map(t => (
+                  <option key={t.id} value={t.id}>{t.name} {t.description ? `(${t.description})` : ''}</option>
+                ))}
+              </select>
             </div>
             <p className="text-xs text-foreground">※ URL部分は `aianonymous-portal.com/【ここ】` になります（半角英数字推奨、1, 2, 3 のような数字だけでもOKです）</p>
           </form>

@@ -12,7 +12,8 @@ import {
   addEventFaq, deleteEventFaq,
   toggleEventTrackPublication, deleteEventTrack, syncEventTracksFromSheet, syncOnlyEventAnalysisFromSheet,
   updateEventConfig,
-  toggleEventDirectTrackPublication, deleteEventDirectTrack
+  toggleEventDirectTrackPublication, deleteEventDirectTrack,
+  createTemplateFromEvent
 } from './actions'
 import ColorInput from '@/components/ColorInput'
 import RichTextEditor from '@/components/RichTextEditor'
@@ -145,6 +146,20 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           <Link href={`/${event.slug}`} target="_blank" className="px-6 py-3 bg-fuchsia-600 text-white font-bold rounded-xl shadow-lg hover:bg-fuchsia-700 transition">
             公開ページを確認 ↗
           </Link>
+        </div>
+
+        {/* テンプレート保存 */}
+        <div className="bg-white p-6 rounded-xl shadow border-l-4 border-yellow-500">
+          <h2 className="text-sm font-bold text-foreground mb-3">設定をテンプレートとして保存</h2>
+          <form action={async (formData) => {
+            'use server'
+            const name = formData.get('templateName') as string
+            await createTemplateFromEvent(id, name)
+          }} className="flex items-center gap-4">
+            <input name="templateName" placeholder="保存するテンプレート名 (例: ポップデザイン版)" className="border p-2 rounded text-sm text-black flex-1 max-w-sm" required />
+            <ToastSubmitButton label="現在の見栄えと機能ON/OFF設定を保存" className="bg-yellow-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-yellow-700 whitespace-nowrap" />
+          </form>
+          <p className="text-xs text-foreground mt-2">※保存されるのは「デザイン・見た目」設定と「機能ON/OFF（CTAモード等含む）」のみです。基本情報や各種固有のURL等は保存されません。</p>
         </div>
 
         {/* 目次 (Table of Contents) */}

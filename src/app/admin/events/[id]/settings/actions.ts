@@ -303,3 +303,38 @@ export async function syncOnlyEventAnalysisFromSheet(eventId: string, formData: 
     return { success: false, error: err.message };
   }
 }
+
+// === テンプレート ===
+export async function createTemplateFromEvent(eventId: string, templateName: string) {
+  if (!templateName) return { success: false, error: 'テンプレート名が空です。' };
+  try {
+    const event = await prisma.event.findUnique({ where: { id: eventId }, include: { settings: true } });
+    if (!event) return { success: false, error: 'イベントが見つかりません。' };
+
+    const templateSettings = event.settings.filter((s: any) =>
+      ['CTA_BUTTON_MODE', 'ENABLE_ILLUST_RECOMMEND'].includes(s.key)
+    ).map((s: any) => ({ key: s.key, value: s.value }));
+
+    await prisma.eventTemplate.upsert({
+      where: { name: templateName },
+      update: {
+        themeConfig: event.themeConfig,
+        featureFlags: event.featureFlags,
+        labelConfig: '{}', // 文言等はコピーしない
+        settingsData: JSON.stringify(templateSettings)
+      },
+      create: {
+        name: templateName,
+        description: `${event.title} から作成されたテンプレート`,
+        themeConfig: event.themeConfig,
+        featureFlags: event.featureFlags,
+        labelConfig: '{}', // 文言等はコピーしない
+        settingsData: JSON.stringify(templateSettings)
+      }
+    });
+    return { success: true };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+

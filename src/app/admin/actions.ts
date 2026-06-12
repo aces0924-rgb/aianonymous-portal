@@ -26,17 +26,51 @@ export async function deleteAdminUser(id: string) {
   revalidatePath('/admin')
 }
 
+export async function getEventTemplates() {
+  return await prisma.eventTemplate.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
+}
+
 export async function addEvent(formData: FormData) {
   const title = formData.get('title') as string
   const slug = formData.get('slug') as string
+  const templateIdStr = formData.get('templateId') as string
   if (!title || !slug) return
   
-  await prisma.event.create({
+  let themeConfig = "{}"
+  let featureFlags = "{}"
+  let settingsData: {key: string, value: string}[] = []
+
+  if (templateIdStr) {
+    const templateId = parseInt(templateIdStr, 10)
+    const template = await prisma.eventTemplate.findUnique({ where: { id: templateId } })
+    if (template) {
+      themeConfig = template.themeConfig
+      featureFlags = template.featureFlags
+      try {
+        settingsData = JSON.parse(template.settingsData)
+      } catch (e) { console.error(e) }
+    }
+  }
+
+  const event = await prisma.event.create({
     data: { 
       title, 
-      slug
+      slug,
+      themeConfig,
+      featureFlags
     }
   })
+
+  if (settingsData && settingsData.length > 0) {
+    await Promise.all(settingsData.map(s => 
+      prisma.setting.create({
+        data: { eventId: event.id, key: s.key, value: s.value }
+      })
+    ))
+  }
+
   revalidatePath('/admin')
 }
 
