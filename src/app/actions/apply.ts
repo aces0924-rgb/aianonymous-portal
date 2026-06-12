@@ -63,10 +63,25 @@ export async function submitApplication(eventSlug: string, formData: {
     const labelConfig = JSON.parse(event.labelConfig || '{}');
     const entryPrefix = (labelConfig.entryPrefix || 'ANF').toUpperCase().substring(0, 3);
     
-    const trackCount = await prisma.track.count({
-      where: { eventId: event.id }
+    const existingTracks = await prisma.track.findMany({
+      where: { eventId: event.id },
+      select: { entryNo: true }
     });
-    const entryNo = entryPrefix + (trackCount + 1).toString().padStart(3, '0');
+    
+    let maxNumber = 0;
+    for (const t of existingTracks) {
+      if (t.entryNo) {
+        const match = t.entryNo.match(/\d+$/);
+        if (match) {
+          const num = parseInt(match[0], 10);
+          if (num > maxNumber) {
+            maxNumber = num;
+          }
+        }
+      }
+    }
+    
+    const entryNo = entryPrefix + (maxNumber + 1).toString().padStart(3, '0');
 
     // Insert into Track table
     const track = await prisma.track.create({
