@@ -33,7 +33,7 @@ export default async function TrackPage({
     thumbnailSubmit: labelConfig.thumbnailSubmit || '{defaultLabels.thumbnailSubmit}',
     lyricsTab: labelConfig.lyricsTab || 'LYRICS',
     analysisTab: labelConfig.analysisTab || '歌詞考察',
-    analysisNote: labelConfig.analysisNote || '※AIが歌詞から導き出した独自の考察です。制作者の意図や公式の解釈を示すものではありません。',
+    analysisNote: labelConfig.analysisNote !== undefined ? labelConfig.analysisNote : '※AIが歌詞から導き出した独自の考察です。制作者の意図や公式の解釈を示すものではありません。',
     disclaimer: labelConfig.disclaimer || '【免責事項】この考察はAIによる独自の解釈であり、作者様の意図と異なる場合があります。',
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     guidelinesTitle: labelConfig.guidelinesTitle || '募集要項'
