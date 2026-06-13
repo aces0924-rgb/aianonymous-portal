@@ -594,7 +594,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                   name="analysis"
                   value={formData.analysis}
                   onChange={handleChange}
-                  rows={4}
+                  rows={8}
                   className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
                   placeholder={`${config.analysisTab}について自由に記述してください。`}
                 />
