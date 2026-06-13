@@ -10,6 +10,7 @@ import FavoriteButton from '@/components/FavoriteButton';
 import InterestedButton from '@/components/InterestedButton';
 import TrackJumpInput from '@/components/TrackJumpInput';
 import SelectionIndicator from '@/components/SelectionIndicator';
+import { parseXAccountUrl } from '@/lib/id-utils';
 
 interface TrackDetailViewProps {
   track: any;
@@ -288,6 +289,12 @@ export default function TrackDetailView({
                           <span className="flex items-center flex-wrap gap-2">
                             楽曲制作：
                             <span className="text-foreground">{track.artistName}</span>
+                            {parseXAccountUrl(track.xAccount) && (
+                              <a href={parseXAccountUrl(track.xAccount)!} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-2.5 py-0.5 ml-1 rounded-full bg-[var(--color-cyan-500)]/60 border border-[var(--color-cyan-400)]/80 hover:bg-[var(--color-cyan-500)] transition-colors group">
+                                <svg className="w-3 h-3 text-[var(--color-cyan-400)] group-hover:text-[var(--color-cyan-400)]" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                <span className="text-[var(--color-cyan-400)] font-mono tracking-wider text-xs">Xで見る</span>
+                              </a>
+                            )}
                           </span>
                         </div>
                         {thumbnail && (
@@ -302,10 +309,10 @@ export default function TrackDetailView({
                               ) : (
                                 <span className="text-foreground text-sm font-medium">匿名</span>
                               )}
-                              {!thumbnail.isXAnonymous && thumbnail.twitterId && (
-                                <a href={`https://x.com/${thumbnail.twitterId.replace(/^@/, '')}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-2.5 py-0.5 ml-1 rounded-full bg-[var(--color-cyan-500)]/60 border border-[var(--color-cyan-400)]/80 hover:bg-[var(--color-cyan-500)] transition-colors group">
+                              {!thumbnail.isXAnonymous && parseXAccountUrl(thumbnail.twitterId) && (
+                                <a href={parseXAccountUrl(thumbnail.twitterId)!} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 px-2.5 py-0.5 ml-1 rounded-full bg-[var(--color-cyan-500)]/60 border border-[var(--color-cyan-400)]/80 hover:bg-[var(--color-cyan-500)] transition-colors group">
                                   <svg className="w-3 h-3 text-[var(--color-cyan-400)] group-hover:text-[var(--color-cyan-400)]" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                                  <span className="text-[var(--color-cyan-400)] font-mono tracking-wider text-xs">@{thumbnail.twitterId.replace(/^@/, '')}</span>
+                                  <span className="text-[var(--color-cyan-400)] font-mono tracking-wider text-xs">Xで見る</span>
                                 </a>
                               )}
                             </span>

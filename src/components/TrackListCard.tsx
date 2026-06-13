@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useFavorites } from '@/context/FavoritesContext';
 import { usePlayer } from '@/context/PlayerContext';
+import { parseXAccountUrl } from '@/lib/id-utils';
 
 export default function TrackListCard({ track, preview, enableArtistMain, eventSlug }: { track: any, preview?: string, enableArtistMain?: boolean, eventSlug: string }) {
   const { isFavorite, toggleFavorite, isInterested, toggleInterested } = useFavorites();
@@ -71,8 +72,21 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               </span>
             )}
           </div>
-          <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover/link:text-[var(--color-cyan-400)] transition-colors break-words leading-tight mt-1">
-            {mainText}
+          <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover/link:text-[var(--color-cyan-400)] transition-colors break-words leading-tight mt-1 flex items-center flex-wrap gap-2">
+            <span>{mainText}</span>
+            {isArtistMain && track.xAccount && parseXAccountUrl(track.xAccount) && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(parseXAccountUrl(track.xAccount)!, '_blank', 'noopener,noreferrer');
+                }}
+                className="flex items-center justify-center shrink-0 w-6 h-6 rounded-full bg-[var(--color-cyan-500)]/20 hover:bg-[var(--color-cyan-500)] group/xbtn border border-[var(--color-cyan-400)]/50 transition-colors"
+                title="X (Twitter) アカウントを見る"
+              >
+                <svg className="w-3 h-3 text-[var(--color-cyan-400)] group-hover/xbtn:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </button>
+            )}
           </h3>
           {subText && (
             <p className="text-sm text-foreground mt-1.5 font-medium flex items-center gap-1.5">
