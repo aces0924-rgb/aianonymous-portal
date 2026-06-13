@@ -164,18 +164,29 @@ export default function TrackDetailView({
                 <InterestedButton trackId={track.id} />
                 <FavoriteButton trackId={track.id} enableArtistMain={defaultFeatures?.enableArtistMain} />
               </div>
-              <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-2 md:mb-4 leading-tight tracking-tighter flex items-start gap-2 md:gap-3">
+              <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-2 md:mb-4 leading-tight tracking-tighter flex items-center flex-wrap gap-2 md:gap-3">
                 {isArtistMain ? (
-                  <svg className="w-8 h-8 md:w-10 md:h-10  shrink-0 mt-1 md:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-8 h-8 md:w-10 md:h-10  shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
                 ) : (
-                  <svg className="w-8 h-8 md:w-10 md:h-10  shrink-0 mt-1 md:mt-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-8 h-8 md:w-10 md:h-10  shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
                   </svg>
                 )}
                 <span>{mainText}</span>
+                {isArtistMain && track.xAccount && parseXAccountUrl(track.xAccount) && (
+                  <a 
+                    href={parseXAccountUrl(track.xAccount)!} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center justify-center shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-[var(--color-cyan-500)]/20 hover:bg-[var(--color-cyan-500)] group/xbtn border border-[var(--color-cyan-400)]/50 transition-colors ml-1 md:ml-2"
+                    title="X (Twitter) アカウントを見る"
+                  >
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-[var(--color-cyan-400)] group-hover/xbtn:text-black transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                  </a>
+                )}
               </h1>
               {subText && (
                 <p className={`text-lg md:text-2xl font-bold text-foreground mb-8 flex items-center gap-2 ${isArtistMain ? 'text-[var(--color-cyan-500)]' : ''}`}>
