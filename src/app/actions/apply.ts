@@ -15,6 +15,8 @@ export async function getApplyConfig(eventSlug: string) {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     applicationFormType: featureFlags.applicationFormType || 'standard',
     enableArtistMain: featureFlags.enableArtistMain ?? false,
+    defaultMusicAnalysis: labelConfig.defaultMusicAnalysis || '',
+    defaultIllustrationAnalysis: labelConfig.defaultIllustrationAnalysis || '',
   };
 }
 

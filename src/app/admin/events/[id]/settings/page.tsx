@@ -111,7 +111,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     disclaimer: labelConfig.disclaimer || '【免責事項】この考察はAIによる独自の解釈であり、作者様の意図と異なる場合があります。',
     entryPrefix: labelConfig.entryPrefix || 'ANF',
     randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
-    scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！'
+    scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！',
+    defaultMusicAnalysis: labelConfig.defaultMusicAnalysis || '',
+    defaultIllustrationAnalysis: labelConfig.defaultIllustrationAnalysis || ''
   }
   const defaultFeatures = {
     enableRandomPlay: featureFlags.enableRandomPlay ?? true,
@@ -425,7 +427,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const entryPrefix = formData.get('entryPrefix') as string
             const randomPlayButtonLabel = formData.get('randomPlayButtonLabel') as string
             const scheduleButtonLabel = formData.get('scheduleButtonLabel') as string
-            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonLabel })
+            const defaultMusicAnalysis = formData.get('defaultMusicAnalysis') as string
+            const defaultIllustrationAnalysis = formData.get('defaultIllustrationAnalysis') as string
+            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis })
           }} className="flex flex-col gap-4">
             <div className="flex gap-4">
               <div className="flex-1">
@@ -463,6 +467,20 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <div className="flex-1">
                 <label className="text-xs font-bold text-foreground block mb-1">スケジュール(配信)ボタン名</label>
                 <input name="scheduleButtonLabel" defaultValue={defaultLabels.scheduleButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
+              </div>
+            </div>
+            <div className="bg-amber-50 p-4 rounded-xl border border-amber-200 mt-4">
+              <h3 className="font-bold text-sm text-amber-800 mb-2">応募フォームの初期入力テンプレート</h3>
+              <p className="text-xs text-amber-700 mb-4">応募画面の「活動概要・歌詞考察」欄に最初から入力されているテキストを設定できます。</p>
+              <div className="flex flex-col gap-4">
+                <div>
+                  <label className="text-xs font-bold text-foreground block mb-1">テンプレート (音楽応募用)</label>
+                  <textarea name="defaultMusicAnalysis" defaultValue={defaultLabels.defaultMusicAnalysis} className="w-full border p-2 rounded text-sm bg-white h-32" placeholder="ボーカル：&#10;作曲：&#10;動画："></textarea>
+                </div>
+                <div>
+                  <label className="text-xs font-bold text-foreground block mb-1">テンプレート (イラスト応募用)</label>
+                  <textarea name="defaultIllustrationAnalysis" defaultValue={defaultLabels.defaultIllustrationAnalysis} className="w-full border p-2 rounded text-sm bg-white h-32" placeholder="使用AIツール：&#10;プロンプト等の工夫点："></textarea>
+                </div>
               </div>
             </div>
             <ToastSubmitButton label="文言・ラベルを保存" className="bg-amber-600 text-white p-2 rounded hover:bg-amber-700 text-sm font-bold mt-2" />

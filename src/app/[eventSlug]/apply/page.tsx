@@ -12,7 +12,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
   const [step, setStep] = useState<'input' | 'preview' | 'success'>('input');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
-  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', analysisNote: '', applicationFormType: 'standard', enableArtistMain: false });
+  const [config, setConfig] = useState({ lyricsTab: '歌詞', analysisTab: '歌詞考察', analysisNote: '', applicationFormType: 'standard', enableArtistMain: false, defaultMusicAnalysis: '', defaultIllustrationAnalysis: '' });
   const [entryType, setEntryType] = useState<'music' | 'illustration'>('music');
 
   // Upload State
@@ -23,9 +23,27 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
   useEffect(() => {
     getApplyConfig(eventSlug).then(res => {
-      if (res) setConfig(res);
+      if (res) {
+        setConfig(res as any);
+        setFormData(prev => {
+          if (!prev.analysis) {
+            return { ...prev, analysis: (res as any).defaultMusicAnalysis || '' };
+          }
+          return prev;
+        });
+      }
     });
   }, [eventSlug]);
+
+  // entryType が切り替わったときにテンプレートを適用（ユーザーが編集していない場合のみ）
+  useEffect(() => {
+    setFormData(prev => {
+      if (!prev.analysis || prev.analysis === config.defaultMusicAnalysis || prev.analysis === config.defaultIllustrationAnalysis) {
+        return { ...prev, analysis: entryType === 'music' ? config.defaultMusicAnalysis : config.defaultIllustrationAnalysis };
+      }
+      return prev;
+    });
+  }, [entryType, config.defaultMusicAnalysis, config.defaultIllustrationAnalysis]);
 
   const [formData, setFormData] = useState({
     title: '',
