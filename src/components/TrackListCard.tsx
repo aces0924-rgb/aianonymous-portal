@@ -49,7 +49,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
 
   const extractSunoId = (url?: string | null) => {
     if (!url) return null;
-    const match = url.match(/suno\.com\/(?:song|embed)\/([a-zA-Z0-9\-]+)/);
+    const match = url.match(/suno\.com\/(?:song|embed|s)\/([a-zA-Z0-9\-]+)/);
     return match ? match[1] : null;
   };
   const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
