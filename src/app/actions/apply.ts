@@ -3,6 +3,20 @@
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 
+export async function resolveSunoUrl(url: string) {
+  if (url.includes('suno.com/s/')) {
+    try {
+      const res = await fetch(url, { method: 'HEAD', redirect: 'follow' });
+      if (res.url && res.url.includes('/song/')) {
+        return res.url;
+      }
+    } catch (e) {
+      console.error('Error resolving Suno short url:', e);
+    }
+  }
+  return url;
+}
+
 export async function getApplyConfig(eventSlug: string) {
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
   if (!event) return null;

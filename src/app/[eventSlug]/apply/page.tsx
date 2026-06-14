@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import TrackDetailView from '@/components/TrackDetailView';
-import { submitApplication, getApplyConfig } from '@/app/actions/apply';
+import { submitApplication, getApplyConfig, resolveSunoUrl } from '@/app/actions/apply';
 import toast from 'react-hot-toast';
 
 export default function ApplyPage({ params }: { params: Promise<{ eventSlug: string }> }) {
@@ -69,14 +69,14 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
     }
   };
 
-  const handlePreview = (e: React.FormEvent) => {
+  const handlePreview = async (e: React.FormEvent) => {
     e.preventDefault();
     if (entryType === 'music' && !formData.title.trim()) {
       setErrorMsg('曲名は必須です。');
       return;
     }
     if (!formData.songUrl.trim()) {
-      setErrorMsg('Suno楽曲URLは必須です。');
+      setErrorMsg('楽曲URLは必須です。');
       return;
     }
 
@@ -123,6 +123,21 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
     if (config.applicationFormType === 'anonymous' && !formData.agreedToTerms) {
       setErrorMsg('応募規約への同意は必須です。');
       return;
+    }
+    
+    // Resolve Suno /s/ shortlinks
+    let finalSongUrl = formData.songUrl;
+    if (finalSongUrl.includes('suno.com/s/')) {
+      setIsSubmitting(true);
+      toast.loading('Sunoの短縮URLを展開しています...', { id: 'resolve-suno' });
+      try {
+        finalSongUrl = await resolveSunoUrl(finalSongUrl);
+        setFormData(prev => ({ ...prev, songUrl: finalSongUrl }));
+        toast.success('URLを展開しました', { id: 'resolve-suno' });
+      } catch (e) {
+        toast.dismiss('resolve-suno');
+      }
+      setIsSubmitting(false);
     }
     
     setErrorMsg('');
