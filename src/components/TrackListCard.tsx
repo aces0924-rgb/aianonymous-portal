@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useFavorites } from '@/context/FavoritesContext';
@@ -112,6 +113,29 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               className="rounded-xl border border-surface-border/50 bg-black/20"
             ></iframe>
           </div>
+        )}
+
+        {isImg && track.songUrl && (
+          <button 
+            className="w-full mb-1 relative h-[120px] rounded-xl overflow-hidden border border-surface-border/50 bg-black/20 group/imgbtn block shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              setIsModalOpen(true);
+            }}
+          >
+            <Image
+              src={track.songUrl}
+              alt={track.title || "Illustration"}
+              fill
+              className="object-cover opacity-80 group-hover/imgbtn:opacity-100 group-hover/imgbtn:scale-105 transition-all duration-500"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/imgbtn:opacity-100 transition-opacity flex items-center justify-center">
+              <span className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
+                拡大表示
+              </span>
+            </div>
+          </button>
         )}
 
         <div className="flex flex-wrap items-center gap-2 shrink-0">

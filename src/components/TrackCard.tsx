@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { getDirectStreamUrl } from '@/lib/audio';
 
 import InterestedButton from './InterestedButton';
@@ -109,6 +110,18 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               className="rounded-xl border border-[var(--color-cyan-400)]/30 bg-black/20"
             ></iframe>
+          </div>
+        )}
+
+        {isImg && track.songUrl && (
+          <div className="w-full mt-2 relative h-[120px] rounded-xl overflow-hidden border border-[var(--color-cyan-400)]/30 bg-black/20">
+            <Image
+              src={track.songUrl}
+              alt={track.title || "Illustration"}
+              fill
+              className="object-cover opacity-90"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         )}
       </div>
