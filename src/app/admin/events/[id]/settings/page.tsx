@@ -113,7 +113,8 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
     scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！',
     defaultMusicAnalysis: labelConfig.defaultMusicAnalysis || '',
-    defaultIllustrationAnalysis: labelConfig.defaultIllustrationAnalysis || ''
+    defaultIllustrationAnalysis: labelConfig.defaultIllustrationAnalysis || '',
+    shareHashtag: labelConfig.shareHashtag || '#アノフェス'
   }
   const defaultFeatures = {
     enableRandomPlay: featureFlags.enableRandomPlay ?? true,
@@ -429,7 +430,8 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const scheduleButtonLabel = formData.get('scheduleButtonLabel') as string
             const defaultMusicAnalysis = formData.get('defaultMusicAnalysis') as string
             const defaultIllustrationAnalysis = formData.get('defaultIllustrationAnalysis') as string
-            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis })
+            const shareHashtag = formData.get('shareHashtag') as string
+            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis, shareHashtag })
           }} className="flex flex-col gap-4">
             <div className="flex gap-4">
               <div className="flex-1">
@@ -439,6 +441,10 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <div className="flex-1">
                 <label className="text-xs font-bold text-foreground block mb-1">エントリーNo接頭辞(3文字)</label>
                 <input name="entryPrefix" defaultValue={defaultLabels.entryPrefix} maxLength={3} className="w-full border p-2 rounded text-sm bg-white uppercase" />
+              </div>
+              <div className="flex-1">
+                <label className="text-xs font-bold text-foreground block mb-1">Xシェア用ハッシュタグ</label>
+                <input name="shareHashtag" defaultValue={defaultLabels.shareHashtag} placeholder="#アノフェス" className="w-full border p-2 rounded text-sm bg-white" />
               </div>
             </div>
             <div className="flex gap-4">

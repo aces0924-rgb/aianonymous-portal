@@ -22,6 +22,9 @@ export default async function SelectionPage({
   const event = await prisma.event.findUnique({ where: { slug: eventSlug } });
   if (!event) return notFound();
   
+  const labelConfig = typeof event.labelConfig === 'string' ? JSON.parse(event.labelConfig) : (event.labelConfig || {});
+  const shareHashtag = labelConfig.shareHashtag || '#アノフェス';
+  
   // Decode ID with check digit
   const dbId = decodeSelectionId(encodedId);
   
@@ -111,9 +114,9 @@ export default async function SelectionPage({
              <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-cyan-400)]/50 to-transparent mt-2 mb-4"></div>
              
              {/* Share Section (Moved to Header) */}
-             <div className="animate-in fade-in zoom-in duration-700">
-               <ShareButton userName={playlist.userName} id={dbId} basePostUrl={shareBasePostUrl} />
-             </div>
+              <div className="animate-in fade-in zoom-in duration-700">
+                <ShareButton userName={playlist.userName} id={dbId} basePostUrl={shareBasePostUrl} shareHashtag={shareHashtag} />
+              </div>
 
              {/* Tab Navigation for Multiple Playlists */}
              {allUserPlaylists.length > 1 && (
