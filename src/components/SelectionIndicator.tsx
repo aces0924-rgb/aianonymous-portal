@@ -1,13 +1,25 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useFavorites } from '@/context/FavoritesContext';
 import RecommendationModal from './RecommendationModal';
 
 export default function SelectionIndicator() {
-  const { favorites, MAX_FAVORITES, enableArtistMain, illustrationFavorites, MAX_ILLUST_FAVORITES } = useFavorites();
+  const { favorites, MAX_FAVORITES, enableArtistMain, illustrationFavorites, MAX_ILLUST_FAVORITES, hasSeenHelp, openHelp } = useFavorites();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialRecommendType, setInitialRecommendType] = useState<'song' | 'illustration' | null>(null);
+  
+  const hasAttemptedOpen = useRef(false);
+
+  useEffect(() => {
+    if (!hasSeenHelp && !hasAttemptedOpen.current) {
+      hasAttemptedOpen.current = true;
+      const timer = setTimeout(() => {
+        openHelp();
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [hasSeenHelp, openHelp]);
   
   const count = favorites.length;
   const isEnabled = count >= 5;
@@ -16,17 +28,24 @@ export default function SelectionIndicator() {
   // イラストは5枚以上で推薦可能とする
   const isIllustEnabled = illustCount >= 5;
 
-  if (count === 0 && (!enableArtistMain || illustCount === 0)) return null;
-
   const handleOpenModal = (type: 'song' | 'illustration' | null) => {
     setInitialRecommendType(type);
     setIsModalOpen(true);
   };
 
   const renderSplitIndicator = () => (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] w-full max-w-2xl px-4">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] w-full max-w-3xl px-4">
       <div className="bg-surface/90 backdrop-blur-xl border-2 border-[var(--color-cyan-400)]/30 rounded-[2rem] p-3 flex flex-col md:flex-row items-center gap-3 shadow-[0_0_40px_rgba(0,0,0,0.8)] border-b-cyan-500/60">
         
+        <button
+          onClick={openHelp}
+          className="w-10 h-10 md:w-12 md:h-12 shrink-0 bg-gray-800/80 hover:bg-gray-700 text-[var(--color-cyan-400)] rounded-full flex items-center justify-center font-black text-xl md:text-2xl transition-all border border-[var(--color-cyan-400)]/30 shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+          aria-label="使い方を見る"
+          title="推しリストの作り方"
+        >
+          ?
+        </button>
+
         {/* Song Section */}
         <div className="flex-1 w-full flex items-center justify-between bg-black/30 rounded-2xl p-2 md:p-3 border border-white/5">
           <div className="pl-2 flex flex-col">
@@ -76,9 +95,19 @@ export default function SelectionIndicator() {
   );
 
   const renderSingleIndicator = () => (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] w-full max-w-lg px-4">
-      <div className="bg-surface/90 backdrop-blur-xl border-2 border-[var(--color-cyan-400)]/30 rounded-[2rem] p-4 flex items-center justify-between shadow-[0_0_40px_rgba(0,0,0,0.8)] border-b-cyan-500/60">
-        <div className="pl-4 flex flex-col">
+    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[80] w-full max-w-2xl px-4">
+      <div className="bg-surface/90 backdrop-blur-xl border-2 border-[var(--color-cyan-400)]/30 rounded-[2rem] p-4 flex items-center justify-between gap-3 shadow-[0_0_40px_rgba(0,0,0,0.8)] border-b-cyan-500/60">
+        
+        <button
+          onClick={openHelp}
+          className="w-10 h-10 md:w-12 md:h-12 shrink-0 bg-gray-800/80 hover:bg-gray-700 text-[var(--color-cyan-400)] rounded-full flex items-center justify-center font-black text-xl md:text-2xl transition-all border border-[var(--color-cyan-400)]/30 shadow-[0_0_15px_rgba(0,240,255,0.2)] hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+          aria-label="使い方を見る"
+          title="推しリストの作り方"
+        >
+          ?
+        </button>
+
+        <div className="pl-2 flex flex-col">
           <span className="text-[10px] font-black tracking-[0.3em] uppercase text-[var(--color-cyan-400)]">Selected</span>
           <div className="flex items-baseline gap-1">
             <span className="text-2xl font-black text-foreground">{count}</span>

@@ -7,7 +7,6 @@ import TrackListFilterable from '@/components/TrackListFilterable';
 import SelectionIndicator from '@/components/SelectionIndicator';
 import ClearFavoritesButton from '@/components/ClearFavoritesButton';
 import ShareButton from '@/components/ShareButton';
-import HelpFloatingButton from '@/components/HelpFloatingButton';
 
 import { notFound } from 'next/navigation';
 
@@ -142,7 +141,6 @@ export default async function TracksListPage({ params, searchParams }: { params:
       </div>
 
       <SelectionIndicator />
-      <HelpFloatingButton />
 
       <footer className="py-10 border-t border-surface-border text-center">
         <Link href="/" className="text-foreground hover:text-[var(--color-cyan-400)] transition-colors text-xs uppercase tracking-widest">
