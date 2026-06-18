@@ -141,6 +141,9 @@ export default async function TracksListPage({ params, searchParams }: { params:
         )}
       </div>
 
+      <SelectionIndicator />
+      <HelpFloatingButton />
+
       <footer className="py-10 border-t border-surface-border text-center">
         <Link href="/" className="text-foreground hover:text-[var(--color-cyan-400)] transition-colors text-xs uppercase tracking-widest">
           Back to Entrance
