@@ -5,21 +5,12 @@ import React, { useState } from 'react';
 interface HelpModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirmShowAgain?: (dontShowAgain: boolean) => void;
   enableArtistMain?: boolean;
 }
 
-export default function HelpModal({ isOpen, onClose, onConfirmShowAgain, enableArtistMain = false }: HelpModalProps) {
-  const [dontShowAgain, setDontShowAgain] = useState(false);
+export default function HelpModal({ isOpen, onClose, enableArtistMain = false }: HelpModalProps) {
 
   if (!isOpen) return null;
-
-  const handleConfirm = () => {
-    if (onConfirmShowAgain) {
-      onConfirmShowAgain(dontShowAgain);
-    }
-    onClose();
-  };
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
@@ -92,25 +83,8 @@ export default function HelpModal({ isOpen, onClose, onConfirmShowAgain, enableA
           </div>
 
           <div className="pt-4 space-y-4 shrink-0 mt-auto bg-surface border-t border-white/5">
-            {onConfirmShowAgain && (
-              <label className="flex items-center justify-center gap-3 cursor-pointer group">
-                <div className="relative flex items-center justify-center w-5 h-5 rounded border-2 border-surface-border bg-gray-800 group-hover:border-[var(--color-cyan-400)] transition-all">
-                  <input
-                    type="checkbox"
-                    checked={dontShowAgain}
-                    onChange={(e) => setDontShowAgain(e.target.checked)}
-                    className="peer absolute inset-0 opacity-0 cursor-pointer z-10"
-                  />
-                  <div className={`w-2.5 h-2.5 rounded-sm bg-[var(--color-cyan-400)] transition-all ${dontShowAgain ? 'scale-100 opacity-100' : 'scale-0 opacity-0'}`}></div>
-                </div>
-                <span className="text-xs font-bold text-gray-400 group-hover:text-white transition-colors">
-                  次回から表示しない
-                </span>
-              </label>
-            )}
-
             <button
-              onClick={handleConfirm}
+              onClick={onClose}
               className="w-full py-3 rounded-xl bg-gradient-to-r from-[var(--color-cyan-400)] to-blue-600 text-white font-black tracking-widest hover:from-[var(--color-cyan-500)] hover:to-blue-700 transition-all active:scale-95 shadow-lg shadow-cyan-900/20"
             >
               OK

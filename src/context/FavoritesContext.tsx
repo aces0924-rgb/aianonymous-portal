@@ -193,7 +193,6 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode, enableArti
       <HelpModal
         isOpen={isHelpOpen}
         onClose={closeHelp}
-        onConfirmShowAgain={(dontShow) => markHelpSeen(dontShow)}
         enableArtistMain={enableArtistMain}
       />
     </FavoritesContext.Provider>
