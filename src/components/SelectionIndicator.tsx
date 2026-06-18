@@ -13,8 +13,8 @@ export default function SelectionIndicator() {
   const isEnabled = count >= 5;
 
   const illustCount = illustrationFavorites ? illustrationFavorites.length : 0;
-  // イラストは1枚以上で推薦可能とする（仕様に合わせて調整可能）
-  const isIllustEnabled = illustCount >= 1;
+  // イラストは5枚以上で推薦可能とする
+  const isIllustEnabled = illustCount >= 5;
 
   if (count === 0 && (!enableArtistMain || illustCount === 0)) return null;
 
@@ -67,7 +67,7 @@ export default function SelectionIndicator() {
                 : 'bg-gray-800 text-foreground cursor-not-allowed grayscale'
             }`}
           >
-            {isIllustEnabled ? '推薦する' : '1枚からOK'}
+            {isIllustEnabled ? '推薦する' : `あと${5 - illustCount}枚`}
           </button>
         </div>
 

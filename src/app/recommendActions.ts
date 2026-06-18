@@ -203,11 +203,11 @@ export async function getTrackTitlesByIds(eventSlug: string, ids: number[]) {
   const tracks = activeTable === "track_honban"
     ? await prisma.trackHonban.findMany({
         where: { id: { in: ids } },
-        select: { id: true, title: true, songUrl: true, audioUrl: true, entryNo: true }
+        select: { id: true, title: true, songUrl: true, audioUrl: true, entryNo: true, artistName: true }
       })
     : await prisma.track.findMany({
         where: { id: { in: ids } },
-        select: { id: true, title: true, songUrl: true, audioUrl: true, entryNo: true }
+        select: { id: true, title: true, songUrl: true, audioUrl: true, entryNo: true, artistName: true }
       });
   
   // Sort tracks to match the order of IDs passed

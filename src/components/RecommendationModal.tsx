@@ -173,7 +173,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds, init
                 {trackTitles.map((track, idx) => (
                   <li key={track.id} className="flex gap-3 text-sm">
                     <span className="text-[var(--color-cyan-400)] font-black">{idx + 1}.</span>
-                    <span className="text-foreground font-bold truncate">{track.title}</span>
+                    <span className="text-foreground font-bold truncate">{track.artistName || track.title}</span>
                   </li>
                 ))}
               </ul>
@@ -248,9 +248,9 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds, init
                     setError(null);
                   }}
                   disabled={isSubmitting || !recommendType}
-                  placeholder={recommendType ? "あなたの名前を入力..." : "リストの種類を選択してください"}
+                  placeholder="ニックネームを入力してください..."
                   autoFocus
-                  className={`w-full bg-surface border-2 ${error || (userName.trim() && !canSubmitCurrentMode) ? 'border-red-500/50' : 'border-surface-border'} rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-foreground font-bold disabled: disabled:cursor-not-allowed`}
+                  className={`w-full bg-surface border-2 ${error || (userName.trim() && !canSubmitCurrentMode) ? 'border-red-500/50' : 'border-surface-border'} rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-gray-400 font-bold disabled:opacity-50 disabled:cursor-not-allowed`}
                   required
                 />
                 {userName.trim() && !canSubmitCurrentMode && recommendType && (
@@ -273,7 +273,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds, init
                   }}
                   disabled={isSubmitting || !recommendType}
                   placeholder={recommendType ? "@zyonetsunko" : ""}
-                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-foreground font-bold disabled: disabled:cursor-not-allowed`}
+                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-gray-400 font-bold disabled:opacity-50 disabled:cursor-not-allowed`}
                   required
                 />
               </div>
@@ -286,8 +286,8 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds, init
                   value={appeal}
                   onChange={(e) => setAppeal(e.target.value)}
                   disabled={isSubmitting || !recommendType}
-                  placeholder={recommendType === 'song' ? 'このリストの見どころや、楽曲への想いを入力してください...' : recommendType === 'illustration' ? '選んだイラストの好きなところや、おすすめポイントを入力してください...' : ''}
-                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-foreground font-bold min-h-[100px] resize-none disabled: disabled:cursor-not-allowed`}
+                  placeholder={recommendType === 'song' ? 'このリストの見どころや、楽曲（アーティスト）への想いを入力してください...' : recommendType === 'illustration' ? '選んだイラストの好きなところや、おすすめポイントを入力してください...' : ''}
+                  className={`w-full bg-surface border-2 border-surface-border rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-${recommendType === 'song' ? 'cyan' : recommendType === 'illustration' ? 'purple' : 'gray'}-500 transition-all placeholder:text-gray-400 font-bold min-h-[100px] resize-none disabled:opacity-50 disabled:cursor-not-allowed`}
                 />
               </div>
               
