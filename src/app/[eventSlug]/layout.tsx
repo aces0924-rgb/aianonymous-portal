@@ -20,6 +20,9 @@ export default async function EventLayout({
   }
 
   const themeConfig = JSON.parse(event.themeConfig || '{}')
+  const defaultFeatures = typeof event.defaultFeatures === 'string' ? JSON.parse(event.defaultFeatures) : (event.defaultFeatures || {})
+  const isArtistMainEnabled = defaultFeatures.enableArtistMain === true
+
   const mainColor = themeConfig.mainColor || '#00f0ff'
   const bgColor = themeConfig.bgColor || '#000000'
   const textColor = themeConfig.textColor || '#ffffff'
@@ -68,7 +71,7 @@ export default async function EventLayout({
     >
       <style dangerouslySetInnerHTML={{ __html: `html { font-size: ${baseFontSize}px !important; }` }} />
       <PlayerProvider>
-        <FavoritesProvider enableArtistMain={event.enableArtistMain}>
+        <FavoritesProvider enableArtistMain={isArtistMainEnabled}>
           <LiveBroadcastBanner />
           {children}
           <GlobalPlayer />
