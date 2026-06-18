@@ -13,8 +13,14 @@ interface TrackListFilterableProps {
 }
 
 export default function TrackListFilterable({ initialTracks, preview, enableArtistMain, eventSlug, enableThumbSubmit = true }: TrackListFilterableProps) {
-  const { interested, favorites } = useFavorites();
-  const [filterMode, setFilterMode] = useState<'all' | 'interested' | 'favorites' | 'unregistered' | 'music' | 'illustration'>('all');
+  const { interested, favorites, illustrationFavorites } = useFavorites();
+  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+
+  const toggleFilter = (filter: string) => {
+    setActiveFilters(prev => 
+      prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
+    );
+  };
 
   const isIllustration = (url?: string) => {
     if (!url) return false;
@@ -28,14 +34,33 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
   const illustrationCount = useMemo(() => initialTracks.filter(t => isIllustration(t.songUrl)).length, [initialTracks]);
 
   const filteredTracks = useMemo(() => {
-    if (filterMode === 'all') return initialTracks;
-    if (filterMode === 'interested') return initialTracks.filter(track => interested.includes(track.id));
-    if (filterMode === 'favorites') return initialTracks.filter(track => favorites.includes(track.id));
-    if (filterMode === 'unregistered') return initialTracks.filter(track => !track.hasThumbnail);
-    if (filterMode === 'music') return initialTracks.filter(track => !isIllustration(track.songUrl));
-    if (filterMode === 'illustration') return initialTracks.filter(track => isIllustration(track.songUrl));
-    return initialTracks;
-  }, [initialTracks, filterMode, interested, favorites]);
+    if (activeFilters.length === 0) return initialTracks;
+
+    return initialTracks.filter(track => {
+      const isIllust = isIllustration(track.songUrl);
+      const isMusic = !isIllust;
+
+      // 種類フィルタのチェック（どちらか一方が選択されている場合のみ絞り込み）
+      const hasMusicFilter = activeFilters.includes('music');
+      const hasIllustFilter = activeFilters.includes('illustration');
+      
+      if (hasMusicFilter && !hasIllustFilter && !isMusic) return false;
+      if (hasIllustFilter && !hasMusicFilter && !isIllust) return false;
+
+      // 状態フィルタのチェック（すべて満たす AND検索）
+      if (activeFilters.includes('interested') && !interested.includes(track.id)) return false;
+      
+      if (activeFilters.includes('favorites')) {
+        const isFav = favorites.includes(track.id);
+        const isIllustFav = enableArtistMain && illustrationFavorites ? illustrationFavorites.includes(track.id) : false;
+        if (!isFav && !isIllustFav) return false;
+      }
+      
+      if (activeFilters.includes('unregistered') && track.hasThumbnail) return false;
+
+      return true;
+    });
+  }, [initialTracks, activeFilters, interested, favorites, illustrationFavorites, enableArtistMain]);
 
   return (
     <div className="space-y-8">
@@ -43,11 +68,11 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
       <div className="flex justify-center">
         <div className="bg-surface/50 p-1.5 rounded-2xl border border-surface-border flex flex-wrap gap-2 backdrop-blur-sm justify-center">
           <button
-            onClick={() => setFilterMode('all')}
+            onClick={() => setActiveFilters([])}
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all ${
-              filterMode === 'all' 
+              activeFilters.length === 0 
                 ? 'bg-gray-800 text-white shadow-lg border border-surface-border' 
-                : 'text-foreground hover:text-foreground'
+                : 'text-foreground hover:text-white'
             }`}
           >
             すべて表示 ({initialTracks.length})
@@ -56,9 +81,9 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
           {enableArtistMain && (
             <>
               <button
-                onClick={() => setFilterMode('music')}
+                onClick={() => toggleFilter('music')}
                 className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-                  filterMode === 'music' 
+                  activeFilters.includes('music') 
                     ? 'bg-[var(--color-cyan-600)] text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]' 
                     : 'text-foreground hover:text-[var(--color-cyan-400)]'
                 }`}
@@ -68,9 +93,9 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
               </button>
 
               <button
-                onClick={() => setFilterMode('illustration')}
+                onClick={() => toggleFilter('illustration')}
                 className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-                  filterMode === 'illustration' 
+                  activeFilters.includes('illustration') 
                     ? 'bg-fuchsia-600 text-white shadow-[0_0_15px_rgba(192,38,211,0.4)]' 
                     : 'text-foreground hover:text-fuchsia-400'
                 }`}
@@ -82,9 +107,9 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
           )}
           
           <button
-            onClick={() => setFilterMode('interested')}
+            onClick={() => toggleFilter('interested')}
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-              filterMode === 'interested' 
+              activeFilters.includes('interested') 
                 ? 'bg-amber-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]' 
                 : 'text-foreground hover:text-amber-500'
             }`}
@@ -94,24 +119,24 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
           </button>
 
           <button
-            onClick={() => setFilterMode('favorites')}
+            onClick={() => toggleFilter('favorites')}
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-              filterMode === 'favorites' 
+              activeFilters.includes('favorites') 
                 ? 'bg-[var(--color-cyan-500)] text-black shadow-[0_0_15px_var(--color-glow)]' 
                 : 'text-foreground hover:text-[var(--color-cyan-400)]'
             }`}
           >
             <span>💖</span>
-            推し候補 ({favorites.length})
+            推し候補 ({enableArtistMain && illustrationFavorites ? favorites.length + illustrationFavorites.length : favorites.length})
           </button>
 
           {enableThumbSubmit && (
             <button
-              onClick={() => setFilterMode('unregistered')}
+              onClick={() => toggleFilter('unregistered')}
               className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all flex items-center gap-2 ${
-                filterMode === 'unregistered' 
-                  ? 'bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] border border-[var(--color-cyan-400)]/40 shadow-[0_0_20px_var(--color-glow)]' 
-                  : 'text-foreground hover:text-[var(--color-cyan-400)]'
+                activeFilters.includes('unregistered') 
+                  ? 'bg-green-600 text-white shadow-[0_0_15px_rgba(22,163,74,0.4)]' 
+                  : 'text-foreground hover:text-green-400'
               }`}
             >
               <span>🎨</span>
