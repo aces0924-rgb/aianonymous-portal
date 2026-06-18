@@ -161,18 +161,18 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
         {filteredTracks.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center py-24 border-2 border-dashed border-surface-border rounded-[3rem] space-y-4 animate-in fade-in duration-700">
             <span className="text-5xl opacity-20">
-              {filterMode === 'interested' ? '⭐' : filterMode === 'favorites' ? '💖' : filterMode === 'music' ? '🎵' : filterMode === 'illustration' ? '🖼️' : '🎨'}
+              {activeFilters.includes('interested') ? '⭐' : activeFilters.includes('favorites') ? '💖' : activeFilters.includes('music') ? '🎵' : activeFilters.includes('illustration') ? '🖼️' : '🎨'}
             </span>
-            <p className="text-foreground font-bold tracking-[0.2em] uppercase text-sm">
-              {filterMode === 'interested' 
-                ? '気になる曲はまだありません' 
-                : filterMode === 'favorites' 
+            <p className="text-foreground font-bold tracking-[0.2em] uppercase text-sm text-center">
+              {activeFilters.includes('interested') 
+                ? '気になる作品はまだありません' 
+                : activeFilters.includes('favorites') 
                   ? '推し候補はまだありません' 
-                  : filterMode === 'music'
-                    ? '音楽作品はまだありません'
-                    : filterMode === 'illustration'
-                      ? 'イラスト作品はまだありません'
-                      : 'すべての楽曲にファンアートが登録されました！'}
+                  : activeFilters.includes('music')
+                    ? '該当する音楽作品がありません'
+                    : activeFilters.includes('illustration')
+                      ? '該当するイラスト作品がありません'
+                      : '作品が見つかりませんでした'}
             </p>
           </div>
         )}
