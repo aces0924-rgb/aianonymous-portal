@@ -9,9 +9,10 @@ interface RecommendationModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedIds: number[];
+  initialRecommendType?: 'song' | 'illustration' | null;
 }
 
-export default function RecommendationModal({ isOpen, onClose, selectedIds }: RecommendationModalProps) {
+export default function RecommendationModal({ isOpen, onClose, selectedIds, initialRecommendType }: RecommendationModalProps) {
   const [recommendType, setRecommendType] = useState<'song' | 'illustration' | null>(null);
   const [userName, setUserName] = useState('');
   const [xAccountId, setXAccountId] = useState('');
@@ -37,8 +38,12 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
   }, [eventSlug]);
 
   useEffect(() => {
-    if (isOpen && selectedIds.length > 0) {
-      const fetchTitles = async () => {
+    if (isOpen) {
+      if (initialRecommendType) {
+        setRecommendType(initialRecommendType);
+      }
+      if (selectedIds.length > 0) {
+        const fetchTitles = async () => {
         setIsLoadingTitles(true);
         try {
           const titles = await getTrackTitlesByIds(eventSlug, selectedIds);
@@ -51,7 +56,8 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
       };
       fetchTitles();
     }
-  }, [isOpen, selectedIds, eventSlug]);
+    }
+  }, [isOpen, selectedIds, eventSlug, initialRecommendType]);
 
   // 名前入力時に登録件数を取得（デバウンス処理）
   useEffect(() => {
@@ -178,7 +184,7 @@ export default function RecommendationModal({ isOpen, onClose, selectedIds }: Re
             <div className="space-y-4">
               {/* 推薦タイプのトグル (移動後) */}
               <div className="bg-surface/40 border border-surface-border rounded-2xl p-5 space-y-4 shadow-inner">
-                {isIllustEnabled && (
+                {isIllustEnabled && !initialRecommendType && (
                   <div className="text-center space-y-3">
                     <p className="text-xs font-black tracking-widest uppercase text-foreground">リストの種類を選択</p>
                     <div className="flex bg-surface rounded-full p-1 max-w-xs mx-auto border border-surface-border">

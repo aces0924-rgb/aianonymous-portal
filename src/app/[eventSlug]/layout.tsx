@@ -68,7 +68,7 @@ export default async function EventLayout({
     >
       <style dangerouslySetInnerHTML={{ __html: `html { font-size: ${baseFontSize}px !important; }` }} />
       <PlayerProvider>
-        <FavoritesProvider>
+        <FavoritesProvider enableArtistMain={event.enableArtistMain}>
           <LiveBroadcastBanner />
           {children}
           <GlobalPlayer />

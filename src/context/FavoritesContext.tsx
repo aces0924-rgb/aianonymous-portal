@@ -9,6 +9,12 @@ interface FavoritesContextType {
   toggleFavorite: (id: number) => void;
   isFavorite: (id: number) => boolean;
   clearFavorites: () => void;
+  illustrationFavorites: number[];
+  toggleIllustrationFavorite: (id: number) => void;
+  isIllustrationFavorite: (id: number) => boolean;
+  clearIllustrationFavorites: () => void;
+  MAX_ILLUST_FAVORITES: number;
+  enableArtistMain: boolean;
   interested: number[];
   toggleInterested: (id: number) => void;
   isInterested: (id: number) => boolean;
@@ -19,18 +25,21 @@ interface FavoritesContextType {
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
-export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const FavoritesProvider: React.FC<{ children: React.ReactNode, enableArtistMain?: boolean }> = ({ children, enableArtistMain = false }) => {
   const params = useParams();
   const eventSlug = (params?.eventSlug as string) || 'default';
 
   const STORAGE_KEY = `vocaloid_fes_favorites_${eventSlug}`;
+  const STORAGE_KEY_ILLUST = `vocaloid_fes_illust_favorites_${eventSlug}`;
   const STORAGE_KEY_INTERESTED = `vocaloid_fes_interested_${eventSlug}`;
   const STORAGE_KEY_DISCLAIMER = `vocaloid_fes_storage_disclaimer_${eventSlug}`;
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [illustrationFavorites, setIllustrationFavorites] = useState<number[]>([]);
   const [interested, setInterested] = useState<number[]>([]);
   const [hasSeenDisclaimer, setHasSeenDisclaimer] = useState<boolean>(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
   const MAX_FAVORITES = 10;
+  const MAX_ILLUST_FAVORITES = 10;
 
   // Load from LocalStorage on mount or when eventSlug changes
   useEffect(() => {
@@ -40,6 +49,14 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     } else {
       setFavorites([]);
     }
+
+    const storedIllustFavs = localStorage.getItem(STORAGE_KEY_ILLUST);
+    if (storedIllustFavs) {
+      try { setIllustrationFavorites(JSON.parse(storedIllustFavs)); } catch (e) { setIllustrationFavorites([]); }
+    } else {
+      setIllustrationFavorites([]);
+    }
+
     const storedInterests = localStorage.getItem(STORAGE_KEY_INTERESTED);
     if (storedInterests) {
       try { setInterested(JSON.parse(storedInterests)); } catch (e) { setInterested([]); }
@@ -48,12 +65,16 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
     const storedDisclaimer = localStorage.getItem(STORAGE_KEY_DISCLAIMER);
     setHasSeenDisclaimer(storedDisclaimer === 'true');
-  }, [STORAGE_KEY, STORAGE_KEY_INTERESTED, STORAGE_KEY_DISCLAIMER]);
+  }, [STORAGE_KEY, STORAGE_KEY_ILLUST, STORAGE_KEY_INTERESTED, STORAGE_KEY_DISCLAIMER]);
 
   // Save to LocalStorage whenever they change
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
   }, [favorites, STORAGE_KEY]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY_ILLUST, JSON.stringify(illustrationFavorites));
+  }, [illustrationFavorites, STORAGE_KEY_ILLUST]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY_INTERESTED, JSON.stringify(interested));
@@ -78,6 +99,23 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     });
   };
 
+  const toggleIllustrationFavorite = (id: number) => {
+    if (!enableArtistMain) {
+      return toggleFavorite(id);
+    }
+    if (!hasSeenDisclaimer && !illustrationFavorites.includes(id)) {
+      setIsDisclaimerOpen(true);
+    }
+    setIllustrationFavorites((prev) => {
+      if (prev.includes(id)) return prev.filter((fid) => fid !== id);
+      if (prev.length >= MAX_ILLUST_FAVORITES) {
+        alert(`推しイラストは最大${MAX_ILLUST_FAVORITES}作品までです。`);
+        return prev;
+      }
+      return [...prev, id];
+    });
+  };
+
   const toggleInterested = (id: number) => {
     if (!hasSeenDisclaimer && !interested.includes(id)) {
       setIsDisclaimerOpen(true);
@@ -89,16 +127,23 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const isFavorite = (id: number) => favorites.includes(id);
+  const isIllustrationFavorite = (id: number) => {
+    if (!enableArtistMain) return favorites.includes(id);
+    return illustrationFavorites.includes(id);
+  };
   const isInterested = (id: number) => interested.includes(id);
 
   const clearFavorites = () => setFavorites([]);
+  const clearIllustrationFavorites = () => setIllustrationFavorites([]);
 
   return (
     <FavoritesContext.Provider value={{ 
       favorites, toggleFavorite, isFavorite, clearFavorites, 
+      illustrationFavorites, toggleIllustrationFavorite, isIllustrationFavorite, clearIllustrationFavorites,
       interested, toggleInterested, isInterested,
       hasSeenDisclaimer, markDisclaimerSeen,
-      MAX_FAVORITES 
+      MAX_FAVORITES, MAX_ILLUST_FAVORITES,
+      enableArtistMain
     }}>
       {children}
       <StorageDisclaimerModal 

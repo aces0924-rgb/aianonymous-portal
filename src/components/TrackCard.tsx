@@ -30,10 +30,11 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
     return match ? match[1] : null;
   };
   const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
+  const isImg = isIllustration(track.songUrl);
 
-  const { isFavorite } = useFavorites();
+  const { isFavorite, isIllustrationFavorite } = useFavorites();
   const { playTrack } = usePlayer();
-  const favorite = isFavorite(track.id);
+  const favorite = isImg && enableArtistMain ? isIllustrationFavorite(track.id) : isFavorite(track.id);
 
   // プレビューモード（手動パラメータ指定）中のみクエリを引き継ぐ
   const detailUrl = preview === 'honban' 

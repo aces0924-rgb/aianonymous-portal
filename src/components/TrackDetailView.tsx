@@ -63,6 +63,14 @@ export default function TrackDetailView({
   };
   const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
 
+  const isIllustration = (url?: string | null) => {
+    if (!url) return false;
+    const isVideo = url.match(/(?:youtu\.be\/|youtube\.com\/|nicovideo\.jp\/|nico\.ms\/|suno\.com\/)/);
+    if (isVideo) return false;
+    return !!(url.match(/\.(jpeg|jpg|gif|png)$/i) || url.includes('pbs.twimg.com') || url.includes('gyazo.com'));
+  };
+  const isImg = isIllustration(track.songUrl);
+
   const renderThumbnailButton = (className: string) => {
     if (isPreviewMode || !defaultFeatures?.enableThumbSubmit) return null;
     
@@ -162,7 +170,7 @@ export default function TrackDetailView({
                   No.{(track as any).entryNo || track.id.toString().padStart(3, '0')}
                 </span>
                 <InterestedButton trackId={track.id} />
-                <FavoriteButton trackId={track.id} enableArtistMain={defaultFeatures?.enableArtistMain} />
+                <FavoriteButton trackId={track.id} enableArtistMain={defaultFeatures?.enableArtistMain} isImg={isImg} />
               </div>
               <h1 className="text-3xl md:text-5xl font-extrabold text-foreground mb-2 md:mb-4 leading-tight tracking-tighter flex items-center flex-wrap gap-2 md:gap-3">
                 {isArtistMain ? (

@@ -9,9 +9,22 @@ import { usePlayer } from '@/context/PlayerContext';
 import { parseXAccountUrl } from '@/lib/id-utils';
 
 export default function TrackListCard({ track, preview, enableArtistMain, eventSlug }: { track: any, preview?: string, enableArtistMain?: boolean, eventSlug: string }) {
-  const { isFavorite, toggleFavorite, isInterested, toggleInterested } = useFavorites();
+  const { 
+    isFavorite, toggleFavorite, 
+    isIllustrationFavorite, toggleIllustrationFavorite,
+    isInterested, toggleInterested 
+  } = useFavorites();
   const { playTrack } = usePlayer();
-  const favorite = isFavorite(track.id);
+
+  const isIllustration = (url?: string | null) => {
+    if (!url) return false;
+    const isVideo = url.match(/(?:youtu\.be\/|youtube\.com\/|nicovideo\.jp\/|nico\.ms\/|suno\.com\/)/);
+    if (isVideo) return false;
+    return !!(url.match(/\.(jpeg|jpg|gif|png)$/i) || url.includes('pbs.twimg.com') || url.includes('gyazo.com'));
+  };
+  const isImg = isIllustration(track.songUrl);
+  
+  const favorite = isImg ? isIllustrationFavorite(track.id) : isFavorite(track.id);
   const interested = isInterested(track.id);
 
   // プレビューモード（手動パラメータ指定）中のみクエリを引き継ぐ
@@ -37,13 +50,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
   // 基本的な高画質サムネイル（maxresdefaultが存在しない場合のフォールバック用）
   const fallbackThumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
 
-  const isIllustration = (url?: string | null) => {
-    if (!url) return false;
-    const isVideo = url.match(/(?:youtu\.be\/|youtube\.com\/|nicovideo\.jp\/|nico\.ms\/|suno\.com\/)/);
-    if (isVideo) return false;
-    return !!(url.match(/\.(jpeg|jpg|gif|png)$/i) || url.includes('pbs.twimg.com') || url.includes('gyazo.com'));
-  };
-  const isImg = isIllustration(track.songUrl);
+
 
   const isSunoUrl = (url?: string | null) => url ? url.includes('suno.com') : false;
   const isSuno = isSunoUrl(track.songUrl) || isSunoUrl(track.audioUrl);
@@ -236,7 +243,11 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
           <button 
             onClick={(e) => {
               e.preventDefault();
-              toggleFavorite(track.id);
+              if (isImg && enableArtistMain) {
+                toggleIllustrationFavorite(track.id);
+              } else {
+                toggleFavorite(track.id);
+              }
             }}
             className={`flex items-center justify-center w-10 h-10 rounded-full border transition-all active:scale-90 ${
               favorite 
