@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import StorageDisclaimerModal from '@/components/StorageDisclaimerModal';
+import HelpModal from '@/components/HelpModal';
 
 interface FavoritesContextType {
   favorites: number[];
@@ -21,6 +22,11 @@ interface FavoritesContextType {
   hasSeenDisclaimer: boolean;
   markDisclaimerSeen: () => void;
   MAX_FAVORITES: number;
+  hasSeenHelp: boolean;
+  markHelpSeen: (seen: boolean) => void;
+  isHelpOpen: boolean;
+  openHelp: () => void;
+  closeHelp: () => void;
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
@@ -33,11 +39,14 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode, enableArti
   const STORAGE_KEY_ILLUST = `vocaloid_fes_illust_favorites_${eventSlug}`;
   const STORAGE_KEY_INTERESTED = `vocaloid_fes_interested_${eventSlug}`;
   const STORAGE_KEY_DISCLAIMER = `vocaloid_fes_storage_disclaimer_${eventSlug}`;
+  const STORAGE_KEY_HELP = `vocaloid_fes_has_seen_help_${eventSlug}`;
   const [favorites, setFavorites] = useState<number[]>([]);
   const [illustrationFavorites, setIllustrationFavorites] = useState<number[]>([]);
   const [interested, setInterested] = useState<number[]>([]);
   const [hasSeenDisclaimer, setHasSeenDisclaimer] = useState<boolean>(false);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
+  const [hasSeenHelp, setHasSeenHelp] = useState<boolean>(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const MAX_FAVORITES = 10;
   const MAX_ILLUST_FAVORITES = 10;
 
@@ -63,9 +72,17 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode, enableArti
     } else {
       setInterested([]);
     }
+
     const storedDisclaimer = localStorage.getItem(STORAGE_KEY_DISCLAIMER);
-    setHasSeenDisclaimer(storedDisclaimer === 'true');
-  }, [STORAGE_KEY, STORAGE_KEY_ILLUST, STORAGE_KEY_INTERESTED, STORAGE_KEY_DISCLAIMER]);
+    if (storedDisclaimer) {
+      setHasSeenDisclaimer(true);
+    }
+
+    const storedHelp = localStorage.getItem(STORAGE_KEY_HELP);
+    if (storedHelp === 'true') {
+      setHasSeenHelp(true);
+    }
+  }, [eventSlug]);
 
   // Save to LocalStorage whenever they change
   useEffect(() => {
@@ -81,8 +98,8 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode, enableArti
   }, [interested, STORAGE_KEY_INTERESTED]);
 
   const markDisclaimerSeen = () => {
-    setHasSeenDisclaimer(true);
     localStorage.setItem(STORAGE_KEY_DISCLAIMER, 'true');
+    setHasSeenDisclaimer(true);
   };
 
   const toggleFavorite = (id: number) => {
@@ -136,19 +153,48 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode, enableArti
   const clearFavorites = () => setFavorites([]);
   const clearIllustrationFavorites = () => setIllustrationFavorites([]);
 
+  const markHelpSeen = (seen: boolean) => {
+    localStorage.setItem(STORAGE_KEY_HELP, seen ? 'true' : 'false');
+    setHasSeenHelp(seen);
+  };
+
+  const openHelp = () => setIsHelpOpen(true);
+  const closeHelp = () => setIsHelpOpen(false);
+
   return (
-    <FavoritesContext.Provider value={{ 
-      favorites, toggleFavorite, isFavorite, clearFavorites, 
-      illustrationFavorites, toggleIllustrationFavorite, isIllustrationFavorite, clearIllustrationFavorites,
-      interested, toggleInterested, isInterested,
-      hasSeenDisclaimer, markDisclaimerSeen,
-      MAX_FAVORITES, MAX_ILLUST_FAVORITES,
-      enableArtistMain
+    <FavoritesContext.Provider value={{
+      favorites,
+      toggleFavorite,
+      isFavorite,
+      clearFavorites,
+      illustrationFavorites,
+      toggleIllustrationFavorite,
+      isIllustrationFavorite,
+      clearIllustrationFavorites,
+      MAX_ILLUST_FAVORITES,
+      enableArtistMain,
+      interested,
+      toggleInterested,
+      isInterested,
+      hasSeenDisclaimer,
+      markDisclaimerSeen,
+      MAX_FAVORITES,
+      hasSeenHelp,
+      markHelpSeen,
+      isHelpOpen,
+      openHelp,
+      closeHelp,
     }}>
       {children}
-      <StorageDisclaimerModal 
-        isOpen={isDisclaimerOpen} 
-        onClose={() => setIsDisclaimerOpen(false)} 
+      <StorageDisclaimerModal
+        isOpen={isDisclaimerOpen}
+        onClose={() => setIsDisclaimerOpen(false)}
+      />
+      <HelpModal
+        isOpen={isHelpOpen}
+        onClose={closeHelp}
+        onConfirmShowAgain={(dontShow) => markHelpSeen(dontShow)}
+        enableArtistMain={enableArtistMain}
       />
     </FavoritesContext.Provider>
   );

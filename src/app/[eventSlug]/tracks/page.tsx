@@ -7,6 +7,7 @@ import TrackListFilterable from '@/components/TrackListFilterable';
 import SelectionIndicator from '@/components/SelectionIndicator';
 import ClearFavoritesButton from '@/components/ClearFavoritesButton';
 import ShareButton from '@/components/ShareButton';
+import HelpFloatingButton from '@/components/HelpFloatingButton';
 
 import { notFound } from 'next/navigation';
 
