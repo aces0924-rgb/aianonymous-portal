@@ -15,6 +15,15 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
   const isSunoUrl = (url?: string | null) => url ? url.includes('suno.com') : false;
   const isSuno = isSunoUrl(track.songUrl) || isSunoUrl(track.audioUrl);
 
+  const getYoutubeVideoId = (url: string | null | undefined) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+  const videoId = getYoutubeVideoId(track.audioUrl || track.songUrl);
+  const fallbackThumbnailUrl = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
+
   const extractSunoId = (url?: string | null) => {
     if (!url) return null;
     const match = url.match(/suno\.com\/(?:song|embed|s)\/([a-zA-Z0-9\-]+)/);
@@ -123,6 +132,31 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
+        )}
+
+        {!isImg && !sunoId && videoId && fallbackThumbnailUrl && (
+          <button 
+            className="w-full mt-2 relative h-[120px] rounded-xl overflow-hidden border border-[var(--color-cyan-400)]/30 bg-black/20 group/ytbtn block shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              playTrack(track.id, track.title, track.songUrl, track.audioUrl);
+            }}
+          >
+            <Image
+              src={fallbackThumbnailUrl}
+              alt={track.title || "YouTube Thumbnail"}
+              fill
+              className="object-cover opacity-80 group-hover/ytbtn:opacity-100 group-hover/ytbtn:scale-105 transition-all duration-500"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className="absolute inset-0 bg-black/20 opacity-100 group-hover/ytbtn:bg-black/40 transition-colors flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/ytbtn:scale-110 transition-transform">
+                <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </button>
         )}
       </div>
     </div>

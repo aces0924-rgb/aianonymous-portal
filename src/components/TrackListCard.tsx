@@ -138,6 +138,31 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
           </button>
         )}
 
+        {!isImg && !sunoId && videoId && fallbackThumbnailUrl && (
+          <button 
+            className="w-full mb-1 relative h-[120px] rounded-xl overflow-hidden border border-surface-border/50 bg-black/20 group/ytbtn block shrink-0"
+            onClick={(e) => {
+              e.preventDefault();
+              playTrack(track.id, track.title, track.songUrl, track.audioUrl);
+            }}
+          >
+            <Image
+              src={fallbackThumbnailUrl}
+              alt={track.title || "YouTube Thumbnail"}
+              fill
+              className="object-cover opacity-80 group-hover/ytbtn:opacity-100 group-hover/ytbtn:scale-105 transition-all duration-500"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            <div className="absolute inset-0 bg-black/20 opacity-100 group-hover/ytbtn:bg-black/40 transition-colors flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/ytbtn:scale-110 transition-transform">
+                <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            </div>
+          </button>
+        )}
+
         <div className="flex flex-wrap items-center gap-2 shrink-0">
           {isImg ? (
             <button
