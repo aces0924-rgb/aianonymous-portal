@@ -20,8 +20,8 @@ export default async function EventLayout({
   }
 
   const themeConfig = JSON.parse(event.themeConfig || '{}')
-  const defaultFeatures = typeof event.defaultFeatures === 'string' ? JSON.parse(event.defaultFeatures) : (event.defaultFeatures || {})
-  const isArtistMainEnabled = defaultFeatures.enableArtistMain === true
+  const featureFlags = typeof event.featureFlags === 'string' ? JSON.parse(event.featureFlags) : (event.featureFlags || {})
+  const isArtistMainEnabled = featureFlags.enableArtistMain === true
 
   const mainColor = themeConfig.mainColor || '#00f0ff'
   const bgColor = themeConfig.bgColor || '#000000'
