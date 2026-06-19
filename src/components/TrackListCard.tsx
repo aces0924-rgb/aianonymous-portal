@@ -118,10 +118,11 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
                 className="w-full relative h-[120px] rounded-xl overflow-hidden border border-surface-border/50 bg-black/40 group/sunobtn flex items-center justify-center transition-all hover:bg-black/60"
               >
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 group-hover/sunobtn:text-white transition-colors">
-                  <span className="font-black text-xs mb-2 opacity-50 tracking-widest uppercase">Suno AI</span>
-                  <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/sunobtn:scale-110 transition-transform">
-                    <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                  <span className="font-black text-xs mb-1.5 opacity-50 tracking-widest uppercase">Suno AI</span>
+                  <div className="w-10 h-10 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/sunobtn:scale-110 transition-transform">
+                    <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
                   </div>
+                  <span className="text-[10px] mt-1.5 opacity-60 font-medium tracking-wide">タップしてプレイヤーを展開</span>
                 </div>
               </button>
             ) : (
