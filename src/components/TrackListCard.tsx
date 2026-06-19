@@ -153,6 +153,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               className="object-cover opacity-80 group-hover/imgbtn:opacity-100 group-hover/imgbtn:scale-105 transition-all duration-500"
               sizes="(max-width: 768px) 300px, 400px"
               loading="lazy"
+              unoptimized
             />
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/imgbtn:opacity-100 transition-opacity flex items-center justify-center">
               <span className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
@@ -177,6 +178,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               className="object-cover opacity-80 group-hover/ytbtn:opacity-100 group-hover/ytbtn:scale-105 transition-all duration-500"
               sizes="(max-width: 768px) 300px, 400px"
               loading="lazy"
+              unoptimized
             />
             <div className="absolute inset-0 bg-black/20 opacity-100 group-hover/ytbtn:bg-black/40 transition-colors flex items-center justify-center">
               <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/ytbtn:scale-110 transition-transform">
