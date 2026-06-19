@@ -16,17 +16,24 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
   const { interested, favorites, illustrationFavorites } = useFavorites();
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
   const [activeGenres, setActiveGenres] = useState<string[]>([]);
+  const [visibleCount, setVisibleCount] = useState(24);
 
   const toggleFilter = (filter: string) => {
     setActiveFilters(prev => 
       prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
     );
+    setVisibleCount(24); // フィルタを変更したら表示件数をリセット
   };
 
   const toggleGenre = (genre: string) => {
     setActiveGenres(prev => 
       prev.includes(genre) ? prev.filter(g => g !== genre) : [...prev, genre]
     );
+    setVisibleCount(24); // フィルタを変更したら表示件数をリセット
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount(prev => prev + 24);
   };
 
   const isIllustration = (url?: string) => {
@@ -202,7 +209,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start min-h-[400px]">
-        {finalFilteredTracks.map((track) => (
+        {finalFilteredTracks.slice(0, visibleCount).map((track) => (
           <TrackListCard 
             key={track.id} 
             track={track} 
@@ -231,6 +238,24 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
           </div>
         )}
       </div>
+
+      {/* Load More Button */}
+      {finalFilteredTracks.length > visibleCount && (
+        <div className="flex justify-center mt-12 pb-8">
+          <button
+            onClick={handleLoadMore}
+            className="group relative px-8 py-3 rounded-2xl bg-surface/50 border border-surface-border hover:bg-surface-hover hover:border-[var(--color-cyan-400)]/50 transition-all shadow-lg active:scale-95"
+          >
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-foreground group-hover:text-white transition-colors">さらに作品を見る</span>
+              <span className="text-xs text-gray-400 font-mono">({visibleCount} / {finalFilteredTracks.length})</span>
+              <svg className="w-5 h-5 text-gray-400 group-hover:text-[var(--color-cyan-400)] transition-colors animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </div>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
