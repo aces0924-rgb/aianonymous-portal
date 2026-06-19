@@ -15,10 +15,17 @@ interface TrackListFilterableProps {
 export default function TrackListFilterable({ initialTracks, preview, enableArtistMain, eventSlug, enableThumbSubmit = true }: TrackListFilterableProps) {
   const { interested, favorites, illustrationFavorites } = useFavorites();
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [activeGenres, setActiveGenres] = useState<string[]>([]);
 
   const toggleFilter = (filter: string) => {
     setActiveFilters(prev => 
       prev.includes(filter) ? prev.filter(f => f !== filter) : [...prev, filter]
+    );
+  };
+
+  const toggleGenre = (genre: string) => {
+    setActiveGenres(prev => 
+      prev.includes(genre) ? prev.filter(g => g !== genre) : [...prev, genre]
     );
   };
 
@@ -33,7 +40,8 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
   const musicCount = useMemo(() => initialTracks.filter(t => !isIllustration(t.songUrl)).length, [initialTracks]);
   const illustrationCount = useMemo(() => initialTracks.filter(t => isIllustration(t.songUrl)).length, [initialTracks]);
 
-  const filteredTracks = useMemo(() => {
+  // 第1段階：メインフィルタ（種類と状態）による絞り込み
+  const primaryFilteredTracks = useMemo(() => {
     if (activeFilters.length === 0) return initialTracks;
 
     return initialTracks.filter(track => {
@@ -62,13 +70,36 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
     });
   }, [initialTracks, activeFilters, interested, favorites, illustrationFavorites, enableArtistMain]);
 
+  // 表示可能なジャンルを抽出（メインフィルタ後から抽出）
+  const availableGenres = useMemo(() => {
+    const genres = new Set<string>();
+    primaryFilteredTracks.forEach(t => {
+      if (t.genre) {
+        genres.add(t.genre.trim());
+      }
+    });
+    return Array.from(genres).sort();
+  }, [primaryFilteredTracks]);
+
+  // ジャンルフィルタエリアを表示するかどうか（音楽かイラストが選択されている場合）
+  const showGenreFilter = activeFilters.includes('music') || activeFilters.includes('illustration');
+
+  // 第2段階：ジャンルによる絞り込み
+  const finalFilteredTracks = useMemo(() => {
+    // ジャンルフィルタが表示されていない、またはジャンルが選択されていない場合はそのまま返す
+    if (!showGenreFilter || activeGenres.length === 0) return primaryFilteredTracks;
+    
+    return primaryFilteredTracks.filter(t => t.genre && activeGenres.includes(t.genre.trim()));
+  }, [primaryFilteredTracks, activeGenres, showGenreFilter]);
+
   return (
     <div className="space-y-8">
       {/* Filter UI */}
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center gap-4">
+        {/* メインフィルターUI */}
         <div className="bg-surface/50 p-1.5 rounded-2xl border border-surface-border flex flex-wrap gap-2 backdrop-blur-sm justify-center">
           <button
-            onClick={() => setActiveFilters([])}
+            onClick={() => { setActiveFilters([]); setActiveGenres([]); }}
             className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all ${
               activeFilters.length === 0 
                 ? 'bg-gray-800 text-white shadow-lg border border-surface-border' 
@@ -144,11 +175,34 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
             </button>
           )}
         </div>
+
+        {/* サブフィルターUI（ジャンル）: 音楽かイラストが選択された時のみ表示 */}
+        {showGenreFilter && availableGenres.length > 0 && (
+          <div className="w-full max-w-4xl bg-black/40 p-2 md:p-3 rounded-2xl border border-white/5 flex flex-wrap gap-2 justify-center items-center animate-in fade-in slide-in-from-top-2 duration-300">
+            <span className="text-xs font-black text-gray-400 mr-2 flex items-center gap-1">
+              <span>🏷️</span>
+              ジャンルで絞り込む:
+            </span>
+            {availableGenres.map(genre => (
+              <button
+                key={genre}
+                onClick={() => toggleGenre(genre)}
+                className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                  activeGenres.includes(genre)
+                    ? 'bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] border border-[var(--color-cyan-500)]/50 shadow-[0_0_10px_rgba(0,240,255,0.2)]'
+                    : 'text-gray-400 hover:text-white border border-transparent hover:bg-white/5'
+                }`}
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-start min-h-[400px]">
-        {filteredTracks.map((track) => (
+        {finalFilteredTracks.map((track) => (
           <TrackListCard 
             key={track.id} 
             track={track} 
@@ -158,7 +212,7 @@ export default function TrackListFilterable({ initialTracks, preview, enableArti
           />
         ))}
         
-        {filteredTracks.length === 0 && (
+        {finalFilteredTracks.length === 0 && (
           <div className="col-span-full flex flex-col items-center justify-center py-24 border-2 border-dashed border-surface-border rounded-[3rem] space-y-4 animate-in fade-in duration-700">
             <span className="text-5xl opacity-20">
               {activeFilters.includes('interested') ? '⭐' : activeFilters.includes('favorites') ? '💖' : activeFilters.includes('music') ? '🎵' : activeFilters.includes('illustration') ? '🖼️' : '🎨'}
