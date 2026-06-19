@@ -30,6 +30,13 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
     return match ? match[1] : null;
   };
   const sunoId = extractSunoId(track.songUrl) || extractSunoId(track.audioUrl);
+
+  const isIllustration = (url?: string | null) => {
+    if (!url) return false;
+    const isVideo = url.match(/(?:youtu\.be\/|youtube\.com\/|nicovideo\.jp\/|nico\.ms\/|suno\.com\/)/);
+    if (isVideo) return false;
+    return !!(url.match(/\.(jpeg|jpg|gif|png)$/i) || url.includes('pbs.twimg.com') || url.includes('gyazo.com'));
+  };
   const isImg = isIllustration(track.songUrl);
 
   const { isFavorite, isIllustrationFavorite } = useFavorites();
@@ -131,6 +138,7 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
               fill
               className="object-cover opacity-90"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized
             />
           </div>
         )}
@@ -149,6 +157,7 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
               fill
               className="object-cover opacity-80 group-hover/ytbtn:opacity-100 group-hover/ytbtn:scale-105 transition-all duration-500"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized
             />
             <div className="absolute inset-0 bg-black/20 opacity-100 group-hover/ytbtn:bg-black/40 transition-colors flex items-center justify-center">
               <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/ytbtn:scale-110 transition-transform">
