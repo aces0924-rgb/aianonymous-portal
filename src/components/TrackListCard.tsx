@@ -34,6 +34,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isSunoPlaying, setIsSunoPlaying] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -67,7 +68,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
   const subText = isArtistMain ? track.title : track.artistName;
 
   return (
-    <div className={`bg-surface/80 border ${favorite ? 'border-[var(--color-cyan-400)]' : 'border-surface-border'} rounded-xl p-4 hover:border-[var(--color-cyan-400)] transition-all group backdrop-blur-sm relative overflow-hidden`}>
+    <div className={`bg-surface/90 border ${favorite ? 'border-[var(--color-cyan-400)]' : 'border-surface-border'} rounded-xl p-4 hover:border-[var(--color-cyan-400)] transition-all group relative overflow-hidden shadow-sm`}>
       <div className="flex flex-col justify-between gap-4">
         <Link href={detailUrl} className="flex flex-col min-w-0 flex-1 group/link mb-2">
           <div className="flex items-center gap-2 mb-1">
@@ -111,14 +112,28 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
 
         {sunoId && (
           <div className="w-full mb-1">
-            <iframe
-              src={`https://suno.com/embed/${sunoId}`}
-              width="100%"
-              height="120"
-              frameBorder="0"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              className="rounded-xl border border-surface-border/50 bg-black/20"
-            ></iframe>
+            {!isSunoPlaying ? (
+              <button
+                onClick={(e) => { e.preventDefault(); setIsSunoPlaying(true); }}
+                className="w-full relative h-[120px] rounded-xl overflow-hidden border border-surface-border/50 bg-black/40 group/sunobtn flex items-center justify-center transition-all hover:bg-black/60"
+              >
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-400 group-hover/sunobtn:text-white transition-colors">
+                  <span className="font-black text-xs mb-2 opacity-50 tracking-widest uppercase">Suno AI</span>
+                  <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/sunobtn:scale-110 transition-transform">
+                    <svg className="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                  </div>
+                </div>
+              </button>
+            ) : (
+              <iframe
+                src={`https://suno.com/embed/${sunoId}`}
+                width="100%"
+                height="120"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                className="rounded-xl border border-surface-border/50 bg-black/20"
+              ></iframe>
+            )}
           </div>
         )}
 
@@ -135,7 +150,8 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               alt={track.title || "Illustration"}
               fill
               className="object-cover opacity-80 group-hover/imgbtn:opacity-100 group-hover/imgbtn:scale-105 transition-all duration-500"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 300px, 400px"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/30 opacity-0 group-hover/imgbtn:opacity-100 transition-opacity flex items-center justify-center">
               <span className="bg-black/60 text-white text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/20">
@@ -158,7 +174,8 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
               alt={track.title || "YouTube Thumbnail"}
               fill
               className="object-cover opacity-80 group-hover/ytbtn:opacity-100 group-hover/ytbtn:scale-105 transition-all duration-500"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 768px) 300px, 400px"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-black/20 opacity-100 group-hover/ytbtn:bg-black/40 transition-colors flex items-center justify-center">
               <div className="w-12 h-12 rounded-full bg-[var(--color-cyan-500)]/80 text-black flex items-center justify-center shadow-lg transform group-hover/ytbtn:scale-110 transition-transform">
