@@ -5,22 +5,9 @@ import { useFavorites } from '@/context/FavoritesContext';
 import RecommendationModal from './RecommendationModal';
 
 export default function SelectionIndicator() {
-  const { favorites, MAX_FAVORITES, enableArtistMain, illustrationFavorites, MAX_ILLUST_FAVORITES, hasSeenHelp, openHelp, markHelpSeen } = useFavorites();
+  const { favorites, MAX_FAVORITES, enableArtistMain, illustrationFavorites, MAX_ILLUST_FAVORITES, openHelp } = useFavorites();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialRecommendType, setInitialRecommendType] = useState<'song' | 'illustration' | null>(null);
-  
-  const hasAttemptedOpen = useRef(false);
-
-  useEffect(() => {
-    if (!hasSeenHelp && !hasAttemptedOpen.current) {
-      hasAttemptedOpen.current = true;
-      const timer = setTimeout(() => {
-        openHelp();
-        markHelpSeen(true);
-      }, 800);
-      return () => clearTimeout(timer);
-    }
-  }, [hasSeenHelp, openHelp, markHelpSeen]);
   
   const count = favorites.length;
   const isEnabled = count >= 5;
