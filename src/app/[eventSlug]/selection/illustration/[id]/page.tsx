@@ -24,6 +24,7 @@ export default async function SelectionPage({
 
   const labelConfig = typeof event.labelConfig === 'string' ? JSON.parse(event.labelConfig) : (event.labelConfig || {});
   const shareHashtag = labelConfig.shareHashtag || '#アノフェス';
+  const siteTitle = labelConfig.siteTitle || 'AI-anonymous MUSIC FES.';
   
   // Decode ID with check digit
   const dbId = decodeSelectionId(encodedId);
@@ -115,7 +116,7 @@ export default async function SelectionPage({
              
              {/* Share Section (Moved to Header) */}
              <div className="animate-in fade-in zoom-in duration-700">
-               <ShareButton userName={playlist.userName} id={dbId} basePostUrl={shareBasePostUrl} type="illustration" shareHashtag={shareHashtag} />
+               <ShareButton userName={playlist.userName} id={dbId} basePostUrl={shareBasePostUrl} type="illustration" shareHashtag={shareHashtag} siteTitle={siteTitle} />
              </div>
 
              {/* Tab Navigation for Multiple Playlists */}

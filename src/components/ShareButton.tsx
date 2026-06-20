@@ -9,9 +9,10 @@ interface ShareButtonProps {
   basePostUrl?: string; // URL of the post to be quoted/appended
   type?: 'song' | 'illustration'; // シェアのタイプ（デフォルトはsong）
   shareHashtag?: string; // カスタムハッシュタグ
+  siteTitle?: string; // イベントのタイトル
 }
 
-export default function ShareButton({ userName, id, basePostUrl, type = 'song', shareHashtag = '#アノフェス' }: ShareButtonProps) {
+export default function ShareButton({ userName, id, basePostUrl, type = 'song', shareHashtag = '#アノフェス', siteTitle = 'AI-anonymous MUSIC FES.' }: ShareButtonProps) {
   const handleShare = () => {
     // Use production URL if available, otherwise fallback to current origin
     const origin = window.location.origin.includes('localhost') 
@@ -24,7 +25,7 @@ export default function ShareButton({ userName, id, basePostUrl, type = 'song', 
     const shareUrl = `${origin}${basePath}/${pathSegment}`;
     
     const shareSubject = type === 'illustration' ? '「推しイラスト」' : '「推し曲」';
-    let text = `【AI-アノニマスミュージックフェス】\n${userName}さんの${shareSubject}はこれ！\n\n${shareHashtag}\n\n${shareUrl}\n`;
+    let text = `【${siteTitle}】\n${userName}さんの${shareSubject}はこれ！\n\n${shareHashtag}\n\n${shareUrl}\n`;
     
     // Append the base post URL if provided (for quote-like behavior) at the very end
     if (basePostUrl) {
