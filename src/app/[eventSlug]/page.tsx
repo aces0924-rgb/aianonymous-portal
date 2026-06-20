@@ -313,7 +313,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               )}
 
               <a 
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://${event.slug}.example.com/\n\n${defaultLabels.shareHashtag}`)}`} 
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://aianonymous.vercel.app/${event.slug}\n\n${defaultLabels.shareHashtag}`)}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 style={defaultTheme.btnXColor ? { backgroundColor: defaultTheme.btnXColor, color: defaultTheme.btnXTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
