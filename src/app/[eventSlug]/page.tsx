@@ -105,7 +105,8 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
-    scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！'
+    scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！',
+    shareHashtag: labelConfig.shareHashtag || '#アノフェス'
   }
   const defaultFeatures = {
     enableRandomPlay: featureFlags.enableRandomPlay ?? true,
