@@ -41,7 +41,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
       const activeTable = isHonban ? 'track_honban' : (getSetting('ACTIVE_TRACK_TABLE') || "track");
       
       const tracksSelect = {
-        id: true, entryNo: true, title: true, artistName: true, genre: true, songUrl: true, audioUrl: true, published: true,
+        id: true, entryNo: true, title: true, genre: true, songUrl: true, audioUrl: true, published: true, artistName: true, xAccount: true,
       };
       
       const whereClause = showUnpublishedTracks ? { eventId } : { eventId, published: true };

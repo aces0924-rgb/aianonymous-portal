@@ -59,6 +59,7 @@ export default async function SelectionPage({
     title: true,
     genre: true,
     artistName: true,
+    xAccount: true,
     songUrl: true,
     audioUrl: true,
     published: true,

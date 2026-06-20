@@ -58,9 +58,25 @@ export default function IllustrationTrackCard({ track, preview, enableArtistMain
         
         {/* Title and Play Button */}
         <div className="flex flex-col gap-4 mt-2">
-          <h3 className="text-xl md:text-2xl font-black text-foreground group-hover:text-purple-300 transition-colors leading-tight tracking-tight">
-            {enableArtistMain && track.artistName ? track.artistName : track.title}
-          </h3>
+          <div className="flex items-center gap-2 max-w-full">
+            <h3 className="text-xl md:text-2xl font-black text-foreground group-hover:text-purple-300 transition-colors leading-tight tracking-tight">
+              {enableArtistMain && track.artistName ? track.artistName : track.title}
+            </h3>
+            {enableArtistMain && track.artistName && track.xAccount && (
+              <a 
+                href={track.xAccount.startsWith('http') ? track.xAccount : `https://x.com/${track.xAccount.replace(/^@/, '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-gray-400 hover:text-purple-400 transition-colors shrink-0 flex items-center justify-center p-1"
+                title="X (Twitter) プロフィール"
+              >
+                <svg className="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+            )}
+          </div>
 
           <div className="w-full">
             <AudioPlayer audioSource={audioSource} trackId={track.id} />

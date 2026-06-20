@@ -41,6 +41,7 @@ export default async function TracksListPage({ params, searchParams }: { params:
       
       if (showCreators) {
         tracksSelect.artistName = true;
+        tracksSelect.xAccount = true;
       }
       
       const fetchedTracks = activeTable === 'track_honban'
