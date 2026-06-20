@@ -21,6 +21,15 @@ const nextConfig: NextConfig = {
       bodySizeLimit: '10mb',
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/selection/:path*',
+        destination: '/aisummer2026/selection/:path*',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

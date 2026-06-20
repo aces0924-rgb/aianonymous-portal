@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useParams } from 'next/navigation';
 import { encodeSelectionId } from '@/lib/id-utils';
 
 interface ShareButtonProps {
@@ -13,6 +14,9 @@ interface ShareButtonProps {
 }
 
 export default function ShareButton({ userName, id, basePostUrl, type = 'song', shareHashtag = '#アノフェス', siteTitle = 'AI-anonymous MUSIC FES.' }: ShareButtonProps) {
+  const params = useParams();
+  const eventSlug = params?.eventSlug as string || '';
+
   const handleShare = () => {
     // Use production URL if available, otherwise fallback to current origin
     const origin = window.location.origin.includes('localhost') 
@@ -22,7 +26,8 @@ export default function ShareButton({ userName, id, basePostUrl, type = 'song', 
     // Construct URL: use numeric ID if available, otherwise fallback to userName
     const pathSegment = id ? encodeSelectionId(id) : encodeURIComponent(userName);
     const basePath = type === 'illustration' ? '/selection/illustration' : '/selection';
-    const shareUrl = `${origin}${basePath}/${pathSegment}`;
+    const eventPrefix = eventSlug ? `/${eventSlug}` : '';
+    const shareUrl = `${origin}${eventPrefix}${basePath}/${pathSegment}`;
     
     const shareSubject = type === 'illustration' ? '「推しイラスト」' : '「推し曲」';
     let text = `【${siteTitle}】\n${userName}さんの${shareSubject}はこれ！\n\n${shareHashtag}\n\n${shareUrl}\n`;
