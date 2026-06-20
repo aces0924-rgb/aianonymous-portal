@@ -111,11 +111,11 @@ function HostCard({ host }: { host: Host }) {
                 href={host.xUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="group/btn relative inline-flex items-center justify-center w-16 h-16 bg-white border border-gray-100 rounded-2xl shadow-lg transition-all hover:bg-gray-50 hover:border-[var(--color-cyan-400)]/30"
+                className="group/btn relative inline-flex items-center justify-center w-16 h-16 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-lg transition-all hover:bg-zinc-800 hover:border-[var(--color-cyan-400)]/50"
                 aria-label={`${host.name}のXプロフィールを表示`}
               >
                 <svg 
-                  className="w-8 h-8 text-foreground group-hover/btn:text-[var(--color-cyan-500)] transition-colors" 
+                  className="w-8 h-8 text-white group-hover/btn:text-[var(--color-cyan-400)] transition-colors" 
                   fill="currentColor" 
                   viewBox="0 0 24 24"
                 >
