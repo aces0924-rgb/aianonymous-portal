@@ -142,6 +142,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <Link href="/admin" className="text-blue-600 hover:underline inline-block font-bold">
                 ← ダッシュボードに戻る
               </Link>
+              <Link href={`/admin/events/${event.id}/premiere`} className="text-purple-600 hover:underline inline-block font-bold ml-4">
+                🎬 プレミア配信予定の管理
+              </Link>
               <form action={logout}>
                 <button type="submit" className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200">ログアウト</button>
               </form>

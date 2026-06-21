@@ -185,7 +185,7 @@ model PremiereSchedule {
   id               Int      @id @default(autoincrement())
   eventId          String
   event            Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  day              Int      @unique
+  day              Int
   date             DateTime
   youtubeUrl       String?  @db.Text
   trackRange       String
@@ -195,6 +195,8 @@ model PremiereSchedule {
   thumbnailDriveId String?  @db.Text // 繝励Ξ繝溘い繧ｵ繝繝阪う繝ｫ縺ｮGoogle繝峨Λ繧､繝蜂D
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
+
+  @@unique([eventId, day])
 }
 model Vote {
   id            Int      @id @default(autoincrement())
