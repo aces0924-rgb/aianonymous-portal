@@ -256,11 +256,6 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
       {/* MAIN GRID */}
       <section className="max-w-7xl w-full px-6 pb-32 relative z-10">
-        <div className="max-w-7xl w-full px-6 mb-12 flex items-center gap-4">
-        <h2 className="text-sm font-black tracking-[0.3em] text-foreground opacity-60">TIMELINE</h2>
-        <div className="flex-1 h-px bg-foreground/10" />
-      </div>
-        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedSchedule.map((item) => {
             const itemDate = new Date(item.date);
