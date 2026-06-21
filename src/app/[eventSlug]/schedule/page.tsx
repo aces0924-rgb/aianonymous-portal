@@ -135,7 +135,6 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                 </div>
 
                 <div className="space-y-4">
-                  <div className="text-[var(--color-cyan-400)] font-mono text-xl font-black tracking-[0.4em] uppercase ">
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-cyan-500)]/20 border border-[var(--color-cyan-400)]/30 text-[var(--color-cyan-400)] text-xs font-black tracking-wider">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-cyan-400)] opacity-75"></span>
