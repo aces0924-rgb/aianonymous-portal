@@ -53,6 +53,13 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
   const featureFlags = JSON.parse(event.featureFlags || '{}');
   const enableArtistMain = featureFlags.enableArtistMain === true;
 
+  const getYoutubeVideoId = (url: string | null) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
   const getDayTracks = (trackRange: string) => {
     if (!trackRange) return [];
     if (trackRange.includes(',')) {
@@ -253,14 +260,34 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
             const dayLabel = item.day === 0 ? '00' : item.day === 16 ? 'LAST' : String(item.day).padStart(2, '0');
 
             const dayTracks = getDayTracks(item.trackRange);
+            const videoId = getYoutubeVideoId(item.youtubeUrl);
 
             return (
-              <div key={item.id} className={`group relative rounded-[2rem] border transition-all ${isTodayItem ? 'border-[var(--color-cyan-400)] bg-[var(--color-cyan-500)]/20' : 'border-white/5 bg-neutral-950/40'}`}>
-                <div className="p-8 space-y-6">
+              <div key={item.id} className={`group relative rounded-[2rem] border transition-all overflow-hidden flex flex-col ${isTodayItem ? 'border-[var(--color-cyan-400)] bg-[var(--color-cyan-500)]/20' : 'border-white/5 bg-neutral-950/40'}`}>
+                {/* Thumbnail Section */}
+                <div className="w-full aspect-video bg-black/40 relative shrink-0 border-b border-white/5">
+                  {videoId ? (
+                    <img 
+                      src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} 
+                      alt="YouTube Thumbnail" 
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/5 to-transparent">
+                      <span className="text-foreground opacity-30 font-black tracking-[0.5em] text-xs">COMING SOON</span>
+                    </div>
+                  )}
+                  {isTodayItem && (
+                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[var(--color-cyan-500)] text-black text-[9px] font-black uppercase tracking-widest shadow-lg">
+                      TODAY
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-8 space-y-6 flex-1 flex flex-col">
                   <div className="flex justify-between items-start">
                     <div className="text-4xl font-black opacity-10 font-mono text-[var(--color-cyan-400)]">{dayLabel}</div>
                     <div className="flex flex-col items-end gap-3 shrink-0">
-                      {isTodayItem && <span className="px-3 py-1 rounded-full bg-[var(--color-cyan-500)] text-black text-[9px] font-black uppercase tracking-widest">TODAY</span>}
                       {!isSpecial && (
                         <ScheduleItemProgress trackIds={dayTracks.map(t => t.id)} />
                       )}
@@ -278,7 +305,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     <div className="p-4 rounded-xl border border-white/5 text-xs font-bold bg-white/5">{item.remarks}</div>
                   )}
 
-                  <div className="flex flex-col gap-3 pt-2">
+                  <div className="flex flex-col gap-3 pt-4 mt-auto">
                     {/* 1. YouTube視聴ボタン */}
                     {item.youtubeUrl && (
                       <a href={item.youtubeUrl} target="_blank" rel="noopener noreferrer" className="block w-full py-4 rounded-2xl bg-red-600 text-center font-black text-xs hover:bg-red-500">
