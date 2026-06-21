@@ -144,7 +144,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
             href={timetableUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-cyan-500)] text-white font-black tracking-widest text-sm hover:bg-[var(--color-cyan-400)] transition-colors shadow-[0_0_20px_var(--color-glow)] mb-4"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-black/70 backdrop-blur-md border border-[var(--color-cyan-400)]/50 text-white font-black tracking-widest text-sm hover:bg-[var(--color-cyan-400)] hover:text-black hover:border-[var(--color-cyan-400)] transition-all shadow-xl mb-4"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
