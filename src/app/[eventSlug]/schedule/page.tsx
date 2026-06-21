@@ -105,12 +105,12 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
       {/* Event Background Image */}
       {bgUrl && (
         <div 
-          className="fixed inset-0 z-[-1] pointer-events-none bg-cover bg-center bg-no-repeat opacity-25"
+          className="fixed inset-0 z-0 pointer-events-none bg-cover bg-top bg-no-repeat opacity-50 mix-blend-overlay"
           style={{ backgroundImage: `url(${bgUrl})` }}
         />
       )}
 
-      <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,_var(--color-cyan-500)_15%,_transparent)] opacity-10 pointer-events-none z-[-1]" />
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,_var(--color-cyan-500)_15%,_transparent)] opacity-10 pointer-events-none z-0" />
 
       <div className="absolute left-6 top-8 z-50">
         <Link 
@@ -124,7 +124,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
         </Link>
       </div>
 
-      <section className="w-full pt-32 pb-8 flex flex-col items-center text-center relative px-6">
+      <section className="w-full pt-32 pb-8 flex flex-col items-center text-center relative px-6 z-10">
         <div className="inline-block px-4 py-1 rounded-full border border-[var(--color-cyan-400)]/30 bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] text-[10px] font-black tracking-[0.4em] uppercase mb-8 animate-pulse">
           Broadcast Schedule
         </div>
@@ -136,7 +136,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
       {/* FEATURED: Today's Program (Optimized for visibility) */}
       {todayItem && (
-        <section className="max-w-7xl w-full px-6 mb-20 relative">
+        <section className="max-w-7xl w-full px-6 mb-20 relative z-10">
           <div className="relative group rounded-[3rem] border-2 border-[var(--color-cyan-400)] bg-[var(--color-cyan-500)]/20 shadow-[0_0_80px_var(--color-glow)] overflow-hidden backdrop-blur-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-cyan-400)]/10 via-transparent to-purple-500/10 pointer-events-none" />
             
@@ -255,7 +255,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
       )}
 
       {/* MAIN GRID */}
-      <section className="max-w-7xl w-full px-6 pb-32">
+      <section className="max-w-7xl w-full px-6 pb-32 relative z-10">
         <div className="max-w-7xl w-full px-6 mb-12 flex items-center gap-4">
         <h2 className="text-sm font-black tracking-[0.3em] text-foreground opacity-60">TIMELINE</h2>
         <div className="flex-1 h-px bg-foreground/10" />
@@ -362,7 +362,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
         </div>
       </section>
 
-      <footer className="w-full py-20 text-center border-t border-white/5 bg-background text-neutral-700">
+      <footer className="w-full py-20 text-center border-t border-white/10 bg-background/80 backdrop-blur-md text-foreground relative z-10">
         <p className="text-[10px] font-mono tracking-[0.5em] uppercase">© 2026 AI-ANONYMOUS MUSIC FES.</p>
       </footer>
     </main>
