@@ -61,6 +61,9 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
   const featureFlags = typeof event.featureFlags === 'string' ? JSON.parse(event.featureFlags) : (event.featureFlags || {});
   const enableArtistMain = featureFlags.enableArtistMain === true;
 
+  const labelConfig = typeof event.labelConfig === 'string' ? JSON.parse(event.labelConfig) : (event.labelConfig || {});
+  const hashtag = labelConfig.shareHashtag || `#${event.title.replace(/\s+/g, '')}`;
+
   const getYoutubeVideoId = (url: string | null) => {
     if (!url) return null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -373,7 +376,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     })()}
                     <a 
                       href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                        `【#アノフェス #${item.day === 0 ? 'Eve' : item.day === 16 ? 'Final' : `Day${item.day}`}】 ${dateFormatter.format(itemDate)} ${timeFormatter.format(itemDate)}〜\n${isSpecial && item.remarks ? `${item.remarks}\n` : ''}\n📺 YouTube: ${item.youtubeUrl || '(準備中)'}`
+                        `【${hashtag} #${item.day === 0 ? 'Eve' : item.day === 16 ? 'Final' : `Day${item.day}`}】 ${dateFormatter.format(itemDate)} ${timeFormatter.format(itemDate)}〜\n${isSpecial && item.remarks ? `${item.remarks}\n` : ''}\n📺 YouTube: ${item.youtubeUrl || '(準備中)'}`
                       )}`}
                       target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-2xl bg-background border border-white/10 text-center font-black text-[10px] hover:border-[var(--color-cyan-400)]/50 text-foreground"
                     >
