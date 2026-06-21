@@ -45,7 +45,7 @@ export default function ScheduleJumpSelect({ tracks, enableArtistMain }: { track
             defaultValue=""
           >
             <option value="" disabled className="bg-surface text-foreground">
-              楽曲を選択...
+              {enableArtistMain ? '出演アーティストを選択...' : '楽曲を選択...'}
             </option>
             {tracks.map((track) => {
               const isInterested = interested.includes(track.id);
