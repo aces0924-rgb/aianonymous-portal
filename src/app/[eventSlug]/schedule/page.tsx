@@ -178,7 +178,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                   
                   <a 
                     href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                      `【本日の#アノフェス】\n本日 ${dateFormatter.format(new Date(todayItem.date))} ${timeFormatter.format(new Date(todayItem.date))}〜 プレミア公開！\n\n${todayItem.day === 0 || todayItem.day === 16 ? `${todayItem.remarks}\n` : `対象楽曲：${todayItem.trackRange} (${todayItem.trackCount}曲)\n`}プレミア会場はこちら！\nみんなで一緒に盛り上がろう！✨\n\n📺 YouTube: ${todayItem.youtubeUrl || '(準備中)'}\n\n#Day${todayItem.day}`
+                      `【本日の#アノフェス】\n本日 ${dateFormatter.format(new Date(todayItem.date))} ${timeFormatter.format(new Date(todayItem.date))}〜 プレミア公開！\n\n${todayItem.day === 0 || todayItem.day === 16 ? `${todayItem.remarks}\n` : `対象楽曲：全 ${todayItem.trackCount}曲\n`}プレミア会場はこちら！\nみんなで一緒に盛り上がろう！✨\n\n📺 YouTube: ${todayItem.youtubeUrl || '(準備中)'}\n\n#Day${todayItem.day}`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -261,7 +261,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                   </div>
                   {!isSpecial ? (
                     <div className="space-y-4">
-                      <div className="text-sm font-black text-neutral-200">{item.trackRange}</div>
+                      <div className="text-sm font-black text-neutral-400">対象楽曲：全 {dayTracks.length} 曲</div>
                       <ScheduleJumpSelect tracks={dayTracks} />
                     </div>
                   ) : (
@@ -301,7 +301,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     })()}
                     <a 
                       href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                        `【#アノフェス #${item.day === 0 ? 'Eve' : item.day === 16 ? 'Final' : `Day${item.day}`}】 ${dateFormatter.format(itemDate)} ${timeFormatter.format(itemDate)}〜\n${!isSpecial ? `対象楽曲：${item.trackRange}\n` : `${item.remarks}\n`}\n📺 YouTube: ${item.youtubeUrl || '(準備中)'}`
+                        `【#アノフェス #${item.day === 0 ? 'Eve' : item.day === 16 ? 'Final' : `Day${item.day}`}】 ${dateFormatter.format(itemDate)} ${timeFormatter.format(itemDate)}〜\n${!isSpecial ? `対象楽曲：全 ${dayTracks.length}曲\n` : `${item.remarks}\n`}\n📺 YouTube: ${item.youtubeUrl || '(準備中)'}`
                       )}`}
                       target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-2xl bg-background border border-white/10 text-center font-black text-[10px] hover:border-[var(--color-cyan-400)]/50 text-foreground"
                     >
