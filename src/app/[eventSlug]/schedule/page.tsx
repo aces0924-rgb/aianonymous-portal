@@ -191,6 +191,35 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                 </div>
 
                 <div className="flex flex-col gap-4 pt-4">
+                  {/* Large Thumbnail */}
+                  <div className="w-full aspect-video bg-black/40 rounded-[2rem] border-2 border-white/10 overflow-hidden relative shadow-2xl group/thumb mb-2">
+                    {todayVideoId ? (
+                      <img 
+                        src={`https://img.youtube.com/vi/${todayVideoId}/maxresdefault.jpg`} 
+                        alt="Today's Premiere Thumbnail" 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105 opacity-90 group-hover/thumb:opacity-100" 
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-white/5 to-transparent text-foreground/30">
+                        <svg className="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                          <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                          <line x1="8" y1="21" x2="16" y2="21"></line>
+                          <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                        <span className="font-black tracking-[0.5em] text-sm">THUMBNAIL COMING SOON</span>
+                      </div>
+                    )}
+                    {todayItem.youtubeUrl && (
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="w-16 h-16 bg-red-600/90 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.5)] backdrop-blur-sm opacity-0 group-hover/thumb:opacity-100 transition-all duration-300 scale-75 group-hover/thumb:scale-100">
+                          <svg className="w-8 h-8 text-white ml-1.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
                   {/* 1. YouTube視聴ボタン */}
                   {todayItem.youtubeUrl && (
                     <a 
@@ -258,37 +287,8 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                 </div>
               </div>
 
-              {/* Right: Thumbnail & Lineup (Expanding flex-1) */}
+              {/* Right: Lineup (Expanding flex-1) */}
               <div className="flex-1 w-full flex flex-col gap-8">
-                {/* Large Thumbnail */}
-                <div className="w-full aspect-video bg-black/40 rounded-[2rem] border-2 border-white/10 overflow-hidden relative shadow-2xl group/thumb">
-                  {todayVideoId ? (
-                    <img 
-                      src={`https://img.youtube.com/vi/${todayVideoId}/maxresdefault.jpg`} 
-                      alt="Today's Premiere Thumbnail" 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105 opacity-90 group-hover/thumb:opacity-100" 
-                    />
-                  ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-white/5 to-transparent text-foreground/30">
-                      <svg className="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                      </svg>
-                      <span className="font-black tracking-[0.5em] text-sm">THUMBNAIL COMING SOON</span>
-                    </div>
-                  )}
-                  {todayItem.youtubeUrl && (
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className="w-20 h-20 bg-red-600/90 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.5)] backdrop-blur-sm opacity-0 group-hover/thumb:opacity-100 transition-all duration-300 scale-75 group-hover/thumb:scale-100">
-                        <svg className="w-10 h-10 text-white ml-2" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
                 {/* Lineup */}
                 {todayItem.day !== 0 && todayItem.day !== 16 && (
                 <div className="flex-1 w-full bg-background/40 rounded-[3rem] border border-[var(--color-cyan-400)]/30 p-10 backdrop-blur-md shadow-2xl overflow-hidden relative">
