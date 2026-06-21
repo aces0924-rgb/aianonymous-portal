@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { useFavorites } from '@/context/FavoritesContext';
 
 interface Track {
@@ -12,6 +12,8 @@ interface Track {
 
 export default function ScheduleJumpSelect({ tracks }: { tracks: Track[] }) {
   const router = useRouter();
+  const params = useParams();
+  const eventSlug = params?.eventSlug as string || '';
   const { interested } = useFavorites();
 
   if (tracks.length === 0) return null;
@@ -33,7 +35,7 @@ export default function ScheduleJumpSelect({ tracks }: { tracks: Track[] }) {
           <select
             onChange={(e) => {
               if (e.target.value) {
-                router.push(`/tracks/${e.target.value}?preview=honban`);
+                router.push(`/${eventSlug}/tracks/${e.target.value}?preview=honban`);
               }
             }}
             className={`appearance-none bg-transparent font-bold text-xs py-3 px-4 pr-10 outline-none cursor-pointer w-full ${

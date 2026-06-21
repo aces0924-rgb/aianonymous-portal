@@ -40,6 +40,21 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
   const { schedule, tracks, shareBasePostUrl } = await getCachedScheduleData(event.id, isHonban);
 
+  const getDayTracks = (trackRange: string) => {
+    if (!trackRange) return [];
+    if (trackRange.includes(',')) {
+      const targetEntryNos = trackRange.split(',').map(s => s.trim());
+      return tracks.filter(t => t.entryNo && targetEntryNos.includes(t.entryNo));
+    }
+    const rangeMatch = trackRange.match(/No\.(\d+)\s*〜\s*No\.(\d+)/);
+    const startNo = rangeMatch ? parseInt(rangeMatch[1]) : 0;
+    const endNo = rangeMatch ? parseInt(rangeMatch[2]) : 0;
+    return tracks.filter(t => {
+      const num = parseInt(t.entryNo || "0");
+      return num >= startNo && num <= endNo;
+    });
+  };
+
   const getJstDateString = (date: Date) => {
     return new Intl.DateTimeFormat('en-CA', {
       timeZone: 'Asia/Tokyo',
@@ -177,18 +192,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
                   {/* Match Rate (Horizontal style) below buttons */}
                   <div className="pt-2">
-                    {(() => {
-                      const rangeMatch = todayItem.trackRange.match(/No\.(\d+)\s*〜\s*No\.(\d+)/);
-                      const startNo = rangeMatch ? parseInt(rangeMatch[1]) : 0;
-                      const endNo = rangeMatch ? parseInt(rangeMatch[2]) : 0;
-                      const dayTrackIds = tracks
-                        .filter(t => {
-                          const num = parseInt(t.entryNo || "0");
-                          return num >= startNo && num <= endNo;
-                        })
-                        .map(t => t.id);
-                      return <ScheduleItemProgress trackIds={dayTrackIds} size="large" />;
-                    })()}
+                    <ScheduleItemProgress trackIds={getDayTracks(todayItem.trackRange).map(t => t.id)} size="large" />
                   </div>
                 </div>
               </div>
@@ -200,22 +204,13 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                   <div className="relative">
                     <div className="text-[12px] font-black text-[var(--color-cyan-400)] tracking-[0.5em] uppercase mb-8 text-center border-b border-[var(--color-cyan-400)]/20 pb-6">Day {todayItem.day} Full Lineup</div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-2">
-                    {(() => {
-                      const rangeMatch = todayItem.trackRange.match(/No\.(\d+)\s*〜\s*No\.(\d+)/);
-                      const startNo = rangeMatch ? parseInt(rangeMatch[1]) : 0;
-                      const endNo = rangeMatch ? parseInt(rangeMatch[2]) : 0;
-                      const dayTracks = tracks.filter(t => {
-                        const num = parseInt(t.entryNo || "0");
-                        return num >= startNo && num <= endNo;
-                      });
-                      return dayTracks.map(t => (
+                      {getDayTracks(todayItem.trackRange).map(t => (
                         <div key={t.id} className="flex items-center gap-3 py-2.5 border-b border-white/5 last:border-0 hover:bg-white/10 px-3 rounded-xl transition-colors group/item truncate">
                           <span className="text-[var(--color-cyan-400)] font-mono text-xs font-black shrink-0">#{t.entryNo}</span>
                           <span className="text-sm md:text-base font-bold text-neutral-200 truncate group-hover/item:text-foreground">{t.title}</span>
                           <TrackInterestStar trackId={t.id} />
                         </div>
-                      ));
-                    })()}
+                      ))}
                     </div>
                   </div>
                   
@@ -246,13 +241,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
             const isSpecial = item.day === 0 || item.day === 16;
             const dayLabel = item.day === 0 ? '00' : item.day === 16 ? 'LAST' : String(item.day).padStart(2, '0');
 
-            const rangeMatch = item.trackRange.match(/No\.(\d+)\s*〜\s*No\.(\d+)/);
-            const startNo = rangeMatch ? parseInt(rangeMatch[1]) : 0;
-            const endNo = rangeMatch ? parseInt(rangeMatch[2]) : 0;
-            const dayTracks = tracks.filter(t => {
-              const num = parseInt(t.entryNo || "0");
-              return num >= startNo && num <= endNo;
-            });
+            const dayTracks = getDayTracks(item.trackRange);
 
             return (
               <div key={item.id} className={`group relative rounded-[2rem] border transition-all ${isTodayItem ? 'border-[var(--color-cyan-400)] bg-[var(--color-cyan-500)]/20' : 'border-white/5 bg-neutral-950/40'}`}>
