@@ -192,7 +192,8 @@ model PremiereSchedule {
   trackCount       Int
   remarks          String?
   isPublic         Boolean  @default(true)
-  thumbnailDriveId String?  @db.Text // 繝励Ξ繝溘い繧ｵ繝繝阪う繝ｫ縺ｮGoogle繝峨Λ繧､繝蜂D
+  acceptsThumbnail Boolean  @default(false) // サムネイル募集を受け付けるかどうか
+  thumbnailDriveId String?  @db.Text // プレミアサムネイルのGoogleドライブID
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 

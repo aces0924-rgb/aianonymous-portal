@@ -206,18 +206,25 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     </a>
                   )}
 
-                  {/* 2. サムネイル応募・応募済み表示（放送開始3時間前締め切り） */}
+                  {/* 2. サムネイル応募・応募済み表示 */}
                   {(() => {
+                    if (!todayItem.acceptsThumbnail) {
+                      if (!todayItem.youtubeUrl) {
+                        return (
+                          <div className="w-full py-6 rounded-2xl bg-white/5 border border-white/10 text-foreground font-black text-2xl tracking-widest text-center select-none">
+                            LINK PENDING
+                          </div>
+                        );
+                      }
+                      return null;
+                    }
+
                     const now = new Date();
                     const dateLimit = new Date(new Date(todayItem.date).getTime() - 3 * 60 * 60 * 1000);
                     const isBeforeLimit = now < dateLimit;
 
                     if (todayItem.thumbnailDriveId) {
-                      return (
-                        <div className="w-full py-6 rounded-2xl bg-green-950/20 border border-green-500/30 text-green-400 font-black text-2xl tracking-widest text-center select-none shadow-[0_0_30px_rgba(34,197,94,0.1)]">
-                          ✓ 応募済み
-                        </div>
-                      );
+                      return null; // 応募済みバッジは不要
                     } else if (isBeforeLimit) {
                       return <PremiereThumbnailUploader day={todayItem.day} size="large" />;
                     } else if (!todayItem.youtubeUrl) {
@@ -353,16 +360,23 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
                     {/* 2. サムネイル応募・応募済み表示 */}
                     {(() => {
+                      if (!item.acceptsThumbnail) {
+                        if (!item.youtubeUrl) {
+                          return (
+                            <div className="block w-full py-2.5 rounded-xl bg-white/5 border border-white/10 text-center font-black text-[10px] text-foreground select-none">
+                              LINK PENDING
+                            </div>
+                          );
+                        }
+                        return null;
+                      }
+
                       const now = new Date();
                       const dateLimit = new Date(itemDate.getTime() - 3 * 60 * 60 * 1000);
                       const isBeforeLimit = now < dateLimit;
 
                       if (item.thumbnailDriveId) {
-                        return (
-                          <div className="block w-full py-2.5 rounded-xl bg-green-950/20 border border-green-500/30 text-center font-black text-[10px] text-green-400 select-none shadow-sm">
-                            ✓ 応募済み
-                          </div>
-                        );
+                        return null; 
                       } else if (isBeforeLimit) {
                         return <PremiereThumbnailUploader day={item.day} />;
                       } else if (!item.youtubeUrl) {

@@ -121,13 +121,20 @@ export default async function PremiereAdminPage({ params }: { params: Promise<{ 
               <input name="isPublic" type="checkbox" value="true" defaultChecked className="w-5 h-5" id="isPublicAdd" />
               <label htmlFor="isPublicAdd" className="font-bold cursor-pointer">公開する</label>
             </div>
-            <div className="md:col-span-2 flex justify-end">
-              <ToastSubmitButton 
-                label="追加する" 
-                loadingLabel="追加中..." 
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-8 rounded-lg shadow"
-                successMessage="追加しました！" 
-              />
+            <div className="md:col-span-2 flex justify-end items-center gap-4">
+              <div>
+                <label className="flex items-center gap-2 cursor-pointer font-bold text-sm text-green-700">
+                  <input type="checkbox" name="acceptsThumbnail" value="true" className="w-5 h-5 text-green-600" />
+                  サムネイル募集を受け付ける
+                </label>
+              </div>
+              <div>
+                <ToastSubmitButton 
+                  label="追加" 
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded shadow"
+                  successMessage="予定を追加しました" 
+                />
+              </div>
             </div>
           </form>
         </div>
@@ -177,13 +184,21 @@ export default async function PremiereAdminPage({ params }: { params: Promise<{ 
                     <input name="isPublic" type="checkbox" value="true" defaultChecked={schedule.isPublic} className="w-4 h-4" id={`isPublic-${schedule.id}`} />
                     <label htmlFor={`isPublic-${schedule.id}`} className="text-sm font-bold cursor-pointer">公開する</label>
                   </div>
-                  <div className="md:col-span-2 flex justify-end">
-                    <ToastSubmitButton 
-                      label="更新" 
-                      loadingLabel="更新中..." 
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded text-sm"
-                      successMessage="更新しました" 
-                    />
+                  <div className="md:col-span-2 flex justify-between items-center">
+                    <div>
+                      <label className="flex items-center gap-2 cursor-pointer font-bold text-sm text-green-700">
+                        <input type="checkbox" name="acceptsThumbnail" value="true" defaultChecked={schedule.acceptsThumbnail} className="w-5 h-5 text-green-600" />
+                        サムネイル募集を受け付ける
+                      </label>
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <ToastSubmitButton 
+                        label="更新" 
+                        loadingLabel="更新中..." 
+                        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-sm"
+                        successMessage="更新しました" 
+                      />
+                    </div>
                   </div>
                 </form>
                 

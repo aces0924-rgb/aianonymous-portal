@@ -34,6 +34,7 @@ export async function addPremiereSchedule(eventId: string, formData: FormData) {
   const remarks = formData.get('remarks') as string || null;
   const thumbnailDriveId = formData.get('thumbnailDriveId') as string || null;
   const isPublic = formData.get('isPublic') === 'true';
+  const acceptsThumbnail = formData.get('acceptsThumbnail') === 'true';
 
   await prisma.premiereSchedule.create({
     data: {
@@ -45,7 +46,8 @@ export async function addPremiereSchedule(eventId: string, formData: FormData) {
       trackCount,
       remarks,
       thumbnailDriveId,
-      isPublic
+      isPublic,
+      acceptsThumbnail
     }
   });
 
@@ -64,6 +66,7 @@ export async function updatePremiereSchedule(eventId: string, id: number, formDa
   const remarks = formData.get('remarks') as string || null;
   const thumbnailDriveId = formData.get('thumbnailDriveId') as string || null;
   const isPublic = formData.get('isPublic') === 'true';
+  const acceptsThumbnail = formData.get('acceptsThumbnail') === 'true';
 
   await prisma.premiereSchedule.update({
     where: { id },
@@ -75,7 +78,8 @@ export async function updatePremiereSchedule(eventId: string, id: number, formDa
       trackCount,
       remarks,
       thumbnailDriveId,
-      isPublic
+      isPublic,
+      acceptsThumbnail
     }
   });
 
