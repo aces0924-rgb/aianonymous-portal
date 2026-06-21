@@ -111,6 +111,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     disclaimer: labelConfig.disclaimer || '【免責事項】この考察はAIによる独自の解釈であり、作者様の意図と異なる場合があります。',
     entryPrefix: labelConfig.entryPrefix || 'ANF',
     randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
+    scheduleButtonSubLabel: labelConfig.scheduleButtonSubLabel || 'イベント期間',
     scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！',
     defaultMusicAnalysis: labelConfig.defaultMusicAnalysis || '',
     defaultIllustrationAnalysis: labelConfig.defaultIllustrationAnalysis || '',
@@ -430,11 +431,12 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const disclaimer = formData.get('disclaimer') as string
             const entryPrefix = formData.get('entryPrefix') as string
             const randomPlayButtonLabel = formData.get('randomPlayButtonLabel') as string
+            const scheduleButtonSubLabel = formData.get('scheduleButtonSubLabel') as string
             const scheduleButtonLabel = formData.get('scheduleButtonLabel') as string
             const defaultMusicAnalysis = formData.get('defaultMusicAnalysis') as string
             const defaultIllustrationAnalysis = formData.get('defaultIllustrationAnalysis') as string
             const shareHashtag = formData.get('shareHashtag') as string
-            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis, shareHashtag })
+            await updateEventConfig(id, 'labelConfig', { siteTitle, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonSubLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis, shareHashtag })
           }} className="flex flex-col gap-4">
             <div className="flex gap-4">
               <div className="flex-1">
@@ -474,7 +476,11 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 <input name="randomPlayButtonLabel" defaultValue={defaultLabels.randomPlayButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
               <div className="flex-1">
-                <label className="text-xs font-bold text-foreground block mb-1">スケジュール(配信)ボタン名</label>
+                <label className="text-xs font-bold text-foreground block mb-1">配信ボタン上の小文字 (例: イベント期間)</label>
+                <input name="scheduleButtonSubLabel" defaultValue={defaultLabels.scheduleButtonSubLabel} className="w-full border p-2 rounded text-sm bg-white" />
+              </div>
+              <div className="flex-1">
+                <label className="text-xs font-bold text-foreground block mb-1">配信ボタン名</label>
                 <input name="scheduleButtonLabel" defaultValue={defaultLabels.scheduleButtonLabel} className="w-full border p-2 rounded text-sm bg-white" />
               </div>
             </div>

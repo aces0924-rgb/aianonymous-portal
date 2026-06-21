@@ -105,6 +105,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
+    scheduleButtonSubLabel: labelConfig.scheduleButtonSubLabel || 'イベント期間',
     scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！',
     shareHashtag: labelConfig.shareHashtag || '#アノフェス'
   }
@@ -335,7 +336,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
                   </svg>
                   <div className="flex flex-col items-start leading-tight">
-                    <span className="text-[10px] md:text-xs  font-bold tracking-[0.2em] mb-1">イベント期間</span>
+                    <span className="text-[10px] md:text-xs  font-bold tracking-[0.2em] mb-1">{defaultLabels.scheduleButtonSubLabel}</span>
                     <span className="text-sm md:text-xl font-black tracking-tighter">{defaultLabels.scheduleButtonLabel}</span>
                   </div>
                 </Link>
