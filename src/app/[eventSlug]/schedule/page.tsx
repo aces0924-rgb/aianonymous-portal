@@ -133,10 +133,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
         </Link>
       </div>
 
-      <section className="w-full pt-32 pb-8 flex flex-col items-center text-center relative px-6 z-10">
-        <div className="inline-block px-4 py-1 rounded-full border border-[var(--color-cyan-400)]/30 bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] text-[10px] font-black tracking-[0.4em] uppercase mb-8 animate-pulse">
-          Broadcast Schedule
-        </div>
+      <section className="w-full pt-20 pb-4 flex flex-col items-center text-center relative px-6 z-10">
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-4 text-foreground drop-shadow-[0_0_30px_var(--color-glow)]">
           YouTube PREMIERE
         </h1>
