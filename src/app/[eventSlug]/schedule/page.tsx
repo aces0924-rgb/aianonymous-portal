@@ -111,12 +111,10 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
         <div className="inline-block px-4 py-1 rounded-full border border-[var(--color-cyan-400)]/30 bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] text-[10px] font-black tracking-[0.4em] uppercase mb-8 animate-pulse">
           Broadcast Schedule
         </div>
-        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-4">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-cyan-400)] via-white to-purple-500 drop-shadow-[0_0_30px_var(--color-glow)]">
-            YouTube PREMIERE
-          </span>
+        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-4 text-foreground drop-shadow-[0_0_30px_var(--color-glow)]">
+          YouTube PREMIERE
         </h1>
-        <p className="text-neutral-500 text-xs font-bold tracking-[0.5em] uppercase">共感の物語が、ここから動き出す。</p>
+        <p className="text-foreground opacity-80 text-xs font-bold tracking-[0.5em] uppercase">共感の物語が、ここから動き出す。</p>
       </section>
 
       {/* FEATURED: Today's Program (Optimized for visibility) */}
@@ -138,14 +136,16 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
                 <div className="space-y-4">
                   <div className="text-[var(--color-cyan-400)] font-mono text-xl font-black tracking-[0.4em] uppercase ">
-                    {todayItem.day === 0 ? 'DAY 00' : todayItem.day === 16 ? 'FINAL DAY' : `DAY ${String(todayItem.day).padStart(2, '0')}`}
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-cyan-500)]/20 border border-[var(--color-cyan-400)]/30 text-[var(--color-cyan-400)] text-xs font-black tracking-wider">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-cyan-400)] opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--color-cyan-500)]"></span>
+                    </span>
+                    TODAY'S PREMIERE
                   </div>
-                  <h2 className="text-7xl md:text-8xl font-black tracking-tighter leading-none text-foreground">
-                    {dateFormatter.format(new Date(todayItem.date))}
-                    <span className="text-[var(--color-cyan-400)] text-4xl md:text-5xl italic block md:inline-block md:ml-4">({dayFormatter.format(new Date(todayItem.date))})</span>
-                  </h2>
-                  <div className="text-4xl font-black text-neutral-400 tracking-wider">
-                    {timeFormatter.format(new Date(todayItem.date))}〜 <span className="text-xl font-bold ml-1">START</span>
+                  <div className="text-[var(--color-cyan-400)] font-black text-xl tracking-widest">{dateFormatter.format(new Date(todayItem.date))} ({['日', '月', '火', '水', '木', '金', '土'][new Date(todayItem.date).getDay()]})</div>
+                  <div className="text-6xl md:text-7xl font-black tracking-tighter text-foreground">
+                    {timeFormatter.format(new Date(todayItem.date))}<span className="text-4xl text-foreground/50">〜</span>
                   </div>
                 </div>
 
@@ -195,7 +195,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-3 px-8 py-5 rounded-2xl bg-white text-black font-black text-xl hover:bg-[var(--color-cyan-500)] transition-all active:scale-[0.98] shadow-2xl"
+                    className="flex items-center justify-center gap-3 px-8 py-5 rounded-2xl bg-foreground text-background font-black text-xl hover:opacity-90 transition-all active:scale-[0.98] shadow-2xl"
                   >
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -220,7 +220,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                       {getDayTracks(todayItem.trackRange).map(t => (
                         <div key={t.id} className="flex items-center gap-3 py-2.5 border-b border-white/5 last:border-0 hover:bg-white/10 px-3 rounded-xl transition-colors group/item truncate">
                           <span className="text-[var(--color-cyan-400)] font-mono text-xs font-black shrink-0">#{t.entryNo}</span>
-                          <span className="text-sm md:text-base font-bold text-neutral-200 truncate group-hover/item:text-foreground">
+                          <span className="text-sm md:text-base font-bold text-foreground opacity-80 truncate group-hover/item:opacity-100">
                             {enableArtistMain ? (t.artistName || t.title) : t.title}
                           </span>
                           <TrackInterestStar trackId={t.id} />
@@ -240,10 +240,10 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
       {/* MAIN GRID */}
       <section className="max-w-7xl w-full px-6 pb-32">
-        <div className="flex items-center gap-6 mb-12">
-          <h3 className="text-xs font-black tracking-[0.6em] text-neutral-600 uppercase whitespace-nowrap">Timeline</h3>
-          <div className="h-px w-full bg-neutral-900" />
-        </div>
+        <div className="max-w-7xl w-full px-6 mb-12 flex items-center gap-4">
+        <h2 className="text-sm font-black tracking-[0.3em] text-foreground opacity-60">TIMELINE</h2>
+        <div className="flex-1 h-px bg-foreground/10" />
+      </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {sortedSchedule.map((item) => {
