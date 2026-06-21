@@ -157,7 +157,10 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
       </section>
 
       {/* FEATURED: Today's Program (Optimized for visibility) */}
-      {todayItem && (
+      {todayItem && (() => {
+        const todayVideoId = todayItem.youtubeUrl?.match(/(?:v=|\/)([a-zA-Z0-9_-]{11})/)?.[1];
+        
+        return (
         <section className="max-w-7xl w-full px-6 mb-20 relative z-10">
           <div className="relative group rounded-[3rem] border-2 border-[var(--color-cyan-400)] bg-[var(--color-cyan-500)]/20 shadow-[0_0_80px_var(--color-glow)] overflow-hidden backdrop-blur-2xl">
             <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-cyan-400)]/10 via-transparent to-purple-500/10 pointer-events-none" />
@@ -255,8 +258,39 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                 </div>
               </div>
 
-              {/* Right: Lineup (Expanding flex-1) */}
-              {todayItem.day !== 0 && todayItem.day !== 16 && (
+              {/* Right: Thumbnail & Lineup (Expanding flex-1) */}
+              <div className="flex-1 w-full flex flex-col gap-8">
+                {/* Large Thumbnail */}
+                <div className="w-full aspect-video bg-black/40 rounded-[2rem] border-2 border-white/10 overflow-hidden relative shadow-2xl group/thumb">
+                  {todayVideoId ? (
+                    <img 
+                      src={`https://img.youtube.com/vi/${todayVideoId}/maxresdefault.jpg`} 
+                      alt="Today's Premiere Thumbnail" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover/thumb:scale-105 opacity-90 group-hover/thumb:opacity-100" 
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-white/5 to-transparent text-foreground/30">
+                      <svg className="w-16 h-16 mb-4 opacity-50" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                      </svg>
+                      <span className="font-black tracking-[0.5em] text-sm">THUMBNAIL COMING SOON</span>
+                    </div>
+                  )}
+                  {todayItem.youtubeUrl && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-20 h-20 bg-red-600/90 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(220,38,38,0.5)] backdrop-blur-sm opacity-0 group-hover/thumb:opacity-100 transition-all duration-300 scale-75 group-hover/thumb:scale-100">
+                        <svg className="w-10 h-10 text-white ml-2" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Lineup */}
+                {todayItem.day !== 0 && todayItem.day !== 16 && (
                 <div className="flex-1 w-full bg-background/40 rounded-[3rem] border border-[var(--color-cyan-400)]/30 p-10 backdrop-blur-md shadow-2xl overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-cyan-400)]/5 to-transparent pointer-events-none" />
                   <div className="relative">
@@ -277,11 +311,12 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                   <div className="mt-6 pt-4 text-center border-t border-white/5">
                   </div>
                 </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </section>
-      )}
+      )})()}
 
       {/* MAIN GRID */}
       <section className="max-w-7xl w-full px-6 pb-32 relative z-10">
