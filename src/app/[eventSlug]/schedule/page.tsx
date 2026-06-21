@@ -20,18 +20,29 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
   const getCachedScheduleData = unstable_cache(
     async (eventId: string, isHonban: boolean) => {
-      const [schedule, tracks, shareBasePostUrlSetting] = await Promise.all([
+      const [schedule, shareBasePostUrlSetting, activeTableSetting] = await Promise.all([
         prisma.premiereSchedule.findMany({
           where: isHonban ? {} : { isPublic: true },
           orderBy: { day: 'asc' },
         }),
-        prisma.trackHonban.findMany({
-          where: { eventId, published: true },
-          orderBy: { entryNo: 'asc' },
-          select: { id: true, entryNo: true, title: true, artistName: true }
-        }),
-        (prisma as any).setting.findUnique({ where: { eventId_key: { eventId, key: 'SHARE_BASE_POST_URL' } } })
+        (prisma as any).setting.findUnique({ where: { eventId_key: { eventId, key: 'SHARE_BASE_POST_URL' } } }),
+        (prisma as any).setting.findUnique({ where: { eventId_key: { eventId, key: 'ACTIVE_TRACK_TABLE' } } })
       ]);
+
+      const activeTable = isHonban ? 'track_honban' : (activeTableSetting?.value || "track");
+      const tracksSelect = { id: true, entryNo: true, title: true, artistName: true };
+      
+      const tracks = activeTable === 'track_honban'
+        ? await prisma.trackHonban.findMany({
+            where: { eventId, published: true },
+            orderBy: { entryNo: 'asc' },
+            select: tracksSelect
+          })
+        : await prisma.track.findMany({
+            where: { eventId, published: true },
+            orderBy: { entryNo: 'asc' },
+            select: tracksSelect
+          });
       return { schedule, tracks, shareBasePostUrl: shareBasePostUrlSetting?.value || "" };
     },
     ['event-schedule-data'],
