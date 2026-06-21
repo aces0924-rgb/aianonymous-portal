@@ -50,7 +50,9 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
   );
   const { schedule, tracks, shareBasePostUrl } = await getCachedScheduleData(event.id, isHonban);
 
-  const featureFlags = JSON.parse(event.featureFlags || '{}');
+  const themeConfig = JSON.parse(event.themeConfig || '{}');
+  const bgUrl = themeConfig.bgUrl;
+  const featureFlags = typeof event.featureFlags === 'string' ? JSON.parse(event.featureFlags) : (event.featureFlags || {});
   const enableArtistMain = featureFlags.enableArtistMain === true;
 
   const getYoutubeVideoId = (url: string | null) => {
@@ -99,8 +101,16 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
   });
 
   return (
-    <main className="min-h-screen bg-background text-white selection:bg-[var(--color-cyan-500)]/30 overflow-x-hidden flex flex-col items-center relative font-sans">
-      <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(6,182,212,0.15),_transparent)] pointer-events-none" />
+    <main className="min-h-screen bg-background text-foreground selection:bg-[var(--color-cyan-500)]/30 overflow-x-hidden flex flex-col items-center relative font-sans">
+      {/* Event Background Image */}
+      {bgUrl && (
+        <div 
+          className="fixed inset-0 z-[-1] pointer-events-none bg-cover bg-center bg-no-repeat opacity-25"
+          style={{ backgroundImage: `url(${bgUrl})` }}
+        />
+      )}
+
+      <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,_var(--color-cyan-500)_15%,_transparent)] opacity-10 pointer-events-none z-[-1]" />
 
       <div className="absolute left-6 top-8 z-50">
         <Link 
