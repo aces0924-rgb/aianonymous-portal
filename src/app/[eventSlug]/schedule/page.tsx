@@ -28,7 +28,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
         prisma.trackHonban.findMany({
           where: { eventId, published: true },
           orderBy: { entryNo: 'asc' },
-          select: { id: true, entryNo: true, title: true }
+          select: { id: true, entryNo: true, title: true, artistName: true }
         }),
         (prisma as any).setting.findUnique({ where: { eventId_key: { eventId, key: 'SHARE_BASE_POST_URL' } } })
       ]);
@@ -37,8 +37,10 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
     ['event-schedule-data'],
     { revalidate: 60 }
   );
-
   const { schedule, tracks, shareBasePostUrl } = await getCachedScheduleData(event.id, isHonban);
+
+  const featureFlags = JSON.parse(event.featureFlags || '{}');
+  const enableArtistMain = featureFlags.enableArtistMain === true;
 
   const getDayTracks = (trackRange: string) => {
     if (!trackRange) return [];
@@ -207,7 +209,9 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                       {getDayTracks(todayItem.trackRange).map(t => (
                         <div key={t.id} className="flex items-center gap-3 py-2.5 border-b border-white/5 last:border-0 hover:bg-white/10 px-3 rounded-xl transition-colors group/item truncate">
                           <span className="text-[var(--color-cyan-400)] font-mono text-xs font-black shrink-0">#{t.entryNo}</span>
-                          <span className="text-sm md:text-base font-bold text-neutral-200 truncate group-hover/item:text-foreground">{t.title}</span>
+                          <span className="text-sm md:text-base font-bold text-neutral-200 truncate group-hover/item:text-foreground">
+                            {enableArtistMain ? (t.artistName || t.title) : t.title}
+                          </span>
                           <TrackInterestStar trackId={t.id} />
                         </div>
                       ))}
@@ -262,7 +266,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                   {!isSpecial ? (
                     <div className="space-y-4">
                       <div className="text-sm font-black text-neutral-400">対象楽曲：全 {dayTracks.length} 曲</div>
-                      <ScheduleJumpSelect tracks={dayTracks} />
+                      <ScheduleJumpSelect tracks={dayTracks} enableArtistMain={enableArtistMain} />
                     </div>
                   ) : (
                     <div className="p-4 rounded-xl border border-white/5 text-xs font-bold bg-white/5">{item.remarks}</div>

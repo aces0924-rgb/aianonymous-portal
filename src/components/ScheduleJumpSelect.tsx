@@ -8,9 +8,10 @@ interface Track {
   id: number;
   entryNo: string | null;
   title: string;
+  artistName?: string | null;
 }
 
-export default function ScheduleJumpSelect({ tracks }: { tracks: Track[] }) {
+export default function ScheduleJumpSelect({ tracks, enableArtistMain }: { tracks: Track[], enableArtistMain?: boolean }) {
   const router = useRouter();
   const params = useParams();
   const eventSlug = params?.eventSlug as string || '';
@@ -46,15 +47,20 @@ export default function ScheduleJumpSelect({ tracks }: { tracks: Track[] }) {
             <option value="" disabled className="bg-surface text-foreground">
               楽曲を選択...
             </option>
-            {tracks.map((track) => {
+            {[...tracks].sort((a, b) => {
+              const aName = enableArtistMain ? (a.artistName || a.title) : a.title;
+              const bName = enableArtistMain ? (b.artistName || b.title) : b.title;
+              return aName.localeCompare(bName, 'ja');
+            }).map((track) => {
               const isInterested = interested.includes(track.id);
+              const displayName = enableArtistMain ? (track.artistName || track.title) : track.title;
               return (
                 <option 
                   key={track.id} 
                   value={track.id} 
                   className={`bg-surface ${isInterested ? 'text-yellow-400 font-black' : 'text-foreground'}`}
                 >
-                  {isInterested ? '★ ' : ''}No.{track.entryNo} : {track.title}
+                  {isInterested ? '★ ' : ''}No.{track.entryNo} {displayName}
                 </option>
               );
             })}
