@@ -91,3 +91,45 @@ export async function deletePremiereSchedule(eventId: string, id: number) {
 
   revalidatePath(`/admin/events/${eventId}/premiere`);
 }
+
+export async function updateTimetableUrl(eventId: string, formData: FormData) {
+  await checkAdmin(eventId);
+
+  const url = formData.get('timetableUrl') as string;
+
+  if (url) {
+    await prisma.setting.upsert({
+      where: {
+        eventId_key: {
+          eventId,
+          key: 'timetableUrl'
+        }
+      },
+      update: {
+        value: url
+      },
+      create: {
+        eventId,
+        key: 'timetableUrl',
+        value: url
+      }
+    });
+  } else {
+    // If empty, delete the setting
+    try {
+      await prisma.setting.delete({
+        where: {
+          eventId_key: {
+            eventId,
+            key: 'timetableUrl'
+          }
+        }
+      });
+    } catch (e) {
+      // ignore if it doesn't exist
+    }
+  }
+
+  revalidatePath(`/admin/events/${eventId}/premiere`);
+  revalidatePath(`/${eventId}/schedule`);
+}

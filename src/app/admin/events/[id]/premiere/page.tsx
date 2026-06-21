@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect, notFound } from 'next/navigation';
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
-import { addPremiereSchedule, updatePremiereSchedule, deletePremiereSchedule } from './actions';
+import { addPremiereSchedule, updatePremiereSchedule, deletePremiereSchedule, updateTimetableUrl } from './actions';
 import { ToastSubmitButton } from '@/components/admin/ToastSubmitButton';
 
 export const dynamic = 'force-dynamic';
@@ -30,11 +30,15 @@ export default async function PremiereAdminPage({ params }: { params: Promise<{ 
   const event = await prisma.event.findUnique({ 
     where: { id },
     include: {
-      premiereSchedules: { orderBy: { day: 'asc' } }
+      premiereSchedules: { orderBy: { day: 'asc' } },
+      settings: true
     }
   });
 
   if (!event) notFound();
+
+  const timetableUrlSetting = event.settings?.find(s => s.key === 'timetableUrl');
+  const timetableUrl = timetableUrlSetting?.value || '';
 
   const schedules = event.premiereSchedules || [];
 
@@ -49,6 +53,38 @@ export default async function PremiereAdminPage({ params }: { params: Promise<{ 
         </div>
         <h1 className="text-3xl font-black">🎬 プレミア配信予定の管理 : {event.title}</h1>
         
+        {/* 全体設定（タイムテーブル画像など） */}
+        <div className="bg-white p-6 rounded-xl shadow border-l-4 border-blue-500">
+          <h2 className="text-xl font-bold mb-4">イベント全体設定</h2>
+          <form action={updateTimetableUrl.bind(null, id)} className="flex items-end gap-4">
+            <div className="flex-1">
+              <label className="block text-sm font-bold mb-1">タイムテーブル画像のURL (Twitter画像やGyazoなど)</label>
+              <input 
+                name="timetableUrl" 
+                type="url" 
+                defaultValue={timetableUrl} 
+                placeholder="https://pbs.twimg.com/..." 
+                className="w-full border p-2 rounded" 
+              />
+            </div>
+            <div>
+              <ToastSubmitButton 
+                label="保存" 
+                loadingLabel="保存中..." 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow"
+                successMessage="設定を保存しました" 
+              />
+            </div>
+          </form>
+          {timetableUrl && (
+            <div className="mt-4">
+              <a href={timetableUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">
+                現在の画像を確認する ↗
+              </a>
+            </div>
+          )}
+        </div>
+
         {/* 新規追加フォーム */}
         <div className="bg-white p-6 rounded-xl shadow border-l-4 border-purple-500">
           <h2 className="text-xl font-bold mb-4">新規追加</h2>

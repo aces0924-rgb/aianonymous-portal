@@ -48,6 +48,12 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
     ['event-schedule-data'],
     { revalidate: 60 }
   );
+  
+  const timetableUrlSetting = await (prisma as any).setting.findUnique({
+    where: { eventId_key: { eventId: event.id, key: 'timetableUrl' } }
+  });
+  const timetableUrl = timetableUrlSetting?.value;
+
   const { schedule, tracks, shareBasePostUrl } = await getCachedScheduleData(event.id, isHonban);
 
   const themeConfig = JSON.parse(event.themeConfig || '{}');
@@ -131,7 +137,23 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-4 text-foreground drop-shadow-[0_0_30px_var(--color-glow)]">
           YouTube PREMIERE
         </h1>
-        <p className="text-foreground opacity-80 text-xs font-bold tracking-[0.5em] uppercase">共感の物語が、ここから動き出す。</p>
+        <p className="text-foreground opacity-80 text-xs font-bold tracking-[0.5em] uppercase mb-8">共感の物語が、ここから動き出す。</p>
+
+        {timetableUrl && (
+          <a 
+            href={timetableUrl} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-cyan-500)] text-white font-black tracking-widest text-sm hover:bg-[var(--color-cyan-400)] transition-colors shadow-[0_0_20px_var(--color-glow)] mb-4"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            タイムテーブルを見る
+          </a>
+        )}
       </section>
 
       {/* FEATURED: Today's Program (Optimized for visibility) */}
