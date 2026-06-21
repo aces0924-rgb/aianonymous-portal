@@ -47,11 +47,7 @@ export default function ScheduleJumpSelect({ tracks, enableArtistMain }: { track
             <option value="" disabled className="bg-surface text-foreground">
               楽曲を選択...
             </option>
-            {[...tracks].sort((a, b) => {
-              const aName = enableArtistMain ? (a.artistName || a.title) : a.title;
-              const bName = enableArtistMain ? (b.artistName || b.title) : b.title;
-              return aName.localeCompare(bName, 'ja');
-            }).map((track) => {
+            {tracks.map((track) => {
               const isInterested = interested.includes(track.id);
               const displayName = enableArtistMain ? (track.artistName || track.title) : track.title;
               return (
