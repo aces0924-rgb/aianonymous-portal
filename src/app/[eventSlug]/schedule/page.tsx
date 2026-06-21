@@ -294,18 +294,26 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                   )}
                 </div>
 
-                <div className="p-8 space-y-6 flex-1 flex flex-col">
+                <div className="p-6 md:p-8 space-y-4 flex-1 flex flex-col">
                   <div className="flex justify-between items-start">
-                    <div className="text-4xl font-black opacity-10 font-mono text-[var(--color-cyan-400)]">{dayLabel}</div>
-                    <div className="flex flex-col items-end gap-3 shrink-0">
-                      {!isSpecial && (
-                        <ScheduleItemProgress trackIds={dayTracks.map(t => t.id)} />
-                      )}
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] text-[10px] font-black tracking-widest uppercase">
+                          DAY {dayLabel}
+                        </span>
+                        <span className="text-xs font-bold text-foreground opacity-80">
+                          {dateFormatter.format(itemDate)} ({dayFormatter.format(itemDate)})
+                        </span>
+                      </div>
+                      <div className="text-3xl font-black text-foreground tracking-tight">
+                        {timeFormatter.format(itemDate)}<span className="text-xl text-foreground/50">〜</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-xs font-black text-[var(--color-cyan-400)] uppercase">{dateFormatter.format(itemDate)} ({dayFormatter.format(itemDate)})</div>
-                    <div className="text-3xl font-black text-foreground tracking-tight">{timeFormatter.format(itemDate)}〜</div>
+                    {!isSpecial && (
+                      <div className="shrink-0">
+                        <ScheduleItemProgress trackIds={dayTracks.map(t => t.id)} />
+                      </div>
+                    )}
                   </div>
                   {!isSpecial ? (
                     <div className="space-y-4">
