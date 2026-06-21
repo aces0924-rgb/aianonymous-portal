@@ -304,29 +304,29 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/5 to-transparent">
-                      <span className="text-foreground opacity-30 font-black tracking-[0.5em] text-xs">COMING SOON</span>
+                      <span className="text-foreground opacity-30 font-black tracking-[0.5em] text-[10px]">COMING SOON</span>
                     </div>
                   )}
                   {isTodayItem && (
-                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-[var(--color-cyan-500)] text-black text-[9px] font-black uppercase tracking-widest shadow-lg">
+                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-[var(--color-cyan-500)] text-black text-[9px] font-black uppercase tracking-widest shadow-lg">
                       TODAY
                     </div>
                   )}
                 </div>
 
-                <div className="p-6 md:p-8 space-y-4 flex-1 flex flex-col">
+                <div className="p-4 space-y-2 flex-1 flex flex-col">
                   <div className="flex justify-between items-start">
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-0.5">
                       <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 rounded bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] text-[10px] font-black tracking-widest uppercase">
+                        <span className="px-1.5 py-0 rounded bg-[var(--color-cyan-500)]/20 text-[var(--color-cyan-400)] text-[9px] font-black tracking-widest uppercase">
                           DAY {dayLabel}
                         </span>
-                        <span className="text-xs font-bold text-foreground opacity-80">
+                        <span className="text-[10px] font-bold text-foreground opacity-80">
                           {dateFormatter.format(itemDate)} ({dayFormatter.format(itemDate)})
                         </span>
                       </div>
-                      <div className="text-3xl font-black text-foreground tracking-tight">
-                        {timeFormatter.format(itemDate)}<span className="text-xl text-foreground/50">〜</span>
+                      <div className="text-2xl font-black text-foreground tracking-tight">
+                        {timeFormatter.format(itemDate)}<span className="text-lg text-foreground/50">〜</span>
                       </div>
                     </div>
                     {!isSpecial && (
@@ -336,22 +336,22 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                     )}
                   </div>
                   {!isSpecial ? (
-                    <div className="space-y-4">
+                    <div className="space-y-1">
                       <ScheduleJumpSelect tracks={dayTracks} enableArtistMain={enableArtistMain} />
                     </div>
                   ) : (
-                    <div className="p-4 rounded-xl border border-white/5 text-xs font-bold bg-white/5">{item.remarks}</div>
+                    <div className="p-2 rounded-lg border border-white/5 text-[10px] font-bold bg-white/5">{item.remarks}</div>
                   )}
 
-                  <div className="flex flex-col gap-3 pt-4 mt-auto">
+                  <div className="flex flex-col gap-1.5 pt-1 mt-auto">
                     {/* 1. YouTube視聴ボタン */}
                     {item.youtubeUrl && (
-                      <a href={item.youtubeUrl} target="_blank" rel="noopener noreferrer" className="block w-full py-4 rounded-2xl bg-red-600 text-center font-black text-xs hover:bg-red-500">
+                      <a href={item.youtubeUrl} target="_blank" rel="noopener noreferrer" className="block w-full py-2.5 rounded-xl bg-red-600 text-center font-black text-[10px] hover:bg-red-500">
                         WATCH
                       </a>
                     )}
 
-                    {/* 2. サムネイル応募・応募済み表示（放送開始3時間前締め切り） */}
+                    {/* 2. サムネイル応募・応募済み表示 */}
                     {(() => {
                       const now = new Date();
                       const dateLimit = new Date(itemDate.getTime() - 3 * 60 * 60 * 1000);
@@ -359,7 +359,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
                       if (item.thumbnailDriveId) {
                         return (
-                          <div className="block w-full py-4 rounded-2xl bg-green-950/20 border border-green-500/30 text-center font-black text-xs text-green-400 select-none shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+                          <div className="block w-full py-2.5 rounded-xl bg-green-950/20 border border-green-500/30 text-center font-black text-[10px] text-green-400 select-none shadow-sm">
                             ✓ 応募済み
                           </div>
                         );
@@ -367,7 +367,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                         return <PremiereThumbnailUploader day={item.day} />;
                       } else if (!item.youtubeUrl) {
                         return (
-                          <div className="block w-full py-4 rounded-2xl bg-white/5 border border-white/10 text-center font-black text-[10px] text-foreground select-none">
+                          <div className="block w-full py-2.5 rounded-xl bg-white/5 border border-white/10 text-center font-black text-[10px] text-foreground select-none">
                             LINK PENDING
                           </div>
                         );
@@ -378,7 +378,7 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
                       href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
                         `【${hashtag} #${item.day === 0 ? 'Eve' : item.day === 16 ? 'Final' : `Day${item.day}`}】 ${dateFormatter.format(itemDate)} ${timeFormatter.format(itemDate)}〜\n${isSpecial && item.remarks ? `${item.remarks}\n` : ''}\n📺 YouTube: ${item.youtubeUrl || '(準備中)'}`
                       )}`}
-                      target="_blank" rel="noopener noreferrer" className="block w-full py-3 rounded-2xl bg-background border border-white/10 text-center font-black text-[10px] hover:border-[var(--color-cyan-400)]/50 text-foreground"
+                      target="_blank" rel="noopener noreferrer" className="block w-full py-2 rounded-xl bg-background border border-white/10 text-center font-black text-[9px] hover:border-[var(--color-cyan-400)]/50 text-foreground"
                     >
                       Xで宣伝
                     </a>
