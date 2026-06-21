@@ -44,7 +44,7 @@ export default function ScheduleJumpSelect({ tracks, enableArtistMain }: { track
             }`}
             defaultValue=""
           >
-            <option value="" disabled className="bg-surface text-foreground">
+            <option value="" disabled className="text-neutral-400">
               {enableArtistMain ? '出演アーティストを選択...' : '楽曲を選択...'}
             </option>
             {tracks.map((track) => {
@@ -54,7 +54,7 @@ export default function ScheduleJumpSelect({ tracks, enableArtistMain }: { track
                 <option 
                   key={track.id} 
                   value={track.id} 
-                  className={`bg-surface ${isInterested ? 'text-yellow-400 font-black' : 'text-foreground'}`}
+                  className={isInterested ? 'text-yellow-600 font-black bg-neutral-100' : 'text-neutral-900 bg-white'}
                 >
                   {isInterested ? '★ ' : ''}No.{track.entryNo} {displayName}
                 </option>
