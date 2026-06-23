@@ -22,8 +22,12 @@ export default async function PortalHome() {
           ) : (
             events.map((event) => {
               const theme = JSON.parse(event.themeConfig || '{}');
+              const labels = JSON.parse(event.labelConfig || '{}');
               const bgUrl = theme.bgUrl || 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80';
               const logoUrl = theme.logoUrl;
+              
+              const periodText = labels.portalPeriod || '';
+              const descText = labels.portalDescription || event.description || '';
               
               return (
               <Link
@@ -44,17 +48,22 @@ export default async function PortalHome() {
                 {/* コンテンツ */}
                 <div className="absolute inset-0 p-8 flex flex-col">
                   {/* 中央のテキスト */}
-                  <div className="flex-1 flex flex-col items-center justify-center">
-                    <h2 className="text-3xl md:text-5xl font-black text-white text-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] tracking-tight transition-transform duration-500 group-hover:scale-105">
+                  <div className="flex-1 flex flex-col items-center justify-center relative">
+                    {periodText && (
+                      <div className="absolute top-1/4 -translate-y-full mb-4 px-5 py-1.5 rounded-full bg-cyan-900/60 border border-cyan-400/30 text-cyan-100 text-xs font-black tracking-widest backdrop-blur-md shadow-lg transition-transform duration-500 group-hover:-translate-y-[120%]">
+                        {periodText}
+                      </div>
+                    )}
+                    <h2 className="text-3xl md:text-5xl font-black text-white text-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] tracking-tight transition-transform duration-500 group-hover:scale-105 z-10">
                       {event.title}
                     </h2>
                   </div>
                   
                   {/* 下部の情報 */}
                   <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    {event.description && (
+                    {descText && (
                       <p className="text-slate-300 line-clamp-2 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-                        {event.description}
+                        {descText}
                       </p>
                     )}
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 text-sm font-bold backdrop-blur-md">
