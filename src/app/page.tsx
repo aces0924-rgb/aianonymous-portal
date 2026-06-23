@@ -32,7 +32,7 @@ export default async function PortalHome() {
 
       <div className="relative z-10 max-w-5xl mx-auto pt-8 pb-16 px-4">
         <div className="flex justify-center mb-10">
-          <div className="relative p-6 md:p-10 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-lg border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.2)] flex justify-center items-center group">
+          <div className="relative px-6 py-3 md:px-10 md:py-5 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-lg border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.2)] flex justify-center items-center group">
             {/* パネル内側の微かなグラデーション */}
             <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-cyan-500/10 via-transparent to-fuchsia-500/10 pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
             <img 
