@@ -27,8 +27,8 @@ export default async function PortalHome() {
           backgroundPosition: "center",
         }}
       />
-      {/* すりガラス風の暗層レイヤー */}
-      <div className="fixed inset-0 z-0 bg-black/40 backdrop-blur-md pointer-events-none" />
+      {/* すりガラス風の暗層レイヤー (薄青みがかった半透明 + 弱めのぼかし) */}
+      <div className="fixed inset-0 z-0 bg-slate-900/50 backdrop-blur-[3px] pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto pt-6 pb-16 px-4">
         <div className="flex justify-center mb-6">
@@ -57,7 +57,7 @@ export default async function PortalHome() {
               return (
               <div
                 key={event.id}
-                className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-slate-200 hover:border-cyan-400"
+                className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-85 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-cyan-400"
               >
                 {/* カード全体をクリック可能にするメインリンク */}
                 <Link href={`/${event.slug}`} className="absolute inset-0 z-10" aria-label={event.title} />
@@ -122,7 +122,7 @@ export default async function PortalHome() {
               href="https://aianonymous.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
+              className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-85 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
             >
               <img 
                 src="https://aianonymous.vercel.app/images/hero-bg.jpg" 
