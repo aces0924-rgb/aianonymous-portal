@@ -22,12 +22,13 @@ export default async function PortalHome() {
       <div className="fixed inset-0 z-0 bg-gradient-to-b from-black/20 via-transparent to-black/80 pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto py-16 px-4">
-        <h1 className="text-4xl md:text-6xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-cyan-200 tracking-tight drop-shadow-md">
-          AI音楽イベントフェスポータル
-        </h1>
-        <p className="text-cyan-100/80 mb-12 text-lg font-medium drop-shadow-sm">
-          AI音楽イベントのポータルサイトです。
-        </p>
+        <div className="flex justify-center mb-12">
+          <img 
+            src="https://i.gyazo.com/11203a829d5d0f947da8831f7c451b00.png" 
+            alt="AI音楽イベントフェスポータル" 
+            className="w-full max-w-xl md:max-w-3xl drop-shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-transform duration-500 hover:scale-105"
+          />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {events.length === 0 ? (
