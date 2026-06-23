@@ -30,14 +30,18 @@ export default async function PortalHome() {
       {/* すりガラス風の明るめレイヤー (うっすら白みがかった半透明 + 弱めのぼかし) */}
       <div className="fixed inset-0 z-0 bg-white/10 backdrop-blur-[3px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto pt-6 pb-16 px-4">
-        <div className="flex justify-center mb-6">
-          <img 
-            src={portalLogoUrl} 
-            alt="AI音楽イベントフェスポータル" 
-            style={portalLogoWidth ? { width: `${portalLogoWidth}px`, maxWidth: '100%' } : undefined}
-            className={`drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] transition-transform duration-500 hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
-          />
+      <div className="relative z-10 max-w-5xl mx-auto pt-8 pb-16 px-4">
+        <div className="flex justify-center mb-10">
+          <div className="relative p-6 md:p-10 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-lg border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.2)] flex justify-center items-center group">
+            {/* パネル内側の微かなグラデーション */}
+            <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-cyan-500/10 via-transparent to-fuchsia-500/10 pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
+            <img 
+              src={portalLogoUrl} 
+              alt="AI音楽イベントフェスポータル" 
+              style={portalLogoWidth ? { width: `${portalLogoWidth}px`, maxWidth: '100%' } : undefined}
+              className={`relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] transition-transform duration-500 group-hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
