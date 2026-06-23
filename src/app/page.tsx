@@ -101,7 +101,7 @@ export default async function PortalHome() {
               className="relative block aspect-[16/9] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
             >
               <img 
-                src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80" 
+                src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80" 
                 alt="Archive" 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -116,15 +116,17 @@ export default async function PortalHome() {
                 <span className="mt-4 px-3 py-1 rounded-full bg-fuchsia-600 text-white text-xs font-bold uppercase tracking-widest">Archive</span>
               </div>
               
-              <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                <p className="text-slate-300 line-clamp-1 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="relative z-20 mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 opacity-0 group-hover:opacity-100 flex flex-col gap-3">
+                <p className="text-slate-200 line-clamp-1 text-sm font-medium drop-shadow-md">
                   2026年5月に開催された記念すべき第1回目の特設サイトはこちら。（外部サイトへ遷移します）
                 </p>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-fuchsia-500/20 border border-fuchsia-400/50 text-fuchsia-300 text-sm font-bold backdrop-blur-md">
-                  アーカイブを見る
-                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-fuchsia-500/30 border border-fuchsia-400/50 text-fuchsia-100 text-sm font-bold backdrop-blur-md">
+                    アーカイブを見る
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
