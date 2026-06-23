@@ -30,6 +30,7 @@ export async function updateEventDetails(id: string, formData: FormData) {
       labelConfig: JSON.stringify(labelConfig)
     }
   })
+  revalidatePath('/')
   revalidatePath('/admin')
   revalidatePath(`/${slug}`, 'layout')
 }
@@ -66,6 +67,7 @@ export async function updateEventConfig(id: string, configType: 'themeConfig' | 
     where: { id },
     data: { [configType]: JSON.stringify(newConfig) }
   });
+  revalidatePath('/');
   revalidatePath(`/admin/events/${id}/settings`);
   revalidatePath(`/${event.slug}`, 'layout');
 }
