@@ -27,8 +27,8 @@ export default async function PortalHome() {
           backgroundPosition: "center",
         }}
       />
-      {/* すりガラス風の暗層レイヤー (薄青みがかった半透明 + 弱めのぼかし) */}
-      <div className="fixed inset-0 z-0 bg-slate-900/50 backdrop-blur-[3px] pointer-events-none" />
+      {/* すりガラス風の明るめレイヤー (うっすら白みがかった半透明 + 弱めのぼかし) */}
+      <div className="fixed inset-0 z-0 bg-white/10 backdrop-blur-[3px] pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto pt-6 pb-16 px-4">
         <div className="flex justify-center mb-6">
@@ -36,7 +36,7 @@ export default async function PortalHome() {
             src={portalLogoUrl} 
             alt="AI音楽イベントフェスポータル" 
             style={portalLogoWidth ? { width: `${portalLogoWidth}px`, maxWidth: '100%' } : undefined}
-            className={`drop-shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-transform duration-500 hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
+            className={`drop-shadow-[0_0_20px_rgba(255,255,255,0.8)] transition-transform duration-500 hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
           />
         </div>
 
