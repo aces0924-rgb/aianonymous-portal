@@ -24,9 +24,9 @@ export default async function PortalHome() {
       <div className="relative z-10 max-w-5xl mx-auto py-16 px-4">
         <div className="flex justify-center mb-12">
           <img 
-            src="https://i.gyazo.com/11203a829d5d0f947da8831f7c451b00.png" 
+            src="https://i.gyazo.com/2d95ce2d1f241232b192d53bc4dd4fd4.png" 
             alt="AI音楽イベントフェスポータル" 
-            className="w-full max-w-xl md:max-w-3xl drop-shadow-[0_0_30px_rgba(0,240,255,0.4)] transition-transform duration-500 hover:scale-105"
+            className="w-full max-w-xs md:max-w-sm drop-shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-transform duration-500 hover:scale-105"
           />
         </div>
 
