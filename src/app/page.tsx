@@ -95,7 +95,7 @@ export default async function PortalHome() {
 
           {/* 現行サイト（第1回）への静的リンク */}
           <a
-              href="https://aianonymous-fes.vercel.app/"
+              href="https://aianonymous.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="relative block aspect-[16/9] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
