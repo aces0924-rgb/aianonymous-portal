@@ -69,11 +69,11 @@ export default async function AdminPage() {
           <form action={updateGlobalSettings} className="flex flex-col gap-4">
             <div>
               <label className="block font-bold text-sm mb-1">背景画像 URL</label>
-              <input name="bgUrl" defaultValue={bgUrl} className="border p-2 rounded text-black w-full" />
+              <input type="text" name="bgUrl" defaultValue={bgUrl} className="border p-2 rounded text-black w-full bg-white" />
             </div>
             <div>
               <label className="block font-bold text-sm mb-1">ロゴ画像 URL</label>
-              <input name="logoUrl" defaultValue={logoUrl} className="border p-2 rounded text-black w-full" />
+              <input type="text" name="logoUrl" defaultValue={logoUrl} className="border p-2 rounded text-black w-full bg-white" />
             </div>
             <div>
               <label className="block font-bold text-sm mb-1">ロゴ画像の幅 (px)</label>
