@@ -54,7 +54,7 @@ export default async function PortalHome() {
                         {periodText}
                       </div>
                     )}
-                    <h2 className="text-3xl md:text-5xl font-black text-white text-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] tracking-tight transition-transform duration-500 group-hover:scale-105 z-10">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white text-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] tracking-tight transition-transform duration-500 group-hover:scale-105 z-10 break-words w-full px-4 line-clamp-3">
                       {event.title}
                     </h2>
                   </div>
@@ -96,7 +96,7 @@ export default async function PortalHome() {
             
             <div className="absolute inset-0 p-8 flex flex-col">
               <div className="flex-1 flex flex-col items-center justify-center">
-                <h2 className="text-3xl md:text-4xl font-black text-white text-center drop-shadow-[0_0_15px_rgba(217,70,239,0.5)]">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white text-center drop-shadow-[0_0_15px_rgba(217,70,239,0.5)] break-words w-full px-4">
                   第1回 AI-anonymous <br/> MUSIC FES
                 </h2>
                 <span className="mt-4 px-3 py-1 rounded-full bg-fuchsia-600 text-white text-xs font-bold uppercase tracking-widest">Archive</span>
