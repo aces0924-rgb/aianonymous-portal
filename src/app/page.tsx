@@ -18,21 +18,20 @@ export default async function PortalHome() {
 
   return (
     <main className="min-h-screen relative bg-black text-white font-sans overflow-hidden">
-      {/* 背景画像 (透明度50%) */}
+      {/* 背景画像 (等倍表示) */}
       <div 
         className="fixed inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `url('${portalBgUrl}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          opacity: 0.5
         }}
       />
-      {/* 背景のグラデーションオーバーレイ */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-black/20 via-transparent to-black/80 pointer-events-none" />
+      {/* すりガラス風の暗層レイヤー */}
+      <div className="fixed inset-0 z-0 bg-black/40 backdrop-blur-md pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto py-16 px-4">
-        <div className="flex justify-center mb-12">
+      <div className="relative z-10 max-w-5xl mx-auto pt-6 pb-16 px-4">
+        <div className="flex justify-center mb-6">
           <img 
             src={portalLogoUrl} 
             alt="AI音楽イベントフェスポータル" 
