@@ -57,7 +57,7 @@ export default async function PortalHome() {
               return (
               <div
                 key={event.id}
-                className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-85 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-cyan-400"
+                className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-65 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-cyan-400"
               >
                 {/* カード全体をクリック可能にするメインリンク */}
                 <Link href={`/${event.slug}`} className="absolute inset-0 z-10" aria-label={event.title} />
@@ -122,7 +122,7 @@ export default async function PortalHome() {
               href="https://aianonymous.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-85 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
+              className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-65 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
             >
               <img 
                 src="https://aianonymous.vercel.app/images/hero-bg.jpg" 
