@@ -38,35 +38,22 @@ export default async function PortalHome() {
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 
-                {/* オーバーレイ (暗くしてテキストやロゴを目立たせる) */}
+                {/* オーバーレイ (暗くしてテキストを目立たせる) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
                 
                 {/* コンテンツ */}
                 <div className="absolute inset-0 p-8 flex flex-col">
-                  {/* 中央のロゴまたはテキスト */}
+                  {/* 中央のテキスト */}
                   <div className="flex-1 flex flex-col items-center justify-center">
-                    {logoUrl ? (
-                      <img 
-                        src={logoUrl} 
-                        alt={event.title}
-                        className="w-3/4 max-h-32 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <h2 className="text-3xl font-black text-white text-center drop-shadow-md">
-                        {event.title}
-                      </h2>
-                    )}
+                    <h2 className="text-3xl md:text-5xl font-black text-white text-center drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] tracking-tight transition-transform duration-500 group-hover:scale-105">
+                      {event.title}
+                    </h2>
                   </div>
                   
                   {/* 下部の情報 */}
                   <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    {logoUrl && (
-                      <h2 className="text-xl font-bold text-white mb-1 truncate drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        {event.title}
-                      </h2>
-                    )}
                     {event.description && (
-                      <p className="text-slate-300 line-clamp-1 text-sm mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                      <p className="text-slate-300 line-clamp-2 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
                         {event.description}
                       </p>
                     )}
