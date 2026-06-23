@@ -89,3 +89,25 @@ export async function deleteAllTracks() {}
 export async function syncHonbanToSample() {}
 export async function updateActiveTrackTable() {}
 
+export async function updateGlobalSettings(formData: FormData) {
+  const bgUrl = formData.get('bgUrl') as string;
+  const logoUrl = formData.get('logoUrl') as string;
+  const logoWidth = formData.get('logoWidth') as string;
+
+  const updateSetting = async (key: string, value: string) => {
+    if (value !== null && value !== undefined) {
+      await prisma.globalSetting.upsert({
+        where: { key },
+        update: { value },
+        create: { key, value }
+      });
+    }
+  };
+
+  await updateSetting('portal_bg_url', bgUrl);
+  await updateSetting('portal_logo_url', logoUrl);
+  await updateSetting('portal_logo_width', logoWidth);
+
+  revalidatePath('/');
+  revalidatePath('/admin');
+}

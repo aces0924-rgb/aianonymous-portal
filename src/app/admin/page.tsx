@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { addAdminUser, deleteAdminUser, addEvent, getEventTemplates } from './actions'
+import { addAdminUser, deleteAdminUser, addEvent, getEventTemplates, updateGlobalSettings } from './actions'
 import { logout } from './login/actions'
 
 export const metadata = {
@@ -41,6 +41,15 @@ export default async function AdminPage() {
   const events = await prisma.event.findMany({ orderBy: { createdAt: 'desc' } })
   const adminUsers = await prisma.adminUser.findMany({ orderBy: { createdAt: 'desc' } })
   const templates = await getEventTemplates()
+  const globalSettings = await prisma.globalSetting.findMany()
+  const settingsMap = globalSettings.reduce((acc, s) => {
+    acc[s.key] = s.value;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const bgUrl = settingsMap['portal_bg_url'] || "https://i.gyazo.com/3d88429640b885cb595bc0c3756007d6.jpg"
+  const logoUrl = settingsMap['portal_logo_url'] || "https://i.gyazo.com/2d95ce2d1f241232b192d53bc4dd4fd4.png"
+  const logoWidth = settingsMap['portal_logo_width'] || "320"
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 text-black">
@@ -50,6 +59,29 @@ export default async function AdminPage() {
           <form action={logout} className="shrink-0 flex items-center">
             <button className="px-6 py-4 border border-red-200 text-red-600 rounded-2xl hover:bg-red-50 transition-colors font-bold text-sm bg-white">
               ログアウト
+            </button>
+          </form>
+        </div>
+
+        {/* Portal Settings */}
+        <div className="bg-white p-6 rounded-xl shadow border-l-4 border-cyan-500">
+          <h2 className="text-xl font-bold mb-4">ポータル全体設定</h2>
+          <form action={updateGlobalSettings} className="flex flex-col gap-4">
+            <div>
+              <label className="block font-bold text-sm mb-1">背景画像 URL</label>
+              <input name="bgUrl" defaultValue={bgUrl} className="border p-2 rounded text-black w-full" />
+            </div>
+            <div>
+              <label className="block font-bold text-sm mb-1">ロゴ画像 URL</label>
+              <input name="logoUrl" defaultValue={logoUrl} className="border p-2 rounded text-black w-full" />
+            </div>
+            <div>
+              <label className="block font-bold text-sm mb-1">ロゴ画像の幅 (px)</label>
+              <input name="logoWidth" type="number" defaultValue={logoWidth} className="border p-2 rounded text-black w-full max-w-xs" />
+              <p className="text-xs text-gray-500 mt-1">※空欄にした場合は画面幅いっぱいに自動調整されます。</p>
+            </div>
+            <button type="submit" className="bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-700 font-bold self-start mt-2">
+              保存して反映
             </button>
           </form>
         </div>

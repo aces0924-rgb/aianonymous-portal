@@ -6,13 +6,23 @@ export default async function PortalHome() {
     orderBy: { createdAt: "desc" },
   });
 
+  const globalSettings = await prisma.globalSetting.findMany();
+  const settingsMap = globalSettings.reduce((acc, s) => {
+    acc[s.key] = s.value;
+    return acc;
+  }, {} as Record<string, string>);
+
+  const portalBgUrl = settingsMap['portal_bg_url'] || "https://i.gyazo.com/3d88429640b885cb595bc0c3756007d6.jpg";
+  const portalLogoUrl = settingsMap['portal_logo_url'] || "https://i.gyazo.com/2d95ce2d1f241232b192d53bc4dd4fd4.png";
+  const portalLogoWidth = settingsMap['portal_logo_width'];
+
   return (
     <main className="min-h-screen relative bg-black text-white font-sans overflow-hidden">
       {/* 背景画像 (透明度50%) */}
       <div 
         className="fixed inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: "url('https://i.gyazo.com/3d88429640b885cb595bc0c3756007d6.jpg')",
+          backgroundImage: `url('${portalBgUrl}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.5
@@ -24,9 +34,10 @@ export default async function PortalHome() {
       <div className="relative z-10 max-w-5xl mx-auto py-16 px-4">
         <div className="flex justify-center mb-12">
           <img 
-            src="https://i.gyazo.com/2d95ce2d1f241232b192d53bc4dd4fd4.png" 
+            src={portalLogoUrl} 
             alt="AI音楽イベントフェスポータル" 
-            className="w-full max-w-xs md:max-w-sm drop-shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-transform duration-500 hover:scale-105"
+            style={portalLogoWidth ? { width: `${portalLogoWidth}px`, maxWidth: '100%' } : undefined}
+            className={`drop-shadow-[0_0_20px_rgba(0,240,255,0.3)] transition-transform duration-500 hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
           />
         </div>
 
