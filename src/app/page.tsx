@@ -28,13 +28,15 @@ export default async function PortalHome() {
               
               const periodText = labels.portalPeriod || '';
               const descText = labels.portalDescription || event.description || '';
+              const officialUrl = labels.portalOfficialUrl || '';
               
               return (
-              <Link
+              <div
                 key={event.id}
-                href={`/${event.slug}`}
                 className="relative block aspect-[16/9] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-slate-200 hover:border-cyan-400"
               >
+                {/* カード全体をクリック可能にするメインリンク */}
+                <Link href={`/${event.slug}`} className="absolute inset-0 z-10" aria-label={event.title} />
                 {/* 背景画像 */}
                 <img 
                   src={bgUrl} 
@@ -59,22 +61,35 @@ export default async function PortalHome() {
                     </h2>
                   </div>
                   
-                  {/* 下部の情報 */}
-                  <div className="mt-auto transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  {/* 下部の情報 (ボタングループ等は z-20 にして押せるようにする) */}
+                  <div className="relative z-20 mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 opacity-0 group-hover:opacity-100 flex flex-col gap-3">
                     {descText && (
-                      <p className="text-slate-300 line-clamp-2 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                      <p className="text-slate-200 line-clamp-2 text-sm font-medium drop-shadow-md">
                         {descText}
                       </p>
                     )}
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 text-sm font-bold backdrop-blur-md">
-                      イベントページへ行く
-                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    <div className="flex flex-wrap items-center gap-3">
+                      {/* メインのイベントページボタン */}
+                      <Link href={`/${event.slug}`} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/30 hover:bg-cyan-500/50 border border-cyan-400/50 text-white text-sm font-bold backdrop-blur-md transition-colors shadow-lg">
+                        イベントページへ
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Link>
+                      
+                      {/* 公式サイトボタン (あれば表示) */}
+                      {officialUrl && (
+                        <a href={officialUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/60 hover:bg-slate-700/80 border border-slate-500/50 text-slate-200 text-sm font-bold backdrop-blur-md transition-colors shadow-lg">
+                          公式サイト
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             )})
           )}
 

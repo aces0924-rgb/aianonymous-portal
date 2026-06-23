@@ -106,6 +106,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
     portalPeriod: labelConfig.portalPeriod || '',
     portalDescription: labelConfig.portalDescription || '',
+    portalOfficialUrl: labelConfig.portalOfficialUrl || '',
     guidelinesTitle: labelConfig.guidelinesTitle || '募集要項',
     lyricsTab: labelConfig.lyricsTab || 'LYRICS',
     analysisTab: labelConfig.analysisTab || '歌詞考察',
@@ -429,6 +430,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const siteTitle = formData.get('siteTitle') as string
             const portalPeriod = formData.get('portalPeriod') as string
             const portalDescription = formData.get('portalDescription') as string
+            const portalOfficialUrl = formData.get('portalOfficialUrl') as string
             const lyricsTab = formData.get('lyricsTab') as string
             const analysisTab = formData.get('analysisTab') as string
             const analysisNote = formData.get('analysisNote') as string
@@ -440,7 +442,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const defaultMusicAnalysis = formData.get('defaultMusicAnalysis') as string
             const defaultIllustrationAnalysis = formData.get('defaultIllustrationAnalysis') as string
             const shareHashtag = formData.get('shareHashtag') as string
-            await updateEventConfig(id, 'labelConfig', { siteTitle, portalPeriod, portalDescription, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonSubLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis, shareHashtag })
+            await updateEventConfig(id, 'labelConfig', { siteTitle, portalPeriod, portalDescription, portalOfficialUrl, lyricsTab, analysisTab, analysisNote, disclaimer, entryPrefix, randomPlayButtonLabel, scheduleButtonSubLabel, scheduleButtonLabel, defaultMusicAnalysis, defaultIllustrationAnalysis, shareHashtag })
           }} className="flex flex-col gap-4">
             <div className="flex gap-4">
               <div className="flex-1">
@@ -456,6 +458,12 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <div className="flex-[2]">
                 <label className="text-xs font-bold text-foreground block mb-1">ポータル用: 概要文</label>
                 <input name="portalDescription" defaultValue={defaultLabels.portalDescription} placeholder="一覧カードに表示する短い概要" className="w-full border p-2 rounded text-sm bg-white" />
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <label className="text-xs font-bold text-foreground block mb-1">ポータル用: 公式サイトURL (任意)</label>
+                <input name="portalOfficialUrl" defaultValue={defaultLabels.portalOfficialUrl} placeholder="https://..." className="w-full border p-2 rounded text-sm bg-white" />
               </div>
             </div>
             <div className="flex gap-4">
