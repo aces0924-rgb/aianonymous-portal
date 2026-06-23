@@ -48,9 +48,9 @@ export default async function PortalHome() {
                 {/* コンテンツ */}
                 <div className="absolute inset-0 p-8 flex flex-col">
                   {/* 中央のテキスト */}
-                  <div className="flex-1 flex flex-col items-center justify-center relative">
+                  <div className="flex-1 flex flex-col items-center justify-center">
                     {periodText && (
-                      <div className="absolute top-1/4 -translate-y-full mb-4 px-5 py-1.5 rounded-full bg-cyan-900/60 border border-cyan-400/30 text-cyan-100 text-xs font-black tracking-widest backdrop-blur-md shadow-lg transition-transform duration-500 group-hover:-translate-y-[120%]">
+                      <div className="mb-4 px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-400/30 text-cyan-100 text-[10px] md:text-xs font-black tracking-widest backdrop-blur-md shadow-lg transition-transform duration-500 group-hover:-translate-y-2">
                         {periodText}
                       </div>
                     )}
