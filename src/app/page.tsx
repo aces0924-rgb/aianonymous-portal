@@ -7,18 +7,31 @@ export default async function PortalHome() {
   });
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 py-16 px-4 font-sans">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl md:text-6xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-[var(--color-cyan-600)] to-[var(--color-cyan-400)] tracking-tight">
+    <main className="min-h-screen relative bg-black text-white font-sans overflow-hidden">
+      {/* 背景画像 (透明度50%) */}
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('https://i.gyazo.com/3d88429640b885cb595bc0c3756007d6.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: 0.5
+        }}
+      />
+      {/* 背景のグラデーションオーバーレイ */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-black/20 via-transparent to-black/80 pointer-events-none" />
+
+      <div className="relative z-10 max-w-5xl mx-auto py-16 px-4">
+        <h1 className="text-4xl md:text-6xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-cyan-200 tracking-tight drop-shadow-md">
           AI音楽イベントフェスポータル
         </h1>
-        <p className="text-slate-500 mb-12 text-lg">
+        <p className="text-cyan-100/80 mb-12 text-lg font-medium drop-shadow-sm">
           AI音楽イベントのポータルサイトです。
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {events.length === 0 ? (
-            <p className="text-slate-500">現在公開されているイベントはありません。</p>
+            <p className="text-slate-300">現在公開されているイベントはありません。</p>
           ) : (
             events.map((event) => {
               const theme = JSON.parse(event.themeConfig || '{}');
