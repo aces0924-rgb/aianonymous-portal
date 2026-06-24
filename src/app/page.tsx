@@ -92,9 +92,10 @@ export default async function PortalHome() {
                   {/* 下部の情報 (ボタングループ等は z-20 にして押せるようにする) */}
                   <div className="relative z-20 mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 opacity-0 group-hover:opacity-100 flex flex-col gap-3">
                     {descText && (
-                      <p className="text-slate-200 line-clamp-2 text-sm font-medium drop-shadow-md">
-                        {descText}
-                      </p>
+                      <div 
+                        className="text-slate-200 line-clamp-2 text-sm font-medium drop-shadow-md [&>p]:inline [&>br]:hidden"
+                        dangerouslySetInnerHTML={{ __html: descText }}
+                      />
                     )}
                     <div className="flex flex-wrap items-center gap-3">
                       {/* メインのイベントページボタン */}
