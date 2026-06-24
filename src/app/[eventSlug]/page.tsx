@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SelectionIndicator from '@/components/SelectionIndicator'
 import TrackJumpModern from '@/components/TrackJumpModern'
+import RichTextRenderer from '@/components/RichTextRenderer'
 
 import { notFound } from "next/navigation";
 import { unstable_cache } from "next/cache";
@@ -369,7 +370,11 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                       {`${n.createdAt.getFullYear()}/${n.createdAt.getMonth() + 1}/${n.createdAt.getDate()}`}
                     </span>
                     <h3 className="text-xl font-bold text-foreground">{n.title}</h3>
-                    {n.content && <p className="text-foreground mt-3 leading-relaxed font-light">{n.content}</p>}
+                    {n.content && (
+                      <div className="text-foreground mt-3 leading-relaxed font-light break-words">
+                        <RichTextRenderer content={n.content} />
+                      </div>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -440,7 +445,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                     
                     {event.description && (
                       <div className="prose prose-p:text-foreground prose-headings:text-foreground prose-a:text-[var(--color-cyan-400)] prose-li:text-foreground prose-strong:text-foreground max-w-none px-0 custom-quill-content">
-                        <div dangerouslySetInnerHTML={{ __html: event.description }} />
+                        <RichTextRenderer content={event.description} isHtml={true} />
                       </div>
                     )}
                     
@@ -468,7 +473,9 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                       <h3 className="text-xl font-black text-foreground leading-tight">{faq.question}</h3>
                       <div className="flex gap-6 pt-2 border-t border-surface-border/50">
                         <span className="text-2xl font-black text-[var(--color-cyan-400)]">A.</span>
-                        <p className="text-foreground text-lg font-light leading-relaxed whitespace-pre-wrap">{faq.answer}</p>
+                        <div className="text-foreground text-lg font-light leading-relaxed break-words w-full whitespace-pre-wrap">
+                          <RichTextRenderer content={faq.answer} />
+                        </div>
                       </div>
                     </div>
                   </div>
