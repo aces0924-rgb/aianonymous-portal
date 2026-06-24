@@ -545,6 +545,11 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
           <form action={updateEventSetting.bind(null, id, 'SHEET_URL')} className="flex flex-col gap-2">
             <label className="text-xs font-bold text-foreground">スプレッドシート（CSVエクスポートURL）</label>
             <input name="value" defaultValue={currentSheetUrl} placeholder="https://docs.google.com/spreadsheets/d/.../export?format=csv&gid=..." className="border p-2 rounded text-sm bg-white" />
+            <p className="text-xs text-slate-500 mt-1 mb-2 leading-relaxed">
+              ※ CSVの1行目（ヘッダー）に以下の項目名を含めてください。<br/>
+              <b>必須項目:</b> <code className="bg-slate-100 px-1 rounded">タイムスタンプ</code>, <code className="bg-slate-100 px-1 rounded">No</code>, <code className="bg-slate-100 px-1 rounded">title</code> または <code className="bg-slate-100 px-1 rounded">■ 曲タイトル</code>, <code className="bg-slate-100 px-1 rounded">URL</code> または <code className="bg-slate-100 px-1 rounded">youtube:URL</code>, <code className="bg-slate-100 px-1 rounded">artist</code> または <code className="bg-slate-100 px-1 rounded">名前（ハンドルネーム）</code><br/>
+              <b>任意項目:</b> <code className="bg-slate-100 px-1 rounded">lyrics</code>, <code className="bg-slate-100 px-1 rounded">xAccount</code>, <code className="bg-slate-100 px-1 rounded">メールアドレス</code>, <code className="bg-slate-100 px-1 rounded">歌詞考察</code>, <code className="bg-slate-100 px-1 rounded">楽曲考察</code>
+            </p>
             <ToastSubmitButton label="URLを保存" className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 text-sm font-bold" />
           </form>
 
