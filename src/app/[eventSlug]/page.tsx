@@ -104,6 +104,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
   }
   const defaultLabels = {
     siteTitle: labelConfig.siteTitle || 'AI-anonymous MUSIC FES.',
+    guidelinesTitle: labelConfig.guidelinesTitle || '募集要項',
     randomPlayButtonLabel: labelConfig.randomPlayButtonLabel || 'ランダムで曲を聴く',
     scheduleButtonSubLabel: labelConfig.scheduleButtonSubLabel || 'イベント期間',
     scheduleButtonLabel: labelConfig.scheduleButtonLabel || 'YouTubeプレミア配信中！！',
