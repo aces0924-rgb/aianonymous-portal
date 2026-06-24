@@ -93,7 +93,7 @@ export default async function PortalHome() {
                   <div className="relative z-20 mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 opacity-0 group-hover:opacity-100 flex flex-col gap-3">
                     {descText && (
                       <div 
-                        className="text-slate-200 line-clamp-2 text-sm font-medium drop-shadow-md [&>p]:inline [&>br]:hidden"
+                        className="text-white line-clamp-2 text-sm font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] [&_*]:!text-white [&>p]:inline [&>br]:hidden"
                         dangerouslySetInnerHTML={{ __html: descText }}
                       />
                     )}
