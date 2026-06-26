@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import parse, { domToReact, Element, Text, HTMLReactParserOptions } from 'html-react-parser';
+import parse, { HTMLReactParserOptions } from 'html-react-parser';
 import { Tweet } from 'react-tweet';
 
 const URL_REGEX = /(https?:\/\/[^\s]+)/g;
@@ -34,10 +34,10 @@ function processText(text: string): React.ReactNode[] {
 }
 
 const options: HTMLReactParserOptions = {
-  replace: (domNode) => {
+  replace: (domNode: any) => {
     // aタグがすでにXのURLだった場合もTweetに置き換える
-    if (domNode instanceof Element && domNode.name === 'a') {
-      const href = domNode.attribs.href;
+    if (domNode.type === 'tag' && domNode.name === 'a') {
+      const href = domNode.attribs?.href;
       if (href) {
         const tweetId = isXUrl(href);
         if (tweetId) {
@@ -52,7 +52,7 @@ const options: HTMLReactParserOptions = {
       return undefined;
     }
 
-    if (domNode instanceof Text) {
+    if (domNode.type === 'text') {
       const text = domNode.data;
       if (URL_REGEX.test(text)) {
         return <>{processText(text)}</>;
