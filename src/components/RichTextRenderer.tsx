@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import parse, { HTMLReactParserOptions } from 'html-react-parser';
 import { Tweet } from 'react-tweet';
