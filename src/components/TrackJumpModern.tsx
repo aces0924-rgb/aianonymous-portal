@@ -113,7 +113,7 @@ export default function TrackJumpModern({
           ref={inputRef}
           type="text"
           className="bg-transparent text-foreground font-mono text-sm py-2.5 px-4 outline-none w-full placeholder:text-foreground"
-          placeholder={enableShowCreators ? "曲名・番号・アーティスト名で検索..." : "曲名・番号で検索..."}
+          placeholder={enableShowCreators ? "作品名・番号・クリエイター名で検索..." : "作品名・番号で検索..."}
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -172,7 +172,7 @@ export default function TrackJumpModern({
             </div>
           ) : (
             <div className="p-8 text-center text-foreground italic text-sm">
-              一致する楽曲が見つかりません
+              一致する作品が見つかりません
             </div>
           )}
         </div>

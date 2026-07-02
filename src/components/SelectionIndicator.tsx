@@ -4,12 +4,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useFavorites } from '@/context/FavoritesContext';
 import RecommendationModal from './RecommendationModal';
 
-export default function SelectionIndicator() {
+export default function SelectionIndicator({ applicationFormType = 'standard' }: { applicationFormType?: string }) {
   const { favorites, MAX_FAVORITES, enableArtistMain, illustrationFavorites, MAX_ILLUST_FAVORITES, openHelp } = useFavorites();
+  const isIllustrationMode = applicationFormType === 'illustration';
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialRecommendType, setInitialRecommendType] = useState<'song' | 'illustration' | null>(null);
   
-  const count = favorites.length;
+  // Use appropriate favorites based on mode
+  const currentFavorites = isIllustrationMode ? illustrationFavorites || [] : favorites;
+  const currentMax = isIllustrationMode ? MAX_ILLUST_FAVORITES : MAX_FAVORITES;
+  
+  const count = currentFavorites.length;
   const isEnabled = count >= 5;
 
   const illustCount = illustrationFavorites ? illustrationFavorites.length : 0;
@@ -104,7 +109,7 @@ export default function SelectionIndicator() {
         <div className="flex-1 px-6">
           {!isEnabled ? (
             <p className="text-[10px] text-foreground font-bold text-center leading-tight">
-              あと <span className="text-[var(--color-cyan-400)]">{5 - count}曲</span> 選択すると<br />推薦ページを作成できます
+              あと <span className="text-[var(--color-cyan-400)]">{5 - count}{isIllustrationMode ? '作品' : '曲'}</span> 選択すると<br />推薦ページを作成できます
             </p>
           ) : (
             <p className="text-[10px] text-[var(--color-cyan-400)] font-bold text-center animate-pulse">
@@ -130,7 +135,7 @@ export default function SelectionIndicator() {
 
   return (
     <>
-      {enableArtistMain ? renderSplitIndicator() : renderSingleIndicator()}
+      {enableArtistMain && !isIllustrationMode ? renderSplitIndicator() : renderSingleIndicator()}
       <RecommendationModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 

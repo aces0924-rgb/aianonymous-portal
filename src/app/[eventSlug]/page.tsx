@@ -117,8 +117,11 @@ export default async function Home({ params, searchParams }: { params: Promise<{
     enableArtistMain: featureFlags.enableArtistMain ?? false,
     enableAwards: featureFlags.enableAwards ?? false,
     enableHostSection: featureFlags.enableHostSection ?? true,
-    enableScheduleButton: featureFlags.enableScheduleButton ?? true
+    enableScheduleButton: featureFlags.enableScheduleButton ?? true,
+    applicationFormType: featureFlags.applicationFormType || 'standard'
   }
+
+  const isIllustrationMode = defaultFeatures.applicationFormType === 'illustration';
 
   const hosts = labelConfig.hosts || []
 
@@ -200,7 +203,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 },
                 { 
                   href: `/${eventSlug}/tracks`, 
-                  label: '参加作品', 
+                  label: isIllustrationMode ? '参加イラスト' : '参加作品', 
                   icon: (
                     <svg className="w-5 h-5 md:w-6 md:h-6 text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
@@ -288,7 +291,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               )}
 
               {/* YouTube Button */}
-              {playlistUrl && defaultFeatures.enablePlaylistInfo && (
+              {!isIllustrationMode && playlistUrl && defaultFeatures.enablePlaylistInfo && (
                 <a 
                   href={playlistUrl}
                   target="_blank"
@@ -304,7 +307,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               )}
 
               {/* Random Button */}
-              {defaultFeatures.enableRandomPlay && (
+              {!isIllustrationMode && defaultFeatures.enableRandomPlay && (
                 <RandomTrackButton 
                   trackIds={tracks.map((t: any) => t.id)} 
                   preview={preview} 
@@ -366,7 +369,10 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 {news.map((n: any) => (
                   <li key={n.id} className="border-b border-surface-border pb-6 last:border-0 last:pb-0">
                     <span className="text-sm text-[var(--color-cyan-400)] font-mono block mb-2">
-                      {`${n.createdAt.getFullYear()}/${n.createdAt.getMonth() + 1}/${n.createdAt.getDate()}`}
+                      {(() => {
+                        const date = new Date(n.createdAt);
+                        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+                      })()}
                     </span>
                     <h3 className="text-xl font-bold text-foreground">{n.title}</h3>
                     {n.content && <p className="text-foreground mt-3 leading-relaxed font-light">{n.content}</p>}
@@ -497,7 +503,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
       </footer>
 
       {/* Selection UI */}
-      <SelectionIndicator />
+      <SelectionIndicator applicationFormType={defaultFeatures.applicationFormType} />
     </main>
   )
 }

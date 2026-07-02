@@ -362,14 +362,18 @@ export default function TrackDetailView({
           {/* Right Column: Lyrics Box & Submission Button */}
           <div className="lg:w-[45%] flex flex-col relative">
             <div className="flex flex-col gap-4 mb-4 lg:mb-0 lg:absolute lg:inset-0">
-              <h2 className="text-lg md:text-2xl font-black flex items-center gap-3 tracking-tighter text-[var(--color-cyan-400)] uppercase shrink-0">
-                {defaultLabels.lyricsTab || 'LYRICS'}
-              </h2>
-              <div className="bg-surface/40 border border-surface-border rounded-3xl p-6 md:p-8 backdrop-blur-sm flex-grow overflow-y-auto custom-scrollbar max-h-[600px] lg:max-h-none">
-                <pre className="text-foreground whitespace-pre-wrap font-sans leading-loose text-base md:text-lg">
-                  {track.lyrics || "歌詞は登録されていません。"}
-                </pre>
-              </div>
+              {track.lyrics && (
+                <>
+                  <h2 className="text-lg md:text-2xl font-black flex items-center gap-3 tracking-tighter text-[var(--color-cyan-400)] uppercase shrink-0">
+                    {defaultLabels.lyricsTab || 'LYRICS'}
+                  </h2>
+                  <div className="bg-surface/40 border border-surface-border rounded-3xl p-6 md:p-8 backdrop-blur-sm flex-grow overflow-y-auto custom-scrollbar max-h-[600px] lg:max-h-none">
+                    <pre className="text-foreground whitespace-pre-wrap font-sans leading-loose text-base md:text-lg">
+                      {track.lyrics}
+                    </pre>
+                  </div>
+                </>
+              )}
 
               {/* Desktop only thumbnail button */}
               {renderThumbnailButton("hidden lg:flex shrink-0")}

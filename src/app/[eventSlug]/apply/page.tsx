@@ -35,15 +35,20 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
     });
   }, [eventSlug]);
 
+  const isIllustrationMode = config.applicationFormType === 'illustration';
+
   // entryType が切り替わったときにテンプレートを適用（ユーザーが編集していない場合のみ）
   useEffect(() => {
+    if (isIllustrationMode && entryType !== 'illustration') {
+      setEntryType('illustration');
+    }
     setFormData(prev => {
       if (!prev.analysis || prev.analysis === config.defaultMusicAnalysis || prev.analysis === config.defaultIllustrationAnalysis) {
         return { ...prev, analysis: entryType === 'music' ? config.defaultMusicAnalysis : config.defaultIllustrationAnalysis };
       }
       return prev;
     });
-  }, [entryType, config.defaultMusicAnalysis, config.defaultIllustrationAnalysis]);
+  }, [entryType, isIllustrationMode, config.defaultMusicAnalysis, config.defaultIllustrationAnalysis]);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -99,6 +104,28 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
       }
       if (!musicFile) {
         setErrorMsg('音楽ファイルのアップロードは必須です。');
+        return;
+      }
+    } else if (config.applicationFormType === 'illustration') {
+      if (!formData.title.trim()) {
+        setErrorMsg('作品タイトルは必須です。');
+        return;
+      }
+      const url = formData.songUrl.trim();
+      if (!url.match(/^https?:\/\//)) {
+        setErrorMsg('正しい画像URLを入力してください。');
+        return;
+      }
+      if (url.includes('x.com/') || url.includes('twitter.com/')) {
+        setErrorMsg('エラー: ポストのURLが入力されています。「画像URL」 (pbs.twimg.com等) を取得して入力してください。');
+        return;
+      }
+      if (!formData.artistName.trim()) {
+        setErrorMsg('イラストレーター名は必須です。');
+        return;
+      }
+      if (!formData.xAccount.trim()) {
+        setErrorMsg('X (旧Twitter) アカウントは必須です。');
         return;
       }
     } else {
@@ -346,6 +373,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
   }
 
   const isAnonymousMode = config.applicationFormType === 'anonymous';
+  // isIllustrationMode is defined at the top
 
   return (
     <main className="min-h-screen bg-background text-foreground py-12 md:py-20 px-4">
@@ -359,27 +387,20 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-foreground">
-            {isAnonymousMode ? '匿名楽曲エントリー' : (config.enableArtistMain ? 'アーティストエントリー' : '楽曲エントリー')}
+            {isIllustrationMode ? 'イラスト作品エントリー' : (isAnonymousMode ? '匿名楽曲エントリー' : (config.enableArtistMain ? 'アーティストエントリー' : '楽曲エントリー'))}
           </h1>
           <p className="text-foreground text-lg">
-            {isAnonymousMode 
-              ? '以下のフォームから匿名フェス用の情報を登録してください。'
-              : (config.enableArtistMain ? '以下のフォームからアーティスト情報と作品を登録してください。' : '以下のフォームから楽曲情報を登録してください。')}
+            {isIllustrationMode 
+              ? '以下のフォームからイラスト作品の情報を登録してください。'
+              : (isAnonymousMode 
+                  ? '以下のフォームから匿名フェス用の情報を登録してください。'
+                  : (config.enableArtistMain ? '以下のフォームからアーティスト情報と作品を登録してください。' : '以下のフォームから楽曲情報を登録してください。'))}
           </p>
         </div>
 
-        {errorMsg && (
-          <div className="mb-8 p-4 bg-red-500/10 border border-red-500/50 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-top-4">
-            <svg className="w-6 h-6 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <p className="text-red-500 font-bold">{errorMsg}</p>
-          </div>
-        )}
-
         <form onSubmit={handlePreview} className="space-y-8">
           
-          {!isAnonymousMode && (
+          {!isAnonymousMode && !isIllustrationMode && (
             <div className="flex bg-surface border border-surface-border p-1 rounded-2xl w-full max-w-sm mx-auto shadow-inner">
               <button
                 type="button"
@@ -401,7 +422,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
           <div className="bg-surface border border-surface-border p-6 md:p-8 rounded-3xl space-y-6 shadow-xl">
             
             {/* 共通項目: 曲名 */}
-            {entryType === 'music' && (
+            {(entryType === 'music' || isIllustrationMode) && (
               <div>
                 <label className="block text-sm font-bold mb-2">
                   曲名 <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
@@ -421,7 +442,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* URL */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                {isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画 または Suno)' : 'イラストの画像URL (Gyazoやpbs.twimg等)')} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                {isIllustrationMode ? 'イラストの画像URL (pbs.twimg等)' : (isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画 または Suno)' : 'イラストの画像URL (Gyazoやpbs.twimg等)'))} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
               </label>
               <input
                 type="url"
@@ -447,7 +468,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* アーティスト名 */}
             <div>
               <label className="block text-sm font-bold mb-2">
-                アーティスト名 {isAnonymousMode ? <span className="text-foreground ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-[var(--color-cyan-500)] ml-1">必須</span>}
+                {isIllustrationMode ? 'イラストレーター名' : 'アーティスト名'} {isAnonymousMode ? <span className="text-foreground ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-[var(--color-cyan-500)] ml-1">必須</span>}
               </label>
               <input
                 type="text"
@@ -518,7 +539,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
               <>
                 <div>
                   <label className="block text-sm font-bold mb-2">
-                    X (Twitter) アカウント <span className="text-foreground ml-1">任意</span>
+                    X (Twitter) アカウント {isIllustrationMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground ml-1">任意</span>}
                   </label>
                   <input
                     type="text"
@@ -530,7 +551,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                   />
                 </div>
 
-                {entryType === 'music' && (
+                {entryType === 'music' && !isIllustrationMode && (
                   <div>
                     <label className="block text-sm font-bold mb-2">
                       ジャンル <span className="text-foreground ml-1">任意</span>
@@ -667,6 +688,14 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
           </div>
 
           <div className="text-center pt-4 pb-12">
+            {errorMsg && (
+              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-xl flex items-center gap-3 animate-in fade-in slide-in-from-bottom-4 max-w-2xl mx-auto text-left">
+                <svg className="w-6 h-6 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p className="text-red-500 font-bold">{errorMsg}</p>
+              </div>
+            )}
             <button
               type="submit"
               className="inline-flex items-center justify-center gap-2 px-12 py-4 bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-background font-black text-lg rounded-full transition-all shadow-[0_0_20px_var(--color-glow)] hover:shadow-[0_0_30px_var(--color-glow)] hover:scale-105 active:scale-95"

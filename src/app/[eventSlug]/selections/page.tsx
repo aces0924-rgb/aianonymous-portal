@@ -25,6 +25,8 @@ export default async function SelectionsIndexPage({ params, searchParams }: { pa
   };
   const featureFlags = JSON.parse(event.featureFlags || '{}');
   const enableArtistMain = featureFlags.enableArtistMain ?? false;
+  const applicationFormType = featureFlags.applicationFormType || 'standard';
+  const isIllustrationMode = applicationFormType === 'illustration';
 
   // Fetch all user playlists, ordered by newest first
   // 1回目と2回目以降のリストを両方取得
@@ -54,7 +56,7 @@ export default async function SelectionsIndexPage({ params, searchParams }: { pa
         
         <div className="relative z-10 max-w-4xl mx-auto space-y-6">
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter italic text-foreground">
-            みんなの<span className="text-[var(--color-cyan-400)]">{enableArtistMain ? '推しアーティストリスト' : '推し曲リスト'}</span>
+            みんなの<span className="text-[var(--color-cyan-400)]">{isIllustrationMode ? '推しイラストリスト' : (enableArtistMain ? '推しアーティストリスト' : '推し曲リスト')}</span>
           </h1>
           <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-tight">
             リスナーが選んだ珠玉のセレクション。
@@ -62,20 +64,21 @@ export default async function SelectionsIndexPage({ params, searchParams }: { pa
           <p className="text-foreground max-w-xl mx-auto text-xs md:text-sm font-bold tracking-widest uppercase ">
             それぞれの想いが詰まったアピールポイントをチェックしましょう。
           </p>
-          
-          <div className="pt-6 flex justify-center">
-            <div className="inline-flex bg-surface/50 p-1.5 rounded-full border border-surface-border backdrop-blur-sm">
-              <div className="px-6 py-2.5 rounded-full text-sm font-black bg-[var(--color-cyan-500)] text-white shadow-[0_0_15px_var(--color-glow)] [text-shadow:none]">
-                {enableArtistMain ? '🎵 アーティストリスト' : '🎵 楽曲リスト'}
+          {enableArtistMain && !isIllustrationMode && (
+            <div className="pt-6 flex justify-center">
+              <div className="inline-flex bg-surface/50 p-1.5 rounded-full border border-surface-border backdrop-blur-sm">
+                <div className="px-6 py-2.5 rounded-full text-sm font-black bg-[var(--color-cyan-500)] text-white shadow-[0_0_15px_var(--color-glow)] [text-shadow:none]">
+                  🎵 アーティストリスト
+                </div>
+                <Link 
+                  href={`/${eventSlug}/selections/illustrations${previewQuery}`}
+                  className="px-6 py-2.5 rounded-full text-sm font-black text-foreground hover:text-foreground transition-all hover:bg-surface-hover [text-shadow:none]"
+                >
+                  🎨 イラストリスト
+                </Link>
               </div>
-              <Link 
-                href={`/${eventSlug}/selections/illustrations${previewQuery}`}
-                className="px-6 py-2.5 rounded-full text-sm font-black text-foreground hover:text-foreground transition-all hover:bg-surface-hover [text-shadow:none]"
-              >
-                🎨 イラストリスト
-              </Link>
             </div>
-          </div>
+          )}
         </div>
       </section>
 

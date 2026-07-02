@@ -662,6 +662,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 <select name="applicationFormType" defaultValue={defaultFeatures.applicationFormType} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="standard">標準（タイトル、URL、歌詞、考察、等）</option>
                   <option value="anonymous">匿名フェス用（SunoURL、パスワード、直アップロード等）</option>
+                  <option value="illustration">イラスト投稿用（音楽なし、XURL入力メイン）</option>
                 </select>
               </div>
             </div>

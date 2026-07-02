@@ -43,7 +43,7 @@ function ConfirmPageContent() {
         setTracks(data);
       } catch (err) {
         console.error(err);
-        setError('楽曲データの取得に失敗しました。');
+        setError('作品データの取得に失敗しました。');
       } finally {
         setIsLoading(false);
       }
