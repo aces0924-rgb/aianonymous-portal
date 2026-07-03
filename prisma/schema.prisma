@@ -204,7 +204,8 @@ model Vote {
   eventId       String
   event         Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   responseId    String? // 1蝗槭・蝗樒ｭ斐ｒ隴伜挨縺吶ｋID
-  timestamp     String? // 繝輔か繝ｼ繝縺ｮ繧ｿ繧､繝繧ｹ繧ｿ繝ｳ繝・  voterName     String? // 謚慕･ｨ閠・錐
+  timestamp     String? // 繝輔か繝ｼ繝縺ｮ繧ｿ繧､繝繧ｹ繧ｿ繝ｳ繝・
+  voterName     String? // 謚慕･ｨ閠・錐
   targetContent String? // 謚慕･ｨ縺輔ｌ縺滓峇蜷阪ｄ逡ｪ蜿ｷ
   createdAt     DateTime @default(now())
 }

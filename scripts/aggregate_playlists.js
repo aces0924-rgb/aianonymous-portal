@@ -17,20 +17,86 @@ if (fs.existsSync(envPath)) {
 const prisma = new PrismaClient();
 
 async function main() {
-  try {
-    // プレイリスト、本投票、曲情報、サムネイル状況を並列取得
-    const [mainPlaylists, subPlaylists, allVotes, tracks, thumbnails] = await Promise.all([
-      prisma.userPlaylist.findMany({ select: { trackEntryNos: true, userName: true, xAccountId: true } }),
-      prisma.userPlaylistSub.findMany({ select: { trackEntryNos: true, userName: true, xAccountId: true } }),
-      prisma.vote.findMany({ select: { targetContent: true, voterName: true } }),
-      prisma.trackHonban.findMany({ 
-        where: { published: true },
-        select: { entryNo: true, title: true, artistName: true, xAccount: true } 
-      }),
-      prisma.trackThumbnail.findMany({ select: { entryNo: true, status: true } })
-    ]);
+  const args = process.argv.slice(2);
+  const eventId = args[0] || null;
+  const type = args[1] || 'music'; // 'music' or 'illustration'
 
-    // X IDを正規化する関数
+  try {
+    let eventFilter = {};
+    if (eventId) {
+      eventFilter = { eventId };
+    }
+
+    // 1. イベントのモードを確認してテーブルを決定する
+    // デフォルトは UserPlaylist と UserPlaylistSub を見る
+    let useIllustrationPlaylistTable = false;
+    if (eventId && type === 'illustration') {
+      const event = await prisma.event.findUnique({ where: { id: eventId } });
+      if (event) {
+        const featureFlags = JSON.parse(event.featureFlags || '{}');
+        // アーティストモード（enableArtistMainがtrue）かつ illustration の場合は専用テーブルを見る
+        // ただし、イベント自体が「イラスト専用モード（applicationFormType = illustration）」の場合は音楽と同じUserPlaylistに入るのでfalseのままにする
+        if (featureFlags.enableArtistMain && featureFlags.applicationFormType !== 'illustration') {
+          useIllustrationPlaylistTable = true;
+        }
+        // それ以外（イラスト専用モードなど）は、同じく UserPlaylist を見るので false のまま
+      }
+    }
+
+    // イラスト集計の場合は、イラスト作品のみ（タイトルが'イラスト作品'）に絞る
+    let trackFilter = { ...eventFilter };
+    if (type === 'illustration') {
+      trackFilter.title = 'イラスト作品';
+    }
+
+    let mainPlaylists = [];
+    let subPlaylists = [];
+
+    if (useIllustrationPlaylistTable) {
+      // アーティストモードにおけるイラストリスト
+      mainPlaylists = await prisma.userIllustrationPlaylist.findMany({ 
+        where: eventFilter,
+        select: { trackEntryNos: true, userName: true, xAccountId: true } 
+      });
+      // イラストの場合はサブリストはない仕様
+    } else {
+      // 音楽、またはイラスト専用モードでのリスト
+      mainPlaylists = await prisma.userPlaylist.findMany({ 
+        where: eventFilter,
+        select: { trackEntryNos: true, userName: true, xAccountId: true } 
+      });
+      // サブリストも取得
+      subPlaylists = await prisma.userPlaylistSub.findMany({ 
+        where: eventFilter,
+        select: { trackEntryNos: true, userName: true, xAccountId: true } 
+      });
+    }
+
+    // 作品情報の取得 (TrackHonban)
+    let tracks = await prisma.trackHonban.findMany({ 
+      where: { ...trackFilter, published: true },
+      select: { entryNo: true, title: true, artistName: true, xAccount: true, songUrl: true } 
+    });
+
+    // 開発中のテストなど、TrackHonbanが空の場合はTrackテーブル（応募データ）をフォールバックとして使用する
+    if (tracks.length === 0) {
+      tracks = await prisma.track.findMany({ 
+        where: trackFilter,
+        select: { entryNo: true, title: true, artistName: true, xAccount: true, songUrl: true } 
+      });
+    }
+
+    // 投票・サムネ状況の取得
+    const allVotes = await prisma.vote.findMany({ 
+      where: eventFilter,
+      select: { targetContent: true } 
+    });
+    
+    const thumbnails = await prisma.trackThumbnail.findMany({ 
+      where: eventFilter,
+      select: { entryNo: true, status: true } 
+    });
+
     const normalizeX = (id) => {
       if (!id) return "";
       return id.toLowerCase()
@@ -40,7 +106,6 @@ async function main() {
         .trim();
     };
 
-    // 曲情報から制作者情報を引くマップ
     const trackInfoMap = {};
     tracks.forEach(t => {
       if (t.entryNo) {
@@ -48,19 +113,19 @@ async function main() {
         trackInfoMap[t.entryNo] = { 
           title: t.title, 
           artist: t.artistName || "匿名",
-          creatorId: normalizedX
+          creatorId: normalizedX,
+          imageUrl: t.songUrl
         };
       }
     });
 
-    const countMap = {}; // { no: { main: 0, sub: 0, mainNet: 0, subNet: 0 } }
+    const countMap = {}; 
 
     const isSelfRecommend = (playlist, trackCreatorId) => {
       const plId = normalizeX(playlist.xAccountId || playlist.userName);
       return plId && trackCreatorId && plId === trackCreatorId;
     };
 
-    // メインの集計
     mainPlaylists.forEach(p => {
       if (!p.trackEntryNos) return;
       p.trackEntryNos.split(',').map(s => s.trim()).filter(Boolean).forEach(no => {
@@ -72,7 +137,6 @@ async function main() {
       });
     });
 
-    // サブの集計
     subPlaylists.forEach(p => {
       if (!p.trackEntryNos) return;
       p.trackEntryNos.split(',').map(s => s.trim()).filter(Boolean).forEach(no => {
@@ -84,40 +148,26 @@ async function main() {
       });
     });
 
-    // サムネイル状況マップ
     const thumbStatusMap = {};
     thumbnails.forEach(th => {
       if (th.entryNo) thumbStatusMap[th.entryNo] = th.status;
     });
 
-    // 本投票（Vote）の集計 (自投票を除外した実質有効投票数を算出)
-    const voteCountMap = {}; // { entryNo: 投票数 }
+    const voteCountMap = {}; 
     allVotes.forEach(v => {
       const song = v.targetContent;
-      const entryMatch = song.match(/No\.(\d+)/);
+      const entryMatch = song && typeof song === 'string' ? song.match(/No\.(\d+)/) : null;
       const entryKey = entryMatch ? entryMatch[1] : null;
       if (!entryKey) return;
-
-      // 自投票の判定
-      let isSelf = false;
-      const normalizedVoter = normalizeX(v.voterName);
-      const creatorId = trackInfoMap[entryKey]?.creatorId;
-      if (normalizedVoter && creatorId && normalizedVoter === creatorId) {
-        isSelf = true;
-      }
-      
-      // 自投票は除外して実際の票数として集計
-      if (isSelf) return;
 
       if (!voteCountMap[entryKey]) voteCountMap[entryKey] = 0;
       voteCountMap[entryKey]++;
     });
 
-    // ランキング作成（推しリスト合計順）
     const ranking = Object.entries(countMap)
-      .filter(([no]) => trackInfoMap[no]) // 非公開(published: false)の楽曲を除外
+      .filter(([no]) => trackInfoMap[no]) 
       .map(([no, counts]) => {
-        const info = trackInfoMap[no] || { title: "不明な楽曲", artist: "-" };
+        const info = trackInfoMap[no] || { title: "不明な作品", artist: "-" };
         return {
           no,
           mainCount: counts.main,
@@ -126,15 +176,15 @@ async function main() {
           subNet: counts.subNet,
           totalCount: counts.main + counts.sub,
           totalNet: counts.mainNet + counts.subNet,
-          voteCount: voteCountMap[no] || 0, // 本投票数を横にくっつける！
+          voteCount: voteCountMap[no] || 0,
           thumbStatus: thumbStatusMap[no] || "未登録",
           title: info.title,
-          artist: info.artist
+          artist: info.artist,
+          imageUrl: info.imageUrl
         };
       })
       .sort((a, b) => b.totalCount - a.totalCount);
 
-    // 未選曲（推しリスト0票）の抽出
     const unselected = [];
     tracks.forEach(t => {
       if (t.entryNo && !countMap[t.entryNo]) {
@@ -142,19 +192,21 @@ async function main() {
           no: t.entryNo,
           title: t.title,
           artist: t.artistName || "匿名",
-          voteCount: voteCountMap[t.entryNo] || 0, // 推しリストは0票だが、本投票は入っているかもしれない！
-          thumbStatus: thumbStatusMap[t.entryNo] || "未登録"
+          voteCount: voteCountMap[t.entryNo] || 0,
+          thumbStatus: thumbStatusMap[t.entryNo] || "未登録",
+          imageUrl: t.songUrl
         });
       }
     });
-    // 曲番号の昇順でソート
     unselected.sort((a, b) => a.no.localeCompare(b.no));
 
     console.log(JSON.stringify({
       totalMain: mainPlaylists.length,
       totalSub: subPlaylists.length,
       ranking: ranking,
-      unselected: unselected
+      unselected: unselected,
+      debugTracksCount: tracks.length,
+      debugTrackInfoKeys: Object.keys(trackInfoMap).length
     }));
   } catch (error) {
     console.log(JSON.stringify({ error: error.message }));

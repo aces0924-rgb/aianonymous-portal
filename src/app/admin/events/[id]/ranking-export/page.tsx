@@ -94,7 +94,8 @@ export default function RankingExportPage({ params }: { params: Promise<{ id: st
         const ext = imageUrl.toLowerCase().includes('.png') ? '.png' : 
                     imageUrl.toLowerCase().includes('.gif') ? '.gif' : '.jpg'
         
-        const filename = `${rank}_${safeArtist}${ext}`
+        const paddedRank = rank.toString().padStart(2, '0')
+        const filename = `${paddedRank}_${safeArtist}${ext}`
         
         try {
           // プロキシ経由で画像を取得

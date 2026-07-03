@@ -382,7 +382,7 @@ class RankingApp:
                 elif ".gif" in image_url.lower():
                     ext = ".gif"
                 
-                filename = f"{rank}_{safe_artist}{ext}"
+                filename = f"{rank:02d}_{safe_artist}{ext}"
                 filepath = os.path.join(target_dir, filename)
                 
                 try:
