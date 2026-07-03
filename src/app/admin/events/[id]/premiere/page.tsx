@@ -50,6 +50,9 @@ export default async function PremiereAdminPage({ params }: { params: Promise<{ 
           <Link href={`/admin/events/${id}/settings`} className="text-blue-600 hover:underline inline-block font-bold">
             ← イベント設定に戻る
           </Link>
+          <Link href={`/admin/events/${id}/ranking-export`} className="text-emerald-600 hover:underline inline-block font-bold ml-4">
+            📊 推しリスト集計・ダウンロード
+          </Link>
         </div>
         <h1 className="text-3xl font-black">🎬 プレミア配信予定の管理 : {event.title}</h1>
         

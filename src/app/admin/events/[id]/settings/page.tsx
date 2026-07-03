@@ -149,6 +149,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
               <Link href={`/admin/events/${event.id}/premiere`} className="text-purple-600 hover:underline inline-block font-bold ml-4">
                 🎬 プレミア配信予定の管理
               </Link>
+              <Link href={`/admin/events/${event.id}/ranking-export`} className="text-emerald-600 hover:underline inline-block font-bold ml-4">
+                📊 推しリスト集計・ダウンロード
+              </Link>
               <form action={logout}>
                 <button type="submit" className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded hover:bg-red-200">ログアウト</button>
               </form>
