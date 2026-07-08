@@ -17,6 +17,7 @@ export default async function PortalHome() {
   const portalBgUrl = settingsMap['portal_bg_url'] || "https://i.gyazo.com/3d88429640b885cb595bc0c3756007d6.jpg";
   const portalLogoUrl = settingsMap['portal_logo_url'] || "https://i.gyazo.com/2d95ce2d1f241232b192d53bc4dd4fd4.png";
   const portalLogoWidth = settingsMap['portal_logo_width'];
+  const portalArchiveUrl = settingsMap['portal_archive_url'] ?? "https://aianonymous.vercel.app/";
 
   return (
     <main className="min-h-screen relative bg-black text-white font-sans overflow-hidden">
@@ -125,8 +126,9 @@ export default async function PortalHome() {
           )}
 
           {/* 現行サイト（第1回）への静的リンク */}
-          <a
-              href="https://aianonymous.vercel.app/"
+          {portalArchiveUrl && (
+            <a
+              href={portalArchiveUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="relative block aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg hover:shadow-2xl opacity-85 hover:opacity-100 transition-all duration-500 group border border-slate-200 hover:border-fuchsia-400"
@@ -137,31 +139,15 @@ export default async function PortalHome() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
             
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-slate-900/20 transition-opacity duration-300 group-hover:opacity-80" />
-            
-            <div className="absolute inset-0 p-8 flex flex-col">
-              <div className="flex-1 flex flex-col items-center justify-center">
-                <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-white text-center drop-shadow-[0_0_15px_rgba(217,70,239,0.5)] break-words w-full px-4">
-                  第1回 AI-anonymous <br/> MUSIC FES
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-slate-900/20 transition-opacity duration-300 group-hover:opacity-80" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+                <span className="text-fuchsia-400 font-bold tracking-widest text-sm mb-2 drop-shadow-md">ARCHIVE</span>
+                <h2 className="text-3xl font-black text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500">
+                  アノフェス汎用サイト
                 </h2>
-                <span className="mt-4 px-3 py-1 rounded-full bg-fuchsia-600 text-white text-xs font-bold uppercase tracking-widest">Archive</span>
               </div>
-              
-              <div className="relative z-20 mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 opacity-0 group-hover:opacity-100 flex flex-col gap-3">
-                <p className="text-slate-200 line-clamp-1 text-sm font-medium drop-shadow-md">
-                  2026年5月に開催された記念すべき第1回目の特設サイトはこちら。（外部サイトへ遷移します）
-                </p>
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-fuchsia-500/30 border border-fuchsia-400/50 text-fuchsia-100 text-sm font-bold backdrop-blur-md">
-                    アーカイブを見る
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
+            </a>
+          )}
         </div>
       </div>
     </main>

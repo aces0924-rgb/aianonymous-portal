@@ -50,6 +50,7 @@ export default async function AdminPage() {
   const bgUrl = settingsMap['portal_bg_url'] || "https://i.gyazo.com/3d88429640b885cb595bc0c3756007d6.jpg"
   const logoUrl = settingsMap['portal_logo_url'] || "https://i.gyazo.com/2d95ce2d1f241232b192d53bc4dd4fd4.png"
   const logoWidth = settingsMap['portal_logo_width'] || "320"
+  const archiveUrl = settingsMap['portal_archive_url'] ?? "https://aianonymous.vercel.app/"
 
   return (
     <div className="min-h-screen bg-gray-100 p-8 text-black">
@@ -79,6 +80,11 @@ export default async function AdminPage() {
               <label className="block font-bold text-sm mb-1">ロゴ画像の幅 (px)</label>
               <input name="logoWidth" type="number" defaultValue={logoWidth} className="border p-2 rounded text-black w-full max-w-xs" />
               <p className="text-xs text-gray-500 mt-1">※空欄にした場合は画面幅いっぱいに自動調整されます。</p>
+            </div>
+            <div>
+              <label className="block font-bold text-sm mb-1">汎用サイト(アーカイブ) URL</label>
+              <input type="text" name="archiveUrl" defaultValue={archiveUrl} className="border p-2 rounded text-black w-full bg-white" />
+              <p className="text-xs text-gray-500 mt-1">※空欄にすると、ポータルから汎用サイト（第1回など）へのリンクカードが非表示になります。</p>
             </div>
             <button type="submit" className="bg-cyan-600 text-white px-6 py-2 rounded-lg hover:bg-cyan-700 font-bold self-start mt-2">
               保存して反映

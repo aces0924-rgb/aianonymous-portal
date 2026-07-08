@@ -93,6 +93,7 @@ export async function updateGlobalSettings(formData: FormData) {
   const bgUrl = formData.get('bgUrl') as string;
   const logoUrl = formData.get('logoUrl') as string;
   const logoWidth = formData.get('logoWidth') as string;
+  const archiveUrl = formData.get('archiveUrl') as string;
 
   const updateSetting = async (key: string, value: string) => {
     if (value !== null && value !== undefined) {
@@ -107,6 +108,7 @@ export async function updateGlobalSettings(formData: FormData) {
   await updateSetting('portal_bg_url', bgUrl);
   await updateSetting('portal_logo_url', logoUrl);
   await updateSetting('portal_logo_width', logoWidth);
+  await updateSetting('portal_archive_url', archiveUrl);
 
   revalidatePath('/');
   revalidatePath('/admin');
