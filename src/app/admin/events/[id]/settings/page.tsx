@@ -598,8 +598,9 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const enableHostSection = formData.get('enableHostSection') === 'true'
             const enableScheduleButton = formData.get('enableScheduleButton') === 'true'
             const enableCelebrationAlert = formData.get('enableCelebrationAlert') === 'true'
+            const isExternalLinkOnly = formData.get('isExternalLinkOnly') === 'true'
             const applicationFormType = formData.get('applicationFormType') as string || 'standard'
-            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, enableScheduleButton, enableCelebrationAlert, applicationFormType })
+            await updateEventConfig(id, 'featureFlags', { enableRandomPlay, enableThumbSubmit, enablePlaylistInfo, enableShowCreators, enableArtistMain, enableAwards, enableHostSection, enableScheduleButton, enableCelebrationAlert, isExternalLinkOnly, applicationFormType })
           }} className="flex flex-col gap-2 pt-4 border-t">
             <h3 className="font-bold text-sm text-foreground mb-2">機能ON/OFF (Features)</h3>
             <div className="flex gap-4">
@@ -648,6 +649,13 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 <select name="enableScheduleButton" defaultValue={defaultFeatures.enableScheduleButton ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
                   <option value="true">表示する (ON)</option>
                   <option value="false">非表示 (OFF)</option>
+                </select>
+              </div>
+              <div className="flex-1">
+                <label className="text-xs font-bold text-foreground block mb-1">リンクモード (ポータル)</label>
+                <select name="isExternalLinkOnly" defaultValue={defaultFeatures.isExternalLinkOnly ? 'true' : 'false'} className="w-full border p-2 rounded text-sm bg-white">
+                  <option value="false">内部のイベントページに飛ぶ</option>
+                  <option value="true">外部の公式サイトに直接飛ばす</option>
                 </select>
               </div>
               <div className="flex-1">
