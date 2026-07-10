@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import prisma from "@/lib/prisma";
 
 export const dynamic = 'force-dynamic';
@@ -22,28 +23,41 @@ export default async function PortalHome() {
   return (
     <main className="min-h-screen relative bg-black text-white font-sans overflow-hidden">
       {/* 背景画像 (等倍表示) */}
-      <div 
-        className="fixed inset-0 z-0 pointer-events-none"
-        style={{
-          backgroundImage: `url('${portalBgUrl}')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Image 
+          src={portalBgUrl} 
+          alt="Portal Background" 
+          fill 
+          style={{ objectFit: 'cover', objectPosition: 'center' }} 
+          priority 
+        />
+      </div>
       {/* すりガラス風の明るめレイヤー (うっすら白みがかった半透明 + 弱めのぼかし) */}
       <div className="fixed inset-0 z-0 bg-white/10 backdrop-blur-[3px] pointer-events-none" />
 
       <div className="relative z-10 max-w-5xl mx-auto pt-8 pb-16 px-4">
         <div className="flex justify-center mb-10">
-          <div className="relative px-6 py-3 md:px-10 md:py-5 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-lg border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.2)] flex justify-center items-center group">
+          <div className="relative px-6 py-3 md:px-10 md:py-5 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-lg border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.2)] flex justify-center items-center group overflow-hidden">
             {/* パネル内側の微かなグラデーション */}
             <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-cyan-500/10 via-transparent to-fuchsia-500/10 pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
-            <img 
-              src={portalLogoUrl} 
-              alt="AI音楽イベントフェスポータル" 
-              style={portalLogoWidth ? { width: `${portalLogoWidth}px`, maxWidth: '100%' } : undefined}
-              className={`relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] transition-transform duration-500 group-hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
-            />
+            <div 
+              style={{ 
+                width: portalLogoWidth ? `${portalLogoWidth}px` : '100%', 
+                maxWidth: portalLogoWidth ? '100%' : '320px', 
+                height: 'auto', 
+                aspectRatio: '3/2' 
+              }} 
+              className="relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] transition-transform duration-500 group-hover:scale-105"
+            >
+              <Image 
+                src={portalLogoUrl} 
+                alt="AI音楽イベントフェスポータル" 
+                fill
+                style={{ objectFit: 'contain' }}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
           </div>
         </div>
 
@@ -76,9 +90,11 @@ export default async function PortalHome() {
                   <Link href={cardTargetUrl} className="absolute inset-0 z-10" aria-label={event.title} />
                 )}
                 {/* 背景画像 */}
-                <img 
+                <Image 
                   src={bgUrl} 
                   alt="" 
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 
