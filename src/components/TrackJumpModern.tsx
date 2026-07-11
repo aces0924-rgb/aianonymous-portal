@@ -19,7 +19,8 @@ export default function TrackJumpModern({
   tracks: TrackInfo[], 
   preview?: string,
   enableShowCreators?: boolean,
-  enableArtistMain?: boolean
+  enableArtistMain?: boolean,
+  eventSlug: string
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
@@ -71,7 +72,7 @@ export default function TrackJumpModern({
 
   const handleSelect = (id: number) => {
     const queryParam = preview === 'honban' ? '?preview=honban' : '';
-    router.push(`/tracks/${id}${queryParam}`);
+    router.push(`/${eventSlug}/tracks/${id}${queryParam}`);
     setIsOpen(false);
     setQuery('');
   };

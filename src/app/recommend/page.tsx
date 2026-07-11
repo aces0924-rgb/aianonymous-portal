@@ -108,7 +108,7 @@ export default async function RecommendPage({
                 <div className="absolute -left-4 -top-4 w-12 h-12 flex items-center justify-center bg-surface border-2 border-[var(--color-cyan-400)] text-[var(--color-cyan-400)] font-black rounded-full z-20 text-xl italic shadow-lg">
                   {idx + 1}
                 </div>
-                <TrackCard track={t} />
+                <TrackCard track={t} eventSlug={t.event?.slug || t.eventSlug || 'aicomfes'} />
               </div>
             ))}
           </div>

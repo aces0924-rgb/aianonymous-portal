@@ -251,7 +251,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
 
               {/* Row 3: Full-width Dropdown spanning 4 columns */}
               <div className="col-span-4 mt-1">
-                <TrackJumpModern preview={preview} tracks={tracks} enableShowCreators={defaultFeatures.enableShowCreators} enableArtistMain={defaultFeatures.enableArtistMain} />
+                <TrackJumpModern preview={preview} tracks={tracks} enableShowCreators={defaultFeatures.enableShowCreators} enableArtistMain={defaultFeatures.enableArtistMain} eventSlug={eventSlug} />
               </div>
             </div>
           </div>
