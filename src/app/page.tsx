@@ -167,8 +167,8 @@ export default async function PortalHome() {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/60 to-slate-900/20 transition-opacity duration-300 group-hover:opacity-80" />
               <div className="absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
                 <span className="text-fuchsia-400 font-bold tracking-widest text-sm mb-2 drop-shadow-md">ARCHIVE</span>
-                <h2 className="text-3xl font-black text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500">
-                  アノフェス汎用サイト
+                <h2 className="text-xl md:text-3xl font-black text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-500">
+                  第1回AIアノニマスミュージックフェス
                 </h2>
               </div>
             </a>
