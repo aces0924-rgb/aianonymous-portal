@@ -310,7 +310,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
     return (
       <div className="min-h-screen bg-background relative pb-24">
-        <div className="fixed top-0 left-0 w-full z-[100] bg-purple-600 text-white py-2 text-center text-sm font-black tracking-widest shadow-lg">
+        <div className="fixed top-0 left-0 w-full z-[100] bg-purple-600 text-white py-2 text-center text-lg font-black tracking-widest shadow-lg">
           プレビューモード（実際の画面ではこのように表示されます）
         </div>
         
@@ -335,9 +335,9 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
         <div className="fixed bottom-0 left-0 w-full z-[100] bg-surface/90 backdrop-blur-xl border-t border-surface-border p-4 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
           <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-sm">
+            <div className="text-lg">
               <p className="font-bold text-[var(--color-cyan-400)] mb-1">プレビュー確認中</p>
-              <p className="text-foreground text-xs hidden sm:block">内容に問題がなければ「この内容で応募する」を押してください。</p>
+              <p className="text-foreground text-base hidden sm:block">内容に問題がなければ「この内容で応募する」を押してください。</p>
             </div>
             
             <div className="flex gap-3 w-full sm:w-auto">
@@ -405,34 +405,34 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
               <button
                 type="button"
                 onClick={() => setEntryType('music')}
-                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'music' ? 'bg-[var(--color-cyan-500)] text-background shadow-lg' : 'text-foreground hover:text-foreground'}`}
+                className={`flex-1 py-3 text-lg font-black rounded-xl transition-all ${entryType === 'music' ? 'bg-fuchsia-500 text-white shadow-lg' : 'text-foreground hover:text-foreground opacity-70'}`}
               >
                 楽曲アーティスト
               </button>
               <button
                 type="button"
                 onClick={() => setEntryType('illustration')}
-                className={`flex-1 py-3 text-sm font-black rounded-xl transition-all ${entryType === 'illustration' ? 'bg-fuchsia-500 text-background shadow-lg' : 'text-foreground hover:text-foreground'}`}
+                className={`flex-1 py-3 text-lg font-black rounded-xl transition-all ${entryType === 'illustration' ? 'bg-fuchsia-500 text-white shadow-lg' : 'text-foreground hover:text-foreground opacity-70'}`}
               >
                 イラストアーティスト
               </button>
             </div>
           )}
 
-          <div className="bg-surface border border-surface-border p-6 md:p-8 rounded-3xl space-y-6 shadow-xl">
+          <div className="bg-white/40 backdrop-blur-md border border-white/30 p-6 md:p-8 rounded-3xl space-y-6 shadow-xl no-text-shadow text-gray-900">
             
             {/* 共通項目: 曲名 */}
             {(entryType === 'music' || isIllustrationMode) && (
               <div>
-                <label className="block text-sm font-bold mb-2">
-                  曲名 <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                <label className="block text-lg font-bold mb-2">
+                  曲名 <span className="text-red-500 ml-1">必須</span>
                 </label>
                 <input
                   type="text"
                   name="title"
                   value={formData.title}
                   onChange={handleChange}
-                  className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                  className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none"
                   placeholder="例: サイバーパンク・シティ"
                   required
                 />
@@ -441,25 +441,25 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
             {/* URL */}
             <div>
-              <label className="block text-sm font-bold mb-2">
-                {isIllustrationMode ? 'イラストの画像URL (pbs.twimg等)' : (isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画 または Suno)' : 'イラストの画像URL (Gyazoやpbs.twimg等)'))} <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+              <label className="block text-lg font-bold mb-2">
+                {isIllustrationMode ? 'イラストの画像URL (pbs.twimg等)' : (isAnonymousMode ? 'Suno楽曲URL' : (entryType === 'music' ? '楽曲URL (YouTube または ニコニコ動画 または Suno)' : 'イラストの画像URL (Gyazoやpbs.twimg等)'))} <span className="text-red-500 ml-1">必須</span>
               </label>
               <input
                 type="url"
                 name="songUrl"
                 value={formData.songUrl}
                 onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none"
                 placeholder={isAnonymousMode ? "例: https://suno.com/song/..." : (entryType === 'music' ? "例: https://youtu.be/..." : "例: https://pbs.twimg.com/media/...jpg")}
                 required
               />
               {!isAnonymousMode && entryType === 'illustration' && (
-                <div className="mt-3 text-xs text-foreground bg-surface-border/30 border border-surface-border p-4 rounded-xl space-y-2 leading-relaxed">
-                  <p className="font-black text-[var(--color-cyan-400)] flex items-center gap-2"><span className="text-base">💡</span> 画像URLの取得方法</p>
+                <div className="mt-3 text-base text-gray-800 bg-white/50 border border-gray-300 p-4 rounded-xl space-y-2 leading-relaxed">
+                  <p className="font-black text-fuchsia-600 flex items-center gap-2"><span className="text-base">💡</span> 画像URLの取得方法</p>
                   <div className="space-y-1.5 pl-1">
-                    <p><span className="font-bold text-white">【PCの場合】</span><br/>X (Twitter) の画像ページを開いて画像を右クリック → <span className="font-bold text-white underline decoration-cyan-500 underline-offset-2">「画像のアドレスをコピー」</span></p>
-                    <p><span className="font-bold text-white">【スマホの場合】</span><br/>直接画像URLが取れない場合は、ポストのURLをコピーして以下のツール等で画像URLを取得してください。</p>
-                    <p><a href="https://tool-place.net/tools/x_media_getter/" target="_blank" rel="noopener noreferrer" className="inline-block mt-1 text-[var(--color-cyan-400)] underline hover:text-[var(--color-cyan-500)] font-bold">X (Twitter) 画像URL取得ツールを開く ↗</a></p>
+                    <p><span className="font-bold text-black">【PCの場合】</span><br/>X (Twitter) の画像ページを開いて画像を右クリック → <span className="font-bold text-black underline decoration-fuchsia-500 underline-offset-2">「画像のアドレスをコピー」</span></p>
+                    <p><span className="font-bold text-black">【スマホの場合】</span><br/>直接画像URLが取れない場合は、ポストのURLをコピーして以下のツール等で画像URLを取得してください。</p>
+                    <p><a href="https://tool-place.net/tools/x_media_getter/" target="_blank" rel="noopener noreferrer" className="inline-block mt-1 text-fuchsia-600 underline hover:text-fuchsia-700 font-bold">X (Twitter) 画像URL取得ツールを開く ↗</a></p>
                   </div>
                 </div>
               )}
@@ -467,15 +467,15 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
             {/* アーティスト名 */}
             <div>
-              <label className="block text-sm font-bold mb-2">
-                {isIllustrationMode ? 'イラストレーター名' : 'アーティスト名'} {isAnonymousMode ? <span className="text-foreground ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-[var(--color-cyan-500)] ml-1">必須</span>}
+              <label className="block text-lg font-bold mb-2">
+                {isIllustrationMode ? 'イラストレーター名' : 'アーティスト名'} {isAnonymousMode ? <span className="text-foreground ml-1">任意（未入力時は最後まで匿名扱い）</span> : <span className="text-red-500 ml-1">必須</span>}
               </label>
               <input
                 type="text"
                 name="artistName"
                 value={formData.artistName}
                 onChange={handleChange}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none"
                 placeholder={isAnonymousMode ? "未入力の場合は匿名" : "例: AI-Creator"}
                 required={!isAnonymousMode}
               />
@@ -485,39 +485,39 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {isAnonymousMode && (
               <>
                 <div>
-                  <label className="block text-sm font-bold mb-2">
-                    X (旧Twitter) アカウント <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                  <label className="block text-lg font-bold mb-2">
+                    X (旧Twitter) アカウント <span className="text-red-500 ml-1">必須</span>
                   </label>
                   <input
                     type="text"
                     name="xAccount"
                     value={formData.xAccount}
                     onChange={handleChange}
-                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none font-mono"
+                    className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none font-mono"
                     placeholder="例: @your_account"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2">
-                    連絡用メールアドレス <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                  <label className="block text-lg font-bold mb-2">
+                    連絡用メールアドレス <span className="text-red-500 ml-1">必須</span>
                   </label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                    className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none"
                     placeholder="例: example@gmail.com"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold mb-2">
-                    パスワード (10桁) <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
-                    <p className="text-xs text-foreground font-normal mt-1">※投票や結果開示などに使用します</p>
+                  <label className="block text-lg font-bold mb-2">
+                    パスワード (10桁) <span className="text-red-500 ml-1">必須</span>
+                    <p className="text-base text-foreground font-normal mt-1">※投票や結果開示などに使用します</p>
                   </label>
                   <input
                     type="password"
@@ -526,7 +526,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                     onChange={handleChange}
                     maxLength={10}
                     minLength={10}
-                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none font-mono tracking-widest"
+                    className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none font-mono tracking-widest"
                     placeholder="10桁のパスワードを入力"
                     required
                   />
@@ -538,30 +538,30 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {!isAnonymousMode && (
               <>
                 <div>
-                  <label className="block text-sm font-bold mb-2">
-                    X (Twitter) アカウント {isIllustrationMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground ml-1">任意</span>}
+                  <label className="block text-lg font-bold mb-2">
+                    X (Twitter) アカウント {isIllustrationMode ? <span className="text-red-500 ml-1">必須</span> : <span className="text-gray-800 ml-1 font-normal">任意</span>}
                   </label>
                   <input
                     type="text"
                     name="xAccount"
                     value={formData.xAccount}
                     onChange={handleChange}
-                    className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                    className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none"
                     placeholder="例: @your_account"
                   />
                 </div>
 
                 {entryType === 'music' && !isIllustrationMode && (
                   <div>
-                    <label className="block text-sm font-bold mb-2">
-                      ジャンル <span className="text-foreground ml-1">任意</span>
+                    <label className="block text-lg font-bold mb-2">
+                      ジャンル <span className="text-gray-800 ml-1 font-normal">任意</span>
                     </label>
                     <input
                       type="text"
                       name="genre"
                       value={formData.genre}
                       onChange={handleChange}
-                      className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none"
+                      className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none"
                       placeholder="例: サイバーパンク / EDM"
                     />
                   </div>
@@ -571,16 +571,16 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
 
             {/* 歌詞 / イラスト説明 */}
             <div>
-              <label className="block text-sm font-bold mb-2">
-                {entryType === 'illustration' ? 'このイラストについて' : config.lyricsTab} {isAnonymousMode ? <span className="text-[var(--color-cyan-500)] ml-1">必須</span> : <span className="text-foreground ml-1">任意</span>}
-                {(isAnonymousMode && entryType === 'music') && <p className="text-xs text-foreground font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
+              <label className="block text-lg font-bold mb-2">
+                {entryType === 'illustration' ? 'このイラストについて' : config.lyricsTab} {isAnonymousMode ? <span className="text-red-500 ml-1">必須</span> : <span className="text-gray-800 ml-1 font-normal">任意</span>}
+                {(isAnonymousMode && entryType === 'music') && <p className="text-base text-foreground font-normal mt-1">※インストの場合は「インスト曲」と記載してください</p>}
               </label>
               <textarea
                 name="lyrics"
                 value={formData.lyrics}
                 onChange={handleChange}
                 rows={6}
-                className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
+                className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none resize-y"
                 placeholder={
                   entryType === 'illustration' 
                     ? "イラストのキャプションや設定などを入力..." 
@@ -594,27 +594,27 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {isAnonymousMode && (
               <div className="space-y-6 pt-4 border-t border-surface-border">
                 <div>
-                  <label className="block text-sm font-bold mb-2">
-                    音楽ファイルアップロード <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
-                    <p className="text-xs text-foreground font-normal mt-1">※ .mp3, .wav, .mp4 のいずれかの形式</p>
+                  <label className="block text-lg font-bold mb-2">
+                    音楽ファイルアップロード <span className="text-red-500 ml-1">必須</span>
+                    <p className="text-base text-foreground font-normal mt-1">※ .mp3, .wav, .mp4 のいずれかの形式</p>
                   </label>
                   <input
                     type="file"
                     accept=".mp3,.wav,.mp4,audio/mpeg,audio/wav,video/mp4"
                     onChange={(e) => setMusicFile(e.target.files?.[0] || null)}
-                    className="w-full text-sm text-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-[var(--color-cyan-500)]/10 file:text-[var(--color-cyan-400)] hover:file:bg-[var(--color-cyan-500)]/20 cursor-pointer"
+                    className="w-full text-lg text-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-lg file:font-bold file:bg-[var(--color-cyan-500)]/10 file:text-[var(--color-cyan-400)] hover:file:bg-[var(--color-cyan-500)]/20 cursor-pointer"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold mb-2">
-                    字幕SRTファイル <span className="text-foreground ml-1">任意</span>
+                  <label className="block text-lg font-bold mb-2">
+                    字幕SRTファイル <span className="text-gray-800 ml-1 font-normal">任意</span>
                   </label>
                   <input
                     type="file"
                     accept=".srt"
                     onChange={(e) => setSrtFile(e.target.files?.[0] || null)}
-                    className="w-full text-sm text-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-surface-border file:text-foreground hover:file:bg-surface-border/80 cursor-pointer"
+                    className="w-full text-lg text-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:text-lg file:font-bold file:bg-surface-border file:text-foreground hover:file:bg-surface-border/80 cursor-pointer"
                   />
                 </div>
               </div>
@@ -623,15 +623,15 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             {/* 通常モード専用の考察 */}
             {!isAnonymousMode && (
               <div>
-                <label className="block text-sm font-bold mb-2">
-                  {config.analysisTab} <span className="text-foreground ml-1">任意</span>
+                <label className="block text-lg font-bold mb-2">
+                  {config.analysisTab} <span className="text-gray-800 ml-1 font-normal">任意</span>
                 </label>
                 <textarea
                   name="analysis"
                   value={formData.analysis}
                   onChange={handleChange}
                   rows={8}
-                  className="w-full bg-background border border-surface-border rounded-xl px-4 py-3 text-foreground focus:ring-2 focus:ring-[var(--color-cyan-500)] focus:border-transparent transition-all outline-none resize-y"
+                  className="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-black text-lg placeholder:text-gray-400 focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent transition-all outline-none resize-y"
                   placeholder={`${config.analysisTab}について自由に記述してください。`}
                 />
               </div>
@@ -653,7 +653,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
-                  <div className="text-sm">
+                  <div className="text-lg">
                     <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
                       ニコニコ動画等への転載・公開に同意する
                     </p>
@@ -677,9 +677,9 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
                       <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                   </div>
-                  <div className="text-sm">
+                  <div className="text-lg">
                     <p className="font-bold text-foreground group-hover:text-[var(--color-cyan-400)] transition-colors">
-                      応募規約に同意する <span className="text-[var(--color-cyan-500)] ml-1">必須</span>
+                      応募規約に同意する <span className="text-red-500 ml-1">必須</span>
                     </p>
                   </div>
                 </label>
@@ -698,7 +698,7 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
             )}
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 px-12 py-4 bg-[var(--color-cyan-500)] hover:bg-[var(--color-cyan-400)] text-background font-black text-lg rounded-full transition-all shadow-[0_0_20px_var(--color-glow)] hover:shadow-[0_0_30px_var(--color-glow)] hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-12 py-4 bg-fuchsia-500 hover:bg-fuchsia-400 text-white font-black text-lg rounded-full transition-all shadow-lg hover:shadow-xl hover:scale-105 active:scale-95"
             >
               入力内容の確認へ進む
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
