@@ -40,24 +40,12 @@ export default async function PortalHome() {
           <div className="relative px-6 py-3 md:px-10 md:py-5 rounded-[2.5rem] bg-slate-900/50 backdrop-blur-lg border border-white/10 shadow-[0_0_40px_rgba(0,240,255,0.2)] flex justify-center items-center group overflow-hidden">
             {/* パネル内側の微かなグラデーション */}
             <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-cyan-500/10 via-transparent to-fuchsia-500/10 pointer-events-none transition-opacity duration-500 opacity-50 group-hover:opacity-100" />
-            <div 
-              style={{ 
-                width: portalLogoWidth ? `${portalLogoWidth}px` : '100%', 
-                maxWidth: portalLogoWidth ? '100%' : '320px', 
-                height: 'auto', 
-                aspectRatio: '3/2' 
-              }} 
-              className="relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] transition-transform duration-500 group-hover:scale-105"
-            >
-              <Image 
-                src={portalLogoUrl} 
-                alt="AI音楽イベントフェスポータル" 
-                fill
-                style={{ objectFit: 'contain' }}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority
-              />
-            </div>
+                <img 
+                  src={portalLogoUrl} 
+                  alt="AI音楽イベントフェスポータル" 
+                  style={portalLogoWidth ? { width: `${portalLogoWidth}px`, maxWidth: '100%' } : undefined}
+                  className={`relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] transition-transform duration-500 group-hover:scale-105 ${!portalLogoWidth ? 'w-full max-w-xs md:max-w-sm' : ''}`}
+                />
           </div>
         </div>
 
