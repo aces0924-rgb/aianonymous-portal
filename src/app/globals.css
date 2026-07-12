@@ -30,4 +30,14 @@ body {
   color: var(--foreground);
   font-family: var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
 }
+
+.theme-text-outline :is(h1, h2, h3, h4, h5, h6, p, span, a, button, label, li, dt, dd) {
+  -webkit-text-stroke: 0.5px var(--text-outline-color, #000000);
+  paint-order: stroke fill;
+}
+
+.theme-text-shadow :is(h1, h2, h3, h4, h5, h6, p, span, a, button, label, li, dt, dd) {
+  text-shadow: 0 1px var(--text-shadow-blur, 3px) var(--text-shadow-color, #000000);
+}
+
 .no-text-shadow, .no-text-shadow * { text-shadow: none !important; }

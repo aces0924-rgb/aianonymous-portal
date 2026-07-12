@@ -28,6 +28,14 @@ export default async function EventLayout({
   const textColor = themeConfig.textColor || '#ffffff'
   const surfaceColor = themeConfig.surfaceColor || '#111827'
   const enableNeon = themeConfig.enableNeon !== false // true by default
+  const enableTextOutline = themeConfig.enableTextOutline === true
+  const textOutlineColor = themeConfig.textOutlineColor || '#000000'
+  const enableTextShadow = themeConfig.enableTextShadow === true
+  const textShadowColor = themeConfig.textShadowColor || '#000000'
+  const configuredTextShadowBlur = Number(themeConfig.textShadowBlur)
+  const textShadowBlur = Number.isFinite(configuredTextShadowBlur) && configuredTextShadowBlur >= 0
+    ? configuredTextShadowBlur
+    : 3
   const glowColor = enableNeon ? mainColor : 'transparent'
   const baseFontSize = themeConfig.baseFontSize || 16
   const bgEffect = themeConfig.bgEffect || 'none'
@@ -61,13 +69,16 @@ export default async function EventLayout({
         '--surface-border': surfaceColor,
         '--glow': glowColor,
         '--outline-shadow': outlineShadow,
+        '--text-outline-color': textOutlineColor,
+        '--text-shadow-color': textShadowColor,
+        '--text-shadow-blur': `${textShadowBlur}px`,
         // Also keep the color versions for backwards compatibility if needed
         '--color-background': bgColor,
         '--color-foreground': textColor,
         '--color-surface': surfaceColor,
         '--color-glow': glowColor,
       } as React.CSSProperties}
-      className={`contents ${enableNeon ? 'theme-neon-enabled' : 'theme-neon-disabled'} theme-bg-${bgEffect} theme-ui-${uiTexture} theme-corner-${cornerStyle}`}
+      className={`contents ${enableNeon ? 'theme-neon-enabled' : 'theme-neon-disabled'} ${enableTextOutline ? 'theme-text-outline' : ''} ${enableTextShadow ? 'theme-text-shadow' : ''} theme-bg-${bgEffect} theme-ui-${uiTexture} theme-corner-${cornerStyle}`}
     >
       <style dangerouslySetInnerHTML={{ __html: `html { font-size: ${baseFontSize}px !important; }` }} />
       <PlayerProvider>

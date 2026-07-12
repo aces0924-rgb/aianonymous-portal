@@ -75,11 +75,11 @@ export default async function TracksListPage({ params, searchParams }: { params:
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-[var(--color-cyan-500)] selection:text-white font-sans overflow-x-hidden">
       {/* Navigation Header */}
-      <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-[var(--color-cyan-400)]/30">
+      <nav className="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-md border-b border-white/30">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link 
             href={homeUrl} 
-            className="text-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] transition-colors flex items-center gap-2 text-sm font-bold shrink-0"
+            className="text-white hover:text-white/80 transition-colors flex items-center gap-2 text-sm font-bold shrink-0"
           >
             <span className="text-lg">◀</span> <span>TOPへ戻る</span>
           </Link>

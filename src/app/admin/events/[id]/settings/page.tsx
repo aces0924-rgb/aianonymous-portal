@@ -83,6 +83,11 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     textColor: themeConfig.textColor || '#ffffff',
     surfaceColor: themeConfig.surfaceColor || '#111827',
     enableNeon: themeConfig.enableNeon !== false, // default true
+    enableTextOutline: themeConfig.enableTextOutline === true,
+    textOutlineColor: themeConfig.textOutlineColor || '#000000',
+    enableTextShadow: themeConfig.enableTextShadow === true,
+    textShadowColor: themeConfig.textShadowColor || '#000000',
+    textShadowBlur: themeConfig.textShadowBlur || 3,
     bgUrl: themeConfig.bgUrl || '',
     bgPosition: themeConfig.bgPosition || '',
     logoUrl: themeConfig.logoUrl || '',
@@ -236,6 +241,12 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const textColor = formData.get('textColor') as string
             const surfaceColor = formData.get('surfaceColor') as string
             const enableNeon = formData.get('enableNeon') === 'on'
+            const enableTextOutline = formData.get('enableTextOutline') === 'on'
+            const textOutlineColor = formData.get('textOutlineColor') as string || '#000000'
+            const enableTextShadow = formData.get('enableTextShadow') === 'on'
+            const textShadowColor = formData.get('textShadowColor') as string || '#000000'
+            const textShadowBlurValue = formData.get('textShadowBlur') as string
+            const textShadowBlur = textShadowBlurValue ? parseInt(textShadowBlurValue, 10) : 3
             const bgEffect = formData.get('bgEffect') as string
             const uiTexture = formData.get('uiTexture') as string
             const cornerStyle = formData.get('cornerStyle') as string
@@ -257,7 +268,7 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             const btnScheduleTextColor = formData.get('btnScheduleTextColor') as string || '#ffffff'
             const baseFontSizeStr = formData.get('baseFontSize') as string
             const baseFontSize = baseFontSizeStr ? parseInt(baseFontSizeStr, 10) : 16
-            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, bgEffect, uiTexture, cornerStyle, bgUrl, bgPosition, logoUrl, logoWidth, logoMarginTop, btnOpacity, btnPrimaryColor, btnPrimaryTextColor, btnSecondaryColor, btnSecondaryTextColor, btnRandomColor, btnRandomTextColor, btnXColor, btnXTextColor, btnScheduleColor, btnScheduleTextColor, baseFontSize })
+            await updateEventConfig(id, 'themeConfig', { mainColor, bgColor, textColor, surfaceColor, enableNeon, enableTextOutline, textOutlineColor, enableTextShadow, textShadowColor, textShadowBlur, bgEffect, uiTexture, cornerStyle, bgUrl, bgPosition, logoUrl, logoWidth, logoMarginTop, btnOpacity, btnPrimaryColor, btnPrimaryTextColor, btnSecondaryColor, btnSecondaryTextColor, btnRandomColor, btnRandomTextColor, btnXColor, btnXTextColor, btnScheduleColor, btnScheduleTextColor, baseFontSize })
           }} className="flex flex-col gap-4">
             
             <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
@@ -340,6 +351,16 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 <p className="text-[10px] text-foreground mt-1">デフォルトは白(#ffffff)です。</p>
               </div>
               <div>
+                <label className="text-xs font-bold text-foreground block mb-1">文字アウトライン色 (HEX)</label>
+                <ColorInput name="textOutlineColor" defaultValue={defaultTheme.textOutlineColor} />
+                <p className="text-[10px] text-foreground mt-1">アウトラインを有効にしたときの縁取り色です。</p>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-foreground block mb-1">文字シャドウ色 (HEX)</label>
+                <ColorInput name="textShadowColor" defaultValue={defaultTheme.textShadowColor} />
+                <p className="text-[10px] text-foreground mt-1">文字シャドウを有効にしたときの影の色です。</p>
+              </div>
+              <div>
                 <label className="text-xs font-bold text-foreground block mb-1">基本フォントサイズ (px)</label>
                 <input type="number" name="baseFontSize" defaultValue={defaultTheme.baseFontSize} className="w-full border p-2 rounded text-sm bg-white" min="12" max="24" />
                 <p className="text-[10px] text-foreground mt-1">UI全体の基準サイズ。デフォルトは16です。</p>
@@ -357,6 +378,19 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
                 <span className="text-sm font-bold text-foreground">ネオン発光エフェクト (Cyberpunk Glow) を有効にする</span>
               </label>
               <p className="text-xs text-foreground pl-7 mb-4">OFFにすると、文字や枠線のドロップシャドウ（光る影）が消え、フラットでクリーンなデザインになります。サイバーパンク以外のテーマを作る際に有用です。</p>
+              <label className="flex items-center gap-2 cursor-pointer mb-2">
+                <input type="checkbox" name="enableTextOutline" defaultChecked={defaultTheme.enableTextOutline} className="w-5 h-5 accent-pink-600 rounded cursor-pointer" />
+                <span className="text-sm font-bold text-foreground">文字アウトラインを有効にする</span>
+              </label>
+              <p className="text-xs text-foreground pl-7 mb-4">見出しや本文、リンクに選択した色の細い縁取りを付け、背景画像の上でも文字を読みやすくします。</p>
+              <label className="flex items-center gap-2 cursor-pointer mb-2">
+                <input type="checkbox" name="enableTextShadow" defaultChecked={defaultTheme.enableTextShadow} className="w-5 h-5 accent-pink-600 rounded cursor-pointer" />
+                <span className="text-sm font-bold text-foreground">文字シャドウを有効にする</span>
+              </label>
+              <div className="pl-7 mb-4 max-w-xs">
+                <label className="text-xs font-bold text-foreground block mb-1">シャドウのぼかし (px)</label>
+                <input type="number" name="textShadowBlur" defaultValue={defaultTheme.textShadowBlur} min="0" max="20" className="w-full border p-2 rounded text-sm bg-white" />
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-200 pt-4">
                 <div>

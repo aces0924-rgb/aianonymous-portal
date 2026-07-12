@@ -41,16 +41,18 @@ export default async function SelectionsIndexPage({ params, searchParams }: { pa
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-[var(--color-cyan-500)] selection:text-white font-sans overflow-x-hidden relative">
-      {/* Back Button (Fixed/Absolute Top Left) */}
-      <div className="absolute top-4 left-4 md:top-8 md:left-8 z-30">
-        <Link href={`/${eventSlug}${previewQuery}`} className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface/80 backdrop-blur-md border border-surface-border hover:border-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] transition-all group">
-          <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
-          <span className="text-xs md:text-sm font-black tracking-widest uppercase">Back to Top</span>
-        </Link>
-      </div>
+      {/* Navigation Header */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/70 backdrop-blur-md border-b border-white/30">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <Link href={`/${eventSlug}${previewQuery}`} className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors text-sm font-bold shrink-0 group">
+            <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
+            <span className="text-xs md:text-sm font-black tracking-widest uppercase">Back to Top</span>
+          </Link>
+        </div>
+      </nav>
 
       {/* Header Section */}
-      <section className="relative pt-16 pb-6 md:pt-20 md:pb-8 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+      <section className="relative pt-28 pb-6 md:pt-32 md:pb-8 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-glow)]/10 to-transparent z-0"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--color-glow)]/10 blur-[100px] rounded-full pointer-events-none"></div>
         
