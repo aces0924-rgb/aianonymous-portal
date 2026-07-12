@@ -45,7 +45,7 @@ export default function ShareButton({ userName, id, basePostUrl, type = 'song', 
   return (
     <button
       onClick={handleShare}
-      className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-black text-lg hover:bg-[var(--color-cyan-500)] hover:text-black transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:shadow-[0_0_35px_var(--color-glow)] active:scale-95 group"
+      className="no-text-outline no-text-shadow inline-flex items-center gap-3 px-8 py-4 bg-white text-black rounded-full font-black text-lg hover:bg-[var(--color-cyan-500)] hover:text-black transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] hover:shadow-[0_0_35px_var(--color-glow)] active:scale-95 group"
     >
       <span className="text-2xl">𝕏</span>
       <span>このリストを𝕏で共有する</span>

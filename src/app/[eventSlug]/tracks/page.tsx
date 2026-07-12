@@ -93,23 +93,18 @@ export default async function TracksListPage({ params, searchParams }: { params:
       </nav>
 
       <div className="pt-24 pb-20 px-6 max-w-7xl mx-auto">
-        <SelectionIndicator /* activeTable={activeTable} */ />
-
-        <div className="mb-10 text-center">
-          <p className="text-[var(--color-cyan-400)] font-mono text-sm tracking-[0.3em] uppercase mb-2">
-            {featureFlags.enableArtistMain ? "Artists & Tracks" : "Archive"}
-          </p>
-          <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase mb-4">
+        <div className="mb-8 text-center">
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-3">
             {featureFlags.enableArtistMain ? "参加アーティスト一覧" : "投稿作品一覧"}
           </h2>
-          <p className="text-foreground text-sm max-w-2xl mx-auto mb-6">
+          <p className="text-foreground text-sm max-w-2xl mx-auto mb-5">
             {featureFlags.enableArtistMain ? "エントリーされたすべての参加者と楽曲です。" : "エントリーされたすべての楽曲です。"}
           </p>
-          <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex flex-col items-center justify-center gap-3">
             <ClearFavoritesButton />
             
             {/* ボタン凡例 */}
-            <div className="flex items-center gap-4 md:gap-6 text-[10px] md:text-xs font-bold text-foreground bg-surface/30 px-5 py-2.5 rounded-full border border-surface-border/50">
+            <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[10px] md:text-xs font-bold text-foreground bg-surface/30 px-5 py-2.5 rounded-2xl border border-surface-border/50">
               <span className="flex items-center gap-1.5">
                 <svg className="w-4 h-4 text-[var(--color-cyan-400)]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
                 プレイヤー再生

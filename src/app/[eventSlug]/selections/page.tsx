@@ -56,18 +56,15 @@ export default async function SelectionsIndexPage({ params, searchParams }: { pa
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-glow)]/10 to-transparent z-0"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--color-glow)]/10 blur-[100px] rounded-full pointer-events-none"></div>
         
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter italic text-foreground">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-3">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight italic text-foreground">
             みんなの<span className="text-foreground border-b-4 border-[var(--color-cyan-400)]">{isIllustrationMode ? '推しイラストリスト' : (enableArtistMain ? '推しアーティストリスト' : '推し曲リスト')}</span>
           </h1>
-          <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-tight">
+          <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-none">
             リスナーが選んだ珠玉のセレクション。
           </p>
-          <p className="text-foreground max-w-xl mx-auto text-xs md:text-sm font-bold tracking-widest uppercase ">
-            それぞれの想いが詰まったアピールポイントをチェックしましょう。
-          </p>
           {enableArtistMain && !isIllustrationMode && (
-            <div className="pt-6 flex justify-center">
+            <div className="pt-3 flex justify-center">
               <div className="inline-flex bg-surface/50 p-1.5 rounded-full border border-surface-border backdrop-blur-sm">
                 <div className="px-6 py-2.5 rounded-full text-sm font-black bg-[var(--color-cyan-500)] text-white shadow-[0_0_15px_var(--color-glow)] [text-shadow:none]">
                   🎵 アーティストリスト

@@ -103,7 +103,7 @@ export default function SelectionListContainer({ initialPlaylists, subPlaylists,
       {/* Header Info & Sort Buttons Row */}
       <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-6">
         {/* Left: Explanation Box */}
-        <div className="flex-1 max-w-xl bg-[var(--color-glow)]/10 border border-[var(--color-glow)]/30 rounded-[2rem] p-6 backdrop-blur-sm shadow-xl">
+        <div className="flex-1 max-w-xl bg-surface/90 border border-surface-border rounded-[2rem] p-6 backdrop-blur-sm shadow-xl">
           <div className="flex items-center gap-5 text-left">
             <div className="shrink-0 w-12 h-12 rounded-xl bg-[var(--color-glow)]/20 flex items-center justify-center text-2xl">
               💡

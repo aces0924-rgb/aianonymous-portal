@@ -48,18 +48,15 @@ export default async function IllustrationSelectionsIndexPage({ params, searchPa
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-glow)]/10 to-transparent z-0"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--color-glow)]/10 blur-[100px] rounded-full pointer-events-none"></div>
         
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter italic text-foreground">
+        <div className="relative z-10 max-w-4xl mx-auto space-y-3">
+          <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight italic text-foreground">
             みんなの<span className="text-foreground border-b-4 border-[var(--color-cyan-400)]">{enableArtistMain ? '推しクリエイターリスト' : '推しイラストリスト'}</span>
           </h1>
-          <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-tight">
+          <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-none">
             リスナーが選んだ珠玉のセレクション。
           </p>
-          <p className="text-foreground max-w-xl mx-auto text-xs md:text-sm font-bold tracking-widest uppercase ">
-            それぞれの想いが詰まったアピールポイントをチェックしましょう。
-          </p>
           
-          <div className="pt-6 flex justify-center">
+          <div className="pt-3 flex justify-center">
             <div className="inline-flex bg-surface/50 p-1.5 rounded-full border border-surface-border backdrop-blur-sm">
               <Link 
                 href={`/${eventSlug}/selections${previewQuery}`}

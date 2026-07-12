@@ -12,7 +12,7 @@ export default function ClearFavoritesButton() {
   if (!hasFavorites && !hasIllustFavorites) return null;
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4">
+    <div className="no-text-outline no-text-shadow flex flex-col sm:flex-row items-center justify-center gap-2">
       {hasFavorites && (
         <button
           onClick={() => {

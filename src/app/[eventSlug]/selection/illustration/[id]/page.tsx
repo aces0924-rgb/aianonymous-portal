@@ -84,22 +84,24 @@ export default async function SelectionPage({
 
   return (
     <main className="min-h-screen bg-background text-white selection:bg-[var(--color-cyan-500)] selection:text-white font-sans overflow-x-hidden relative">
-      {/* Back Button (Fixed/Absolute Top Left) */}
-      <div className="absolute top-4 left-4 md:top-8 md:left-8 z-30">
-        <Link href={`/${eventSlug}/selections/illustrations${previewQuery}`} className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-surface/80 backdrop-blur-md border border-surface-border hover:border-purple-500 hover:text-purple-400 transition-all group">
-          <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
-          <span className="text-xs md:text-sm font-black tracking-widest uppercase">推し{enableArtistMain ? 'クリエイター' : 'イラスト'}一覧へ</span>
-        </Link>
-      </div>
+      {/* Navigation Header */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/70 backdrop-blur-md border-b border-white/30">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <Link href={`/${eventSlug}/selections/illustrations${previewQuery}`} className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors text-sm font-bold group">
+            <span className="group-hover:-translate-x-1 transition-transform text-lg">←</span>
+            <span className="text-xs md:text-sm font-black tracking-widest uppercase">推し{enableArtistMain ? 'クリエイター' : 'イラスト'}一覧へ</span>
+          </Link>
+        </div>
+      </nav>
 
       {/* Dynamic Header */}
-      <section className="relative pt-16 pb-2 md:pt-20 md:pb-4 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+      <section className="relative pt-28 pb-2 md:pt-32 md:pb-4 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent z-0"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[var(--color-cyan-500)]/5 blur-[100px] rounded-full pointer-events-none"></div>
         
         <div className="relative z-10 max-w-6xl mx-auto">
           <h1 className="text-2xl md:text-5xl font-black tracking-tighter leading-tight italic">
-            <span className="text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.4)]">{playlist.userName}</span> 様の
+            <span className="text-white">{playlist.userName}</span> 様の
             推薦{enableArtistMain ? 'クリエイター' : 'イラスト'}リスト
           </h1>
           
