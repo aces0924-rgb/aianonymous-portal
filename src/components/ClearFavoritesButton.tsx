@@ -23,7 +23,7 @@ export default function ClearFavoritesButton() {
               clearFavorites();
             }
           }}
-          className="px-6 py-2 rounded-full border border-red-500/30 text-red-400 text-xs font-black tracking-widest uppercase hover:bg-red-500/10 hover:border-red-500 transition-all active:scale-95 flex items-center gap-2"
+          className="px-6 py-2 rounded-full bg-red-600 hover:bg-red-500 border border-red-300 text-white text-xs font-black tracking-widest uppercase shadow-md transition-all active:scale-95 flex items-center gap-2"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>
@@ -39,7 +39,7 @@ export default function ClearFavoritesButton() {
               clearIllustrationFavorites();
             }
           }}
-          className="px-6 py-2 rounded-full border border-fuchsia-500/30 text-fuchsia-400 text-xs font-black tracking-widest uppercase hover:bg-fuchsia-500/10 hover:border-fuchsia-500 transition-all active:scale-95 flex items-center gap-2"
+          className="px-6 py-2 rounded-full bg-pink-600 hover:bg-pink-500 border border-pink-300 text-white text-xs font-black tracking-widest uppercase shadow-md transition-all active:scale-95 flex items-center gap-2"
         >
           <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/>

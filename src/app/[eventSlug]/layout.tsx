@@ -36,6 +36,7 @@ export default async function EventLayout({
   const textShadowBlur = Number.isFinite(configuredTextShadowBlur) && configuredTextShadowBlur >= 0
     ? configuredTextShadowBlur
     : 3
+  const pageBackgroundUrl = themeConfig.bgUrl || '/images/hero-bg.jpg'
   const glowColor = enableNeon ? mainColor : 'transparent'
   const baseFontSize = themeConfig.baseFontSize || 16
   const bgEffect = themeConfig.bgEffect || 'none'
@@ -72,13 +73,14 @@ export default async function EventLayout({
         '--text-outline-color': textOutlineColor,
         '--text-shadow-color': textShadowColor,
         '--text-shadow-blur': `${textShadowBlur}px`,
+        '--event-page-background': `url("${pageBackgroundUrl}")`,
         // Also keep the color versions for backwards compatibility if needed
         '--color-background': bgColor,
         '--color-foreground': textColor,
         '--color-surface': surfaceColor,
         '--color-glow': glowColor,
       } as React.CSSProperties}
-      className={`contents ${enableNeon ? 'theme-neon-enabled' : 'theme-neon-disabled'} ${enableTextOutline ? 'theme-text-outline' : ''} ${enableTextShadow ? 'theme-text-shadow' : ''} theme-bg-${bgEffect} theme-ui-${uiTexture} theme-corner-${cornerStyle}`}
+      className={`event-theme ${enableNeon ? 'theme-neon-enabled' : 'theme-neon-disabled'} ${enableTextOutline ? 'theme-text-outline' : ''} ${enableTextShadow ? 'theme-text-shadow' : ''} theme-bg-${bgEffect} theme-ui-${uiTexture} theme-corner-${cornerStyle}`}
     >
       <style dangerouslySetInnerHTML={{ __html: `html { font-size: ${baseFontSize}px !important; }` }} />
       <PlayerProvider>
