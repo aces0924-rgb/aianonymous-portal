@@ -12,11 +12,11 @@ export default function InterestedButton({ trackId, compact = false }: { trackId
       onClick={() => toggleInterested(trackId)}
       className={`flex items-center justify-center transition-all active:scale-95 ${
         compact 
-          ? `w-10 h-10 rounded-full border-2 ${interested ? 'bg-amber-500/20 border-amber-500 text-amber-500' : 'bg-transparent border-surface-border text-foreground hover:border-amber-500/50 hover:text-amber-500'}`
+          ? `w-10 h-10 rounded-full border-2 ${interested ? 'bg-amber-600 border-amber-300 text-white shadow-lg' : 'bg-amber-400 border-amber-200 text-white hover:bg-amber-300 shadow-md'}`
           : `gap-0 sm:gap-3 px-3 sm:px-6 py-2.5 rounded-xl border-2 text-sm font-black uppercase tracking-widest ${
             interested 
-              ? 'bg-amber-500/10 border-amber-500 text-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.2)]' 
-              : 'bg-transparent border-surface-border text-foreground hover:border-amber-500/50 hover:text-amber-500'
+              ? 'bg-amber-600 border-amber-300 text-white shadow-lg'
+              : 'bg-amber-400 border-amber-200 text-white hover:bg-amber-300 shadow-md'
           }`
       }`}
       title={interested ? '気になる済' : '気になる'}

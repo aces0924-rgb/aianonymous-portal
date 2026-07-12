@@ -109,9 +109,9 @@ export default function TrackDetailView({
       }}></div>
 
       {/* Fixed Top Navigation Frame */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-surface-border shadow-2xl">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-xl border-b border-white/20 shadow-2xl">
         <div className="max-w-6xl mx-auto px-4 h-16 md:h-20 flex items-center justify-between gap-4">
-          <Link href={tracksListUrl} className="text-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] transition-colors flex items-center gap-2 text-xs md:text-sm font-bold shrink-0">
+          <Link href={tracksListUrl} className="text-white hover:text-white/80 transition-colors flex items-center gap-2 text-xs md:text-sm font-bold shrink-0">
             <span className="text-lg">◀</span> <span className="hidden sm:inline">参加作品一覧へ</span>
           </Link>
           
@@ -130,9 +130,9 @@ export default function TrackDetailView({
               {prevTrack && (
                 <Link 
                   href={`/${eventSlug}/tracks/${(prevTrack as any).id}${tableQuery}`} 
-                  className="px-3 md:px-5 py-2 md:py-3 rounded-full bg-white/5 hover:bg-white/10 text-foreground text-[10px] md:text-xs font-black transition-all border border-surface-border flex items-center gap-1 backdrop-blur-sm whitespace-nowrap"
+                  className="px-3 md:px-5 py-2 md:py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] md:text-xs font-black transition-all border border-white/20 flex items-center gap-1 whitespace-nowrap"
                 >
-                  <svg className="w-4 h-4 md:w-5 md:h-5 text-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="15 18 9 12 15 6"/>
                   </svg>
                   <span>前へ</span>
@@ -141,10 +141,10 @@ export default function TrackDetailView({
               {nextTrack && (
                 <Link 
                   href={`/${eventSlug}/tracks/${(nextTrack as any).id}${tableQuery}`} 
-                  className="px-3 md:px-5 py-2 md:py-3 rounded-full bg-[var(--color-cyan-500)]/10 hover:bg-[var(--color-cyan-500)]/20 text-foreground text-[10px] md:text-xs font-black transition-all border border-[var(--color-cyan-400)]/30 flex items-center gap-1 backdrop-blur-sm whitespace-nowrap"
+                  className="px-3 md:px-5 py-2 md:py-3 rounded-full bg-zinc-800 hover:bg-zinc-700 text-white text-[10px] md:text-xs font-black transition-all border border-white/20 flex items-center gap-1 whitespace-nowrap"
                 >
                   <span>次へ</span>
-                  <svg className="w-4 h-4 md:w-5 md:h-5 text-[var(--color-cyan-400)] drop-shadow-[0_0_5px_var(--color-glow)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="9 18 15 12 9 6"/>
                   </svg>
                 </Link>
@@ -166,7 +166,7 @@ export default function TrackDetailView({
           <div className="lg:w-[55%] flex flex-col">
             <div className="border-l-8 border-[var(--color-cyan-400)] pl-6 flex-grow flex flex-col">
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-[var(--color-cyan-400)] font-mono text-base font-black tracking-[0.2em] bg-[var(--color-cyan-500)]/40 px-5 py-2.5 rounded-xl border-2 border-[var(--color-cyan-400)]/30 shadow-[0_0_15px_rgba(0,255,255,0.1)]">
+                <span className="text-white font-mono text-base font-black tracking-[0.2em] bg-zinc-900/90 px-5 py-2.5 rounded-xl border-2 border-white/20 shadow-lg">
                   No.{(track as any).entryNo || track.id.toString().padStart(3, '0')}
                 </span>
                 <InterestedButton trackId={track.id} />

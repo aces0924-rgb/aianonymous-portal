@@ -30,17 +30,17 @@ export default function TrackJumpSelect({
 
   return (
     <div className="relative group w-full">
-      <div className="flex items-center bg-background/60 border border-surface-border rounded-lg overflow-hidden transition-all duration-300 focus-within:border-cyan-400 focus-within:shadow-[0_0_20px_rgba(6,182,212,0.5)] w-full">
-        <span className="pl-4 pr-2 text-cyan-400 font-mono text-xs font-black tracking-widest select-none shrink-0 border-r border-surface-border/50">
+      <div className="flex items-center bg-zinc-900/90 border border-white/25 rounded-lg overflow-hidden transition-all duration-300 focus-within:border-white/60 focus-within:shadow-lg w-full">
+        <span className="pl-4 pr-2 text-zinc-300 font-mono text-xs font-black tracking-widest select-none shrink-0 border-r border-white/20">
           JUMP
         </span>
         <div className="relative flex-1 min-w-0">
           <select
             onChange={(e) => handleJump(e.target.value)}
-            className="appearance-none bg-transparent text-foreground font-mono text-sm md:text-base py-2.5 px-4 pr-12 outline-none cursor-pointer w-full whitespace-nowrap overflow-hidden text-ellipsis"
+            className="appearance-none bg-transparent text-white font-mono text-sm md:text-base py-2.5 px-4 pr-12 outline-none cursor-pointer w-full whitespace-nowrap overflow-hidden text-ellipsis"
             defaultValue=""
           >
-            <option value="" disabled className="bg-surface text-foreground">
+            <option value="" disabled className="bg-zinc-900 text-white">
               {isArtistMain ? 'アーティストを選択 ...' : '楽曲を選択 ...'}
             </option>
             {tracks.map((track) => {
@@ -49,7 +49,7 @@ export default function TrackJumpSelect({
                 <option 
                   key={track.id} 
                   value={track.id} 
-                  className="bg-surface text-foreground py-2"
+                  className="bg-zinc-900 text-white py-2"
                 >
                   No.{track.entryNo || track.id.toString().padStart(3, '0')} : {mainText}
                 </option>

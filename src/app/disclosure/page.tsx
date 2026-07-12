@@ -40,18 +40,20 @@ export default function DisclosurePage() {
   return (
     <main className="min-h-screen bg-background text-white selection:bg-[var(--color-cyan-500)]/30 flex flex-col items-center relative overflow-hidden font-sans">
       
-      {/* Back Button */}
-      <div className="absolute left-6 top-8 z-50">
-        <Link 
-          href="/" 
-          className="flex items-center gap-2 text-xs font-bold tracking-widest text-neutral-500 hover:text-[var(--color-cyan-400)] transition-colors uppercase group"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:-translate-x-1">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          Back to Home
-        </Link>
-      </div>
+      {/* Navigation Header */}
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-xs font-bold tracking-widest text-white hover:text-white/80 transition-colors uppercase group"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:-translate-x-1">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+          </Link>
+        </div>
+      </nav>
 
       {/* Background Effects */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[var(--color-cyan-400)]/20 via-transparent to-transparent -z-10 pointer-events-none" />

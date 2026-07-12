@@ -15,8 +15,8 @@ export default function FavoriteButton({ trackId, compact = false, enableArtistM
   const effectiveEnableArtistMain = enableArtistMain || contextEnableArtistMain;
   const favorite = isImg && effectiveEnableArtistMain ? isIllustrationFavorite(trackId) : isFavorite(trackId);
 
-  const titleNotFavorite = effectiveEnableArtistMain ? (isImg ? '推しイラストに選ぶ' : '推し人に選ぶ') : '推し曲に選ぶ';
-  const titleFavorite = effectiveEnableArtistMain ? (isImg ? '推しイラストに登録済み!' : '推し人に登録済み!') : '推し曲に登録済み!';
+  const titleNotFavorite = '推しに選ぶ';
+  const titleFavorite = '推しに選択済み';
 
   const handleToggle = () => {
     if (isImg && effectiveEnableArtistMain) {
@@ -31,11 +31,11 @@ export default function FavoriteButton({ trackId, compact = false, enableArtistM
       onClick={handleToggle}
       className={`flex items-center justify-center transition-all duration-300 active:scale-95 ${
         compact 
-          ? `w-10 h-10 rounded-full border-2 ${favorite ? 'bg-[var(--color-cyan-500)] border-[var(--color-cyan-400)] text-black shadow-[0_0_15px_var(--color-glow)]' : 'bg-transparent border-surface-border text-foreground hover:border-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] hover:bg-[var(--color-cyan-500)]/5'}`
+          ? `w-10 h-10 rounded-full border-2 ${favorite ? 'bg-pink-700 border-pink-300 text-white shadow-lg' : 'bg-rose-500 border-rose-200 text-white hover:bg-pink-500 shadow-md'}`
           : `gap-0 sm:gap-2 px-3 sm:px-5 py-2.5 rounded-xl border-2 font-bold text-base whitespace-nowrap ${
             favorite 
-              ? 'bg-[var(--color-cyan-500)] border-[var(--color-cyan-400)] text-black shadow-[0_0_20px_var(--color-glow)]' 
-              : 'bg-transparent border-surface-border text-foreground hover:border-[var(--color-cyan-400)] hover:text-[var(--color-cyan-400)] hover:bg-[var(--color-cyan-500)]/5'
+              ? 'bg-pink-700 border-pink-300 text-white shadow-lg'
+              : 'bg-rose-500 border-rose-200 text-white hover:bg-pink-500 shadow-md'
           }`
       }`}
       title={favorite ? titleFavorite : titleNotFavorite}

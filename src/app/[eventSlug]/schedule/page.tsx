@@ -121,17 +121,19 @@ export default async function SchedulePage(props: { params: Promise<{ eventSlug:
 
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_50%_0%,_var(--color-cyan-500)_15%,_transparent)] opacity-10 pointer-events-none z-0" />
 
-      <div className="absolute left-6 top-8 z-50">
-        <Link 
-          href={`/${eventSlug}`} 
-          className="flex items-center gap-2 text-[10px] font-black tracking-widest text-neutral-500 hover:text-[var(--color-cyan-400)] transition-colors uppercase group"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:-translate-x-1">
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          Back to Home
-        </Link>
-      </div>
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <Link
+            href={`/${eventSlug}`}
+            className="flex items-center gap-2 text-xs font-bold tracking-widest text-white hover:text-white/80 transition-colors uppercase group"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" className="transition-transform group-hover:-translate-x-1">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+          </Link>
+        </div>
+      </nav>
 
       <section className="w-full pt-20 pb-4 flex flex-col items-center text-center relative px-6 z-10">
         <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none mb-4 text-foreground drop-shadow-[0_0_30px_var(--color-glow)]">
