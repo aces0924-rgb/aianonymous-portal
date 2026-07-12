@@ -36,7 +36,7 @@ body {
   paint-order: stroke fill;
 }
 
-.theme-text-shadow :is(h1, h2, h3, h4, h5, h6, p, span, a, button, label, li, dt, dd) {
+.theme-text-shadow {
   text-shadow: 0 1px var(--text-shadow-blur, 3px) var(--text-shadow-color, #000000);
 }
 

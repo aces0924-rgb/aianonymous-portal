@@ -376,15 +376,18 @@ export default function ApplyPage({ params }: { params: Promise<{ eventSlug: str
   // isIllustrationMode is defined at the top
 
   return (
-    <main className="min-h-screen bg-background text-foreground py-12 md:py-20 px-4">
+    <main className="min-h-screen bg-background text-foreground pt-28 pb-12 md:pt-32 md:pb-20 px-4">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <Link href={`/${eventSlug}`} className="inline-flex items-center gap-2 text-white hover:text-white/80 text-sm font-bold transition-colors group">
+            <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l-7-7m-7 7h18" />
+            </svg>
+            トップページに戻る
+          </Link>
+        </div>
+      </nav>
       <div className="max-w-3xl mx-auto">
-        <Link href={`/${eventSlug}`} className="inline-flex items-center text-[var(--color-cyan-500)] hover:text-[var(--color-cyan-400)] font-bold mb-8 transition-colors">
-          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l-7-7m-7 7h18" />
-          </svg>
-          トップページに戻る
-        </Link>
-
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-black mb-4 tracking-tighter text-foreground">
             {isIllustrationMode ? 'イラスト作品エントリー' : (isAnonymousMode ? '匿名楽曲エントリー' : (config.enableArtistMain ? 'アーティストエントリー' : '楽曲エントリー'))}
