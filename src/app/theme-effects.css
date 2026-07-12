@@ -62,7 +62,7 @@
 .theme-ui-glass .bg-surface\/40,
 .theme-ui-glass .bg-surface\/80,
 .theme-ui-glass .bg-surface\/90 {
-  background-color: color-mix(in srgb, var(--surface) 20%, transparent) !important;
+  background-color: color-mix(in srgb, var(--surface) 88%, transparent) !important;
   backdrop-filter: blur(16px) !important;
   -webkit-backdrop-filter: blur(16px) !important;
   border-color: color-mix(in srgb, var(--surface-border) 40%, transparent) !important;

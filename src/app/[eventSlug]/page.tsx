@@ -259,12 +259,12 @@ export default async function Home({ params, searchParams }: { params: Promise<{
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center min-h-screen overflow-hidden py-32" style={{ 
+        <section className="relative flex items-center justify-center min-h-screen overflow-hidden py-32" style={{ 
         backgroundImage: `url(${defaultTheme.bgUrl})`, 
         backgroundSize: 'cover', 
         backgroundPosition: defaultTheme.bgPosition || 'center 75%' 
       }}>
-        <div className="absolute inset-0 bg-background/40 z-0"></div>
+          <div className="absolute inset-0 bg-background/40 z-0"></div>
         
         <div className="absolute inset-0 opacity-10 pointer-events-none z-0" style={{ backgroundImage: 'radial-gradient(circle at center, #bc13fe 0%, transparent 50%)' }}></div>
         
@@ -278,7 +278,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   href={ctaMode === 'vote' ? voteUrl : `/${eventSlug}/apply`} 
                   target={ctaMode === 'vote' ? "_blank" : undefined} 
                   rel={ctaMode === 'vote' ? "noopener noreferrer" : undefined} 
-                  style={defaultTheme.btnPrimaryColor ? { backgroundColor: defaultTheme.btnPrimaryColor, color: defaultTheme.btnPrimaryTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
+                    style={defaultTheme.btnPrimaryColor ? { backgroundColor: defaultTheme.btnPrimaryColor, color: defaultTheme.btnPrimaryTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                   className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${
                     defaultTheme.btnPrimaryColor ? '' :
                     ctaMode === 'vote' 
@@ -301,7 +301,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                   href={playlistUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={defaultTheme.btnSecondaryColor ? { backgroundColor: defaultTheme.btnSecondaryColor, color: defaultTheme.btnSecondaryTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
+                    style={defaultTheme.btnSecondaryColor ? { backgroundColor: defaultTheme.btnSecondaryColor, color: defaultTheme.btnSecondaryTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                   className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnSecondaryColor ? '' : 'bg-[var(--color-btn-secondary)] text-white'} hover:brightness-110 text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 border-2 border-white/20 whitespace-nowrap group [text-shadow:none]`}
                 >
                   <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnSecondaryColor ? 'text-current' : 'text-foreground'} group-hover:scale-110 transition-transform`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -326,7 +326,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${defaultLabels.siteTitle}】\n素晴らしい音楽祭を応援しています！\n\nhttps://aianonymous.vercel.app/${event.slug}\n\n${defaultLabels.shareHashtag}${shareBasePostUrl ? `\n\n${shareBasePostUrl}` : ''}`)}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                style={defaultTheme.btnXColor ? { backgroundColor: defaultTheme.btnXColor, color: defaultTheme.btnXTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
+                  style={defaultTheme.btnXColor ? { backgroundColor: defaultTheme.btnXColor, color: defaultTheme.btnXTextColor, opacity: defaultTheme.btnOpacity || 1 } : { opacity: defaultTheme.btnOpacity || 1 }}
                 className={`w-full md:w-[420px] h-16 md:h-24 px-8 md:px-12 rounded-full ${defaultTheme.btnXColor ? '' : 'bg-white hover:bg-gray-100 text-foreground'} text-xl md:text-2xl font-black transition-all shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 flex items-center justify-center gap-4 whitespace-nowrap group [text-shadow:none]`}
               >
                 <svg className={`w-8 h-8 md:w-10 md:h-10 ${defaultTheme.btnXColor ? 'text-current' : 'text-foreground'} group-hover:rotate-12 transition-transform`} fill="currentColor" viewBox="0 0 24 24">
@@ -365,7 +365,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         
         {/* News Section */}
         <section id="news" className="space-y-8 scroll-mt-20">
-          <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">NEWS</h2>
+          <h2 className="text-4xl font-black tracking-tight border-l-4 border-[var(--color-cyan-400)] pl-4 text-foreground">NEWS</h2>
           <div className="bg-surface/50 backdrop-blur-sm border border-surface-border rounded-3xl p-8 shadow-2xl">
             {news.length === 0 ? (
               <p className="text-foreground italic">現在お知らせはありません。</p>
@@ -390,7 +390,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
 
         {/* Schedule Section */}
         <section id="schedule" className="space-y-16 scroll-mt-20">
-          <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">SCHEDULE</h2>
+          <h2 className="text-4xl font-black tracking-tight border-l-4 border-[var(--color-cyan-400)] pl-4 text-foreground">SCHEDULE</h2>
           
           <div className="relative">
             {/* Central Line (Desktop) */}
@@ -402,7 +402,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               ) : (
                 schedule.map((s: any, idx: number) => {
                   const isEven = idx % 2 === 0;
-                  const neonColorClasses = isEven ? 'text-[var(--color-cyan-400)] drop-shadow-[0_0_8px_rgba(188,19,254,0.6)]' : 'text-[var(--color-cyan-400)] drop-shadow-[0_0_8px_var(--color-glow)]';
+                  const dateColorClasses = 'text-foreground';
                   const ringColorClasses = isEven ? 'border-[var(--color-cyan-400)] shadow-[0_0_10px_#bc13fe]' : 'border-[var(--color-cyan-400)] shadow-[0_0_10px_var(--color-glow)]';
 
                   return (
@@ -412,10 +412,10 @@ export default async function Home({ params, searchParams }: { params: Promise<{
                         <div className={`w-4 h-4 border-2 rounded-full bg-background ${ringColorClasses}`}></div>
                       </div>
                       <div className="w-full pl-12 md:pl-0 md:w-5/12 group">
-                        <div className={`mb-2 font-black text-xl font-mono tracking-tighter ${neonColorClasses} ${isEven ? 'md:text-left' : 'md:text-right'}`}>
+                        <div className={`mb-2 font-black text-xl font-sans tracking-normal ${dateColorClasses} ${isEven ? 'md:text-left' : 'md:text-right'}`}>
                           {s.date}
                         </div>
-                        <div className={`bg-surface/40 backdrop-blur-md border border-surface-border p-6 rounded-3xl shadow-2xl transition-all group-hover:border-gray-500 group-hover:bg-gray-800/60 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
+                        <div className={`bg-surface/90 backdrop-blur-md border border-surface-border p-6 rounded-3xl shadow-xl transition-all group-hover:border-gray-500 ${isEven ? 'md:text-left' : 'md:text-right'}`}>
                           <p className="text-foreground font-bold text-lg leading-snug">{s.title}</p>
                         </div>
                       </div>
@@ -430,7 +430,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         {/* Guidelines Section */}
         <section id="guidelines" className="space-y-16 scroll-mt-20">
           <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
-            <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md">
+            <h2 className="text-4xl font-black tracking-tight border-l-4 border-[var(--color-cyan-400)] pl-4 text-foreground">
               GUIDELINES
             </h2>
             <span className="text-foreground font-mono text-sm tracking-widest">/ {(defaultLabels as any).guidelinesTitle || '募集要項'}</span>
@@ -465,7 +465,7 @@ export default async function Home({ params, searchParams }: { params: Promise<{
         {/* Schedule Section */}
           <section id="faq" className="space-y-8 scroll-mt-24">
             <div className="flex flex-col md:flex-row md:items-baseline gap-4 mb-4">
-              <h2 className="text-4xl font-black tracking-tighter border-l-4 border-[var(--color-cyan-400)] pl-4 text-white drop-shadow-md uppercase">
+              <h2 className="text-4xl font-black tracking-tight border-l-4 border-[var(--color-cyan-400)] pl-4 text-foreground uppercase">
                 FAQ
               </h2>
               <span className="text-foreground font-mono text-sm tracking-widest">/ よくある質問</span>

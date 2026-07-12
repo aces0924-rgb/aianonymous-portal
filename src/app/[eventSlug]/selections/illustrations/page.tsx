@@ -48,7 +48,7 @@ export default async function IllustrationSelectionsIndexPage({ params, searchPa
         
         <div className="relative z-10 max-w-4xl mx-auto space-y-6">
           <h1 className="text-4xl md:text-6xl font-black tracking-tighter italic text-foreground">
-            みんなの<span className="text-[var(--color-cyan-400)]">{enableArtistMain ? '推しクリエイターリスト' : '推しイラストリスト'}</span>
+            みんなの<span className="text-foreground border-b-4 border-[var(--color-cyan-400)]">{enableArtistMain ? '推しクリエイターリスト' : '推しイラストリスト'}</span>
           </h1>
           <p className="text-2xl md:text-4xl font-black tracking-tight text-foreground drop-shadow-[0_0_20px_var(--color-glow)] leading-tight">
             リスナーが選んだ珠玉のセレクション。

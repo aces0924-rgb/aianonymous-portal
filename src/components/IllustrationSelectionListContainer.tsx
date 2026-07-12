@@ -120,15 +120,15 @@ export default function IllustrationSelectionListContainer({ initialPlaylists, p
               💡
             </div>
             <p className="text-foreground text-sm md:text-lg font-bold leading-tight">
-              あなたが<span className="text-[var(--color-cyan-400)] font-black px-1">「気になる」</span>した{enableArtistMain ? '参加者' : 'イラスト'}との一致度を<br className="hidden md:block" />
-              <span className="text-[var(--color-cyan-400)] font-black">「シンクロ率」</span>として表示しています。
+              あなたが<span className="text-foreground font-black px-1 underline decoration-[var(--color-cyan-400)] decoration-2 underline-offset-4">「気になる」</span>した{enableArtistMain ? '参加者' : 'イラスト'}との一致度を<br className="hidden md:block" />
+              <span className="text-foreground font-black underline decoration-[var(--color-cyan-400)] decoration-2 underline-offset-4">「シンクロ率」</span>として表示しています。
             </p>
           </div>
         </div>
 
         {/* Right: Sort Group */}
         <div className="shrink-0 space-y-3 flex flex-col items-center lg:items-end">
-          <p className="text-[var(--color-cyan-300)] text-xs md:text-sm font-black tracking-widest bg-[var(--color-glow)]/10 py-1.5 px-4 rounded-full border border-[var(--color-glow)]/20">
+          <p className="text-foreground text-xs md:text-sm font-black tracking-widest bg-surface/80 py-1.5 px-4 rounded-full border border-surface-border">
             自分と感性が近い人を探してみましょう！
           </p>
           

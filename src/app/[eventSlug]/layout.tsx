@@ -26,7 +26,7 @@ export default async function EventLayout({
   const mainColor = themeConfig.mainColor || '#00f0ff'
   const bgColor = themeConfig.bgColor || '#000000'
   const textColor = themeConfig.textColor || '#ffffff'
-  const surfaceColor = themeConfig.surfaceColor || '#111827' // gray-900
+  const surfaceColor = themeConfig.surfaceColor || '#111827'
   const enableNeon = themeConfig.enableNeon !== false // true by default
   const glowColor = enableNeon ? mainColor : 'transparent'
   const baseFontSize = themeConfig.baseFontSize || 16
@@ -58,7 +58,7 @@ export default async function EventLayout({
         '--background': bgColor,
         '--foreground': textColor,
         '--surface': surfaceColor,
-        '--surface-border': surfaceColor, // Add this if you want border to match surface, or leave out
+        '--surface-border': surfaceColor,
         '--glow': glowColor,
         '--outline-shadow': outlineShadow,
         // Also keep the color versions for backwards compatibility if needed
