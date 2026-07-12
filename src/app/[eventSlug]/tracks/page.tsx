@@ -97,9 +97,6 @@ export default async function TracksListPage({ params, searchParams }: { params:
           <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-3">
             {featureFlags.enableArtistMain ? "参加アーティスト一覧" : "投稿作品一覧"}
           </h2>
-          <p className="text-foreground text-sm max-w-2xl mx-auto mb-5">
-            {featureFlags.enableArtistMain ? "エントリーされたすべての参加者と楽曲です。" : "エントリーされたすべての楽曲です。"}
-          </p>
           <div className="flex flex-col items-center justify-center gap-3">
             <ClearFavoritesButton />
             
