@@ -68,7 +68,7 @@ export default function TrackListCard({ track, preview, enableArtistMain, eventS
   const subText = isArtistMain ? track.title : track.artistName;
 
   return (
-    <div className={`bg-surface/90 border ${favorite ? 'border-[var(--color-cyan-400)]' : 'border-surface-border'} rounded-xl p-4 hover:border-[var(--color-cyan-400)] transition-all group relative overflow-hidden shadow-sm`}>
+    <div className={`bg-surface/95 border ${favorite ? 'border-[var(--color-cyan-400)]' : 'border-surface-border'} rounded-xl p-4 hover:border-[var(--color-cyan-400)] transition-all group relative overflow-hidden shadow-sm`}>
       <div className="flex flex-col justify-between gap-4">
         <Link href={detailUrl} className="flex flex-col min-w-0 flex-1 group/link mb-2">
           <div className="flex items-center gap-2 mb-1">

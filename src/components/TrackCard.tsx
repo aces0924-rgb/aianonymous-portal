@@ -49,7 +49,7 @@ export default function TrackCard({ track, preview, enableArtistMain, eventSlug 
     : `/${eventSlug}/tracks/${track.id}`;
 
   return (
-    <div className={`bg-surface/40 border ${favorite ? 'border-[var(--color-cyan-400)] shadow-[0_0_20px_var(--color-glow)]' : 'border-[var(--color-cyan-400)]/50'} rounded-2xl p-4 md:p-5 hover:border-[var(--color-cyan-400)] transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] relative overflow-hidden group backdrop-blur-sm`}>
+    <div className={`bg-surface/95 border ${favorite ? 'border-[var(--color-cyan-400)] shadow-[0_0_20px_var(--color-glow)]' : 'border-[var(--color-cyan-400)]/50'} rounded-2xl p-4 md:p-5 hover:border-[var(--color-cyan-400)] transition-all shadow-[0_0_20px_rgba(0,0,0,0.5)] relative overflow-hidden group backdrop-blur-sm`}>
       {/* Accent border */}
       <div className={`absolute top-0 left-0 w-1 h-full ${favorite ? 'bg-[var(--color-cyan-500)]' : 'bg-gray-800'} group-hover:bg-[var(--color-cyan-500)] transition-all duration-500`}></div>
       
