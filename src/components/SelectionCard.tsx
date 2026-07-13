@@ -55,6 +55,15 @@ export default function SelectionCard({ list, previewQuery, enableArtistMain }: 
       href={`${prefix}/selection/${encodeSelectionId(list.id)}${previewQuery}`}
       className={`group relative border ${borderClass} ${bgClass} rounded-[2.5rem] p-7 md:p-8 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] flex flex-col h-full overflow-hidden`}
     >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-80 mix-blend-soft-light"
+        style={{
+          backgroundImage:
+            'linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 18%, transparent 38%, rgba(255,255,255,0.08) 52%, transparent 72%, rgba(255,255,255,0.04) 100%)',
+        }}
+      />
+      <div className="absolute inset-x-0 top-0 h-24 pointer-events-none bg-gradient-to-b from-white/12 via-white/4 to-transparent" />
+
       {/* Decorative gradient overlay */}
       <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none ${
         isCompleted ? 'bg-yellow-500/5' : 'bg-[var(--color-cyan-500)]/5'
