@@ -49,6 +49,19 @@ export default async function PortalHome() {
           </div>
         </div>
 
+        <div className="flex justify-center mb-10">
+          <a
+            href="#event-calendar"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-black text-white border border-white/20 shadow-[0_0_24px_rgba(0,0,0,0.45)] hover:bg-zinc-900 hover:border-white/30 transition-all font-black tracking-widest"
+          >
+            <span className="text-sm md:text-base">イベントカレンダーへ</span>
+            <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M12 5v14" />
+              <path d="M5 12l7 7 7-7" />
+            </svg>
+          </a>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {events.length === 0 ? (
             <p className="text-slate-300">現在公開されているイベントはありません。</p>
@@ -137,6 +150,36 @@ export default async function PortalHome() {
               </div>
             )})
           )}
+
+          <section id="event-calendar" className="md:col-span-2 scroll-mt-24">
+            <div className="rounded-[2rem] overflow-hidden border border-white/15 shadow-[0_0_40px_rgba(0,0,0,0.45)] bg-black">
+              <a
+                href="#event-calendar"
+                className="flex items-center justify-between gap-4 px-6 md:px-8 py-4 bg-black text-white border-b border-white/10 hover:bg-zinc-900 transition-colors"
+              >
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs md:text-sm font-bold tracking-[0.3em] uppercase text-white/70">Event Calendar</span>
+                  <span className="text-lg md:text-xl font-black tracking-tight">イベントカレンダー</span>
+                </div>
+                <svg className="w-5 h-5 shrink-0 text-white/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 5v14" />
+                  <path d="M5 12l7 7 7-7" />
+                </svg>
+              </a>
+              <div className="bg-zinc-950 p-2 md:p-4">
+                <iframe
+                  src="https://script.google.com/macros/s/AKfycbxEFXYDzYnK9T8AOwWISFoBfXcTYLz2WuKdBTjQ1hW_DLvawgLub6_YG-yoezmCCcuibw/exec"
+                  width="100%"
+                  height="820"
+                  frameBorder="0"
+                  scrolling="no"
+                  style={{ border: 0, width: '100%', display: 'block' }}
+                  loading="lazy"
+                  title="イベントカレンダー"
+                />
+              </div>
+            </div>
+          </section>
 
           {/* 現行サイト（第1回）への静的リンク */}
           {portalArchiveUrl && (
