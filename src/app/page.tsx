@@ -54,7 +54,7 @@ export default async function PortalHome() {
       </div>
       <div className="fixed inset-0 z-0 bg-white/10 backdrop-blur-[3px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-5xl mx-auto pt-8 pb-16 px-4">
+      <div className="relative z-10 max-w-6xl mx-auto pt-8 pb-16 px-4">
         <PortalHomeExplorer
           events={serializedEvents}
           portalLogoUrl={portalLogoUrl}
