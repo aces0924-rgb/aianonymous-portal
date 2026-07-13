@@ -320,7 +320,7 @@ export default function PortalHomeExplorer({
           </a>
           <div className="bg-white/70 p-2 md:p-4">
             <p className="mb-3 rounded-2xl border border-cyan-100 bg-cyan-50/90 px-4 py-3 text-xs md:text-sm font-medium text-cyan-900 shadow-sm">
-              ※ イベントカレンダーには、まだポータルに掲載していないイベント情報も含まれます。
+              ※ イベントカレンダーには、ポータルに掲載していないイベント情報も含まれます。
             </p>
             <iframe
               src={eventCalendarUrl}
