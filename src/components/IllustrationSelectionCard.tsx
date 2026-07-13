@@ -48,7 +48,7 @@ export default function IllustrationSelectionCard({ list, previewQuery, enableAr
     ? 'bg-gradient-to-br from-gray-900 via-yellow-950/10 to-gray-950' 
     : hasStarted 
     ? 'bg-gradient-to-br from-gray-900 via-[var(--color-cyan-400)]/5 to-gray-950' 
-    : 'bg-surface/30';
+    : 'bg-surface/95';
 
   return (
     <Link 

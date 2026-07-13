@@ -114,7 +114,7 @@ export default function IllustrationSelectionListContainer({ initialPlaylists, p
       {/* Header Info & Sort Buttons Row */}
       <div className="flex flex-col lg:flex-row items-center lg:items-end justify-between gap-6">
         {/* Left: Explanation Box */}
-        <div className="flex-1 max-w-xl bg-surface/90 border border-surface-border rounded-[2rem] p-6 backdrop-blur-sm shadow-xl">
+        <div className="flex-1 max-w-xl bg-surface/95 border border-surface-border rounded-[2rem] p-6 backdrop-blur-sm shadow-xl">
           <div className="flex items-center gap-5 text-left">
             <div className="shrink-0 w-12 h-12 rounded-xl bg-[var(--color-glow)]/20 flex items-center justify-center text-2xl">
               💡
@@ -128,11 +128,11 @@ export default function IllustrationSelectionListContainer({ initialPlaylists, p
 
         {/* Right: Sort Group */}
         <div className="shrink-0 space-y-3 flex flex-col items-center lg:items-end">
-          <p className="text-foreground text-xs md:text-sm font-black tracking-widest bg-surface/80 py-1.5 px-4 rounded-full border border-surface-border">
+          <p className="text-foreground text-xs md:text-sm font-black tracking-widest bg-surface/95 py-1.5 px-4 rounded-full border border-surface-border">
             自分と感性が近い人を探してみましょう！
           </p>
           
-          <div className="inline-flex p-1 bg-surface/50 border border-surface-border rounded-2xl backdrop-blur-md shadow-2xl overflow-x-auto max-w-full">
+          <div className="inline-flex p-1 bg-surface/95 border border-surface-border rounded-2xl backdrop-blur-md shadow-2xl overflow-x-auto max-w-full">
             <button
               onClick={() => setSortMode('newest')}
               className={`px-4 md:px-6 py-2.5 rounded-xl text-[10px] md:text-xs font-black tracking-widest transition-all whitespace-nowrap ${
