@@ -470,16 +470,20 @@ export default async function Home({ params, searchParams }: { params: Promise<{
               </h2>
               <span className="text-foreground font-mono text-sm tracking-widest">/ よくある質問</span>
             </div>
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-4 md:gap-6">
               {faqs.map((faq: any, index: number) => (
-                <div key={index} className="group relative bg-surface/40 backdrop-blur-sm border border-surface-border rounded-3xl p-8 hover:border-[var(--color-cyan-400)] transition-all duration-300">
-                  <div className="flex gap-6">
-                    <span className="text-2xl font-black text-[var(--color-cyan-400)]">Q.</span>
+                <div key={index} className="group relative bg-surface/40 backdrop-blur-sm border border-surface-border rounded-3xl p-5 md:p-8 hover:border-[var(--color-cyan-400)] transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+                    <span className="text-xl md:text-2xl font-black text-[var(--color-cyan-400)] shrink-0 leading-none">Q.</span>
                     <div className="space-y-4 flex-1">
-                      <h3 className="text-xl font-black text-foreground leading-tight">{faq.question}</h3>
-                      <div className="flex gap-6 pt-2 border-t border-surface-border/50">
-                        <span className="text-2xl font-black text-[var(--color-cyan-400)]">A.</span>
-                        <p className="text-foreground text-lg font-light leading-relaxed whitespace-pre-wrap">{faq.answer}</p>
+                      <h3 className="text-base md:text-xl font-black text-foreground leading-tight break-words">
+                        {faq.question}
+                      </h3>
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 pt-2 border-t border-surface-border/50">
+                        <span className="text-xl md:text-2xl font-black text-[var(--color-cyan-400)] shrink-0 leading-none">A.</span>
+                        <p className="text-foreground text-sm md:text-lg font-light leading-relaxed whitespace-pre-wrap break-words">
+                          {faq.answer}
+                        </p>
                       </div>
                     </div>
                   </div>
