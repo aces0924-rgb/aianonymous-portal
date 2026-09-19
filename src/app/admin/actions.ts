@@ -74,6 +74,50 @@ export async function addEvent(formData: FormData) {
   revalidatePath('/admin')
 }
 
+export async function toggleEventPortalVisibility(id: string, isPortalVisible: boolean) {
+  const event = await prisma.event.findUnique({ where: { id } })
+  if (!event) return
+
+  let featureFlags: Record<string, unknown> = {}
+  try {
+    featureFlags = JSON.parse(event.featureFlags || '{}')
+  } catch {
+    featureFlags = {}
+  }
+
+  featureFlags.isPortalVisible = isPortalVisible
+
+  await prisma.event.update({
+    where: { id },
+    data: { featureFlags: JSON.stringify(featureFlags) }
+  })
+
+  revalidatePath('/')
+  revalidatePath('/admin')
+}
+
+export async function toggleEventSiteAvailability(id: string, isSiteAccessible: boolean) {
+  const event = await prisma.event.findUnique({ where: { id } })
+  if (!event) return
+
+  let featureFlags: Record<string, unknown> = {}
+  try {
+    featureFlags = JSON.parse(event.featureFlags || '{}')
+  } catch {
+    featureFlags = {}
+  }
+
+  featureFlags.isSiteAccessible = isSiteAccessible
+
+  await prisma.event.update({
+    where: { id },
+    data: { featureFlags: JSON.stringify(featureFlags) }
+  })
+
+  revalidatePath('/admin')
+  revalidatePath(`/${event.slug}`, 'layout')
+}
+
 export async function toggleAwardPublication(id: number, isPublished: boolean) {
   await prisma.award.update({
     where: { id },

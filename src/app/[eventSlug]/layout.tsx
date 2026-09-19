@@ -1,5 +1,4 @@
 import prisma from '@/lib/prisma'
-import { notFound } from 'next/navigation'
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { PlayerProvider } from "@/context/PlayerContext";
 import GlobalPlayer from "@/components/GlobalPlayer";
@@ -21,6 +20,18 @@ export default async function EventLayout({
 
   const themeConfig = JSON.parse(event.themeConfig || '{}')
   const featureFlags = typeof event.featureFlags === 'string' ? JSON.parse(event.featureFlags) : (event.featureFlags || {})
+  const isSiteAccessible = featureFlags.isSiteAccessible !== false
+
+  if (!isSiteAccessible) {
+    return (
+      <main className="min-h-screen bg-[#07182f] text-white flex items-center justify-center px-6">
+        <h1 className="text-3xl md:text-5xl font-black tracking-wide text-center">
+          イベントは終了しました
+        </h1>
+      </main>
+    )
+  }
+
   const isArtistMainEnabled = featureFlags.enableArtistMain === true
 
   const mainColor = themeConfig.mainColor || '#00f0ff'

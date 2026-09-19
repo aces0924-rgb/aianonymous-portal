@@ -126,6 +126,8 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
     shareHashtag: labelConfig.shareHashtag || '#アノフェス'
   }
   const defaultFeatures = {
+    isPortalVisible: featureFlags.isPortalVisible !== false,
+    isSiteAccessible: featureFlags.isSiteAccessible !== false,
     enableRandomPlay: featureFlags.enableRandomPlay ?? true,
     enableThumbSubmit: featureFlags.enableThumbSubmit ?? false,
     enablePlaylistInfo: featureFlags.enablePlaylistInfo ?? true,
@@ -207,6 +209,38 @@ export default async function EventSettingsPage({ params }: { params: Promise<{ 
             <AdminHelpButton contentKey="basic-info" />
           </div>
           <form action={updateEventDetails.bind(null, id)} className="space-y-4">
+            <div className={`rounded-xl border p-4 ${defaultFeatures.isPortalVisible ? 'border-green-200 bg-green-50' : 'border-gray-300 bg-gray-100'}`}>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="isPortalVisible"
+                  defaultChecked={defaultFeatures.isPortalVisible}
+                  className="mt-1 h-5 w-5 accent-green-600"
+                />
+                <span>
+                  <span className="block font-bold">ポータルのイベント一覧に表示する</span>
+                  <span className="block text-xs text-foreground mt-1">
+                    OFFにすると一覧から非表示になります。イベントは削除されず、直接URLと管理画面は引き続き利用できます。
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div className={`rounded-xl border p-4 ${defaultFeatures.isSiteAccessible ? 'border-blue-200 bg-blue-50' : 'border-amber-300 bg-amber-50'}`}>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="isSiteAccessible"
+                  defaultChecked={defaultFeatures.isSiteAccessible}
+                  className="mt-1 h-5 w-5 accent-blue-600"
+                />
+                <span>
+                  <span className="block font-bold">イベントサイトを公開する</span>
+                  <span className="block text-xs text-foreground mt-1">
+                    OFFにすると直接URLを含むイベント内の全ページを閉じ、「イベントは終了しました」と表示します。
+                  </span>
+                </span>
+              </label>
+            </div>
             <div>
               <label className="block text-sm font-bold text-foreground">イベント名</label>
               <input name="title" defaultValue={event.title} className="w-full border p-2 rounded mt-1 bg-white" required />

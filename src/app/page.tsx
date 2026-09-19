@@ -24,7 +24,16 @@ export default async function PortalHome() {
   const portalArchiveUrl = settingsMap['portal_archive_url'] ?? "https://aianonymous.vercel.app/";
   const eventCalendarUrl = "https://script.google.com/macros/s/AKfycbxEFXYDzYnK9T8AOwWISFoBfXcTYLz2WuKdBTjQ1hW_DLvawgLub6_YG-yoezmCCcuibw/exec";
 
-  const serializedEvents = events.map((event) => ({
+  const serializedEvents = events
+    .filter((event) => {
+      try {
+        const featureFlags = JSON.parse(event.featureFlags || '{}');
+        return featureFlags.isPortalVisible !== false;
+      } catch {
+        return true;
+      }
+    })
+    .map((event) => ({
     id: event.id,
     slug: event.slug,
     title: event.title,
@@ -39,7 +48,7 @@ export default async function PortalHome() {
       date: schedule.date,
       order: schedule.order,
     })),
-  }));
+    }));
 
   return (
     <main className="min-h-screen relative bg-black text-white font-sans overflow-hidden">

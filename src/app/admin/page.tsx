@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { addAdminUser, deleteAdminUser, addEvent, getEventTemplates, updateGlobalSettings } from './actions'
+import { addAdminUser, deleteAdminUser, addEvent, getEventTemplates, toggleEventPortalVisibility, toggleEventSiteAvailability, updateGlobalSettings } from './actions'
 import { logout } from './login/actions'
 
 export const metadata = {
@@ -115,17 +115,50 @@ export default async function AdminPage() {
           </form>
 
           <ul className="space-y-4">
-            {events.map(e => (
-              <li key={e.id} className="border p-4 rounded-xl flex items-center justify-between hover:bg-gray-50 transition-colors">
+            {events.map(e => {
+              let isPortalVisible = true
+              let isSiteAccessible = true
+              try {
+                const featureFlags = JSON.parse(e.featureFlags || '{}')
+                isPortalVisible = featureFlags.isPortalVisible !== false
+                isSiteAccessible = featureFlags.isSiteAccessible !== false
+              } catch {
+                isPortalVisible = true
+                isSiteAccessible = true
+              }
+
+              return (
+              <li key={e.id} className={`border p-4 rounded-xl flex items-center justify-between transition-colors ${isPortalVisible ? 'hover:bg-gray-50' : 'bg-gray-100 border-gray-300'}`}>
                 <div>
-                  <h3 className="font-bold text-lg">{e.title}</h3>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="font-bold text-lg">{e.title}</h3>
+                    <span className={`text-xs px-2 py-1 rounded-full font-bold ${isPortalVisible ? 'bg-green-100 text-green-700' : 'bg-gray-700 text-white'}`}>
+                      {isPortalVisible ? 'ポータルに表示中' : 'ポータルで非表示'}
+                    </span>
+                    <span className={`text-xs px-2 py-1 rounded-full font-bold ${isSiteAccessible ? 'bg-blue-100 text-blue-700' : 'bg-amber-500 text-white'}`}>
+                      {isSiteAccessible ? 'サイト公開中' : 'イベント終了表示'}
+                    </span>
+                  </div>
                   <p className="text-foreground text-sm">/{e.slug}</p>
                 </div>
-                <Link href={`/admin/events/${e.id}/settings`} className="bg-fuchsia-100 text-fuchsia-700 px-4 py-2 rounded-lg font-bold hover:bg-fuchsia-200 transition-colors">
-                  管理画面を開く →
-                </Link>
+                <div className="flex flex-wrap items-center justify-end gap-2">
+                  <form action={toggleEventPortalVisibility.bind(null, e.id, !isPortalVisible)}>
+                    <button className={`px-4 py-2 rounded-lg font-bold transition-colors ${isPortalVisible ? 'bg-gray-700 text-white hover:bg-gray-800' : 'bg-green-600 text-white hover:bg-green-700'}`}>
+                      {isPortalVisible ? 'ポータルで非表示にする' : 'ポータルに再表示する'}
+                    </button>
+                  </form>
+                  <form action={toggleEventSiteAvailability.bind(null, e.id, !isSiteAccessible)}>
+                    <button className={`px-4 py-2 rounded-lg font-bold transition-colors ${isSiteAccessible ? 'bg-amber-500 text-white hover:bg-amber-600' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>
+                      {isSiteAccessible ? 'イベントを終了する' : 'イベントを再公開する'}
+                    </button>
+                  </form>
+                  <Link href={`/admin/events/${e.id}/settings`} className="bg-fuchsia-100 text-fuchsia-700 px-4 py-2 rounded-lg font-bold hover:bg-fuchsia-200 transition-colors">
+                    管理画面を開く →
+                  </Link>
+                </div>
               </li>
-            ))}
+              )
+            })}
           </ul>
         </div>
 

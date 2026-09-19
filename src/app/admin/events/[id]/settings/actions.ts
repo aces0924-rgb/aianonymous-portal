@@ -10,6 +10,8 @@ export async function updateEventDetails(id: string, formData: FormData) {
   const description = formData.get('description') as string
   const slug = formData.get('slug') as string
   const guidelinesTitle = formData.get('guidelinesTitle') as string
+  const isPortalVisible = formData.get('isPortalVisible') === 'on'
+  const isSiteAccessible = formData.get('isSiteAccessible') === 'on'
 
   if (!title || !slug) return
 
@@ -17,9 +19,17 @@ export async function updateEventDetails(id: string, formData: FormData) {
   if (!event) return
 
   const labelConfig = JSON.parse(event.labelConfig || '{}')
+  let featureFlags: Record<string, unknown> = {}
+  try {
+    featureFlags = JSON.parse(event.featureFlags || '{}')
+  } catch {
+    featureFlags = {}
+  }
   if (guidelinesTitle !== undefined) {
     labelConfig.guidelinesTitle = guidelinesTitle
   }
+  featureFlags.isPortalVisible = isPortalVisible
+  featureFlags.isSiteAccessible = isSiteAccessible
 
   await prisma.event.update({
     where: { id },
@@ -27,7 +37,8 @@ export async function updateEventDetails(id: string, formData: FormData) {
       title, 
       description, 
       slug,
-      labelConfig: JSON.stringify(labelConfig)
+      labelConfig: JSON.stringify(labelConfig),
+      featureFlags: JSON.stringify(featureFlags)
     }
   })
   revalidatePath('/')
@@ -343,4 +354,3 @@ export async function createTemplateFromEvent(eventId: string, templateName: str
     return { success: false, error: e.message };
   }
 }
-
