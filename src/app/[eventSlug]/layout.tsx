@@ -20,7 +20,9 @@ export default async function EventLayout({
 
   const themeConfig = JSON.parse(event.themeConfig || '{}')
   const featureFlags = typeof event.featureFlags === 'string' ? JSON.parse(event.featureFlags) : (event.featureFlags || {})
-  const isSiteAccessible = featureFlags.isSiteAccessible !== false
+  // This event has permanently ended. Keep the public route closed even when
+  // a deployment is connected to a database whose feature flags lag behind.
+  const isSiteAccessible = eventSlug !== 'aicomfes' && featureFlags.isSiteAccessible !== false
 
   if (!isSiteAccessible) {
     return (

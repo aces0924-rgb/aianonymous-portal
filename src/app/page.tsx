@@ -26,6 +26,8 @@ export default async function PortalHome() {
 
   const serializedEvents = events
     .filter((event) => {
+      if (event.slug === 'aicomfes') return false;
+
       try {
         const featureFlags = JSON.parse(event.featureFlags || '{}');
         return featureFlags.isPortalVisible !== false;
